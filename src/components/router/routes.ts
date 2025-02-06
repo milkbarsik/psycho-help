@@ -8,6 +8,8 @@ interface routePath {
   Component: FC<any>;
 }
 
+// Список всех урлов, а также компонентов, отрисовываемых при нахождении на одном из них
+
 export const routes: routePath[] = [
   {
     path: '/',

@@ -30,6 +30,8 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(isOpen);
 
+  //Функции для валидации полей формы
+
   const validateFirstName = (name: string) =>
     /^[a-zа-я]+$/i.test(name) ? '' : 'Имя не должно содержать цифр';
 
@@ -70,6 +72,8 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
   const validateConfirmPassword = (confirmPassword: string) =>
     confirmPassword === formValue.password ? '' : 'Пароли не совпадают';
 
+  //Применение функций валидаций и возвращение true, если нет ошибок, иначе false
+
   const validateForm = () => {
     const newErrors = {
       firstName: validateFirstName(formValue.firstName),
@@ -83,6 +87,8 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     return Object.values(newErrors).every((error) => error === '');
   };
 
+  //Если все правильно, то модалка закрывается
+
   const handleOk = () => {
     if (!validateForm()) return;
     setLoading(true);
@@ -93,16 +99,17 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     }, 1000);
   };
 
+  //Закрытие модалки
   const handleCancel = () => {
     setOpen(false);
     setModalOpen(false);
   };
 
-  const formComplete = useMemo(() => {
+  const formComplete = useMemo(() => { //Функция, возвращающая true, если все поля формы заполнены, иначе false (При изменении формы)
     return Object.values(formValue).every((value) => value.trim() !== '');
   }, [formValue]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { //
     const { name, value } = e.target;
     const filteredValue =
       name === 'firstName' || name === 'lastName' ? value.replace(/[0-9\s]/g, '') : value;
@@ -199,7 +206,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
             {errors.confirmPassword && <ErrorText>{errors.confirmPassword}</ErrorText>}
           </label>
           <p>У вас уже есть учётная запись?</p>
-          <Button type="default" onClick={() => setWindow('log')}>
+          <Button type="default" onClick={() => setWindow('log')}> {/*При нажатии меняется модальное окно*/}
             <span> Войти</span>
           </Button>
         </Form>
