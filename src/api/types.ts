@@ -1,38 +1,66 @@
-export interface Pagination {
-  pageNo?: number;
-  pageSize?: number;
+export type regData = {
+	first_name: string;
+	middle_name?: string;
+	last_name: string;
+	phone_number: string;
+	email: string;
+	password: string;
+	role: string;
 }
 
-export interface User {
-  userId: number;
-  name: string;
-  username: string;
-  photo?: string[];
-  description?: string;
-  isWorking?: boolean;
+export type user = {
+	id: string;
+	first_name: string;
+	middle_name?: string;
+	last_name: string;
+	phone_number: string;
+	email: string;
+	social_media: string;
 }
 
-export interface Pageable {
-  pageNumber: number;
-  pageSize: number;
-  sort: {
-    sorted: boolean;
-    empty: boolean;
-    unsorted: boolean;
-  };
-  offset: number;
-  paged: boolean;
-  unpaged: boolean;
+export type authRes = {
+	status_code: number;
+	token: string;
 }
 
-export interface BaseEntityListDTO {
-  content: any;
-  pageable?: Pageable;
-}
 
-export interface DoctorsList extends BaseEntityListDTO {
-  content: User[];
-}
+
+
+// export interface Pagination {
+//   pageNo?: number;
+//   pageSize?: number;
+// }
+
+// export interface User {
+//   userId: number;
+//   name: string;
+//   username: string;
+//   photo?: string[];
+//   description?: string;
+//   isWorking?: boolean;
+// }
+
+// export interface Pageable {
+//   pageNumber: number;
+//   pageSize: number;
+//   sort: {
+//     sorted: boolean;
+//     empty: boolean;
+//     unsorted: boolean;
+//   };
+//   offset: number;
+//   paged: boolean;
+//   unpaged: boolean;
+// }
+
+// export interface BaseEntityListDTO {
+//   content: any;
+//   pageable?: Pageable;
+// }
+
+// export interface DoctorsList extends BaseEntityListDTO {
+//   content: User[];
+// }
 
 // "totalPages": 1,
 // "totalElements": 1,
@@ -47,3 +75,5 @@ export interface DoctorsList extends BaseEntityListDTO {
 // "numberOfElements": 1,
 // "first": true,
 // "empty": false
+
+
