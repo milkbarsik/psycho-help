@@ -1,0 +1,18 @@
+.wrapper {
+    margin-top: 150px;
+    margin-bottom: 43px;
+}
+
+.list_wrapper {
+    width: 100%;
+    max-width: 1128px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+
+.title {
+    font-size: 4.8em;
+    text-align: center;
+}
