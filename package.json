@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@types/css-modules": "^1.0.5",
     "@types/istanbul-reports": "^3.0.4",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
