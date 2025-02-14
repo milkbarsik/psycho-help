@@ -9,7 +9,7 @@ const Header = () => {
       <St.ContentWrapper>
         <Logo />
         <St.link href="/">Главная</St.link>
-        {/* <St.link href="/#therapists">Психологи</St.link> */}
+        <St.link href="/therapists/">Психологи</St.link>
         {/* <St.link href="/">Новости</St.link> */}
         {/* <St.link href="/">Полезные материалы</St.link> */}
         <St.link href="/faq">FAQ</St.link>

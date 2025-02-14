@@ -1,0 +1,39 @@
+.wrapper {
+    width: 100%;
+    margin-top: 60px;
+    display: flex;
+}
+
+.content {
+    width: 50%;
+    background-color: #D9E5FF;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    
+}
+
+.title {
+    font-size: 9.6em;
+    color: #5E8BF4;
+    margin-bottom: 20px;
+}
+
+.text {
+    color: #393939;
+    font-size: 2.4em;
+}
+
+.content__text {
+    width: 548px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+.titleImg {
+    position: absolute;
+    left: 45%;
+    top: 33%;
+}
