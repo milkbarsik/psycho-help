@@ -3,7 +3,7 @@ import orlova from '@/assets/images/doctors/doctorsPictures/orlova.jpg';
 import abasova from '@/assets/images/doctors/doctorsPictures/abasova.jpg';
 
 export interface DoctorType {
-    id: number;
+    id: string;
     photo: string;
     first_name: string;
     middle_name: string;
@@ -23,7 +23,7 @@ export interface DoctorType {
 
 export const doctors: DoctorType[] = [
     {
-        id: 1,
+        id: "1",
         photo: safronova,
         first_name: 'Ольга',
         middle_name: 'Алексеевна',
@@ -40,7 +40,7 @@ export const doctors: DoctorType[] = [
         office: '',
     },
     {
-        id: 2,
+        id: "2",
         photo: orlova,
         first_name: 'Виктория',
         middle_name: 'Евгеньевна',
@@ -57,7 +57,7 @@ export const doctors: DoctorType[] = [
         office: '',
     },
     {
-        id: 3,
+        id: "3",
         photo: abasova,
         first_name: 'Лейла',
         middle_name: 'Рауфовна',
