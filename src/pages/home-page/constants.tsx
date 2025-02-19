@@ -9,6 +9,8 @@ import FormatImage from '../../assets/images/main/features/feature_format.png';
 import TimeImage from '../../assets/images/main/features/feature_time.png';
 import RescheduleImage from '../../assets/images/main/features/feature_reschedule.png';
 
+//Файл с кностантами(импортируются в другие компоненты как пропсы)
+
 export const SERVICE_PROPS = [
   'тренинги;',
   'тематические лекции и беседы;',

@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/compatible": "5.1.2",
     "@ant-design/icons": "5.2.6",
+    "@craco/craco": "^7.1.0",
     "@tanstack/react-query": "^4.36.1",
     "@types/node": "20.8.4",
     "antd": "5.12.5",
@@ -23,9 +24,9 @@
     "zustand": "^5.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/css-modules": "^1.0.5",
     "@types/istanbul-reports": "^3.0.4",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",

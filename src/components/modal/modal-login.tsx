@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Modal, Input, Checkbox } from 'antd';
 import { ErrorText, Form } from '../../global-styles';
 
+//По аналогии с модалкой регистрации
+
 const INITIAL_FORM_VALUE = {
   email: '',
   password: '',

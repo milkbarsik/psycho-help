@@ -38,6 +38,8 @@ interface BlockWrapperProps {
 	ref?: React.Ref<HTMLElement | null>;
 }
 
+//Объект с компонентами, используемыми на home-page
+
 const blocks: BlockWrapperProps[] = [
   { component: GreetingBlock, style: Block, name: 'Greeting' },
   { component: ReasonsBlock, style: Block, title: 'С чем может помочь психолог?', name: 'reasons' },

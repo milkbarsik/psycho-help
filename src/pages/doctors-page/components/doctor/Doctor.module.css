@@ -1,0 +1,45 @@
+.wrapper {
+    max-width: 284px;
+    width: 100%;
+}
+
+.photo {
+    width: 284px;
+    height: 284px;
+    border-radius: 20px;
+}
+
+.fio {
+    color: #000000;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 18px;
+}
+
+.education {
+    color: #393939;
+    font-size: 1.6em;
+}
+
+.short_desc {
+    color: #393939;
+    font-size: 1.6em;
+}
+
+.experience {
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.link {
+    font-size: 1.8em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 110px;
+}
+
+.arrow {
+    margin-top: 10px;
+}

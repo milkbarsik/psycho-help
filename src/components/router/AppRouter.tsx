@@ -10,7 +10,7 @@ const AppRouter: FC = () => {
         <Route key={path} path={path} element={<Component />} />
       ))}
       <Route path="*" element={<Navigate to='/' />} />
-      {/* по аналогии отрисовываем навигацию для лругих ролей */}
+      {/* по аналогии отрисовываем навигацию для других ролей */}
     </Routes>
   );
 };

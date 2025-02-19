@@ -1,6 +1,6 @@
-import { $serviceClient } from './service-client';
+import { $serviceClient } from './http';
 import { AxiosResponse } from 'axios';
-// import { DoctorsList, Pagination } from './types';
+import { therapist } from './types';
 
 // export const serviceApi = {
 //   getDoctors: async (params: Pagination): Promise<DoctorsList> => {
@@ -10,13 +10,13 @@ import { AxiosResponse } from 'axios';
 // };
 
 export default class ServiceApi {
-	static async getTherapists (): Promise<AxiosResponse<any>> {
-		const res = await $serviceClient.get<any>('/therapists');
+	static async getTherapists (): Promise<AxiosResponse<Array<therapist>>> {
+		const res = await $serviceClient.get<Array<therapist>>('/therapists');
 		return res;
 	}
 
-	static async getTherapist (id: string): Promise<AxiosResponse<any>> {
-		const res = await $serviceClient.get(`/therapists/${id}`);
+	static async getTherapist (id: string): Promise<AxiosResponse<therapist>> {
+		const res = await $serviceClient.get<therapist>(`/therapists/${id}`);
 		return res;
 	}
 }

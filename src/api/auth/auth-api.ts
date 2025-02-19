@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { $serviceClient } from "../service-client";
+import { $serviceClient } from "../http";
 import { user, regData, authRes } from "../types";
 
 

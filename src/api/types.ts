@@ -23,6 +23,18 @@ export type authRes = {
 	token: string;
 }
 
+export type therapist = {
+	id: string;
+	first_name: string;
+	middle_name: string;
+	last_name: string;
+	phone_number: string;
+	experience: string;
+	qualification: string;
+	consult_areas: string;
+	description: string;
+	office: string;
+}
 
 
 

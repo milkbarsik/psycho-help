@@ -19,6 +19,9 @@ const LayoutStyle = styled(Layout)`
 `;
 
 function App() {
+  /* В главном компоненте мы просто подключили импортированный роутер
+     Также импортировали общие стили для всего проекта
+  */
   return (
     <LayoutStyle>
       <Header />

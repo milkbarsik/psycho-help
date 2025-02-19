@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import AuthApi from './auth/auth-api';
+import AuthApi from './auth-api';
 import { AxiosResponse } from 'axios';
-import { regData, authRes, user } from './types';
+import { regData, authRes, user } from '../types';
 
 type Tauth = {
 	isAuth: boolean;
