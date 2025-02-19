@@ -17,6 +17,7 @@ type Tauth = {
 export const useAuth = create<Tauth>((set) => ({
 	isAuth: false,
 	email: '',
+	remember_me: false,
 
 	setAuth: (value: boolean) => set((state) => ({...state, isAuth: value})),
 

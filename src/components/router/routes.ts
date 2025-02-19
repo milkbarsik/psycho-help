@@ -11,7 +11,7 @@ interface routePath {
 
 // Список всех урлов, а также компонентов, отрисовываемых при нахождении на одном из них
 
-export const routes: routePath[] = [
+export const authRoutes: routePath[] = [
   {
     path: '/',
     Component: HomePage,
@@ -29,3 +29,18 @@ export const routes: routePath[] = [
     Component: DoctorsPage,
   },
 ];
+
+export const notAuthRoutes: routePath[] = [
+	{
+    path: '/',
+    Component: HomePage,
+  },
+	{
+    path: '/faq',
+    Component: FaqPage,
+  },
+	{
+    path: '/therapists/',
+    Component: DoctorsPage,
+  },
+]

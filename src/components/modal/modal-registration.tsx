@@ -2,14 +2,19 @@ import React, { useState, useMemo } from 'react';
 import { Button, Modal, Input } from 'antd';
 import InputMask from 'react-input-mask';
 import { ErrorText, Form } from '../../global-styles';
+import { useFetch } from '@/api/useFetch';
+import { useAuth } from '@/api/auth/useAuth';
+import { regData } from '@/api/types';
 
 const INITIAL_FORM_VALUE = {
-  firstName: '',
-  lastName: '',
-  phoneNumber: '',
+  first_name: '',
+	middle_name: '',
+  last_name: '',
+  phone_number: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  confirm_password: '',
+	role: ''
 };
 
 type Tprops = {
@@ -26,20 +31,37 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     setFormValue({ ...INITIAL_FORM_VALUE });
     setErrors({ ...INITIAL_FORM_VALUE });
   };
-
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(isOpen);
+
+
+	//импортируем функции регистрации, изменения состояния и мидлвар
+	const { registration, setUser, setAuth} = useAuth();
+
+	const {fetching, isLoading, error} = useFetch( async () => {
+		const { confirm_password, ...dataForServer } = formValue;
+		const res = await registration(dataForServer as regData);
+		if (res.status === 200) {
+			setUser(formValue.email);
+			setAuth(true);
+			localStorage.setItem('token', res.data.token);
+		}
+	})
+
+
 
   //Функции для валидации полей формы
 
-  const validateFirstName = (name: string) =>
+  const validateFirst_name = (name: string) =>
     /^[a-zа-я]+$/i.test(name) ? '' : 'Имя не должно содержать цифр';
 
-  const validateLastName = (name: string) =>
+	const validateMiddle_name = (name: string) =>
+    /^[a-zа-я]+$/i.test(name) ? '' : 'Второе имя не должно содержать цифр';
+
+  const validateLast_name = (name: string) =>
     /^[a-zа-я]+$/i.test(name) ? '' : 'Фамилия не должна содержать цифр';
 
-  const validatePhoneNumber = (phoneNumber: string) => {
-    const sanitizedNumber = phoneNumber.replace(/[^0-9+]/g, '');
+  const validatePhone_number = (phone_number: string) => {
+    const sanitizedNumber = phone_number.replace(/[^0-9+]/g, '');
     return sanitizedNumber.length === 12 && sanitizedNumber.startsWith('+7')
       ? ''
       : 'Номер телефона должен быть в формате +79999999999';
@@ -69,19 +91,35 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     return '';
   };
 
-  const validateConfirmPassword = (confirmPassword: string) =>
-    confirmPassword === formValue.password ? '' : 'Пароли не совпадают';
+  const validateConfirm_password = (confirm_password: string) =>
+    confirm_password === formValue.password ? '' : 'Пароли не совпадают';
+
+	const validateRole = (role: string): string => {
+		if (!role || role.trim() === '') {
+			return 'Выберите роль';
+		}
+	
+		const allowedRoles = ['Student', 'Therapist', 'Administrator', 'Stuff'];
+		if (!allowedRoles.includes(role)) {
+			return 'Недопустимая роль';
+		}
+		
+		return '';
+	};
+	
 
   //Применение функций валидаций и возвращение true, если нет ошибок, иначе false
 
   const validateForm = () => {
     const newErrors = {
-      firstName: validateFirstName(formValue.firstName),
-      lastName: validateLastName(formValue.lastName),
-      phoneNumber: validatePhoneNumber(formValue.phoneNumber),
+      first_name: validateFirst_name(formValue.first_name),
+			middle_name: validateMiddle_name(formValue.middle_name),
+      last_name: validateLast_name(formValue.last_name),
+      phone_number: validatePhone_number(formValue.phone_number),
       email: validateEmail(formValue.email),
       password: validatePassword(formValue.password),
-      confirmPassword: validateConfirmPassword(formValue.confirmPassword),
+      confirm_password: validateConfirm_password(formValue.confirm_password),
+			role: validateRole(formValue.role)
     };
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => error === '');
@@ -89,14 +127,13 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 
   //Если все правильно, то модалка закрывается
 
-  const handleOk = () => {
+  const handleOk = async () => {
     if (!validateForm()) return;
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      resetForm();
-      setOpen(false);
-    }, 1000);
+		await fetching();
+		console.log(error, 'error')
+		resetForm();
+		setOpen(false);
+		setModalOpen(false);
   };
 
   //Закрытие модалки
@@ -105,14 +142,22 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     setModalOpen(false);
   };
 
-  const formComplete = useMemo(() => { //Функция, возвращающая true, если все поля формы заполнены, иначе false (При изменении формы)
-    return Object.values(formValue).every((value) => value.trim() !== '');
-  }, [formValue]);
+	//Функция, возвращающая true, если все поля формы заполнены (кроме middle_name),
+	//иначе false (При изменении формы)
+	const formComplete = useMemo(() => {
+		return Object.entries(formValue).every(([key, value]) => {
+			if (key === 'middle_name') return true;
+			return value.trim() !== '';
+		});
+	}, [formValue]);
+	
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { //
     const { name, value } = e.target;
     const filteredValue =
-      name === 'firstName' || name === 'lastName' ? value.replace(/[0-9\s]/g, '') : value;
+			name === 'first_name' || name === 'last_name' || name === 'middle_name'
+				? value.replace(/[0-9\s]/g, '')
+				: value;
     setFormValue((prevValues) => ({
       ...prevValues,
       [name]: filteredValue,
@@ -134,7 +179,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           <Button
             key="submit"
             type="primary"
-            loading={loading}
+            loading={isLoading}
             onClick={handleOk}
             disabled={!formComplete}
           >
@@ -146,34 +191,44 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           <label>
             <span>Ваше имя</span>
             <Input
-              name="firstName"
-              value={formValue.firstName}
+              name="first_name"
+              value={formValue.first_name}
               placeholder="Введите имя"
               onChange={handleInputChange}
             />
-            {errors.firstName && <ErrorText>{errors.firstName}</ErrorText>}
+            {errors.first_name && <ErrorText>{errors.first_name}</ErrorText>}
           </label>
           <label>
-            <span>Ваша фамилия</span>
+            <span>Второе имя (при наличии)</span>
             <Input
-              name="lastName"
-              value={formValue.lastName}
+              name="middle_name"
+              value={formValue.middle_name}
+              placeholder="Введите второе имя"
+              onChange={handleInputChange}
+            />
+            {errors.middle_name && <ErrorText>{errors.middle_name}</ErrorText>}
+          </label>
+					<label>
+            <span>Ваше фамилия</span>
+            <Input
+              name="last_name"
+              value={formValue.last_name}
               placeholder="Введите фамилию"
               onChange={handleInputChange}
             />
-            {errors.lastName && <ErrorText>{errors.lastName}</ErrorText>}
+            {errors.last_name && <ErrorText>{errors.last_name}</ErrorText>}
           </label>
           <label>
             <span>Номер телефона</span>
             <InputMask
-              name="phoneNumber"
-              value={formValue.phoneNumber}
+              name="phone_number"
+              value={formValue.phone_number}
               mask="+79999999999"
               onChange={handleInputChange}
             >
               {<Input type="tel" placeholder="+79999999999" />}
             </InputMask>
-            {errors.phoneNumber && <ErrorText>{errors.phoneNumber}</ErrorText>}
+            {errors.phone_number && <ErrorText>{errors.phone_number}</ErrorText>}
           </label>
           <label>
             <span>Электронная почта</span>
@@ -184,6 +239,16 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               onChange={handleInputChange}
             />
             {errors.email && <ErrorText>{errors.email}</ErrorText>}
+          </label>
+					<label>
+            <span>Роль</span>
+            <Input
+              name="role"
+              value={formValue.role}
+              placeholder="Student"
+              onChange={handleInputChange}
+            />
+            {errors.role && <ErrorText>{errors.role}</ErrorText>}
           </label>
           <label>
             <span>Пароль</span>
@@ -198,12 +263,12 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           <label>
             <span>Повторите пароль</span>
             <Input.Password
-              name="confirmPassword"
-              value={formValue.confirmPassword}
+              name="confirm_password"
+              value={formValue.confirm_password}
               placeholder="Введите пароль ещё раз"
               onChange={handleInputChange}
             />
-            {errors.confirmPassword && <ErrorText>{errors.confirmPassword}</ErrorText>}
+            {errors.confirm_password && <ErrorText>{errors.confirm_password}</ErrorText>}
           </label>
           <p>У вас уже есть учётная запись?</p>
           <Button type="default" onClick={() => setWindow('log')}> {/*При нажатии меняется модальное окно*/}

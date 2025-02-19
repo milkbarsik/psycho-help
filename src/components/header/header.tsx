@@ -3,7 +3,11 @@ import { ReactComponent as Bell } from '../../assets/images/header/bell.svg';
 import { ReactComponent as Profile } from '../../assets/images/header/profile.svg';
 import * as St from './header-style';
 import ModalWindow from '../modal/modal';
+import { useAuth } from '@/api/auth/useAuth';
 const Header = () => {
+
+	const {isAuth} = useAuth()
+
   return (
     <St.StyledHeader>
       <St.ContentWrapper>
@@ -16,12 +20,16 @@ const Header = () => {
         {/* <St.link href="#">
           <Bell />
         </St.link> */}
-        {/* надо объединить аутентификацию и личный кабинет в одну кнопку 
-				в зависимости от того, авторизован пользователь или нет */}
-        <St.link href="/cabinet">
-          <Profile />
-        </St.link>
-        <ModalWindow />
+        {/* отображаем кабинет, если авторизован, иначе модалку */}
+				{
+					isAuth 
+						? 
+						<St.link href="/cabinet">
+							<Profile />
+						</St.link>
+						:
+						<ModalWindow />
+				}
       </St.ContentWrapper>
     </St.StyledHeader>
   );

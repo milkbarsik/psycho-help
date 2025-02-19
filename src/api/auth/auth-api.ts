@@ -10,7 +10,7 @@ export default class AuthApi {
 	}
 
 	static async registration (data: regData): Promise<AxiosResponse<authRes>> {
-		const res = await $serviceClient.post<authRes>('/users/registr', {...data});
+		const res = await $serviceClient.post<authRes>('/users/register', {...data});
 		return res;
 	}
 
