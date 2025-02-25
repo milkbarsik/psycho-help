@@ -12,19 +12,19 @@ const Header = () => {
     <St.StyledHeader>
       <St.ContentWrapper>
         <Logo />
-        <St.link href="/">Главная</St.link>
-        <St.link href="/therapists/">Психологи</St.link>
-        {/* <St.link href="/">Новости</St.link> */}
-        {/* <St.link href="/">Полезные материалы</St.link> */}
-        <St.link href="/faq">FAQ</St.link>
-        {/* <St.link href="#">
+        <St.link to="/">Главная</St.link>
+        <St.link to="/therapists">Психологи</St.link>
+        {/* <St.link to="/">Новости</St.link> */}
+        {/* <St.link to="/">Полезные материалы</St.link> */}
+        <St.link to="/faq">FAQ</St.link>
+        {/* <St.link to="#">
           <Bell />
         </St.link> */}
         {/* отображаем кабинет, если авторизован, иначе модалку */}
 				{
 					isAuth 
 						? 
-						<St.link href="/cabinet">
+						<St.link to="/cabinet">
 							<Profile />
 						</St.link>
 						:

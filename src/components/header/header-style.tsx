@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 
 export const StyledHeader = styled(Layout.Header)`
@@ -20,7 +21,7 @@ export const ContentWrapper = styled.div`
   width: 100%;
 `;
 
-export const link = styled.a`
+export const link = styled(Link)`
   text-decoration: none;
   color: white;
   font-weight: bold;
