@@ -10,12 +10,17 @@ export default class AuthApi {
 	}
 
 	static async registration (data: regData): Promise<AxiosResponse<authRes>> {
-		const res = await $serviceClient.post<authRes>('/users/registr', {...data});
+		const res = await $serviceClient.post<authRes>('/users/register', {...data});
 		return res;
 	}
 
 	static async getUser (): Promise<AxiosResponse<user>> {
 		const res = await $serviceClient.get<user>('/users/user');
+		return res;
+	}
+
+	static async logOut (): Promise<AxiosResponse> {
+		const res = await $serviceClient.get('/users/logout');
 		return res;
 	}
 }

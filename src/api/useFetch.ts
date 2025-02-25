@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 
 export type UseFetchReturn = {
@@ -15,7 +16,8 @@ export function useFetch(foo: () => Promise<any>): UseFetchReturn {
       setIsLoading(true);
       await foo();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'unknown error');
+			console.log(e)
+      setError(e instanceof (AxiosError || Error) ? e.message : 'unknown error');
     } finally {
       setIsLoading(false);
     }

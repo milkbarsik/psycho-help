@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, Input, Checkbox } from 'antd';
 import { ErrorText, Form } from '../../global-styles';
+import { useAuth } from '@/api/auth/useAuth';
+import { useFetch } from '@/api/useFetch';
 
 //По аналогии с модалкой регистрации
 
@@ -18,9 +20,21 @@ type Tprops = {
 const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   const [formValue, setFormValue] = useState({ ...INITIAL_FORM_VALUE });
   const [errors, setErrors] = useState({ ...INITIAL_FORM_VALUE });
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(isOpen);
   const [rememberMe, setRememberMe] = useState(false);
+
+
+	const {login, setUser, setAuth} = useAuth();
+
+	const {fetching, isLoading, error} = useFetch( async () => {
+		const {email, password} = {...formValue}
+		const res = await login(email, password);
+		if (res.status === 200) {
+			setUser(email);
+			setAuth(true);
+		}
+	})
+
 
   const validateEmail = (email: string) =>
     /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email)
@@ -38,13 +52,12 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
     return Object.values(newErrors).every((error) => error === '');
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     if (!validateForm()) return;
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-    }, 1000);
+		await fetching();
+		console.log(error, 'error')
+		setOpen(false);
+		setModalOpen(false);
   };
 
   const handleCancel = () => {
@@ -71,7 +84,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+          <Button key="submit" type="primary" loading={isLoading} onClick={handleOk}>
             Войти
           </Button>,
         ]}

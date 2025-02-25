@@ -11,12 +11,13 @@ type Tauth = {
 	login: (email: string, password: string) => Promise<AxiosResponse<authRes>>;
 	registration: (data: regData) => Promise<AxiosResponse<authRes>>;
 	getUser: () => Promise<AxiosResponse<user>>;
-	logOut: () => void;
+	logOut: () => Promise<AxiosResponse>;
 }
 
 export const useAuth = create<Tauth>((set) => ({
 	isAuth: false,
 	email: '',
+	remember_me: false,
 
 	setAuth: (value: boolean) => set((state) => ({...state, isAuth: value})),
 
@@ -24,23 +25,13 @@ export const useAuth = create<Tauth>((set) => ({
 
 	async login (email: string, password: string): Promise<AxiosResponse<authRes>> {
 		const res = await AuthApi.login(email, password);
-		try {
-			localStorage.setItem('token', res.data.token);
-			set((state) => ({...state, isAuth: true, email: email}));
-		} catch(e) {
-			console.log(e);
-		}
+		set((state) => ({...state, isAuth: true, email: email}));
 		return res;
 	},
 
 	async registration (data: regData): Promise<AxiosResponse<authRes>> {
 		const res = await AuthApi.registration(data);
-		try {
-			localStorage.setItem('token', res.data.token);
-			set((state) => ({...state, isAuth: true, email: data.email}));
-		} catch (e) {
-			console.log(e);
-		}
+		set((state) => ({...state, isAuth: true, email: data.email}));
 		return res;
 	},
 
@@ -49,9 +40,10 @@ export const useAuth = create<Tauth>((set) => ({
 		return res;
   },
 
-  logOut() {
-    set((state) => ({ ...state, isAuth: false }));
-    localStorage.removeItem('token');
+  async logOut():Promise<AxiosResponse> {
+		const res = await AuthApi.logOut();
+		set(() => ({isAuth: false, email: '' }));
+		return res;
   },
 
 }))
