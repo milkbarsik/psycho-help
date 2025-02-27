@@ -22,7 +22,7 @@ const Doctor: FC<Props> = ({doctor}) => {
 
             <p className={styles.experience}>Опыт {doctor.experience} лет</p>
 
-            <a className={styles.link} href='#'>Подробнее<span className={styles.arrow_wrapper}><img className={styles.arrow} src={arrowLink} alt="" /></span></a>
+            <a className={styles.link} href={doctor.id}>Подробнее<span className={styles.arrow_wrapper}><img className={styles.arrow} src={arrowLink} alt="" /></span></a>
         </div>
     )
 }
