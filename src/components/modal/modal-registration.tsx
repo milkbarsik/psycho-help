@@ -43,7 +43,6 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 		if (res.status === 200) {
 			setUser(formValue.email);
 			setAuth(true);
-			localStorage.setItem('token', res.data.token);
 		}
 	})
 

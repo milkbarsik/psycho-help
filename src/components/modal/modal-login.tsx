@@ -32,11 +32,6 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
 		if (res.status === 200) {
 			setUser(email);
 			setAuth(true);
-			rememberMe
-			?
-				localStorage.setItem('token', res.data.token)
-			:
-				sessionStorage.setItem('token', res.data.token);
 		}
 	})
 

@@ -18,4 +18,9 @@ export default class AuthApi {
 		const res = await $serviceClient.get<user>('/users/user');
 		return res;
 	}
+
+	static async logOut (): Promise<AxiosResponse> {
+		const res = await $serviceClient.get('/users/logout');
+		return res;
+	}
 }

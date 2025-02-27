@@ -18,16 +18,16 @@ export const authRoutes: routePath[] = [
     Component: HomePage,
   },
   {
-    path: '/cabinet',
-    Component: PersonalCabinet,
-  },
-  {
     path: '/faq',
     Component: FaqPage,
   },
   {
-    path: '/therapists/',
+    path: '/therapists',
     Component: DoctorsPage,
+  },
+	{
+    path: '/cabinet',
+    Component: PersonalCabinet,
   },
 ];
 
