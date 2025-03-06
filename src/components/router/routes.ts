@@ -22,8 +22,12 @@ export const authRoutes: routePath[] = [
     Component: FaqPage,
   },
   {
-    path: '/therapists',
+    path: '/therapists/',
     Component: DoctorsPage,
+  },
+  {
+    path: '/therapists/:id',
+    Component: DoctorPage,
   },
 	{
     path: '/cabinet',

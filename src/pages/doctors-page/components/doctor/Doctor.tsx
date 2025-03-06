@@ -2,6 +2,7 @@ import { FC } from "react";
 import { DoctorType } from "../../constants";
 import styles from './Doctor.module.css';
 import arrowLink from '@/assets/images/doctors/link-arrow.svg';
+import { Link } from "react-router-dom";
 
 interface Props {
     doctor: DoctorType;
@@ -22,7 +23,7 @@ const Doctor: FC<Props> = ({doctor}) => {
 
             <p className={styles.experience}>Опыт {doctor.experience} лет</p>
 
-            <a className={styles.link} href={doctor.id}>Подробнее<span className={styles.arrow_wrapper}><img className={styles.arrow} src={arrowLink} alt="" /></span></a>
+            <Link className={styles.link} to={`/therapists/${doctor.id}`}>Подробнее<span className={styles.arrow_wrapper}><img className={styles.arrow} src={arrowLink} alt="" /></span></Link>
         </div>
     )
 }
