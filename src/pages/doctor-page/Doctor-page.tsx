@@ -17,11 +17,10 @@ const DoctorPage = () => {
     //     setDoctor(data.data);
     // });
 
-    
-
-    // useEffect(() => {
-    //     fetching();
-    // }, [])
+    useEffect(() => {
+        window.scroll(0, 0);
+        // fetching();
+    }, [])
 
 
     return(
