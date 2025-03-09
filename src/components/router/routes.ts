@@ -3,6 +3,7 @@ import HomePage from '../../pages/home-page/home-page';
 import PersonalCabinet from '../../pages/personal-cabinet/personal-cabinet';
 import FaqPage from '../../pages/faq-page/faq-page';
 import DoctorsPage from '../../pages/doctors-page/DoctorsPage';
+import DoctorPage from '@/pages/doctor-page/Doctor-page';
 
 interface routePath {
   path: string;
@@ -21,8 +22,12 @@ export const authRoutes: routePath[] = [
     Component: FaqPage,
   },
   {
-    path: '/therapists',
+    path: '/therapists/',
     Component: DoctorsPage,
+  },
+  {
+    path: '/therapists/:id',
+    Component: DoctorPage,
   },
 	{
     path: '/cabinet',
@@ -43,4 +48,9 @@ export const notAuthRoutes: routePath[] = [
     path: '/therapists/',
     Component: DoctorsPage,
   },
+  {
+    path: '/therapists/:id',
+    Component: DoctorPage,
+  }
+  
 ]

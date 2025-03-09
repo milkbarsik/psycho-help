@@ -13,7 +13,7 @@ const Header = () => {
       <St.ContentWrapper>
         <Logo />
         <St.link to="/">Главная</St.link>
-        <St.link to="/therapists">Психологи</St.link>
+        <St.link to="/therapists/">Психологи</St.link>
         {/* <St.link to="/">Новости</St.link> */}
         {/* <St.link to="/">Полезные материалы</St.link> */}
         <St.link to="/faq">FAQ</St.link>

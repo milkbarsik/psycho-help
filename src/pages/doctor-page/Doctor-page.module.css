@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    max-width: 1164px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.card__wrapper {
+    margin-top: 104px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card__content {
+    width: 100%;
+    max-width: 727px;
+}
+
+.thirsname {
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.IF {
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.educ {
+    margin-top: 16px;
+}
+
+.btn {
+    background-color: #5E8BF4;
+    color: white;
+    padding: 12px 48px;
+    border: none;
+    border-radius: 16px;
+    margin-top: 34px;
+    cursor: pointer;
+}
+
+.img {
+    width: 351px;
+    height: auto;
+    border-radius: 30px;
+}
+
+.textBold {
+    margin-top: 72px;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.text {
+    font-size: 24px;
+}
+
+.subtitle {
+    margin-top: 103px;
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.qualif__wrapper {
+    display: flex;
+    margin: 63px auto 86px auto;
+    justify-content: space-between;
+}
+
+.qualif__elem {
+    box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.3);
+    width: 556px;
+    padding: 40px;
+    border-radius: 46px;
+}
+
+.qualif__title {
+    color: #5E8BF4;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.qualif__text {
+    margin-top: 22px;
+    font-size: 24px;
+    color: #7A7A7A;
+}
+

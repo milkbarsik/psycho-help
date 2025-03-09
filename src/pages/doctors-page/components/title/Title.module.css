@@ -1,15 +1,20 @@
 .wrapper {
     width: 100%;
     margin-top: 60px;
+    background-color: #D9E5FF;
+}
+
+.container {
     display: flex;
+    justify-content: space-between;
+    max-width: 1199px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
 }
 
 .content {
-    width: 50%;
-    background-color: #D9E5FF;
-    border-bottom-right-radius: 20px;
-    border-top-right-radius: 20px;
-    
+    width: 506px;
 }
 
 .title {
@@ -33,7 +38,5 @@
 }
 
 .titleImg {
-    position: absolute;
-    left: 45%;
-    top: 33%;
+    
 }
