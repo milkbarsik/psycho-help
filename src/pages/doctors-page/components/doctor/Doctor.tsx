@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { DoctorType } from "../../constants";
+import { therapist } from "@/api/types";
 import styles from './Doctor.module.css';
 import arrowLink from '@/assets/images/doctors/link-arrow.svg';
 import { Link } from "react-router-dom";
 
 interface Props {
-    doctor: DoctorType;
+    doctor: therapist;
 }
 
 const Doctor: FC<Props> = ({doctor}) => {
