@@ -11,7 +11,7 @@ import { therapist } from './types';
 
 export default class ServiceApi {
 	static async getTherapists (): Promise<AxiosResponse<Array<therapist>>> {
-		const res = await $serviceClient.get<Array<therapist>>('/therapists');
+		const res = await $serviceClient.get<Array<therapist>>('/therapists/');
 		return res;
 	}
 
