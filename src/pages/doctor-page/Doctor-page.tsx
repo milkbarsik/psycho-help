@@ -43,7 +43,7 @@ const DoctorPage = () => {
 			return(
 				<div className={styles.wrapper}>
 						<div className={styles.card__wrapper}>
-								<img src={doctor.photo} alt="" className={styles.img}/>
+								<img src={`${process.env.REACT_APP_IMAGE_URL}` + `${doctor.photo}`} alt="image" className={styles.img}/>
 								<div className={styles.card__content}>
 										<p className={styles.thirsname}>{doctor.last_name.toUpperCase()}</p>
 										<p className={styles.IF}>{[doctor?.first_name, doctor.middle_name].join(' ')}</p>
