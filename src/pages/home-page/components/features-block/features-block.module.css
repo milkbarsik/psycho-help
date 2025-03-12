@@ -1,0 +1,16 @@
+.featuresBlock {
+    padding-top: 24px;
+}
+
+.featureItem {
+    margin-bottom: 24px;
+}
+
+.featureImage {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.title {
+    margin: 0;
+}

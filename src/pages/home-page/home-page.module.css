@@ -1,0 +1,21 @@
+.block {
+    padding-block: 48px;
+    padding-inline: 24px;
+}
+
+.blockBlue {
+    padding: 12px 24px 24px;
+    background: #d9e5ff;
+}
+
+.contentWrapper {
+    max-width: 1440px;
+    margin: auto;
+    width: 100%;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 24px;
+}

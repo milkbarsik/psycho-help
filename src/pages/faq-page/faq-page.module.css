@@ -1,0 +1,33 @@
+.wrapper {}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background: transparent;
+    z-index: 0;
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    padding-inline: 32px;
+}
+
+.header {
+    background: #d9e5ff;
+}
+
+.faqName {
+    flex-basis: 45%;
+}
+
+.faq {
+    font-size: 8rem;
+    margin: 0;
+}
+
+.description {}
+
+.questions {
+    padding: calc((1vh + 1vw) * 2);
+}

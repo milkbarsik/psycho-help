@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import ClockImage from '../../../../assets/images/main/chart/clock.svg';
 import lineVector from '../../../../assets/images/main/chart/line.svg';
-import * as St from './schedule-block-style';
+import styles from './schedule-block.module.css';
 
 interface TextBlockProps {
   title: string;
@@ -31,41 +31,41 @@ const items: TextBlockProps[] = [
 ];
 
 const ItemsBlock: FC<TextBlockProps> = ({ title, info }) => (
-  <St.TextBlock>
-    <St.TextList>
+  <div className={styles.textBlock}>
+    <ul className={styles.textList}>
       <li>{title}</li>
       <li>
-        <St.ListBold>{info}</St.ListBold>
+        <span className={styles.listBold}>{info}</span>
       </li>
-    </St.TextList>
-  </St.TextBlock>
+    </ul>
+  </div>
 );
 
 const ChartBlock: FC = () => {
   return (
-    <St.Wrapper>
-      <St.weekdaysWrapper>
-        <St.weekdaysList>
-          <St.weekdaysElement>
-            <St.weekdaysName>Понедельник - Четверг</St.weekdaysName>
-            <St.weekdaysTime>9:30 - 18:30</St.weekdaysTime>
-          </St.weekdaysElement>
-          <St.weekdaysElement>
-            <St.weekdaysName>Пятница</St.weekdaysName>
-            <St.weekdaysTime>9:30 - 17:15</St.weekdaysTime>
-          </St.weekdaysElement>
-        </St.weekdaysList>
-        <St.centerSpan>
-          <St.weekdaysDinner>
-            <St.boldSpan>Обед:</St.boldSpan> 13:00 - 13:45
-          </St.weekdaysDinner>
-        </St.centerSpan>
-      </St.weekdaysWrapper>
-      <St.SpaceBetween>
+    <div className={styles.wrapper}>
+      <div className={styles.weekdaysWrapper}>
+        <ul className={styles.weekdaysList}>
+          <li className={styles.weekdaysElement}>
+            <p className={styles.weekdaysName}>Понедельник - Четверг</p>
+            <p className={styles.weekdaysTime}>9:30 - 18:30</p>
+          </li>
+          <li className={styles.weekdaysElement}>
+            <p className={styles.weekdaysName}>Пятница</p>
+            <p className={styles.weekdaysTime}>9:30 - 17:15</p>
+          </li>
+        </ul>
+        <div className={styles.centerSpan}>
+          <p className={styles.weekdaysDinner}>
+            <span className={styles.boldSpan}>Обед:</span> 13:00 - 13:45
+          </p>
+        </div>
+      </div>
+      <div className={styles.spaceBetween}>
         <img src={lineVector} alt="line" />
         <img src={ClockImage} alt="clock" />
         <img src={lineVector} alt="line" />
-      </St.SpaceBetween>
+      </div>
       <h3>
         <span>
           В выходные и праздничные дни, ночью, за срочной психологической помощью можно обратиться
@@ -75,7 +75,7 @@ const ChartBlock: FC = () => {
       {items.map((block, index) => (
         <ItemsBlock key={index} title={block.title} info={block.info} />
       ))}
-    </St.Wrapper>
+    </div>
   );
 };
 
