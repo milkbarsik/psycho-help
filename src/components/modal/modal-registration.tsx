@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Button, Modal, Input } from 'antd';
 import InputMask from 'react-input-mask';
-import { ErrorText, Form } from '../../global-styles';
 import { useFetch } from '@/api/useFetch';
 import { useAuth } from '@/api/auth/useAuth';
 import { regData } from '@/api/types';
+import styles from './modal-registration.module.css';
 
 const INITIAL_FORM_VALUE = {
   first_name: '',
@@ -186,7 +186,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           </Button>,
         ]}
       >
-        <Form>
+        <form className={styles.form}>
           <label>
             <span>Ваше имя</span>
             <Input
@@ -195,7 +195,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               placeholder="Введите имя"
               onChange={handleInputChange}
             />
-            {errors.first_name && <ErrorText>{errors.first_name}</ErrorText>}
+            {errors.first_name && <p className={styles.errorText}>{errors.first_name}</p>}
           </label>
           <label>
             <span>Второе имя (при наличии)</span>
@@ -205,7 +205,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               placeholder="Введите второе имя"
               onChange={handleInputChange}
             />
-            {errors.middle_name && <ErrorText>{errors.middle_name}</ErrorText>}
+            {errors.middle_name && <p className={styles.errorText}>{errors.middle_name}</p>}
           </label>
           <label>
             <span>Ваше фамилия</span>
@@ -215,7 +215,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               placeholder="Введите фамилию"
               onChange={handleInputChange}
             />
-            {errors.last_name && <ErrorText>{errors.last_name}</ErrorText>}
+            {errors.last_name && <p className={styles.errorText}>{errors.last_name}</p>}
           </label>
           <label>
             <span>Номер телефона</span>
@@ -227,7 +227,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
             >
               {<Input type="tel" placeholder="+79999999999" />}
             </InputMask>
-            {errors.phone_number && <ErrorText>{errors.phone_number}</ErrorText>}
+            {errors.phone_number && <p className={styles.errorText}>{errors.phone_number}</p>}
           </label>
           <label>
             <span>Электронная почта</span>
@@ -237,7 +237,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               placeholder="primer@gmail.com"
               onChange={handleInputChange}
             />
-            {errors.email && <ErrorText>{errors.email}</ErrorText>}
+            {errors.email && <p className={styles.errorText}>{errors.email}</p>}
           </label>
           <label>
             <span>Роль</span>
@@ -247,7 +247,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               placeholder="Student"
               onChange={handleInputChange}
             />
-            {errors.role && <ErrorText>{errors.role}</ErrorText>}
+            {errors.role && <p className={styles.errorText}>{errors.role}</p>}
           </label>
           <label>
             <span>Пароль</span>
@@ -257,7 +257,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               placeholder="Введите пароль"
               onChange={handleInputChange}
             />
-            {errors.password && <ErrorText>{errors.password}</ErrorText>}
+            {errors.password && <p className={styles.errorText}>{errors.password}</p>}
           </label>
           <label>
             <span>Повторите пароль</span>
@@ -267,13 +267,13 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               placeholder="Введите пароль ещё раз"
               onChange={handleInputChange}
             />
-            {errors.confirm_password && <ErrorText>{errors.confirm_password}</ErrorText>}
+            {errors.confirm_password && <p className={styles.errorText}>{errors.confirm_password}</p>}
           </label>
           <p>У вас уже есть учётная запись?</p>
-          <Button type="default" onClick={() => setWindow('log')}> {/*При нажатии меняется модальное окно*/}
-            <span> Войти</span>
+          <Button type="default" onClick={() => setWindow('log')} className={styles.registerButton}>
+            <span>Войти</span>
           </Button>
-        </Form>
+        </form>
       </Modal>
     </>
   );
