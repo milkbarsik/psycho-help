@@ -1,0 +1,42 @@
+.wrapper {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    margin: auto;
+}
+
+.ask {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.askActive {
+    color: #5E8BF4;
+}
+
+.button {
+    border-radius: 50%;
+    height: 34px;
+    width: 34px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: calc((1vh + 1vw) / 2);
+}
+
+.answer {
+    margin-left: calc((1vh + 1vw) / 2 + 34px);
+}
+
+.p {
+    word-break: break-word;
+    flex-grow: 1;
+    width: 100%;
+    white-space: pre-wrap;
+}

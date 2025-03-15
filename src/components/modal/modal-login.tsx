@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, Input, Checkbox } from 'antd';
-import { ErrorText, Form } from '../../global-styles';
+import styles from './modal-login.module.css';
 import { useAuth } from '@/api/auth/useAuth';
 import { useFetch } from '@/api/useFetch';
-
-//По аналогии с модалкой регистрации
 
 const INITIAL_FORM_VALUE = {
   email: '',
@@ -23,23 +21,19 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   const [open, setOpen] = useState(isOpen);
   const [rememberMe, setRememberMe] = useState(false);
 
+  const { login, setUser, setAuth } = useAuth();
 
-	const {login, setUser, setAuth} = useAuth();
-
-	const {fetching, isLoading, error} = useFetch( async () => {
-		const {email, password} = {...formValue}
-		const res = await login(email, password);
-		if (res.status === 200) {
-			setUser(email);
-			setAuth(true);
-		}
-	})
-
+  const { fetching, isLoading, error } = useFetch(async () => {
+    const { email, password } = { ...formValue };
+    const res = await login(email, password);
+    if (res.status === 200) {
+      setUser(email);
+      setAuth(true);
+    }
+  });
 
   const validateEmail = (email: string) =>
-    /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email)
-      ? ''
-      : 'Некорректный формат электронной почты';
+    /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email) ? '' : 'Некорректный формат электронной почты';
 
   const validatePassword = (password: string) => (password ? '' : 'Пароль не может быть пустым');
 
@@ -54,16 +48,17 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
 
   const handleOk = async () => {
     if (!validateForm()) return;
-		await fetching();
-		console.log(error, 'error')
-		setOpen(false);
-		setModalOpen(false);
+    await fetching();
+    console.log(error, 'error');
+    setOpen(false);
+    setModalOpen(false);
   };
 
   const handleCancel = () => {
     setOpen(false);
     setModalOpen(false);
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormValue((prevValues) => ({
@@ -89,16 +84,11 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
           </Button>,
         ]}
       >
-        <Form>
+        <form className={styles.form}>
           <label>
             <span>Электронная почта</span>
-            <Input
-              name="email"
-              value={formValue.email}
-              placeholder="primer@gmail.com"
-              onChange={handleInputChange}
-            />
-            {errors.email && <ErrorText>{errors.email}</ErrorText>}
+            <Input name="email" value={formValue.email} placeholder="primer@gmail.com" onChange={handleInputChange} />
+            {errors.email && <span className={styles.errorText}>{errors.email}</span>}
           </label>
           <label>
             <span>Пароль</span>
@@ -108,23 +98,19 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
               placeholder="Введите пароль"
               onChange={handleInputChange}
             />
-            {errors.password && <ErrorText>{errors.password}</ErrorText>}
+            {errors.password && <span className={styles.errorText}>{errors.password}</span>}
           </label>
-          <Checkbox
-            style={{ display: 'flex' }}
-            checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)}
-          >
+          <Checkbox className={styles.checkbox} checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)}>
             Запомнить меня
           </Checkbox>
           <p>
             <a href="/forgot-password">Забыли пароль?</a>
           </p>
           <p>У вас еще нет учетной записи?</p>
-          <Button type="default" onClick={() => setWindow('reg')}>
+          <Button type="default" onClick={() => setWindow('reg')} className={styles.registerButton}>
             <span>Регистрация</span>
           </Button>
-        </Form>
+        </form>
       </Modal>
     </>
   );

@@ -1,0 +1,33 @@
+.styledHeader {
+    height: 100px;
+    width: 100%;
+    margin: auto;
+    background-color: #5e8bf4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contentWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
+    margin: auto;
+    width: 100%;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalWrapper {
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+}

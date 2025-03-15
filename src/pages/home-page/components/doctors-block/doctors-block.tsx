@@ -6,24 +6,18 @@ import { serviceApi } from '../../../../api/service-api';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination as SwiperPagination, Scrollbar, A11y } from 'swiper/modules';
 import dayjs from 'dayjs';
-import styled from 'styled-components';
-
-const DoctorCard = styled.div`
-  border-radius: 20;
-  padding: 28px 18px 21px;
-  background-color: white;
-`;
+import styles from './doctors-block.module.css';
 
 const TherapistsBlock = () => {
   const [params, setParams] = useState<Pagination>({ pageSize: 15, pageNo: 1 });
 
   const { data, isFetching } = useQuery({
-    queryKey: ['dosctors', params],
+    queryKey: ['doctors', params],
     keepPreviousData: true,
     cacheTime: 1000 * 15,
     refetchOnWindowFocus: false,
     queryFn: () => serviceApi.getDoctors(params),
-    onError: () => message.error('Не удалось список докторов'),
+    onError: () => message.error('Не удалось получить список докторов'),
   });
 
   return (
@@ -35,16 +29,16 @@ const TherapistsBlock = () => {
           modules={[Navigation, SwiperPagination, Scrollbar, A11y]}
         >
           {data?.content &&
-            data.content?.map((doctor) => (
+            data.content.map((doctor) => (
               <SwiperSlide
                 key={`${doctor.username}-${dayjs().format()}`}
                 style={{ height: '100%' }}
               >
-                <DoctorCard>
+                <div className={styles.doctorCard}>
                   <Flex vertical>
                     <div style={{ alignSelf: 'center' }}>
                       <Avatar
-                        src={doctor?.photo?.length && doctor.photo[0]}
+                        src={doctor?.photo?.length ? doctor.photo[0] : undefined}
                         alt={doctor.name}
                         size={100}
                       />
@@ -56,7 +50,7 @@ const TherapistsBlock = () => {
                       </Typography.Paragraph>
                     </Space>
                   </Flex>
-                </DoctorCard>
+                </div>
               </SwiperSlide>
             ))}
         </Swiper>

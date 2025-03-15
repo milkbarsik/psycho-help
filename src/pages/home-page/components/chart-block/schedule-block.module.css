@@ -1,0 +1,76 @@
+.wrapper {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1450px;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+.centerSpan {
+    display: flex;
+    justify-content: center;
+}
+
+.spaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+.weekdaysWrapper {
+    text-align: center;
+}
+
+.weekdaysList {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    width: 1300px;
+    margin: 0 auto;
+}
+
+.weekdaysElement {
+    width: 400px;
+    text-align: center;
+}
+
+.weekdaysName {
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+.weekdaysTime {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.boldSpan {
+    font-weight: 600;
+}
+
+.weekdaysDinner {
+    text-align: center;
+    margin-top: 0;
+    border-top: 1px dashed #717785;
+    border-bottom: 1px dashed #717785;
+    padding: 15px 39px;
+    font-size: 24px;
+    width: 414px;
+}
+
+.textBlock {
+    display: flex;
+    align-items: center;
+}
+
+.textList {
+    margin-left: 30px;
+}
+
+.listBold {
+    font-weight: bold;
+}

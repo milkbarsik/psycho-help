@@ -1,0 +1,36 @@
+.loader__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.loader__item {
+    width: 64px;
+    height: 64px;
+    border: 8px solid #FFF;
+    border-bottom-color: #5e8bf4;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader__text {
+    margin-top: 1rem;
+    font-size: 14px;
+}
