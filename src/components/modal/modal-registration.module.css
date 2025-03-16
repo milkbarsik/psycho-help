@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.errorText {
+    color: red;
+    font-size: 12px;
+}
+
+.registerButton {
+    width: 70px;
+    min-width: unset;
+}

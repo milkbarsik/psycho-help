@@ -1,43 +1,26 @@
 import { Row, Col, Flex, Typography, Image } from 'antd';
 import { FEATURES_OF_WORK } from '../../constants';
-import styled from 'styled-components';
-
-const FeatursBlock = styled(Row)`
-  padding-top: 24px;
-`;
-
-const FeatureItem = styled(Col)`
-  margin-bottom: 24px;
-`;
-
-const FeatureImage = styled.div`
-  max-width: 40px;
-  max-height: 40px;
-`;
-
-const Title = styled(Typography.Title)`
-  margin: 0;
-`;
+import styles from './features-block.module.css';
 
 const FeaturesBlock = () => {
   return (
-    <FeatursBlock gutter={64}>
+    <Row gutter={64} className={styles.featuresBlock}>
       {FEATURES_OF_WORK.map((item) => (
-        <FeatureItem xs={24} xl={12}>
+        <Col xs={24} xl={12} key={item.title} className={styles.featureItem}>
           <Flex gap={16}>
-            <FeatureImage>
+            <div className={styles.featureImage}>
               <Image src={item.image} preview={false} alt="Иллюстрация особенностей службы" />
-            </FeatureImage>
+            </div>
             <Flex vertical>
-              <Title level={3} style={{ fontSize: '20px' }}>
+              <Typography.Title level={3} style={{ fontSize: '20px' }} className={styles.title}>
                 {item.title}
-              </Title>
+              </Typography.Title>
               <Typography.Text>{item.desc}</Typography.Text>
             </Flex>
           </Flex>
-        </FeatureItem>
+        </Col>
       ))}
-    </FeatursBlock>
+    </Row>
   );
 };
 

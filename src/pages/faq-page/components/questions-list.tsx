@@ -1,12 +1,5 @@
 import Question from './question';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  border-radius: 0px;
-  overflow: hidden;
-  height: auto;
-  background: transparent;
-`;
+import styles from './questions-list.module.css';
 
 const QuestionsList = ({
   questions,
@@ -14,7 +7,7 @@ const QuestionsList = ({
   questions: Array<{ id: number; ask: string; answer: string }>;
 }) => {
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       {questions.map((questionObj) => (
         <Question
           ask={questionObj.ask}
@@ -23,7 +16,7 @@ const QuestionsList = ({
           key={questionObj.id}
         />
       ))}
-    </Wrapper>
+    </div>
   );
 };
 

@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { Iuser } from '../../constants';
-import * as St from './personal-data-styles';
 import { useFetch } from '@/api/useFetch';
 import { useAuth } from '@/api/auth/useAuth';
 import { useNavigate } from 'react-router-dom';
+import styles from './personal-data.module.css';
+import editImg from '../../../../assets/images/cabinet/edit.svg';
 
 const PersonalData: FC<{ data: Iuser }> = ({ data }) => {
   const edit = () => {};
@@ -19,17 +20,23 @@ const PersonalData: FC<{ data: Iuser }> = ({ data }) => {
 	})
 
   return (
-    <St.wrapper>
-      <St.head>
+    <div className={styles.wrapper}>
+      <div className={styles.head}>
         <b>
           {data.surname} {data.name} {data.lastname}
         </b>
-        <St.edit onClick={edit}></St.edit>
-      </St.head>
+        <div
+          className={styles.edit}
+          style={{ backgroundImage: `url(${editImg})` }}
+          onClick={edit}
+        ></div>
+      </div>
       <p>{data.email}</p>
       <p>{data.phoneNumber}</p>
-      <St.button onClick={fetching}>Выход</St.button>
-    </St.wrapper>
+      <button className={styles.button} onClick={logOut}>
+        Выход
+      </button>
+    </div>
   );
 };
 

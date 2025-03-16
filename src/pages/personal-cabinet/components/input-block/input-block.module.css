@@ -1,0 +1,56 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.label {
+    display: flex;
+    width: 100%;
+    padding: calc((1vh + 1vw) / 2) 0;
+}
+
+.input {
+    height: 3rem;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.select {
+    height: 3rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.typeReception {
+    width: 100%;
+}
+
+.typeReception button:first-child {
+    margin-right: calc((1vh + 1vw) / 2);
+}
+
+.btTypeRec {
+    height: 3rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid black;
+    min-width: 20%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.addressTime {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.addressTime label:last-child {
+    flex-shrink: 2;
+    margin-left: 3%;
+}

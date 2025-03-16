@@ -13,7 +13,7 @@ const Doctor: FC<Props> = ({doctor}) => {
 
     return(
         <div className={styles.wrapper}>
-            <img className={styles.photo} src={doctor.photo} alt="doctor_photo" />
+            <img className={styles.photo} src={`${process.env.REACT_APP_IMAGE_URL}` + `${doctor.photo}`} alt="doctor_photo" />
 
             <p className={styles.fio}>{doctor.last_name} <br /> {[doctor.first_name, doctor.middle_name].join(' ')}</p>
 
