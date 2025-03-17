@@ -13,6 +13,7 @@ const Img: FC<Props> = ({className, photo, altPhoto}) => {
     return (
         <div>
             <img
+            className={className}
             src={imgSrc}
             onError={() => setImgSrc(altPhoto)}
              />
