@@ -41,7 +41,7 @@ const DoctorPage = () => {
       <div className={styles.wrapper}>
         <div className={styles.card__wrapper}>
             <Img 
-             className={styles.photo}
+             className={styles.img}
              photo={`${process.env.REACT_APP_IMAGE_URL}` + doctor.photo} 
              altPhoto={altPhoto} 
             />
