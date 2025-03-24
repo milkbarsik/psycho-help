@@ -27,8 +27,9 @@ function App() {
      который возвращает функцию вызова, статус выполнения запроса и ошибку (в случае её наличия)
   */
   const { fetching } = useFetch(async () => {
-    await getUser();
-		setUserLoading(false);
+    await getUser().finally(() => {
+			setUserLoading(false);
+		});
   });
 
   // при загрузке сайта происходит автоматическая проверка на валидность токена
