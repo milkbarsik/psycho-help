@@ -276,7 +276,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           </Button>
         </form>
 				<p style={{color: 'red'}}>
-					{error.status === 500 && 'пользователь с таким email уже существует'}
+					{error.status === 422 ? 'пользователь с таким email уже существует' : 'Error...'}
 				</p>
       </Modal>
     </>

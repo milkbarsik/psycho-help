@@ -117,7 +117,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
           </Button>
         </form>
 				<p style={{color: 'red'}}>
-					{error.status === 401 && 'Неправильный логин или пароль'}
+					{error.status === 401 ? 'Неверный логин или пароль' : 'Error...'}
 				</p>
       </Modal>
     </>

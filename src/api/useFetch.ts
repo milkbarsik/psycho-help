@@ -13,7 +13,7 @@ export type UseFetchReturn = {
 };
 
 export function useFetch(foo: () => Promise<any>): UseFetchReturn {
-  const [isLoading, setIsLoading] = useState(true); // вообще должно быть false
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<error>({message: '', status: undefined});
 
   const fetching = async () => {
@@ -21,6 +21,7 @@ export function useFetch(foo: () => Promise<any>): UseFetchReturn {
       setIsLoading(true);
       await foo();
     } catch (e) {
+			console.log(e);
       setError(e instanceof (AxiosError || Error)
 				?
 					{message: e.message, status: e.response?.status}
