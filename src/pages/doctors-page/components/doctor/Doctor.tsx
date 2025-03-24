@@ -3,6 +3,8 @@ import { therapist } from "@/api/types";
 import styles from './Doctor.module.css';
 import arrowLink from '@/assets/images/doctors/link-arrow.svg';
 import { Link } from "react-router-dom";
+import Img from "@/components/UI/img/Img";
+import altPhoto from '@/assets/images/altPhotos/User_Accounts_alt.png';
 
 interface Props {
     doctor: therapist;
@@ -13,7 +15,12 @@ const Doctor: FC<Props> = ({doctor}) => {
 
     return(
         <div className={styles.wrapper}>
-            <img className={styles.photo} src={`${process.env.REACT_APP_IMAGE_URL}` + `${doctor.photo}`} alt="doctor_photo" />
+
+            <Img 
+             className={styles.photo}
+             photo={`${process.env.REACT_APP_IMAGE_URL}` + doctor.photo} 
+             altPhoto={altPhoto} 
+            />
 
             <p className={styles.fio}>{doctor.last_name} <br /> {[doctor.first_name, doctor.middle_name].join(' ')}</p>
 
