@@ -19,17 +19,13 @@ function App() {
   */
 
   // Импортируем необходимые методы для управления состоянием авторизованности
-  const { getUser, setUser, setAuth } = useAuth();
+  const { getUser } = useAuth();
 
   /* Передаем логику запроса в мидлвар по обработке ошибок в запросах,
      который возвращает функцию вызова, статус выполнения запроса и ошибку (в случае её наличия)
   */
   const { fetching, isLoading } = useFetch(async () => {
-    const res = await getUser();
-    if (res.status === 200) {
-      setUser(res.data.email);
-      setAuth(true);
-    }
+    await getUser();
   });
 
   // при загрузке сайта происходит автоматическая проверка на валидность токена

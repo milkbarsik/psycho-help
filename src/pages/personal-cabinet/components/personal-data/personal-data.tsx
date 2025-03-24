@@ -33,7 +33,7 @@ const PersonalData: FC<{ data: Iuser }> = ({ data }) => {
       </div>
       <p>{data.email}</p>
       <p>{data.phoneNumber}</p>
-      <button className={styles.button} onClick={logOut}>
+      <button className={styles.button} onClick={() => fetching()}>
         Выход
       </button>
     </div>
