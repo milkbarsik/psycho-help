@@ -7,6 +7,10 @@
     width: 284px;
     height: 284px;
     border-radius: 20px;
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+    overflow: hidden;
 }
 
 .fio {

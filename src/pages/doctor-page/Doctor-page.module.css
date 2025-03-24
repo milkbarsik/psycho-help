@@ -47,7 +47,11 @@
 .img {
     width: 351px;
     height: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     border-radius: 30px;
+    overflow: hidden;
 }
 
 .textBold {

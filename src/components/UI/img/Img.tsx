@@ -1,4 +1,6 @@
-import { FC, useState } from "react";
+import { url } from "inspector";
+import { FC, useState} from "react";
+import { URL } from "url";
 
 interface Props {
     className: string;
@@ -11,13 +13,13 @@ const Img: FC<Props> = ({className, photo, altPhoto}) => {
     const [imgSrc, setImgSrc] = useState(photo);
 
     return (
-        <div>
-            <img
+        <>
+            <div
             className={className}
-            src={imgSrc}
+            style={{backgroundImage: `url(${imgSrc})`}}
             onError={() => setImgSrc(altPhoto)}
-             />
-        </div>
+             > </div>
+        </>
     )
 }
 
