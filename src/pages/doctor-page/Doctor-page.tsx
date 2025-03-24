@@ -5,6 +5,8 @@ import { useFetch } from '@/api/useFetch';
 import { useEffect, useState } from 'react';
 import { therapist } from '@/api/types';
 import Loader from '@/components/UI/loader/loader';
+import Img from '@/components/UI/img/Img';
+import altPhoto from '@/assets/images/altPhotos/User_Accounts_alt.png';
 
 const DoctorPage = () => {
   const [doctor, setDoctor] = useState<therapist | null>(null);
@@ -38,11 +40,11 @@ const DoctorPage = () => {
     return (
       <div className={styles.wrapper}>
         <div className={styles.card__wrapper}>
-          <img
-            src={`${process.env.REACT_APP_IMAGE_URL}` + `${doctor.photo}`}
-            alt="image"
-            className={styles.img}
-          />
+            <Img 
+             className={styles.img}
+             photo={`${process.env.REACT_APP_IMAGE_URL}` + doctor.photo} 
+             altPhoto={altPhoto} 
+            />
           <div className={styles.card__content}>
             <p className={styles.thirsname}>{doctor.last_name.toUpperCase()}</p>
             <p className={styles.IF}>{[doctor?.first_name, doctor.middle_name].join(' ')}</p>
