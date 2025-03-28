@@ -128,11 +128,12 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 
   const handleOk = async () => {
     if (!validateForm()) return;
-    await fetching();
-    console.log(error, 'error')
-    resetForm();
-    setOpen(false);
-    setModalOpen(false);
+		await fetching();
+		if(error == null) {
+			setOpen(false);
+			setModalOpen(false);
+			resetForm();
+		}
   };
 
   //Закрытие модалки
@@ -274,6 +275,9 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
             <span>Войти</span>
           </Button>
         </form>
+				<p style={{color: 'red'}}>
+					{error.status === 422 ? 'пользователь с таким email уже существует' : error.message !== '' && error.message}
+				</p>
       </Modal>
     </>
   );

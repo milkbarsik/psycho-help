@@ -37,6 +37,7 @@ export const useAuth = create<Tauth>((set) => ({
 
 	async getUser(): Promise<AxiosResponse<user>> {
 		const res = await AuthApi.getUser();
+		set((state) => ({...state, isAuth: true, email: res.data.email}));
 		return res;
   },
 

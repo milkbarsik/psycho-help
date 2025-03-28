@@ -19,7 +19,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   const [formValue, setFormValue] = useState({ ...INITIAL_FORM_VALUE });
   const [errors, setErrors] = useState({ ...INITIAL_FORM_VALUE });
   const [open, setOpen] = useState(isOpen);
-  const [rememberMe, setRememberMe] = useState(false);
+  // const [rememberMe, setRememberMe] = useState(false);
 
   const { login, setUser, setAuth } = useAuth();
 
@@ -48,10 +48,11 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
 
   const handleOk = async () => {
     if (!validateForm()) return;
-    await fetching();
-    console.log(error, 'error');
-    setOpen(false);
-    setModalOpen(false);
+		await fetching();
+		if(error == null) {
+			setOpen(false);
+			setModalOpen(false);
+		}
   };
 
   const handleCancel = () => {
@@ -100,9 +101,13 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
             />
             {errors.password && <span className={styles.errorText}>{errors.password}</span>}
           </label>
-          <Checkbox className={styles.checkbox} checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)}>
+          {/* <Checkbox
+            style={{ display: 'flex' }}
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          >
             Запомнить меня
-          </Checkbox>
+          </Checkbox> */}
           <p>
             <a href="/forgot-password">Забыли пароль?</a>
           </p>
@@ -111,6 +116,9 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
             <span>Регистрация</span>
           </Button>
         </form>
+				<p style={{color: 'red'}}>
+					{error.status === 401 ? 'Неверный логин или пароль' : error.message !== '' && error.message}
+				</p>
       </Modal>
     </>
   );

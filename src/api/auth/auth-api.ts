@@ -20,7 +20,7 @@ export default class AuthApi {
 	}
 
 	static async logOut (): Promise<AxiosResponse> {
-		const res = await $serviceClient.get('/users/logout');
+		const res = await $serviceClient.post('/users/logout');
 		return res;
 	}
 }
