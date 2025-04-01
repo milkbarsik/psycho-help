@@ -17,7 +17,7 @@ const ACalendar: React.FC<{ getDate: (param: string) => void }> = ({ getDate }) 
 
   React.useEffect(() => {
     getDate(dayjs().format('YYYY-MM-DD'));
-  }, []);
+  }, [getDate]);
 
   return (
     <div style={wrapperStyle}>

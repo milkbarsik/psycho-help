@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-import { Button, Modal, Input, Checkbox } from 'antd';
+import React, { useCallback, useState } from 'react';
+import { Button, Modal, Input } from 'antd';
 import styles from './modal-login.module.css';
 import { useAuth } from '@/api/auth/useAuth';
 import { useFetch } from '@/api/useFetch';
+import { Tprops } from '@/api/types';
 
 const INITIAL_FORM_VALUE = {
   email: '',
   password: '',
-};
-
-type Tprops = {
-  setWindow: (param: string) => any;
-  isOpen: boolean;
-  setModalOpen: (param: boolean) => any;
 };
 
 const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
@@ -23,44 +18,48 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
 
   const { login, setUser, setAuth } = useAuth();
 
-  const { fetching, isLoading, error } = useFetch(async () => {
-    const { email, password } = { ...formValue };
+  const onFetch = useCallback(async () => {
+    const { email, password } = formValue;
     const res = await login(email, password);
     if (res.status === 200) {
       setUser(email);
       setAuth(true);
     }
-  });
+  }, [formValue, login, setUser, setAuth]);
+
+  const { fetching, isLoading, error } = useFetch(onFetch);
 
   const validateEmail = (email: string) =>
-    /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email) ? '' : 'Некорректный формат электронной почты';
+    /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email)
+      ? ''
+      : 'Некорректный формат электронной почты';
 
   const validatePassword = (password: string) => (password ? '' : 'Пароль не может быть пустым');
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {
       email: validateEmail(formValue.email),
       password: validatePassword(formValue.password),
     };
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => error === '');
-  };
+  }, [formValue]);
 
-  const handleOk = async () => {
+  const handleOk = useCallback(async () => {
     if (!validateForm()) return;
-		await fetching();
-		if(error == null) {
-			setOpen(false);
-			setModalOpen(false);
-		}
-  };
+    await fetching();
+    if (error == null) {
+      setOpen(false);
+      setModalOpen(false);
+    }
+  }, [error, fetching, setModalOpen, validateForm]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setOpen(false);
     setModalOpen(false);
-  };
+  }, [setModalOpen]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormValue((prevValues) => ({
       ...prevValues,
@@ -70,7 +69,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
       ...prevErrors,
       [name]: '',
     }));
-  };
+  }, []);
 
   return (
     <>
@@ -88,7 +87,12 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
         <form className={styles.form}>
           <label>
             <span>Электронная почта</span>
-            <Input name="email" value={formValue.email} placeholder="primer@gmail.com" onChange={handleInputChange} />
+            <Input
+              name="email"
+              value={formValue.email}
+              placeholder="primer@gmail.com"
+              onChange={handleInputChange}
+            />
             {errors.email && <span className={styles.errorText}>{errors.email}</span>}
           </label>
           <label>
@@ -116,9 +120,11 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
             <span>Регистрация</span>
           </Button>
         </form>
-				<p style={{color: 'red'}}>
-					{error.status === 401 ? 'Неверный логин или пароль' : error.message !== '' && error.message}
-				</p>
+        <p style={{ color: 'red' }}>
+          {error.status === 401
+            ? 'Неверный логин или пароль'
+            : error.message !== '' && error.message}
+        </p>
       </Modal>
     </>
   );

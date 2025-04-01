@@ -22,7 +22,7 @@ const DoctorPage = () => {
   useEffect(() => {
     window.scroll(0, 0);
     fetching();
-  }, []);
+  }, [fetching]);
 
   if (isLoading) {
     return (
@@ -40,11 +40,11 @@ const DoctorPage = () => {
     return (
       <div className={styles.wrapper}>
         <div className={styles.card__wrapper}>
-            <Img 
-             className={styles.img}
-             photo={`${process.env.REACT_APP_IMAGE_URL}` + doctor.photo} 
-             altPhoto={altPhoto} 
-            />
+          <Img
+            className={styles.img}
+            photo={`${process.env.REACT_APP_IMAGE_URL}` + doctor.photo}
+            altPhoto={altPhoto}
+          />
           <div className={styles.card__content}>
             <p className={styles.thirsname}>{doctor.last_name.toUpperCase()}</p>
             <p className={styles.IF}>{[doctor?.first_name, doctor.middle_name].join(' ')}</p>

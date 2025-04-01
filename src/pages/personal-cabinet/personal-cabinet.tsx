@@ -17,7 +17,9 @@ const PersonalCabinet: FC = () => {
           <ACalendar getDate={setDate} />
           <input type="hidden" name="date" value={date} required />
           <InputBlock date={date} doctors={doctors} />
-          <button className={styles.subButton} type="submit">Записаться</button>
+          <button className={styles.subButton} style={{ color: 'white' }} type="submit">
+            Записаться
+          </button>
         </form>
       </main>
       <aside className={styles.aside}>

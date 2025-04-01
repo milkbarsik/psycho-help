@@ -9,12 +9,19 @@
 }
 
 .contentWrapper {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     max-width: 1440px;
     margin: auto;
     width: 100%;
+}
+
+.contentList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
 }
 
 .link {

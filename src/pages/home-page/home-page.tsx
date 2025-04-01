@@ -5,8 +5,9 @@ import GreetingBlock from './components/greeting-block/greeting-block';
 import ReasonsBlock from './components/reasons-block/reasons-block';
 import FeaturesBlock from './components/features-block/features-block';
 import ChartBlock from './components/chart-block/schedule-block';
-import TherapistsBlock from './components/doctors-block/doctors-block';
+// import TherapistsBlock from './components/doctors-block/doctors-block';
 import styles from './home-page.module.css';
+import { BlockWrapperProps } from '@/api/types';
 
 const ContentWrapper: FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className={styles.contentWrapper}>{children}</div>
@@ -18,18 +19,21 @@ const Title: FC<{ text: string }> = ({ text }) => (
   </Typography.Title>
 );
 
-interface BlockWrapperProps {
-  component: FC<any>;
-  className: string;
-  title?: string;
-  name: string;
-}
-
 //Объект с компонентами, используемыми на home-page
 const blocks: BlockWrapperProps[] = [
   { component: GreetingBlock, className: styles.block, name: 'Greeting' },
-  { component: ReasonsBlock, className: styles.block, title: 'С чем может помочь психолог?', name: 'reasons' },
-  { component: FeaturesBlock, className: styles.block, title: 'Особенности работы службы', name: 'features' },
+  {
+    component: ReasonsBlock,
+    className: styles.block,
+    title: 'С чем может помочь психолог?',
+    name: 'reasons',
+  },
+  {
+    component: FeaturesBlock,
+    className: styles.block,
+    title: 'Особенности работы службы',
+    name: 'features',
+  },
   { component: ChartBlock, className: styles.blockBlue, title: 'График работы', name: 'chart' },
 ];
 

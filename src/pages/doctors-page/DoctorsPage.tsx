@@ -20,7 +20,7 @@ const DoctorsPage = () => {
 
   useEffect(() => {
     fetching();
-  }, []);
+  }, [fetching]);
 
   if (isLoading) {
     return (
