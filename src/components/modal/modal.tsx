@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import ModalRegistration from './modal-registration';
 import { Button } from 'antd';
+import styles from './modal.module.css';
 import ModalLogin from './modal-login';
-
+import LoginIcon from '@/assets/images/login-icon.svg';
 const ModalWindow: FC = () => {
   const [modalWindow, setModalWindow] = React.useState<string>('log');
   const [isModalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -19,10 +20,10 @@ const ModalWindow: FC = () => {
   };
 
   return (
-    <div>
-      <Button type="primary" onClick={() => setModalOpen(!isModalOpen)}>
-        Войти
-      </Button>
+    <div className={styles.buttonWrapper}>
+      <button className={styles.button} onClick={() => setModalOpen(!isModalOpen)}>
+        <img src={LoginIcon} alt="Иконка входа" />
+      </button>
       {isModalOpen && render(modalWindow)}
     </div>
   );

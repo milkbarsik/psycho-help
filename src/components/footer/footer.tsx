@@ -22,19 +22,21 @@ const Footer = () => {
         <div className={styles.contentWrapper}>
           <span className={styles.wrapperBefore}></span>
           <div className={styles.flexWrap}>
-            <h3>Служба психологической помощи</h3>
-            <h3>Будем рады Вам помочь!</h3>
+            <h3 className={styles.fontSize__18}>Служба психологической помощи</h3>
+            <h3 className={styles.fontSize__18}>Будем рады Вам помочь!</h3>
           </div>
           <div className={styles.address}>
-            <h3>Адреса:</h3>
+            <h3 className={styles.fontSize__18}>Адреса:</h3>
             <ol className={styles.list}>
               {addresses.map((item, index) => (
-                <li key={index}>{item.text}</li>
+                <li key={index} className={styles.fontSize__18}>
+                  {item.text}
+                </li>
               ))}
             </ol>
           </div>
           <div className={styles.flexWrap}>
-            <h3>Тел: +7(495) 223-05-41</h3>
+            <h3 className={styles.phone}>Тел: +7(495) 223-05-41</h3>
             <div className={styles.socials}>
               {social.map((item, index) => (
                 <div className={styles.iconBox} key={index}>
@@ -43,17 +45,17 @@ const Footer = () => {
               ))}
             </div>
           </div>
-          <h3>
-            E-mail:{' '}
-            <a href="mailto:psycholog@mospolytech.ru" className={styles.link}>
-              psycholog@mospolytech.ru
-            </a>
-          </h3>
           <div className={styles.textWrapper}>
+            <h3>
+              E-mail:{' '}
+              <a href="mailto:psycholog@mospolytech.ru" className={styles.link}>
+                psycholog@mospolytech.ru
+              </a>
+            </h3>
             <div className={styles.textBlock}>
               <p className={styles.text}>
-                &copy; 2024 федеральное государственное автономное образовательное учреждение
-                высшего образования &laquo;Московский политехнический университет&raquo;,
+                © {new Date().getFullYear()} федеральное государственное автономное образовательное
+                учреждение высшего образования «Московский политехнический университет»,
               </p>
               <p className={styles.text}>Московский Политех</p>
             </div>

@@ -12,18 +12,18 @@ const Header = () => {
   const items = [
     { link: '/', text: 'Главная' },
     { link: '/therapists', text: 'Психологи' },
+    { link: '/', text: 'Новости' },
+    { link: '/', text: 'Полезные ресурсы' },
     { link: '/faq/', text: 'FAQ' },
   ];
 
   return (
     <header className={styles.styledHeader}>
       <nav className={styles.contentWrapper}>
+        <Link to="/">
+          <Logo />
+        </Link>
         <ul className={styles.contentList}>
-          <li>
-            <Link to="/">
-              <Logo />
-            </Link>
-          </li>
           {items.map((item, index) => (
             <li key={index}>
               <Link to={item.link} className={styles.link}>

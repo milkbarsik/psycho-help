@@ -1,5 +1,6 @@
 import { Col, Flex, Image, Row, Typography } from 'antd';
 import { REASONS_TO_VISIT } from '../../constants';
+import styles from './reasons-block.module.css';
 
 const ReasonsBlock = () => {
   return (
@@ -8,9 +9,7 @@ const ReasonsBlock = () => {
         <Col xs={12} xl={8}>
           <Flex vertical align="center">
             <Image src={item.image} preview={false} height={'100%'} alt="Иллюстрация с помощью" />
-            <Typography.Text strong style={{ textAlign: 'center' }}>
-              {item.title}
-            </Typography.Text>
+            <h2 className={styles.itemText}>{item.title}</h2>
           </Flex>
         </Col>
       ))}

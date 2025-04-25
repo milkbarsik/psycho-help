@@ -1,56 +1,50 @@
 import { Button, Flex, Image, Typography } from 'antd';
-import GreetingImage from '../../../../assets/images/greeting-screen.png';
+// import GreetingImage from '../../../../assets/images/greeting-screen.png';
+import GreetingImage from '@/assets/images/help_blue_t 1 1.png';
+// import GreetingImage from '@/assets/images/help_blue_t 1.png';
 import { SERVICE_PROPS } from '../../constants';
 import styles from './greeting-block.module.css';
 
 const GreatingBlock = () => {
   return (
-    <Flex wrap="wrap" className={styles.greetingBlock}>
-      <Flex vertical flex={14} justify="space-between" style={{ minWidth: '50%' }}>
-        <Flex vertical gap={20}>
-          <Typography.Title level={4} style={{ fontSize: '16px', color: '#5e8bf4' }}>
-            СЛУЖБА ПСИХОЛОГИЧЕСКОЙ ПОМОЩИ
-          </Typography.Title>
+    <div className={styles.greetingBlock}>
+      <div>
+        <div className={styles.blockItems}>
+          <h2 className={styles.title4}>Слубжа психологической помощи</h2>
+          <h1 className={styles.greetingTitle}>
+            Профессиональная помощь <br /> студентам и сотрудникам <br /> университета
+          </h1>
 
-          <Typography.Title level={1} className={styles.greetingTitle}>
-            <span>
-              Профессиональная помощь
-              <br />
-              студентам и сотрудникам университета
-            </span>
-          </Typography.Title>
-
-          <Typography.Title className={styles.greetingTitle}>
+          <ul className={styles.greetingList}>
             {SERVICE_PROPS.map((item, index) => (
-              <Typography.Paragraph key={index}>
+              <li key={index} className={styles.greetingList__item}>
                 <Flex gap={24} style={{ fontSize: '18px' }}>
                   <span>—</span>
                   {item}
                 </Flex>
-              </Typography.Paragraph>
+              </li>
             ))}
-          </Typography.Title>
-
-          <Button type="primary" htmlType="submit" className={styles.signupButton}>
-            Записаться
-          </Button>
-        </Flex>
-      </Flex>
-
-      <Flex vertical flex={10} justify="space-between" style={{ alignSelf: 'center' }}>
-        <div className={styles.greetingImageWrapper}>
-          <Image
-            src={GreetingImage}
-            preview={false}
-            height={'100%'}
-            alt="Иллюстрация на главной странице"
-          />
+          </ul>
+          <div className={styles.buttonWrapper}>
+            <button type="submit" className={styles.signupButton}>
+              <span className={styles.signupButton__text}>Записаться</span>
+            </button>
+          </div>
         </div>
-        <Typography.Paragraph className={styles.importantText}>
-          <b>Важно!</b> Консультации проходят в очном и онлайн режиме, бесплатны и конфиденциальны.
-        </Typography.Paragraph>
-      </Flex>
-    </Flex>
+      </div>
+
+      <div>
+        <div className={styles.greetingImageWrapper}>
+          <img src={GreetingImage} alt="Иллюстрация на главной странице" />
+        </div>
+        <div className={styles.importantTextWrapper}>
+          <span className={styles.importantText}>
+            <span className={styles.importantText__bold}>Важно!</span> Консультации проходят в очном
+            и онлайн режиме, бесплатны и конфиденциальны.
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };
 

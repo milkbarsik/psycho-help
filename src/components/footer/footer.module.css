@@ -55,21 +55,33 @@
 }
 
 .textWrapper {
+    margin-top: 30px;
     display: flex;
-    width: 100%;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+}
+
+.fontSize__18 {
+    font-size: 18px;
 }
 
 .textBlock {
-    text-align: center;
+    /* text-align: start; */
     margin: 0;
-    padding: calc((1vh + 1vw) / 2);
-    width: 80%;
+    /* padding: calc((1vh + 1vw) / 2);
+    width: 80%; */
+}
+
+.phone {
+    margin-top: 20px;
 }
 
 .text {
     margin: 0;
+    font-size: 18px;
+    word-break: break-word;
+    max-width: 700px;
+
 }
 
 .list {
