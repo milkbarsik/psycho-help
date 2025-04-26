@@ -24,7 +24,7 @@ export type authRes = {
 }
 
 export type therapist = {
-	id: string;
+	id?: string;
 	photo?: string;
 	first_name: string;
 	middle_name: string;
@@ -40,6 +40,15 @@ export type therapist = {
 	short_description: string;
 	description: string;
 	office: string;
+}
+
+export type PostAppointment = {
+	patient_id: string,
+	therapist_id: string,
+	type: "Offline" | "Online",
+	reason: string,
+	remind_time: string,
+	venue: string
 }
 
 
