@@ -5,24 +5,26 @@ import { faq } from './constants';
 
 const FaqPage = () => {
   return (
-    <div className={styles.wrapper}>
+    <>
       <div className={styles.header}>
-        <div className={styles.headerContent}>
-          <div className={styles.faqName}>
-            <h1 className={styles.faq}>FAQ</h1>
-            <p className={styles.description}>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. A enim, ex deleniti expedita
-              debitis nisi reiciendis non ipsam earum sit in adipisci ducimus. Vero eveniet a
-              pariatur recusandae autem dolor. (описание)
-            </p>
+        <div className={styles.wrapper}>
+          <div className={styles.headerContent}>
+            <div className={styles.faqName}>
+              <h1 className={styles.faq}>FAQ</h1>
+              <p className={styles.description}>
+                Здесь вы сможете найти ответы на интересующие вас вопросы.
+              </p>
+            </div>
+            <img src={FaqImage} alt="" />
           </div>
-          <img src={FaqImage} alt="" />
         </div>
       </div>
-      <div className={styles.questions}>
-        <QuestionsList questions={faq} />
+      <div className={styles.wrapperQuestions}>
+        <div className={styles.questions}>
+          <QuestionsList questions={faq} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
