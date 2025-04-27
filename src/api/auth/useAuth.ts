@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import AuthApi from './auth-api';
 import { AxiosResponse } from 'axios';
-import { regData, authRes, user } from '../types';
+import { regData, authRes, User } from '../types';
 
 type Tauth = {
 	isAuth: boolean;
@@ -10,7 +10,7 @@ type Tauth = {
 	setUser: (username: string) => void;
 	login: (email: string, password: string) => Promise<AxiosResponse<authRes>>;
 	registration: (data: regData) => Promise<AxiosResponse<authRes>>;
-	getUser: () => Promise<AxiosResponse<user>>;
+	getUser: () => Promise<AxiosResponse<User>>;
 	logOut: () => Promise<AxiosResponse>;
 }
 
@@ -35,7 +35,7 @@ export const useAuth = create<Tauth>((set) => ({
 		return res;
 	},
 
-	async getUser(): Promise<AxiosResponse<user>> {
+	async getUser(): Promise<AxiosResponse<User>> {
 		const res = await AuthApi.getUser();
 		set((state) => ({...state, isAuth: true, email: res.data.email}));
 		return res;

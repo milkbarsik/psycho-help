@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { $serviceClient } from "../http";
-import { user, regData, authRes } from "../types";
+import { User, regData, authRes } from "../types";
 
 
 export default class AuthApi {
@@ -14,8 +14,8 @@ export default class AuthApi {
 		return res;
 	}
 
-	static async getUser (): Promise<AxiosResponse<user>> {
-		const res = await $serviceClient.get<user>('/users/user');
+	static async getUser (): Promise<AxiosResponse<User>> {
+		const res = await $serviceClient.get<User>('/users/user');
 		return res;
 	}
 

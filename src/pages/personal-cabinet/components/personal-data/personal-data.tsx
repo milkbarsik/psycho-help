@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { Iuser } from '../../constants';
+import {User} from '@/api/types'
 import { useFetch } from '@/api/useFetch';
 import { useAuth } from '@/api/auth/useAuth';
 import { useNavigate } from 'react-router-dom';
 import styles from './personal-data.module.css';
 import editImg from '../../../../assets/images/cabinet/edit.svg';
 
-const PersonalData: FC<{ data: Iuser }> = ({ data }) => {
+const PersonalData: FC<{ data: User }> = ({ data }) => {
   const edit = () => {};
 	
 	const {logOut} = useAuth()
@@ -21,9 +21,9 @@ const PersonalData: FC<{ data: Iuser }> = ({ data }) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.head}>
+      {/* <div className={styles.head}>
         <b>
-          {data.surname} {data.name} {data.lastname}
+          {data.last_name} {data.first_name} {data.middle_name}
         </b>
         <div
           className={styles.edit}
@@ -32,7 +32,7 @@ const PersonalData: FC<{ data: Iuser }> = ({ data }) => {
         ></div>
       </div>
       <p>{data.email}</p>
-      <p>{data.phoneNumber}</p>
+      <p>{data.phone_number}</p> */}
       <button className={styles.button} onClick={() => fetching()}>
         Выход
       </button>
