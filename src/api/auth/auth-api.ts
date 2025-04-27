@@ -4,13 +4,13 @@ import { User, regData, authRes } from "../types";
 
 
 export default class AuthApi {
-	static async login (email: string, password: string): Promise<AxiosResponse<authRes>> {
-		const res = await $serviceClient.post<authRes>('/users/login', {email, password});
+	static async login (email: string, password: string): Promise<AxiosResponse<User>> {
+		const res = await $serviceClient.post<User>('/users/login', {email, password});
 		return res;
 	}
 
-	static async registration (data: regData): Promise<AxiosResponse<authRes>> {
-		const res = await $serviceClient.post<authRes>('/users/register', {...data});
+	static async registration (data: regData): Promise<AxiosResponse<User>> {
+		const res = await $serviceClient.post<User>('/users/register', {...data});
 		return res;
 	}
 
