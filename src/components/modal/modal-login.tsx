@@ -21,15 +21,11 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   const [open, setOpen] = useState(isOpen);
   // const [rememberMe, setRememberMe] = useState(false);
 
-  const { login, setUser, setAuth } = useAuth();
+  const { login } = useAuth();
 
   const { fetching, isLoading, error } = useFetch(async () => {
     const { email, password } = { ...formValue };
     const res = await login(email, password);
-    if (res.status === 200) {
-      setUser(email);
-      setAuth(true);
-    }
   });
 
   const validateEmail = (email: string) =>
