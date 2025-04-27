@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
-import { user } from './constants';
 import PersonalData from './components/personal-data/personal-data';
 import { FC } from 'react';
 import styles from './personal-cabinet.module.css';
 import ACalendar from './components/calendar/calendar';
 import AppointmentForm from './components/input-block/AppointmentForm';
-import { therapist, PostAppointment } from '@/api/types';
+import { therapist, PostAppointment, User } from '@/api/types';
 import ServiceApi from '@/api/service-api';
 import { useFetch } from '@/api/useFetch';
+import { useAuth } from '@/api/auth/useAuth';
 
 const PersonalCabinet: FC = () => {
   const [date, setDate] = useState<string>('');
+  const [user, setUser] = useState<User>()
+  const {getUser} = useAuth()
   const [appointment, setAppointment] = useState<PostAppointment>({
     patient_id: '',
     therapist_id: 'default',
@@ -21,11 +23,17 @@ const PersonalCabinet: FC = () => {
   });
 
   const [doctors, setDoctors] = useState<therapist[]>([]);
-
   const { fetching, isLoading, error } = useFetch(async () => {
-    const res = await ServiceApi.getTherapists();
-    if (res.status === 200) {
-      setDoctors(res.data);
+    const therapists = await ServiceApi.getTherapists();
+
+    if (therapists.status === 200) {
+      setDoctors(therapists.data);
+    }
+
+    const userData = await getUser();
+    console.log(userData)
+    if(userData.status === 200) {
+      setUser(userData.data);
     }
   });
 
