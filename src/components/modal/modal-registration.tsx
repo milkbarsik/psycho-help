@@ -35,15 +35,11 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 
 
   //импортируем функции регистрации, изменения состояния и мидлвар
-  const { registration, setUser, setAuth } = useAuth();
+  const { registration } = useAuth();
 
   const { fetching, isLoading, error } = useFetch(async () => {
     const { confirm_password, ...dataForServer } = formValue;
     const res = await registration(dataForServer as regData);
-    if (res.status === 200) {
-      setUser(formValue.email);
-      setAuth(true);
-    }
   })
 
 

@@ -11,9 +11,8 @@ const FaqPage = () => {
           <div className={styles.faqName}>
             <h1 className={styles.faq}>FAQ</h1>
             <p className={styles.description}>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. A enim, ex deleniti expedita
-              debitis nisi reiciendis non ipsam earum sit in adipisci ducimus. Vero eveniet a
-              pariatur recusandae autem dolor. (описание)
+							Здесь вы сможете найти ответы
+							на интересующие вас вопросы.
             </p>
           </div>
           <img src={FaqImage} alt="" />
