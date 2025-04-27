@@ -12,7 +12,7 @@ import { useAuth } from '@/api/auth/useAuth';
 const PersonalCabinet: FC = () => {
   const [date, setDate] = useState<string>('');
   const [user, setUser] = useState<User>()
-  const {getUser} = useAuth()
+  const {} = useAuth()
   const [appointment, setAppointment] = useState<PostAppointment>({
     patient_id: '',
     therapist_id: 'default',
@@ -23,7 +23,7 @@ const PersonalCabinet: FC = () => {
   });
 
   const [doctors, setDoctors] = useState<therapist[]>([]);
-  const { fetching, isLoading, error } = useFetch(async () => {
+  const {fetching, isLoading, error } = useFetch(async () => {
     const therapists = await ServiceApi.getTherapists();
 
     if (therapists.status === 200) {
