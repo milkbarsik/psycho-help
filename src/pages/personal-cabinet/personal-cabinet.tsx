@@ -10,15 +10,11 @@ import { useFetch } from '@/api/useFetch';
 import { useAuth } from '@/api/auth/useAuth';
 
 const PersonalCabinet: FC = () => {
-<<<<<<< HEAD
   const [date, setDate] = useState<string>('');
-  const [user, setUser] = useState<User>()
-  const {} = useAuth()
-=======
-  const {returnUser} = useAuth();
-  const [date, setDate] = useState<string>('');
-  const [user, setUser] = useState<User| {}>(returnUser());
->>>>>>> e1e232260279bf11e4b4f0bff8af927c7790b31e
+  const {returnUser} = useAuth()
+  const authUser = returnUser()
+  const [user, setUser] = useState<User | {}>(authUser)
+
   const [appointment, setAppointment] = useState<PostAppointment>({
     patient_id: '',
     therapist_id: 'default',
@@ -29,25 +25,15 @@ const PersonalCabinet: FC = () => {
   });
 
   const [doctors, setDoctors] = useState<therapist[]>([]);
-<<<<<<< HEAD
+
   const {fetching, isLoading, error } = useFetch(async () => {
-=======
-  const { fetching, isLoading, error } = useFetch(async () => {
->>>>>>> e1e232260279bf11e4b4f0bff8af927c7790b31e
+
     const therapists = await ServiceApi.getTherapists();
 
     if (therapists.status === 200) {
       setDoctors(therapists.data);
     }
-<<<<<<< HEAD
 
-    const userData = await getUser();
-    console.log(userData)
-    if(userData.status === 200) {
-      setUser(userData.data);
-    }
-=======
->>>>>>> e1e232260279bf11e4b4f0bff8af927c7790b31e
   });
 
   useEffect(() => {
