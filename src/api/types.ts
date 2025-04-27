@@ -8,7 +8,7 @@ export type regData = {
 	role: string;
 }
 
-export type user = {
+export type User = {
 	id: string;
 	first_name: string;
 	middle_name?: string;
