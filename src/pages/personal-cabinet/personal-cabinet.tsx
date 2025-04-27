@@ -13,10 +13,10 @@ const PersonalCabinet: FC = () => {
   const [date, setDate] = useState<string>('');
   const {returnUser} = useAuth()
   const authUser = returnUser()
-  const [user, setUser] = useState<User | {}>(authUser)
+  const [user, setUser] = useState<User | null>(authUser)
 
   const [appointment, setAppointment] = useState<PostAppointment>({
-    patient_id: '',
+    patient_id: (user ? user.id : ''),
     therapist_id: 'default',
     type: 'Online',
     reason: '',
@@ -63,7 +63,11 @@ const PersonalCabinet: FC = () => {
         </form>
       </main>
       <aside className={styles.aside}>
-        <PersonalData data={user} />
+        {user ? 
+        <PersonalData data={user} /> 
+        :
+        <p>{error.message}</p>
+        }
       </aside>
     </div>
   );
