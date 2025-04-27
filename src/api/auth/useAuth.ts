@@ -12,6 +12,7 @@ type Tauth = {
 	registration: (data: regData) => Promise<AxiosResponse<authRes>>;
 	getUser: () => Promise<AxiosResponse<User>>;
 	logOut: () => Promise<AxiosResponse>;
+  returnUser: () => User | {};
 }
 
 export const useAuth = create<Tauth>((set, get) => ({

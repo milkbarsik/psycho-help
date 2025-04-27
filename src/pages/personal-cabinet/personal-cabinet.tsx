@@ -10,9 +10,9 @@ import { useFetch } from '@/api/useFetch';
 import { useAuth } from '@/api/auth/useAuth';
 
 const PersonalCabinet: FC = () => {
+  const {returnUser} = useAuth();
   const [date, setDate] = useState<string>('');
-  const [user, setUser] = useState<User>()
-  const {getUser} = useAuth()
+  const [user, setUser] = useState<User| {}>(returnUser());
   const [appointment, setAppointment] = useState<PostAppointment>({
     patient_id: '',
     therapist_id: 'default',
@@ -28,12 +28,6 @@ const PersonalCabinet: FC = () => {
 
     if (therapists.status === 200) {
       setDoctors(therapists.data);
-    }
-
-    const userData = await getUser();
-    console.log(userData)
-    if(userData.status === 200) {
-      setUser(userData.data);
     }
   });
 

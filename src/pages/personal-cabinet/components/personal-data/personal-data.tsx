@@ -21,7 +21,7 @@ const PersonalData: FC<{ data: User }> = ({ data }) => {
 
   return (
     <div className={styles.wrapper}>
-      {/* <div className={styles.head}>
+      <div className={styles.head}>
         <b>
           {data.last_name} {data.first_name} {data.middle_name}
         </b>
@@ -32,7 +32,7 @@ const PersonalData: FC<{ data: User }> = ({ data }) => {
         ></div>
       </div>
       <p>{data.email}</p>
-      <p>{data.phone_number}</p> */}
+      <p>{data.phone_number}</p>
       <button className={styles.button} onClick={() => fetching()}>
         Выход
       </button>
