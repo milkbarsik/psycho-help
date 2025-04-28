@@ -74,7 +74,7 @@ export interface TextBlockProps {
 
 export interface BlockWrapperProps {
   component: FC<any>;
-  className: string;
+  // className: string;
   title?: string;
   name: string;
 }

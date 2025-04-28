@@ -62,7 +62,7 @@
 }
 
 .fontSize__18 {
-    font-size: 18px;
+    font-size: 1.8rem;
 }
 
 .textBlock {
@@ -78,7 +78,7 @@
 
 .text {
     margin: 0;
-    font-size: 18px;
+    font-size: 1.8rem;
     word-break: break-word;
     max-width: 700px;
 

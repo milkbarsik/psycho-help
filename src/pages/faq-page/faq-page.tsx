@@ -1,5 +1,5 @@
 import QuestionsList from './components/questions-list';
-import FaqImage from '../../assets/images/main/faq/shrug_rafiki_1.svg';
+import FaqImage from '../../assets/images/main/faq/questions_blue_t 1.png';
 import styles from './faq-page.module.css';
 import { faq } from './constants';
 
@@ -15,7 +15,11 @@ const FaqPage = () => {
                 Здесь вы сможете найти ответы на интересующие вас вопросы.
               </p>
             </div>
-            <img src={FaqImage} alt="" />
+            <img
+              src={FaqImage}
+              alt="Изображение на странице с вопросами"
+              className={styles.image}
+            />
           </div>
         </div>
       </div>

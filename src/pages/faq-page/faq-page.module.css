@@ -6,15 +6,13 @@
 
 .headerContent {
     display: flex;
-    /* align-items: center; */
     justify-content: space-between;
     flex-wrap: wrap;
     background: transparent;
     z-index: 0;
     position: relative;
-    /* max-width: 1440px;
-    margin: auto; */
     padding-inline: 32px;
+    padding-bottom: 20px;
 }
 
 .header {
@@ -27,7 +25,7 @@
 }
 
 .faq {
-    font-size: 162px;
+    font-size: 16.2rem;
     color: #5E8BF4;
     margin: 0;
 }
@@ -36,16 +34,22 @@
     max-width: 1440px;
     margin: auto;
     width: 100%;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 28px;
+    margin-bottom: 97px;
 }
 
 .questions {
     user-select: none;
+    font-size: 2.4rem;
 }
 
 .description {
-    font-size: 24px;
+    font-size: 2.4rem;
     max-width: 364px;
     margin-top: 10px;
+}
+
+.image {
+    margin-right: 43px;
+    margin-top: 55px;
 }

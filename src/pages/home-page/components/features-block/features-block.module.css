@@ -4,6 +4,7 @@
     grid-template-rows: repeat(2, 1fr);
     gap: 20px;
     margin: 0 40px;
+    margin-top: 44px;
 }
 
 .featureItem {
@@ -13,11 +14,11 @@
 
 .title {
     margin: 0;
-    font-size: 28px;
+    font-size: 2.8rem;
 }
 
 .desc {
-    font-size: 24px;
+    font-size: 2.4rem;
 }
 
 

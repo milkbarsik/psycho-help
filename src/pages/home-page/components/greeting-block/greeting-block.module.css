@@ -1,7 +1,6 @@
 .greetingBlock {
-    min-height: calc(100vh - 200px);
+    margin-top: 48px;
     display: flex;
-    /* justify-content: space-between; */
 }
 
 .greetingImageWrapper {
@@ -9,6 +8,7 @@
     max-width: 50vw;
     margin-top: 40px;
     min-width: 350px;
+    margin-left: 48px;
 }
 
 .blockItems {
@@ -16,7 +16,7 @@
 }
 
 .greetingTitle {
-    font-size: 36px;
+    font-size: 3.6rem;
     line-height: 44px;
     margin-top: 15px;
 }
@@ -32,21 +32,21 @@
 .greetingList__item {
     list-style: none;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 .importantTextWrapper {
     background: #E8EFFD;
-    padding: 10px;
+    padding: 6px;
     border-radius: 20px;
-    width: 513px;
+    width: 512px;
     margin-left: auto;
-    margin-right: 16px;
+    margin-right: 17px;
 }
 
 .importantText {
     color: #393939;
-    font-size: 20px;
+    font-size: 2rem;
     display: block;
     padding: 4px;
 }
@@ -69,18 +69,18 @@
 .signupButton__text {
     padding: 14px;
     color: white;
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: bold;
     user-select: none;
 }
 
 .title4 {
-    font-size: 16px;
+    font-size: 1.6rem;
     color: #5e8bf4;
     text-transform: uppercase;
     margin-top: 20px;
 }
 
 .buttonWrapper {
-    margin-top: 76px;
+    margin-top: 43px;
 }

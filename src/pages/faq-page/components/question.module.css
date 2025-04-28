@@ -1,7 +1,7 @@
 .wrapper {
     width: 100%;
     height: auto;
-    padding: 20px;
+    padding: 22px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -16,10 +16,6 @@
     align-items: center;
 }
 
-.askActive {
-    color: #5E8BF4;
-}
-
 .button {
     border-radius: 50%;
     height: 34px;
@@ -31,6 +27,8 @@
 }
 
 .answer {
+    color: #5E8BF4;
+    margin-top: 30px;
     margin-left: calc((1vh + 1vw) / 2 + 34px);
 }
 

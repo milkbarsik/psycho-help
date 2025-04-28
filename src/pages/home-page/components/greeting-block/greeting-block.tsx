@@ -1,7 +1,5 @@
-import { Button, Flex, Image, Typography } from 'antd';
-// import GreetingImage from '../../../../assets/images/greeting-screen.png';
-import GreetingImage from '@/assets/images/help_blue_t 1 1.png';
-// import GreetingImage from '@/assets/images/help_blue_t 1.png';
+import { Flex } from 'antd';
+import GreetingImage from '@/assets/images/help_blue_t 1.png';
 import { SERVICE_PROPS } from '../../constants';
 import styles from './greeting-block.module.css';
 

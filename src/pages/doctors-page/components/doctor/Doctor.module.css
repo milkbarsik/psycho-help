@@ -15,7 +15,7 @@
 
 .fio {
     color: #000000;
-    font-size: 2em;
+    font-size: 2rem;
     font-weight: bold;
     margin: 0;
     margin-top: 18px;
@@ -23,21 +23,21 @@
 
 .education {
     color: #393939;
-    font-size: 1.6em;
+    font-size: 1.6rem;
 }
 
 .short_desc {
     color: #393939;
-    font-size: 1.6em;
+    font-size: 1.6rem;
 }
 
 .experience {
-    font-size: 1.8em;
+    font-size: 1.8rem;
     font-weight: 600;
 }
 
 .link {
-    font-size: 1.8em;
+    font-size: 1.8rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
