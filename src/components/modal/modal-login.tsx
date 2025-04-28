@@ -1,13 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import { Button, Modal, Input } from 'antd';
+import React, { useState } from 'react';
+import { Button, Modal, Input, Checkbox } from 'antd';
 import styles from './modal-login.module.css';
 import { useAuth } from '@/api/auth/useAuth';
 import { useFetch } from '@/api/useFetch';
-import { Tprops } from '@/api/types';
 
 const INITIAL_FORM_VALUE = {
   email: '',
   password: '',
+};
+
+type Tprops = {
+  setWindow: (param: string) => any;
+  isOpen: boolean;
+  setModalOpen: (param: boolean) => any;
 };
 
 const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
@@ -16,18 +21,12 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   const [open, setOpen] = useState(isOpen);
   // const [rememberMe, setRememberMe] = useState(false);
 
-  const { login, setUser, setAuth } = useAuth();
+  const { login } = useAuth();
 
-  const onFetch = useCallback(async () => {
-    const { email, password } = formValue;
+  const { fetching, isLoading, error } = useFetch(async () => {
+    const { email, password } = { ...formValue };
     const res = await login(email, password);
-    if (res.status === 200) {
-      setUser(email);
-      setAuth(true);
-    }
-  }, [formValue, login, setUser, setAuth]);
-
-  const { fetching, isLoading, error } = useFetch(onFetch);
+  });
 
   const validateEmail = (email: string) =>
     /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email)
@@ -36,30 +35,30 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
 
   const validatePassword = (password: string) => (password ? '' : 'Пароль не может быть пустым');
 
-  const validateForm = useCallback(() => {
+  const validateForm = () => {
     const newErrors = {
       email: validateEmail(formValue.email),
       password: validatePassword(formValue.password),
     };
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => error === '');
-  }, [formValue]);
+  };
 
-  const handleOk = useCallback(async () => {
+  const handleOk = async () => {
     if (!validateForm()) return;
     await fetching();
     if (error == null) {
       setOpen(false);
       setModalOpen(false);
     }
-  }, [error, fetching, setModalOpen, validateForm]);
+  };
 
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     setOpen(false);
     setModalOpen(false);
-  }, [setModalOpen]);
+  };
 
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormValue((prevValues) => ({
       ...prevValues,
@@ -69,7 +68,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
       ...prevErrors,
       [name]: '',
     }));
-  }, []);
+  };
 
   return (
     <>

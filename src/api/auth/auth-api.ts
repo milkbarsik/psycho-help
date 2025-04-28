@@ -1,21 +1,25 @@
 import { AxiosResponse } from 'axios';
 import { $serviceClient } from '../http';
-import { user, regData, authRes } from '../types';
+import { User, regData, authRes } from '../types';
 
 export default class AuthApi {
-  static async login(email: string, password: string): Promise<AxiosResponse<authRes>> {
-    return await $serviceClient.post<authRes>('/users/login', { email, password });
+  static async login(email: string, password: string): Promise<AxiosResponse<User>> {
+    const res = await $serviceClient.post<User>('/users/login', { email, password });
+    return res;
   }
 
-  static async registration(data: regData): Promise<AxiosResponse<authRes>> {
-    return await $serviceClient.post<authRes>('/users/register', { ...data });
+  static async registration(data: regData): Promise<AxiosResponse<User>> {
+    const res = await $serviceClient.post<User>('/users/register', { ...data });
+    return res;
   }
 
-  static async getUser(): Promise<AxiosResponse<user>> {
-    return await $serviceClient.get<user>('/users/user');
+  static async getUser(): Promise<AxiosResponse<User>> {
+    const res = await $serviceClient.get<User>('/users/user');
+    return res;
   }
 
   static async logOut(): Promise<AxiosResponse> {
-    return await $serviceClient.post('/users/logout');
+    const res = await $serviceClient.post('/users/logout');
+    return res;
   }
 }

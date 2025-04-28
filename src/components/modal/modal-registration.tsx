@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button, Modal, Input } from 'antd';
 import InputMask from 'react-input-mask';
 import { useFetch } from '@/api/useFetch';
@@ -34,51 +34,37 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
   const [open, setOpen] = useState(isOpen);
 
   //импортируем функции регистрации, изменения состояния и мидлвар
-  const { registration, setUser, setAuth } = useAuth();
+  const { registration } = useAuth();
 
-  const onFetch = useCallback(async () => {
+  const { fetching, isLoading, error } = useFetch(async () => {
     const { confirm_password, ...dataForServer } = formValue;
     const res = await registration(dataForServer as regData);
-    if (res.status === 200) {
-      setUser(formValue.email);
-      setAuth(true);
-    }
-  }, [formValue, registration, setAuth, setUser]);
-  const { fetching, isLoading, error } = useFetch(onFetch);
+  });
 
   //Функции для валидации полей формы
 
-  const validateFirst_name = useCallback(
-    (name: string) => (/^[a-zа-я]+$/i.test(name) ? '' : 'Имя не должно содержать цифр'),
-    [],
-  );
+  const validateFirst_name = (name: string) =>
+    /^[a-zа-я]+$/i.test(name) ? '' : 'Имя не должно содержать цифр';
 
-  const validateMiddle_name = useCallback(
-    (name: string) => (/^[a-zа-я]+$/i.test(name) ? '' : 'Второе имя не должно содержать цифр'),
-    [],
-  );
+  const validateMiddle_name = (name: string) =>
+    /^[a-zа-я]+$/i.test(name) ? '' : 'Второе имя не должно содержать цифр';
 
-  const validateLast_name = useCallback(
-    (name: string) => (/^[a-zа-я]+$/i.test(name) ? '' : 'Фамилия не должна содержать цифр'),
-    [],
-  );
+  const validateLast_name = (name: string) =>
+    /^[a-zа-я]+$/i.test(name) ? '' : 'Фамилия не должна содержать цифр';
 
-  const validatePhone_number = useCallback((phone_number: string) => {
+  const validatePhone_number = (phone_number: string) => {
     const sanitizedNumber = phone_number.replace(/[^0-9+]/g, '');
     return sanitizedNumber.length === 12 && sanitizedNumber.startsWith('+7')
       ? ''
       : 'Номер телефона должен быть в формате +79999999999';
-  }, []);
+  };
 
-  const validateEmail = useCallback(
-    (email: string) =>
-      /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email)
-        ? ''
-        : 'Некорректный формат электронной почты',
-    [],
-  );
+  const validateEmail = (email: string) =>
+    /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email)
+      ? ''
+      : 'Некорректный формат электронной почты';
 
-  const validatePassword = useCallback((password: string) => {
+  const validatePassword = (password: string) => {
     if (password.length < 8) {
       return 'Пароль должен содержать не менее 8 символов';
     }
@@ -95,28 +81,27 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
       return 'Пароль может содержать только латинские буквы, цифры и специальные символы';
     }
     return '';
-  }, []);
+  };
 
-  const validateConfirm_password = useCallback(
-    (confirm_password: string) =>
-      confirm_password === formValue.password ? '' : 'Пароли не совпадают',
-    [formValue.password],
-  );
+  const validateConfirm_password = (confirm_password: string) =>
+    confirm_password === formValue.password ? '' : 'Пароли не совпадают';
 
-  const validateRole = useCallback((role: string): string => {
+  const validateRole = (role: string): string => {
     if (!role || role.trim() === '') {
       return 'Выберите роль';
     }
+
     const allowedRoles = ['Student', 'Therapist', 'Administrator', 'Stuff'];
     if (!allowedRoles.includes(role)) {
       return 'Недопустимая роль';
     }
+
     return '';
-  }, []);
+  };
 
   //Применение функций валидаций и возвращение true, если нет ошибок, иначе false
 
-  const validateForm = useCallback(() => {
+  const validateForm = () => {
     const newErrors = {
       first_name: validateFirst_name(formValue.first_name),
       middle_name: validateMiddle_name(formValue.middle_name),
@@ -129,28 +114,11 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     };
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => error === '');
-  }, [
-    formValue.confirm_password,
-    formValue.email,
-    formValue.first_name,
-    formValue.last_name,
-    formValue.middle_name,
-    formValue.password,
-    formValue.phone_number,
-    formValue.role,
-    validateConfirm_password,
-    validateEmail,
-    validateFirst_name,
-    validateLast_name,
-    validateMiddle_name,
-    validatePassword,
-    validatePhone_number,
-    validateRole,
-  ]);
+  };
 
   //Если все правильно, то модалка закрывается
 
-  const handleOk = useCallback(async () => {
+  const handleOk = async () => {
     if (!validateForm()) return;
     await fetching();
     if (error == null) {
@@ -158,13 +126,13 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
       setModalOpen(false);
       resetForm();
     }
-  }, [error, fetching, setModalOpen, validateForm]);
+  };
 
   //Закрытие модалки
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     setOpen(false);
     setModalOpen(false);
-  }, [setModalOpen]);
+  };
 
   //Функция, возвращающая true, если все поля формы заполнены (кроме middle_name),
   //иначе false (При изменении формы)
@@ -175,7 +143,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     });
   }, [formValue]);
 
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //
     const { name, value } = e.target;
     const filteredValue =
@@ -190,7 +158,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
       ...prevErrors,
       [name]: '',
     }));
-  }, []);
+  };
 
   return (
     <>

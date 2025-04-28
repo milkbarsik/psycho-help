@@ -34,7 +34,7 @@ function App() {
   // при загрузке сайта происходит автоматическая проверка на валидность токена
   useEffect(() => {
     fetching();
-  }, [fetching]);
+  }, []);
 
   return (
     <Layout className={styles.layout}>

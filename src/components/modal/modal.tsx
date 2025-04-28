@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import ModalRegistration from './modal-registration';
-import { Button } from 'antd';
 import styles from './modal.module.css';
 import ModalLogin from './modal-login';
 import LoginIcon from '@/assets/images/login-icon.svg';

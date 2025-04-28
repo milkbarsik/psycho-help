@@ -1,16 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { FC } from 'react';
 
-export type regData = {
-  first_name: string;
-  middle_name?: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-  password: string;
-  role: string;
-};
-
 export type user = {
   id: string;
   first_name: string;
@@ -19,11 +9,6 @@ export type user = {
   phone_number: string;
   email: string;
   social_media: string;
-};
-
-export type authRes = {
-  status_code: number;
-  token: string;
 };
 
 export type Tauth = {
@@ -35,25 +20,6 @@ export type Tauth = {
   registration: (data: regData) => Promise<AxiosResponse<authRes>>;
   getUser: () => Promise<AxiosResponse<user>>;
   logOut: () => Promise<AxiosResponse>;
-};
-
-export type therapist = {
-  id: string;
-  photo?: string;
-  first_name: string;
-  middle_name: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-  social_media?: string;
-  password: string;
-  education: string;
-  experience: string;
-  qualification: string;
-  consult_areas: string;
-  short_description: string;
-  description: string;
-  office: string;
 };
 
 export type Tprops = {
@@ -78,6 +44,59 @@ export interface BlockWrapperProps {
   title?: string;
   name: string;
 }
+
+export type regData = {
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+  password: string;
+  role: string;
+};
+
+export type User = {
+  id: string;
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+  social_media: string;
+};
+
+export type authRes = {
+  status_code: number;
+  token: string;
+};
+
+export type therapist = {
+  id?: string;
+  photo?: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+  social_media?: string;
+  password: string;
+  education: string;
+  experience: string;
+  qualification: string;
+  consult_areas: string;
+  short_description: string;
+  description: string;
+  office: string;
+};
+
+export type PostAppointment = {
+  patient_id: string;
+  therapist_id: string;
+  type: 'Offline' | 'Online';
+  reason: string;
+  remind_time: string;
+  venue: string;
+};
 
 // export interface Pagination {
 //   pageNo?: number;
