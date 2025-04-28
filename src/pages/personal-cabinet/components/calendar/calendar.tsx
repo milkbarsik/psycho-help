@@ -73,15 +73,24 @@ const ACalendar: React.FC<{ getDate: (param: string) => void }> = ({ getDate }) 
   };
 
   return (
-    <ConfigProvider locale={ru_RU}>
-      <div style={{ width: '100%', borderRadius: token.borderRadiusLG }}>
+    <ConfigProvider
+			locale={ru_RU}
+			theme={{
+				components: {
+					Calendar: {
+						fullBg: 'transparent',
+						fullPanelBg: 'transparent',
+					}
+				}
+			}}>
+      <div style={{ width: '100%', borderRadius: token.borderRadiusLG}}>
         <Calendar
           fullscreen={false}
           onChange={onChange}
           value={selectedDate}
           fullCellRender={dateFullCellRender}
         />
-				<div>
+				<div className={styles.markers}>
 
 				</div>
       </div>
