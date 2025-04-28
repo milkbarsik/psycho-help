@@ -22,7 +22,7 @@ const DoctorPage = () => {
   useEffect(() => {
     window.scroll(0, 0);
     fetching();
-  }, [fetching]);
+  }, []);
 
   if (isLoading) {
     return (
