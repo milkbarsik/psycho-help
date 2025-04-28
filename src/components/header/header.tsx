@@ -1,4 +1,4 @@
-import { ReactComponent as Logo } from '../../assets/images/logo.svg';
+import { ReactComponent as Logo } from '../../assets/images/Logo-2.svg';
 // import { ReactComponent as Bell } from '../../assets/images/header/bell.svg';
 import { ReactComponent as Profile } from '../../assets/images/header/profile.svg';
 import { Link } from 'react-router-dom';

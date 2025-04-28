@@ -29,7 +29,7 @@ const Footer = () => {
             <h3 className={styles.fontSize__18}>Адреса:</h3>
             <ol className={styles.list}>
               {addresses.map((item, index) => (
-                <li key={index} className={styles.fontSize__18}>
+                <li key={index} className={styles.fontSize__14}>
                   {item.text}
                 </li>
               ))}
@@ -46,7 +46,7 @@ const Footer = () => {
             </div>
           </div>
           <div className={styles.textWrapper}>
-            <h3>
+            <h3 className={styles.fontSize__16}>
               E-mail:{' '}
               <a href="mailto:psycholog@mospolytech.ru" className={styles.link}>
                 psycholog@mospolytech.ru

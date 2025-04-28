@@ -22,10 +22,13 @@
 .faqName {
     margin-left: 73px;
     margin-top: 79px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .faq {
-    font-size: 16.2rem;
+    font-size: 4rem;
     color: #5E8BF4;
     margin: 0;
 }
@@ -40,11 +43,11 @@
 
 .questions {
     user-select: none;
-    font-size: 2.4rem;
+    font-size: 1.6rem;
 }
 
 .description {
-    font-size: 2.4rem;
+    font-size: 2rem;
     max-width: 364px;
     margin-top: 10px;
 }

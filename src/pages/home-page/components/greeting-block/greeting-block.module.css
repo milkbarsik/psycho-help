@@ -46,7 +46,7 @@
 
 .importantText {
     color: #393939;
-    font-size: 2rem;
+    font-size: 1.6rem;
     display: block;
     padding: 4px;
 }
@@ -69,7 +69,7 @@
 .signupButton__text {
     padding: 14px;
     color: white;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: bold;
     user-select: none;
 }

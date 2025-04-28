@@ -17,6 +17,7 @@
 .spaceBetween {
     display: flex;
     justify-content: space-between;
+    margin: 30px 0;
 }
 
 .weekdaysWrapper {
@@ -38,12 +39,12 @@
 }
 
 .weekdaysName {
-    font-size: 3.6rem;
+    font-size: 2rem;
     margin-bottom: 0;
 }
 
 .weekdaysTime {
-    font-size: 4.8rem;
+    font-size: 2.2rem;
     font-weight: 600;
     margin: 0;
 }
@@ -53,7 +54,7 @@
 }
 
 .detailedInformation {
-    font-size: 2.4rem;
+    font-size: 1.8rem;
     font-weight: 500;
 }
 
@@ -63,7 +64,7 @@
     border-top: 1px dashed #717785;
     border-bottom: 1px dashed #717785;
     padding: 15px 39px;
-    font-size: 3.6rem;
+    font-size: 2.2rem;
     width: 414px;
 }
 
@@ -81,7 +82,7 @@
 }
 
 .detailedInformationItem {
-    font-size: 2.4rem;
+    font-size: 1.4rem;
     list-style: none;
     color: #393939;
 }

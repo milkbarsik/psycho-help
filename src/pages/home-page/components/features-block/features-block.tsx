@@ -7,7 +7,7 @@ const FeaturesBlock = () => {
       {FEATURES_OF_WORK.map((item) => (
         <div key={item.title} className={styles.featureItem}>
           <div className={styles.contentWrapper}>
-            <div>
+            <div className={styles.imageWrapper}>
               <img src={item.image} alt="Иллюстрация особенностей службы" />
             </div>
             <div className={styles.textWrapper}>

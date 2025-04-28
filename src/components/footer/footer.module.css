@@ -65,15 +65,21 @@
     font-size: 1.8rem;
 }
 
+.fontSize__16 {
+    font-size: 1.6rem;
+}
+
+.fontSize__14 {
+    font-size: 1.4rem;
+}
+
 .textBlock {
-    /* text-align: start; */
     margin: 0;
-    /* padding: calc((1vh + 1vw) / 2);
-    width: 80%; */
 }
 
 .phone {
     margin-top: 20px;
+    font-size: 1.4rem;
 }
 
 .text {
@@ -81,7 +87,7 @@
     font-size: 1.8rem;
     word-break: break-word;
     max-width: 700px;
-
+    font-size: 1.6rem;
 }
 
 .list {
