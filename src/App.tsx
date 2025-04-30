@@ -13,8 +13,7 @@ import { useFetch } from './api/useFetch';
 import { useAuth } from './api/auth/useAuth';
 
 function App() {
-
-	const [isUserLoading, setUserLoading] = useState<boolean>(true);
+  const [isUserLoading, setUserLoading] = useState<boolean>(true);
 
   /* В главном компоненте мы просто подключили импортированный роутер
        Также импортировали общие стили для всего проекта
@@ -28,8 +27,8 @@ function App() {
   */
   const { fetching } = useFetch(async () => {
     await getUser().finally(() => {
-			setUserLoading(false);
-		});
+      setUserLoading(false);
+    });
   });
 
   // при загрузке сайта происходит автоматическая проверка на валидность токена

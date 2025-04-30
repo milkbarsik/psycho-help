@@ -29,28 +29,27 @@ export const authRoutes: routePath[] = [
     path: '/therapists/:id',
     Component: DoctorPage,
   },
-	{
+  {
     path: '/cabinet',
     Component: PersonalCabinet,
   },
 ];
 
 export const notAuthRoutes: routePath[] = [
-	{
+  {
     path: '/',
     Component: HomePage,
   },
-	{
+  {
     path: '/faq',
     Component: FaqPage,
   },
-	{
+  {
     path: '/therapists/',
     Component: DoctorsPage,
   },
   {
     path: '/therapists/:id',
     Component: DoctorPage,
-  }
-  
-]
+  },
+];

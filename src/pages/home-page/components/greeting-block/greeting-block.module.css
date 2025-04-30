@@ -1,5 +1,6 @@
 .greetingBlock {
-    min-height: calc(100vh - 200px);
+    margin-top: 48px;
+    display: flex;
 }
 
 .greetingImageWrapper {
@@ -7,25 +8,79 @@
     max-width: 50vw;
     margin-top: 40px;
     min-width: 350px;
+    margin-left: 48px;
+}
+
+.blockItems {
+    margin-left: 145px;
 }
 
 .greetingTitle {
-    margin-bottom: 20px;
+    font-size: 3.6rem;
+    line-height: 44px;
+    margin-top: 15px;
+}
+
+.greetingList {
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 525px;
+}
+
+.greetingList__item {
+    list-style: none;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.importantTextWrapper {
+    background: #E8EFFD;
+    padding: 6px;
+    border-radius: 20px;
+    width: 512px;
+    margin-left: auto;
+    margin-right: 17px;
 }
 
 .importantText {
-    background: #e8effd;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 17px;
-    font-weight: bold;
-    color: #373535;
+    color: #393939;
+    font-size: 1.6rem;
+    display: block;
+    padding: 4px;
 }
 
+.importantText__bold {
+    font-weight: bold;
+}
+
+
 .signupButton {
-    width: 30%;
+    width: 40%;
     background: #5e8bf4;
-    font-style: bold;
-    font-size: 16px;
+    display: flex;
     border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.signupButton__text {
+    padding: 14px;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    user-select: none;
+}
+
+.title4 {
+    font-size: 1.6rem;
+    color: #5e8bf4;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.buttonWrapper {
+    margin-top: 43px;
 }
