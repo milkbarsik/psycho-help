@@ -1,16 +1,18 @@
-.wrapper {}
+.wrapper {
+    max-width: 1440px;
+    margin: auto;
+    width: 100%;
+}
 
 .headerContent {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     background: transparent;
     z-index: 0;
     position: relative;
-    max-width: 1440px;
-    margin: auto;
     padding-inline: 32px;
+    padding-bottom: 20px;
 }
 
 .header {
@@ -18,16 +20,39 @@
 }
 
 .faqName {
-    flex-basis: 45%;
+    margin-left: 73px;
+    margin-top: 79px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .faq {
-    font-size: 8rem;
+    font-size: 4rem;
+    color: #5E8BF4;
     margin: 0;
 }
 
-.description {}
+.wrapperQuestions {
+    max-width: 1440px;
+    margin: auto;
+    width: 100%;
+    margin-top: 28px;
+    margin-bottom: 97px;
+}
 
 .questions {
-    padding: calc((1vh + 1vw) * 2);
+    user-select: none;
+    font-size: 1.6rem;
+}
+
+.description {
+    font-size: 2rem;
+    max-width: 364px;
+    margin-top: 10px;
+}
+
+.image {
+    margin-right: 43px;
+    margin-top: 55px;
 }

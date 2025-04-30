@@ -6,7 +6,7 @@ import axios from 'axios';
 
 export const $serviceClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-	withCredentials: true,
+  withCredentials: true,
 });
 
 $serviceClient.interceptors.request.use(async (config) => {
@@ -16,6 +16,6 @@ $serviceClient.interceptors.request.use(async (config) => {
   //   document.cookie = `access_token=${loginToken}; path=/`;
   // }
 
-	// console.log(document.cookie);
+  // console.log(document.cookie);
   return config;
 });

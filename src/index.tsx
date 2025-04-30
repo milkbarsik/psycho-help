@@ -19,7 +19,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const queryClient = new QueryClient();
 

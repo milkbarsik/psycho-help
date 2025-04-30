@@ -1,20 +1,18 @@
-import { Col, Flex, Image, Row, Typography } from 'antd';
 import { REASONS_TO_VISIT } from '../../constants';
+import styles from './reasons-block.module.css';
 
 const ReasonsBlock = () => {
   return (
-    <Row>
+    <div className={styles.grid}>
       {REASONS_TO_VISIT.map((item) => (
-        <Col xs={12} xl={8}>
-          <Flex vertical align="center">
-            <Image src={item.image} preview={false} height={'100%'} alt="Иллюстрация с помощью" />
-            <Typography.Text strong style={{ textAlign: 'center' }}>
-              {item.title}
-            </Typography.Text>
-          </Flex>
-        </Col>
+        <div key={item.title} className={styles.content}>
+          <div className={styles.imageWrapper}>
+            <img src={item.image} alt="Иллюстрация с помощью" className={styles.image} />
+          </div>
+          <h2 className={styles.itemText}>{item.title}</h2>
+        </div>
       ))}
-    </Row>
+    </div>
   );
 };
 

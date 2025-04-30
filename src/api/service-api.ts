@@ -10,13 +10,13 @@ import { therapist } from './types';
 // };
 
 export default class ServiceApi {
-	static async getTherapists (): Promise<AxiosResponse<Array<therapist>>> {
-		const res = await $serviceClient.get<Array<therapist>>('/therapists/');
-		return res;
-	}
+  static async getTherapists(): Promise<AxiosResponse<Array<therapist>>> {
+    const res = await $serviceClient.get<Array<therapist>>('/therapists/');
+    return res;
+  }
 
-	static async getTherapist (id: string): Promise<AxiosResponse<therapist>> {
-		const res = await $serviceClient.get<therapist>(`/therapists/${id}`);
-		return res;
-	}
+  static async getTherapist(id: string): Promise<AxiosResponse<therapist>> {
+    const res = await $serviceClient.get<therapist>(`/therapists/${id}`);
+    return res;
+  }
 }

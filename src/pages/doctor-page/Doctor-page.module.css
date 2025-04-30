@@ -21,12 +21,12 @@
 }
 
 .thirsname {
-    font-size: 48px;
+    font-size: 4.8rem;
     font-weight: 600;
 }
 
 .IF {
-    font-size: 36px;
+    font-size: 3.6rem;
     font-weight: 500;
 }
 
@@ -56,18 +56,18 @@
 
 .textBold {
     margin-top: 72px;
-    font-size: 28px;
+    font-size: 2.8rem;
     font-weight: 600;
     margin-bottom: 12px;
 }
 
 .text {
-    font-size: 24px;
+    font-size: 2.4rem;
 }
 
 .subtitle {
     margin-top: 103px;
-    font-size: 48px;
+    font-size: 4.8rem;
     font-weight: 600;
 }
 
@@ -86,13 +86,12 @@
 
 .qualif__title {
     color: #5E8BF4;
-    font-size: 28px;
+    font-size: 2.8rem;
     font-weight: 600;
 }
 
 .qualif__text {
     margin-top: 22px;
-    font-size: 24px;
+    font-size: 2.4rem;
     color: #7A7A7A;
 }
-

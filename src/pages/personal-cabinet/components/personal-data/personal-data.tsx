@@ -8,16 +8,20 @@ import editImg from '../../../../assets/images/cabinet/edit.svg';
 
 const PersonalData: FC<{ data: User }> = ({ data }) => {
   const edit = () => {};
-	
-	const {logOut} = useAuth()
-	const navigate = useNavigate()
-	
-  const {fetching, isLoading, error} = useFetch( async () => {
-		const res = await logOut()
-		if (res.status == 200) {
-			navigate('/')
-		}
-	})
+
+  const { logOut } = useAuth();
+  const navigate = useNavigate();
+
+  const {
+    fetching,
+    // isLoading,
+    // error
+  } = useFetch(async () => {
+    const res = await logOut();
+    if (res.status === 200) {
+      navigate('/');
+    }
+  });
 
   return (
     <div className={styles.wrapper}>

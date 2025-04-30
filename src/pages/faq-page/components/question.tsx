@@ -12,7 +12,7 @@ const Question = ({ id, ask, answer }: { id: number; ask: string; answer: string
 
   return (
     <div className={styles.wrapper} onClick={onClick}>
-      <div className={`${styles.ask} ${isActive ? styles.askActive : ''}`}>
+      <div className={styles.ask}>
         <div
           className={styles.button}
           style={{ backgroundImage: `url(${isActive ? ActivebuttonImage : buttonImage})` }}
