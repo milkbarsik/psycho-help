@@ -45,3 +45,4 @@ const PersonalData: FC<{ data: User }> = ({ data }) => {
 };
 
 export default PersonalData;
+
