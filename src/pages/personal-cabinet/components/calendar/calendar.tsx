@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import ru_RU from 'antd/locale/ru_RU';
 import styles from './calendar.module.css';
+import { useAppointment } from '../../storeOfAppointment/appointment';
 
 dayjs.locale('ru');
 
@@ -17,11 +18,11 @@ const specialDates: Record<string, string> = {
 };
 
 type Props = {
-	getDate: (param: string) => void;
 	appointments: any
 }
 
-const ACalendar: React.FC<Props> = ({getDate, appointments}) => {
+const ACalendar = () => {
+	const setAppointment = useAppointment(state => state.setAppointment);
   const { token } = theme.useToken();
 
   // state для выбранной даты
@@ -30,13 +31,12 @@ const ACalendar: React.FC<Props> = ({getDate, appointments}) => {
 
   // при монтировании сразу возвращаем сегодня
   React.useEffect(() => {
-    getDate(today.format('YYYY-MM-DD'));
-  }, []);
+		setAppointment({date: dayjs().format('YYYY-MM-DD')});
+	}, []);
 
   // handler изменения
-  const onChange = (date: Dayjs) => {
-    setSelectedDate(date);
-    getDate(date.format('YYYY-MM-DD'));
+  const onChange = (value: Dayjs) => {
+    setAppointment({date: value.format('YYYY-MM-DD')});
   };
 
   // полностью перезаписываем содержимое ячейки

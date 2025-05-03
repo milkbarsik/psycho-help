@@ -4,7 +4,7 @@ import { useAuth } from '@/api/auth/useAuth';
 import Loader from '../UI/loader/loader';
 
 const AppRouter = ({ isLoading }: { isLoading: boolean }) => {
-  const { isAuth } = useAuth();
+  const isAuth = useAuth(state => state.isAuth);
 
   if (isLoading) {
     return <Loader />;
