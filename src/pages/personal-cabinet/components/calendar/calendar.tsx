@@ -11,12 +11,17 @@ dayjs.locale('ru');
 
 //Accepted, Approved, Cancelled, Done
 const specialDates: Record<string, string> = {
-  '2025-04-09': '#FFCF52',
-  '2025-04-21': '#33C175',
-	'2025-04-10': '#7D8488'
+  'Accepted': '#FFCF52',
+  'Approved': '#33C175',
+	// '2025-04-10': '#7D8488'
 };
 
-const ACalendar: React.FC<{ getDate: (param: string) => void }> = ({ getDate }) => {
+type Props = {
+	getDate: (param: string) => void;
+	appointments: any
+}
+
+const ACalendar: React.FC<Props> = ({getDate, appointments}) => {
   const { token } = theme.useToken();
 
   // state для выбранной даты
