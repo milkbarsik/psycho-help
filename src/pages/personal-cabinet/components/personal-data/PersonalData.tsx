@@ -17,7 +17,6 @@ const PersonalData: FC<{ user: User, appointments: GetAppointment[]}> = ({ user,
 
 	const {logOut} = useAuth()
 	const navigate = useNavigate()
-  const sortedAppointments = appointments.sort((a, b) => a.remind_time.localeCompare(b.remind_time));
   const {fetching} = useFetch( async () => {
 		const res = await logOut()
 		if (res.status == 200) {
@@ -45,7 +44,7 @@ const PersonalData: FC<{ user: User, appointments: GetAppointment[]}> = ({ user,
       <ul className={styles.appointments}>
           <li className={styles.appointment__active}>
             <div className={styles.active__date}>
-              <p className={styles.active__date_day}>{formatDateToCustomString(sortedAppointments[0].remind_time)}</p>
+              <p className={styles.active__date_day}>{formatDateToCustomString(appointments[0].remind_time)}</p>
             </div>
             <div className={styles.name__wrapper}>
               <img src={userImg} className={styles.user_img} />
@@ -54,12 +53,12 @@ const PersonalData: FC<{ user: User, appointments: GetAppointment[]}> = ({ user,
             <div className={styles.venue_wrapper}>
               <div className={styles.venue__content}>
                 <img src={venueImg} className={styles.venue__img} />
-                <p className={styles.venue}>{sortedAppointments[0].venue}</p>
+                <p className={styles.venue}>{appointments[0].venue}</p>
               </div>
               <button><img src={editAppointmentImg}/></button>
             </div>
           </li>
-          {sortedAppointments.slice(1).map(item =>
+          {appointments.slice(1).map(item =>
             <li className={styles.next} key={item.id}>
               <div className={styles.next__content}>
                 <div className={styles.next__date}>

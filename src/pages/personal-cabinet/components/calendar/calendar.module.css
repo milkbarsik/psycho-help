@@ -1,7 +1,20 @@
+.cell {
+	height: 4.5rem;
+	width: 4.5rem;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	user-select: none;
+}
+
 .markers {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	justify-content: space-between;
-	width: 100%;
+	width: 80%;
+	padding: 2rem 4rem;
+	gap: 1rem 4rem;
 }

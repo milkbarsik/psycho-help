@@ -1,0 +1,15 @@
+.marker {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.markerColor {
+	border-radius: 50%;
+	height: 1.2rem;
+	width: 1.2rem;
+}
+
+.markerText {
+	font-size: 1.4rem;
+}
