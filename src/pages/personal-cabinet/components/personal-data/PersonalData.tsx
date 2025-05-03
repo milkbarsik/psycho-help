@@ -10,74 +10,42 @@ import venueImg from '@/assets/images/appointments/geo.svg';
 import editAppointmentImg from '@/assets/images/appointments/edit.svg';
 import points from '@/assets/images/appointments/3points.svg'
 
+import { formatDateToCustomString } from '../../helpers/dateFunctions';
 
-const PersonalData: FC<{ data: User, appointments: GetAppointment[]}> = ({ data, appointments }) => {
 
-  const edit = () => {};
-	
+const PersonalData: FC<{ user: User, appointments: GetAppointment[]}> = ({ user, appointments }) => {
+
 	const {logOut} = useAuth()
 	const navigate = useNavigate()
   const sortedAppointments = appointments.sort((a, b) => a.remind_time.localeCompare(b.remind_time));
-	console.log(appointments)
-  const {fetching, isLoading, error} = useFetch( async () => {
+  const {fetching} = useFetch( async () => {
 		const res = await logOut()
 		if (res.status == 200) {
 			navigate('/')
 		}
 	})
 
-  function formatDateToCustomString(isoDate: string) {
-    const date = new Date(isoDate);
-    
-    if (isNaN(date.getTime())) {
-      throw new Error("Неверный формат даты");
-    }
-  
-    const day = date.getDate();
-    const month = date.toLocaleString('ru-RU', { month: 'short' }).replace('.', '');
-    const weekday = date.toLocaleString('ru-RU', { weekday: 'long' });
-    const formattedDate = `${day} ${month}. ${weekday.charAt(0).toUpperCase() + weekday.slice(1)}`;
-  
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const formattedTime = `${hours}:${minutes}`;
-  
-    return {
-      date: formattedDate,
-      time: formattedTime  
-    };
-  }
-  
-  // Пример использования
-  const isoDate = "2025-05-02T07:59:17.799Z";
-  const { date, time } = formatDateToCustomString(isoDate);
-  
-  console.log(date); // "2 мая. Пятница"
-  console.log(time); // "07:59" (или "08:59" с учётом часового пояса UTC+1)
-  
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.head}>
         <b>
-          {data.last_name} {data.first_name} {data.middle_name}
+          {user.last_name} {user.first_name} {user.middle_name}
         </b>
         <div
           className={styles.edit}
           style={{ backgroundImage: `url(${editImg})` }}
-          onClick={edit}
+          onClick={() => {console.log('редактирование')}}
         ></div>
       </div>
-      <p>{data.email}</p>
-      <p>{data.phone_number}</p>
+      <p>{user.email}</p>
+      <p>{user.phone_number}</p>
       <button className={styles.button} onClick={() => fetching()}>
         Выход
       </button>
       <ul className={styles.appointments}>
           <li className={styles.appointment__active}>
             <div className={styles.active__date}>
-              <p className={styles.active__date_day}>{formatDateToCustomString(sortedAppointments[0].remind_time).date}</p>
-              <p className={styles.active__date_time}>{formatDateToCustomString(sortedAppointments[0].remind_time).time}</p>
+              <p className={styles.active__date_day}>{formatDateToCustomString(sortedAppointments[0].remind_time)}</p>
             </div>
             <div className={styles.name__wrapper}>
               <img src={userImg} className={styles.user_img} />
@@ -91,15 +59,14 @@ const PersonalData: FC<{ data: User, appointments: GetAppointment[]}> = ({ data,
               <button><img src={editAppointmentImg}/></button>
             </div>
           </li>
-          {sortedAppointments.slice(1).map(item => 
-            <li className={styles.next}>
+          {sortedAppointments.slice(1).map(item =>
+            <li className={styles.next} key={item.id}>
               <div className={styles.next__content}>
                 <div className={styles.next__date}>
-                  <p className={styles.next__date_day}>{formatDateToCustomString(item.remind_time).date}</p>
-                  <p className={styles.next__date_venue}>{item.venue}</p>
+                  <p className={styles.next__date_day}>{formatDateToCustomString(item.remind_time)}</p>
                 </div>
+								<p className={styles.next__date_venue}>{item.venue}</p>
                 <div className={styles.next__time}>
-                  <p className={styles.next__time_value}>{formatDateToCustomString(item.remind_time).time}</p>
                   <p className={styles.next__FIO}>Сафронова Ольга Алексеевна</p>
                 </div>
               </div>
