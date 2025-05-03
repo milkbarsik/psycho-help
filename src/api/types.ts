@@ -51,6 +51,18 @@ export type PostAppointment = {
 	venue: string
 }
 
+export type GetAppointment = {
+	id: string,
+    patient_id: string,
+    therapist_id: string,
+    type: "Offline" | "Online",
+    reason: string,
+    status: "Approved" | "Accepted" | "Cancelled" | "Done",
+    remind_time: string,
+    last_change_time: string,
+    venue: string
+}
+
 
 
 // export interface Pagination {
