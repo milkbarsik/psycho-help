@@ -13,7 +13,6 @@ type Tauth = {
   getUser: () => Promise<AxiosResponse<User>>;
   logOut: () => Promise<AxiosResponse>;
 
-  returnUser: () => User | null;
 }
 
 export const useAuth = create<Tauth>((set, get) => ({
@@ -28,21 +27,18 @@ export const useAuth = create<Tauth>((set, get) => ({
   async login (email: string, password: string): Promise<AxiosResponse<User>> {
     const res = await AuthApi.login(email, password);
     set((state) => ({...state, isAuth: true, user: {...res.data}}));
-		console.log(res);
     return res;
   },
 
   async registration (data: regData): Promise<AxiosResponse<User>> {
     const res = await AuthApi.registration(data);
     set((state) => ({...state, isAuth: true, user: {...res.data}}));
-		console.log(res);
     return res;
   },
 
   async getUser(): Promise<AxiosResponse<User>> {
     const res = await AuthApi.getUser();
     set((state) => ({...state, isAuth: true, user: {...res.data}}));
-		console.log(res);
     return res;
   },
 
@@ -51,9 +47,5 @@ export const useAuth = create<Tauth>((set, get) => ({
     set(() => ({isAuth: false, user: null }));
     return res;
   },
-
-  returnUser() {
-    return get().user;
-  }
 
 }))

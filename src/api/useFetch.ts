@@ -21,7 +21,6 @@ export function useFetch(foo: () => Promise<any>): UseFetchReturn {
       setIsLoading(true);
       await foo();
     } catch (e) {
-      console.log(e);
       setError(
         e instanceof (AxiosError || Error)
           ? { message: e.message, status: e.response?.status }
