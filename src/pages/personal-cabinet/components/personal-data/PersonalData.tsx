@@ -17,6 +17,7 @@ const PersonalData: FC<{ user: User, appointments: GetAppointment[]}> = ({ user,
 
 	const {logOut} = useAuth()
 	const navigate = useNavigate()
+  const sortedAppointments = appointments.sort((a, b) => a.remind_time.localeCompare(b.remind_time));
   const {fetching} = useFetch( async () => {
 		const res = await logOut()
 		if (res.status == 200) {
@@ -26,55 +27,58 @@ const PersonalData: FC<{ user: User, appointments: GetAppointment[]}> = ({ user,
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.head}>
-        <b>
-          {user.last_name} {user.first_name} {user.middle_name}
-        </b>
-        <div
-          className={styles.edit}
-          style={{ backgroundImage: `url(${editImg})` }}
-          onClick={() => {console.log('редактирование')}}
-        ></div>
-      </div>
-      <p>{user.email}</p>
-      <p>{user.phone_number}</p>
-      <button className={styles.button} onClick={() => fetching()}>
-        Выход
-      </button>
-      <ul className={styles.appointments}>
-          <li className={styles.appointment__active}>
-            <div className={styles.active__date}>
-              <p className={styles.active__date_day}>{formatDateToCustomString(appointments[0].remind_time)}</p>
-            </div>
-            <div className={styles.name__wrapper}>
-              <img src={userImg} className={styles.user_img} />
-              <p className={styles.FIO}>Сафронова Ольга Алексеевна</p>
-            </div>
-            <div className={styles.venue_wrapper}>
-              <div className={styles.venue__content}>
-                <img src={venueImg} className={styles.venue__img} />
-                <p className={styles.venue}>{appointments[0].venue}</p>
-              </div>
-              <button><img src={editAppointmentImg}/></button>
-            </div>
-          </li>
-          {appointments.slice(1).map(item =>
-            <li className={styles.next} key={item.id}>
-              <div className={styles.next__content}>
-                <div className={styles.next__date}>
-                  <p className={styles.next__date_day}>{formatDateToCustomString(item.remind_time)}</p>
-                </div>
-								<p className={styles.next__date_venue}>{item.venue}</p>
-                <div className={styles.next__time}>
-                  <p className={styles.next__FIO}>Сафронова Ольга Алексеевна</p>
-                </div>
-              </div>
-              <button><img src={points}/></button>
-            </li>
-          )}
-        </ul>
-      </div>
 
+			<div className={styles.userInfo}>
+				<div className={styles.head}>
+					<p className={styles.userData}>
+						{user.last_name} {user.first_name} {user.middle_name}
+					</p>
+					<div
+						className={styles.edit}
+						style={{ backgroundImage: `url(${editImg})` }}
+						onClick={() => {console.log('редактирование')}}
+					></div>
+				</div>
+				<p>{user.email}</p>
+				<p>{user.phone_number}</p>
+				<button className={styles.exit} onClick={() => fetching()}>
+					Выход
+				</button>
+			</div>
+
+      <ul className={styles.appointments}>
+				<li className={styles.appointment__active}>
+					<div className={styles.active__date}>
+						<p className={styles.active__date_day}>{formatDateToCustomString(sortedAppointments[0].remind_time)}</p>
+					</div>
+					<div className={styles.name__wrapper}>
+						<img src={userImg} className={styles.user_img} />
+						<p className={styles.FIO}>Сафронова Ольга Алексеевна</p>
+					</div>
+					<div className={styles.venue_wrapper}>
+						<div className={styles.venue__content}>
+							<img src={venueImg} className={styles.venue__img} />
+							<p className={styles.venue}>{sortedAppointments[0].venue}</p>
+						</div>
+						<button><img src={editAppointmentImg}/></button>
+					</div>
+				</li>
+				{sortedAppointments.slice(1).map(item =>
+					<li className={styles.next} key={item.id}>
+						<div className={styles.next__content}>
+							<div className={styles.next__date}>
+								<p className={styles.next__date_day}>{formatDateToCustomString(item.remind_time)}</p>
+							</div>
+							<p className={styles.next__date_venue}>{item.venue}</p>
+							<div className={styles.next__time}>
+								<p className={styles.next__FIO}>Сафронова Ольга Алексеевна</p>
+							</div>
+						</div>
+						<button><img src={points}/></button>
+					</li>
+				)}
+			</ul>
+		</div>
   );
 };
 
