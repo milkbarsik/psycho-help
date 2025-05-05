@@ -1,6 +1,11 @@
 <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g transform="rotate(45 17 17)">
-    <path d="M17 4L17 30" stroke="#5E8BF4" stroke-width="2" stroke-linecap="round"/>
-    <path d="M4 17L30 17" stroke="#5E8BF4" stroke-width="2" stroke-linecap="round"/>
-  </g>
+<g clip-path="url(#clip0_24_2)">
+<path d="M26.1924 7.80762L7.80761 26.1924" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<path d="M7.80762 7.80762L26.1924 26.1924" stroke="black" stroke-width="2" stroke-linecap="round"/>
+</g>
+<defs>
+<clipPath id="clip0_24_2">
+<rect width="34" height="34" fill="white"/>
+</clipPath>
+</defs>
 </svg>

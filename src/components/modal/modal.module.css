@@ -1,0 +1,9 @@
+.buttonWrapper {
+    /* margin-right: 10rem; */
+}
+
+.button {
+    background: none;
+    border: none;
+    user-select: none;
+}

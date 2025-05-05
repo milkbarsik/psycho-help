@@ -29,7 +29,9 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   });
 
   const validateEmail = (email: string) =>
-    /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email) ? '' : 'Некорректный формат электронной почты';
+    /^[\w-]+(\.[\w-]+)*@[\w-]+\.[a-z]{2,6}$/i.test(email)
+      ? ''
+      : 'Некорректный формат электронной почты';
 
   const validatePassword = (password: string) => (password ? '' : 'Пароль не может быть пустым');
 
@@ -44,11 +46,11 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
 
   const handleOk = async () => {
     if (!validateForm()) return;
-		await fetching();
-		if(error == null) {
-			setOpen(false);
-			setModalOpen(false);
-		}
+    await fetching();
+    if (error == null) {
+      setOpen(false);
+      setModalOpen(false);
+    }
   };
 
   const handleCancel = () => {
@@ -84,7 +86,12 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
         <form className={styles.form}>
           <label>
             <span>Электронная почта</span>
-            <Input name="email" value={formValue.email} placeholder="primer@gmail.com" onChange={handleInputChange} />
+            <Input
+              name="email"
+              value={formValue.email}
+              placeholder="primer@gmail.com"
+              onChange={handleInputChange}
+            />
             {errors.email && <span className={styles.errorText}>{errors.email}</span>}
           </label>
           <label>
@@ -112,9 +119,11 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
             <span>Регистрация</span>
           </Button>
         </form>
-				<p style={{color: 'red'}}>
-					{error.status === 401 ? 'Неверный логин или пароль' : error.message !== '' && error.message}
-				</p>
+        <p style={{ color: 'red' }}>
+          {error.status === 401
+            ? 'Неверный логин или пароль'
+            : error.message !== '' && error.message}
+        </p>
       </Modal>
     </>
   );

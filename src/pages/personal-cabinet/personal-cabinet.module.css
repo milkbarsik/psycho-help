@@ -21,8 +21,8 @@
     margin-top: 0;
 }
 
-.form {
-    margin-top: 19px;
+.dateInput {
+    margin-top: 2rem;
     background-color: #F2F2F2;
     border-radius: 15px;
     padding: calc((1vh + 1vw)) 20%;
@@ -33,21 +33,17 @@
 
 .subButton {
     width: 100%;
-    padding: 14px;
+    padding: 1.5rem;
     background-color: #4285f4;
     color: white;
-    font-size: 18px;
+    font-size: 2rem;
     font-weight: 600;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s;
-  }
-  
-  .subButton:hover {
-    background-color: #357ae8;
-  }
+}
 
-.inputBlock {
-    /* Add styles if needed */
+.subButton:hover {
+    background-color: #357ae8;
 }

@@ -1,0 +1,38 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 36px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.imageWrapper {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.itemText {
+    font-size: 1.6rem;
+    font-weight: bold;
+    width: 292px;
+    text-align: center;
+    margin-top: 10px;
+    word-break: break-word;
+}

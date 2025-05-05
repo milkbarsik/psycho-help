@@ -1,70 +1,42 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import styles from './AppointmentForm.module.css';
-import { therapist, PostAppointment } from '@/api/types';
+import { therapist } from '@/api/types';
+import { useAppointment } from '../../storeOfAppointment/appointment';
+import { getDayNameOfWeek } from '../../helpers/dateFunctions';
 
 interface Props {
   doctors: therapist[];
-  date: string;
-  appointment: PostAppointment;
-  setAppointment: React.Dispatch<React.SetStateAction<PostAppointment>>;
 }
 
-const AppointmentForm: FC<Props> = ({ doctors, date, appointment, setAppointment }) => {
+const AppointmentForm: FC<Props> = ({ doctors }) => {
 
-  function combineDateAndTime(dateStr: string, timeStr: string) {
-    const [year, month, day] = dateStr.split('-');
-    const [hours, minutes] = timeStr.split(':');
+const appointment = useAppointment(state => state.appointment);
+const setAppointment = useAppointment(state => state.setAppointment);
 
-    const date = new Date(Date.UTC(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      Number(hours),
-      Number(minutes)
-    ));
-
-    return date.toISOString();
-  }
-
-  const dateObj = new Date(date);
-  const dayNumber = dateObj.getDay();
-  const daysOfWeek = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-  const dayName = daysOfWeek[dayNumber];
-
-  const [doctorId, setDoctorId] = useState<string>('default');
-  const [location, setLocation] = useState('Психолог не выбран');
-  const [selectedTime, setSelectedTime] = useState('10:30');
-  const [comment, setComment] = useState('');
-
-  function handleLocation(id: string) {
+  const handleLocation = (id: string) => {
     const currentDoctor = doctors.find((doctor) => doctor.id === id);
     if (currentDoctor) {
-      setLocation(currentDoctor.office);
-      setAppointment(prev => ({ ...prev, venue: currentDoctor.office }));
+      setAppointment({venue: currentDoctor.office});
     }
   }
-
-  useEffect(() => {
-    if (date && selectedTime) {
-      const result = combineDateAndTime(date, selectedTime);
-      setAppointment(prev => ({ ...prev, remind_time: result }));
-    }
-  }, [date, selectedTime, setAppointment]);
 
   return (
     <div className={styles.form}>
-      <h2 className={styles.date}>{dayName}, {date.split('-').at(-1)}</h2>
+      <h2 className={styles.date}>{getDayNameOfWeek(appointment.date)}, {appointment.date.split('-').at(-1)}</h2>
 
       <div className={styles.field}>
         <label className={styles.label}>Психолог</label>
         <select
           className={styles.select}
+					value={appointment.therapist_id}
           onChange={(e) => {
-            const selectedId = e.target.value;
-            setAppointment(prev => ({ ...prev, therapist_id: selectedId }));
-            handleLocation(selectedId);
+            if (appointment.type === 'Offline') {
+							setAppointment({therapist_id: e.target.value});
+							handleLocation(e.target.value);
+						} else {
+							setAppointment({therapist_id: e.target.value});
+						}
           }}
-          value={appointment.therapist_id}
         >
           <option value="default" disabled>---Выберите психолога---</option>
           {doctors.map(item =>
@@ -78,15 +50,19 @@ const AppointmentForm: FC<Props> = ({ doctors, date, appointment, setAppointment
       <div className={styles.format}>
         <button
           type="button"
-          onClick={() => setAppointment(prev => ({ ...prev, type: 'Online' }))}
-          className={`${styles.formatButton} ${appointment.type === 'Online' ? styles.active : ''}`}
+					className={`${styles.formatButton} ${appointment.type === 'Online' ? styles.active : ''}`}
+          onClick={() => setAppointment({type: 'Online', venue: ''})}
         >
           Онлайн
         </button>
         <button
           type="button"
-          onClick={() => setAppointment(prev => ({ ...prev, type: 'Offline' }))}
-          className={`${styles.formatButton} ${appointment.type === 'Offline' ? styles.active : ''}`}
+					className={`${styles.formatButton} ${appointment.type === 'Offline' ? styles.active : ''}`}
+          onClick={() => {
+							setAppointment({type: 'Offline', venue: ''});
+							handleLocation(appointment.therapist_id);
+						}
+					}
         >
           Очно
         </button>
@@ -95,13 +71,28 @@ const AppointmentForm: FC<Props> = ({ doctors, date, appointment, setAppointment
       <div className={styles.row}>
         <div className={styles.column}>
           <label className={styles.label}>Локация</label>
-          <p className={styles.location}>{location}</p>
+          {
+						appointment.type === 'Offline'
+						?
+							<p className={styles.location}>{appointment.venue}</p>
+						:
+							<select
+								value={appointment.venue}
+								className={styles.select}
+								onChange={(e) => setAppointment({venue: e.target.value})}
+							>
+								<option value="" disabled>---Выберите платформу---</option>
+								<option value="discord">Discord</option>
+								<option value="Zoom">Zoom</option>
+								<option value="Telegram">Telegram</option>
+							</select>
+					}
         </div>
         <div className={styles.columnSmall}>
           <label className={styles.label}>Время</label>
           <select
-            value={selectedTime}
-            onChange={(e) => setSelectedTime(e.target.value)}
+            value={appointment.time}
+            onChange={(e) => setAppointment({time: e.target.value})}
             className={styles.select}
           >
             <option value="10:30">10:30</option>
@@ -115,7 +106,7 @@ const AppointmentForm: FC<Props> = ({ doctors, date, appointment, setAppointment
         <label className={styles.label}>Комментарий</label>
         <textarea
           value={appointment.reason}
-          onChange={(e) => setAppointment(prev => ({ ...prev, reason: e.target.value }))}
+          onChange={(e) => setAppointment({reason: e.target.value})}
           className={styles.textarea}
         />
       </div>

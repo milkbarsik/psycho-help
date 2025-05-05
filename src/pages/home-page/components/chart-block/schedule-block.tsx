@@ -2,11 +2,7 @@ import { FC } from 'react';
 import ClockImage from '../../../../assets/images/main/chart/clock.svg';
 import lineVector from '../../../../assets/images/main/chart/line.svg';
 import styles from './schedule-block.module.css';
-
-interface TextBlockProps {
-  title: string;
-  info: string;
-}
+import { TextBlockProps } from '@/api/types';
 
 const items: TextBlockProps[] = [
   {
@@ -30,17 +26,6 @@ const items: TextBlockProps[] = [
   },
 ];
 
-const ItemsBlock: FC<TextBlockProps> = ({ title, info }) => (
-  <div className={styles.textBlock}>
-    <ul className={styles.textList}>
-      <li>{title}</li>
-      <li>
-        <span className={styles.listBold}>{info}</span>
-      </li>
-    </ul>
-  </div>
-);
-
 const ChartBlock: FC = () => {
   return (
     <div className={styles.wrapper}>
@@ -57,7 +42,8 @@ const ChartBlock: FC = () => {
         </ul>
         <div className={styles.centerSpan}>
           <p className={styles.weekdaysDinner}>
-            <span className={styles.boldSpan}>Обед:</span> 13:00 - 13:45
+            <span className={styles.boldSpan}>Обед: </span>
+            <span>13:00 - 13:45</span>
           </p>
         </div>
       </div>
@@ -67,14 +53,21 @@ const ChartBlock: FC = () => {
         <img src={lineVector} alt="line" />
       </div>
       <h3>
-        <span>
+        <span className={styles.detailedInformation}>
           В выходные и праздничные дни, ночью, за срочной психологической помощью можно обратиться
           по следующим телефонам:
         </span>
       </h3>
-      {items.map((block, index) => (
-        <ItemsBlock key={index} title={block.title} info={block.info} />
-      ))}
+      <div className={styles.textBlock}>
+        <ul className={styles.textList}>
+          {items.map((block, index) => (
+            <li key={index} className={styles.detailedInformationItem}>
+              <p>{block.title}</p>
+              <p className={styles.detailedInformationTime}>{block.info}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

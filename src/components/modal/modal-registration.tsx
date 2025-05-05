@@ -14,7 +14,7 @@ const INITIAL_FORM_VALUE = {
   email: '',
   password: '',
   confirm_password: '',
-  role: ''
+  role: '',
 };
 
 type Tprops = {
@@ -33,16 +33,13 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
   };
   const [open, setOpen] = useState(isOpen);
 
-
   //импортируем функции регистрации, изменения состояния и мидлвар
   const { registration } = useAuth();
 
   const { fetching, isLoading, error } = useFetch(async () => {
     const { confirm_password, ...dataForServer } = formValue;
     const res = await registration(dataForServer as regData);
-  })
-
-
+  });
 
   //Функции для валидации полей формы
 
@@ -102,7 +99,6 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     return '';
   };
 
-
   //Применение функций валидаций и возвращение true, если нет ошибок, иначе false
 
   const validateForm = () => {
@@ -114,7 +110,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
       email: validateEmail(formValue.email),
       password: validatePassword(formValue.password),
       confirm_password: validateConfirm_password(formValue.confirm_password),
-      role: validateRole(formValue.role)
+      role: validateRole(formValue.role),
     };
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => error === '');
@@ -124,12 +120,12 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 
   const handleOk = async () => {
     if (!validateForm()) return;
-		await fetching();
-		if(error == null) {
-			setOpen(false);
-			setModalOpen(false);
-			resetForm();
-		}
+    await fetching();
+    if (error == null) {
+      setOpen(false);
+      setModalOpen(false);
+      resetForm();
+    }
   };
 
   //Закрытие модалки
@@ -147,8 +143,8 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
     });
   }, [formValue]);
 
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { //
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //
     const { name, value } = e.target;
     const filteredValue =
       name === 'first_name' || name === 'last_name' || name === 'middle_name'
@@ -264,16 +260,20 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               placeholder="Введите пароль ещё раз"
               onChange={handleInputChange}
             />
-            {errors.confirm_password && <p className={styles.errorText}>{errors.confirm_password}</p>}
+            {errors.confirm_password && (
+              <p className={styles.errorText}>{errors.confirm_password}</p>
+            )}
           </label>
           <p>У вас уже есть учётная запись?</p>
           <Button type="default" onClick={() => setWindow('log')} className={styles.registerButton}>
             <span>Войти</span>
           </Button>
         </form>
-				<p style={{color: 'red'}}>
-					{error.status === 422 ? 'пользователь с таким email уже существует' : error.message !== '' && error.message}
-				</p>
+        <p style={{ color: 'red' }}>
+          {error.status === 422
+            ? 'пользователь с таким email уже существует'
+            : error.message !== '' && error.message}
+        </p>
       </Modal>
     </>
   );
