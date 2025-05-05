@@ -4,17 +4,21 @@
 }
 
 .list_wrapper {
-    width: 100%;
+    width: 90%;
     max-width: 1128px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 60px;
-    gap: 122px;
+    gap: 100px;
     flex-wrap: wrap;
 }
 
 .title {
     font-size: 4.8em;
     text-align: center;
+}
+
+.list_wrapper > * {
+    flex: 0 0 calc(33.333% - 20px);
 }
