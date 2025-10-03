@@ -2,10 +2,7 @@ import { Layout } from 'antd';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-fade';
+
 import styles from './App.module.css';
 import AppRouter from './components/router/AppRouter';
 import { useEffect, useState } from 'react';

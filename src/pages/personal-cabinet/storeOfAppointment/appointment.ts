@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type TAppointment = {
+export type Appointment = {
   therapist_id: string;
   type: 'Online' | 'Offline';
   reason: string;
@@ -10,8 +10,8 @@ export type TAppointment = {
 };
 
 interface IAppointment {
-  appointment: TAppointment;
-  setAppointment: (patch: Partial<TAppointment>) => void;
+  appointment: Appointment;
+  setAppointment: (patch: Partial<Appointment>) => void;
 }
 
 export const useAppointment = create<IAppointment>((set) => ({

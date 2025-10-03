@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Input, Checkbox } from 'antd';
+import { Button, Modal, Input } from 'antd';
 import styles from './modal-login.module.css';
 import { useAuth } from '@/api/auth/useAuth';
 import { useFetch } from '@/api/useFetch';

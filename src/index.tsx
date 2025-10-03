@@ -25,7 +25,7 @@ const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename={process.env.REACT_APP_PUBLIC_URL}>
+      <BrowserRouter basename={import.meta.env.VITE_REACT_APP_PUBLIC_URL}>
         <App />
       </BrowserRouter>
     </QueryClientProvider>

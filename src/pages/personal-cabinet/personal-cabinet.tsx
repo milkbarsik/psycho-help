@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import PersonalData from './components/personal-data/PersonalData';
-import { FC } from 'react';
+import type { FC } from 'react';
 import styles from './personal-cabinet.module.css';
 import ACalendar from './components/calendar/calendar';
 import AppointmentForm from './components/input-block/AppointmentForm';
-import { GetAppointment, therapist } from '@/api/types';
+import type { GetAppointment, Therapist } from '@/api/types';
 import ServiceApi from '@/api/service-api';
 import { useFetch } from '@/api/useFetch';
 import { useAuth } from '@/api/auth/useAuth';
@@ -18,7 +18,7 @@ const PersonalCabinet: FC = () => {
   const authUser = useAuth(state => state.user);
 	const appointment = useAppointment(state => state.appointment);
 
-  const [doctors, setDoctors] = useState<therapist[]>([]);
+  const [doctors, setDoctors] = useState<Therapist[]>([]);
   const [appointments, setAppointments] = useState<GetAppointment[]>();
 
   const { fetching, isLoading, error } = useFetch(async () => {

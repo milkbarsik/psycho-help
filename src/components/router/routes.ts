@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import HomePage from '../../pages/home-page/home-page';
 import PersonalCabinet from '../../pages/personal-cabinet/personal-cabinet';
 import FaqPage from '../../pages/faq-page/faq-page';

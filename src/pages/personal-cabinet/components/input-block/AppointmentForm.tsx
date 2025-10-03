@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import styles from './AppointmentForm.module.css';
-import { therapist } from '@/api/types';
+import type { Therapist } from '@/api/types';
 import { useAppointment } from '../../storeOfAppointment/appointment';
 import { getDayNameOfWeek } from '../../helpers/dateFunctions';
 
 interface Props {
-  doctors: therapist[];
+  doctors: Therapist[];
 }
 
 const AppointmentForm: FC<Props> = ({ doctors }) => {

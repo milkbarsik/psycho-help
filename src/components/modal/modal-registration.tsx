@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { Button, Modal, Input } from 'antd';
-import InputMask from 'react-input-mask';
+import MaskedInput from 'antd-mask-input';
 import { useFetch } from '@/api/useFetch';
 import { useAuth } from '@/api/auth/useAuth';
-import { regData } from '@/api/types';
+import type { regData } from '@/api/types';
 import styles from './modal-registration.module.css';
 
 const INITIAL_FORM_VALUE = {
@@ -212,14 +212,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           </label>
           <label>
             <span>Номер телефона</span>
-            <InputMask
-              name="phone_number"
-              value={formValue.phone_number}
-              mask="+79999999999"
-              onChange={handleInputChange}
-            >
-              {<Input type="tel" placeholder="+79999999999" />}
-            </InputMask>
+            <MaskedInput name="phone_number" mask="+70000000000" onChange={handleInputChange} value={formValue.phone_number} />
             {errors.phone_number && <p className={styles.errorText}>{errors.phone_number}</p>}
           </label>
           <label>

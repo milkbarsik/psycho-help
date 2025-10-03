@@ -1,6 +1,6 @@
-import { AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 import { $serviceClient } from "../http";
-import { User, regData, authRes } from "../types";
+import type { User, regData } from "../types";
 
 
 export default class AuthApi {

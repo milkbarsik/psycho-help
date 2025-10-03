@@ -1,4 +1,4 @@
-import { GetAppointment } from "@/api/types";
+import type { GetAppointment } from "@/api/types";
 
 export const appointmentsConsts: GetAppointment[] = [
     {

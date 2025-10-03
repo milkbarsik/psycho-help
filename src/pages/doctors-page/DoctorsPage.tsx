@@ -5,11 +5,11 @@ import { useFetch } from '@/api/useFetch';
 
 import DoctorList from './components/doctor-list/DoctorList';
 import { useEffect, useState } from 'react';
-import { therapist } from '@/api/types';
+import type { Therapist } from '@/api/types';
 import Loader from '@/components/UI/loader/loader';
 
 const DoctorsPage = () => {
-  const [doctors, setDoctors] = useState<therapist[]>([]);
+  const [doctors, setDoctors] = useState<Therapist[]>([]);
 
   const { fetching, isLoading, error } = useFetch(async () => {
     const res = await ServiceApi.getTherapists();

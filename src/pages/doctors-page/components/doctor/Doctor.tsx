@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { therapist } from '@/api/types';
+import type { FC } from 'react';
+import type { Therapist } from '@/api/types';
 import styles from './Doctor.module.css';
 import arrowLink from '@/assets/images/doctors/link-arrow.svg';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import Img from '@/components/UI/img/Img';
 import altPhoto from '@/assets/images/altPhotos/User_Accounts_alt.png';
 
 interface Props {
-  doctor: therapist;
+  doctor: Therapist;
 }
 
 const Doctor: FC<Props> = ({ doctor }) => {
@@ -15,7 +15,7 @@ const Doctor: FC<Props> = ({ doctor }) => {
     <div className={styles.wrapper}>
       <Img
         className={styles.photo}
-        photo={`${process.env.REACT_APP_IMAGE_URL}` + doctor.photo}
+        photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}` + doctor.photo}
         altPhoto={altPhoto}
       />
       <p className={styles.fio}>
