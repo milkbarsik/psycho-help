@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import {GetAppointment, User} from '@/api/types'
+import type { FC } from 'react';
+import type {GetAppointment, User} from '@/api/types'
 import { useFetch } from '@/api/useFetch';
 import { useAuth } from '@/api/auth/useAuth';
 import { useNavigate } from 'react-router-dom';

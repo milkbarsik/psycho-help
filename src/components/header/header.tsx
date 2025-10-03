@@ -1,6 +1,6 @@
-import { ReactComponent as Logo } from '../../assets/images/Logo-2.svg';
+import Logo from '@/assets/images/Logo-2.svg?react';
 // import { ReactComponent as Bell } from '../../assets/images/header/bell.svg';
-import { ReactComponent as Profile } from '../../assets/images/header/profile.svg';
+import Profile from '@/assets/images/header/profile.svg?react';
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
 import ModalWindow from '../modal/modal';

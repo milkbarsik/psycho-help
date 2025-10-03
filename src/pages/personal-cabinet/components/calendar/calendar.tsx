@@ -1,4 +1,5 @@
-import { CSSProperties, FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { FC, CSSProperties } from 'react';
 import { Calendar, ConfigProvider, theme } from 'antd';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -6,7 +7,7 @@ import 'dayjs/locale/ru';
 import ru_RU from 'antd/locale/ru_RU';
 import styles from './calendar.module.css';
 import { useAppointment } from '../../storeOfAppointment/appointment';
-import { GetAppointment } from '@/api/types';
+import type { GetAppointment } from '@/api/types';
 import Marker from './marker/marker';
 
 dayjs.locale('ru');

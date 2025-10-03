@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import ClockImage from '../../../../assets/images/main/chart/clock.svg';
 import lineVector from '../../../../assets/images/main/chart/line.svg';
 import styles from './schedule-block.module.css';
-import { TextBlockProps } from '@/api/types';
+import type { TextBlockProps } from '@/api/types';
 
 const items: TextBlockProps[] = [
   {

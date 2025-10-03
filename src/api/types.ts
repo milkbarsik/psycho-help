@@ -18,12 +18,12 @@ export type User = {
 	social_media: string;
 }
 
-export type authRes = {
+export type AuthRes = {
 	status_code: number;
 	token: string;
 }
 
-export type therapist = {
+export type Therapist = {
 	id?: string;
 	photo?: string;
 	first_name: string;
@@ -63,12 +63,20 @@ export type GetAppointment = {
     venue: string
 }
 
+export type TextBlockProps = {
+  title: string;
+  info: string;
+}
 
-
-// export interface Pagination {
-//   pageNo?: number;
-//   pageSize?: number;
-// }
+export type BlockWrapperProps = {
+  component: (() => JSX.Element) | React.FC,
+  name: string,
+  title?: string
+}
+export type Pagination = {
+  pageNo?: number;
+  pageSize?: number;
+}
 
 // export interface User {
 //   userId: number;

@@ -1,4 +1,4 @@
-import { TAppointment } from "../storeOfAppointment/appointment";
+import type { Appointment } from "../storeOfAppointment/appointment";
 import { combineDateAndTime } from "./dateFunctions";
 
 
@@ -10,7 +10,7 @@ export default class AppointmentDto {
 	venue: string;
 	remind_time: string;
 
-	constructor (appointment: TAppointment, userId: string | undefined) {
+	constructor (appointment: Appointment, userId: string | undefined) {
 		this.patient_id = userId ? userId : '';
 		this.therapist_id = appointment.therapist_id;
 		this.type = appointment.type;

@@ -1,5 +1,6 @@
 // import { url } from "inspector";
-import { FC, useState } from 'react';
+import { useState } from 'react';
+import type { FC } from 'react'
 // import { URL } from "url";
 
 interface Props {

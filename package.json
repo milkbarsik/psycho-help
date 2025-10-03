@@ -3,37 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/compatible": "5.1.2",
-    "@ant-design/icons": "5.2.6",
-    "@craco/craco": "^7.1.0",
+    "@ant-design/compatible": "5.1.4",
+    "@ant-design/icons": "6.1.0",
     "@tanstack/react-query": "^4.36.1",
-    "@types/node": "20.8.4",
-    "antd": "5.12.5",
-    "axios": "^1.5.1",
-    "classnames": "^2.5.1",
+    "antd": "5.27.4",
+    "antd-mask-input": "^2.0.7",
+    "axios": "^1.12.2",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-router-dom": "7.9.3",
+    "swiper": "^12.0.2",
+    "zustand": "^5.0.8",
     "dayjs": "^1.11.10",
-    "dayjs-plugin-utc": "0.1.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-input-mask": "^3.0.0-alpha.2",
-    "react-router-dom": "6.16.0",
-    "react-scripts": "5.0.1",
-    "styled-components": "^6.1.13",
-    "swiper": "^11.1.1",
-    "typescript": "4.9.5",
-    "zustand": "^5.0.3"
+    "dayjs-plugin-utc": "0.1.2"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "browserslist": {
     "production": [
@@ -48,12 +36,20 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.36.0",
     "@types/css-modules": "^1.0.5",
-    "@types/istanbul-reports": "^3.0.4",
-    "@types/react": "^18.3.2",
+    "@types/node": "24.6.2",
+    "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
-    "@types/react-input-mask": "^3.0.5",
-    "eslint": "^8.57.0",
-    "prettier": "^3.3.3"
+    "@types/swiper": "^5.4.3",
+    "@vitejs/plugin-react": "^5.0.4",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^6.1.0",
+    "eslint-plugin-react-refresh": "^0.4.23",
+    "prettier": "^3.6.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "^7.1.9",
+    "vite-plugin-svgr": "^4.5.0"
   }
 }

@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import type { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import GreetingBlock from './components/greeting-block/greeting-block';
 import ReasonsBlock from './components/reasons-block/reasons-block';
@@ -6,7 +7,7 @@ import FeaturesBlock from './components/features-block/features-block';
 import ChartBlock from './components/chart-block/schedule-block';
 // import TherapistsBlock from './components/doctors-block/doctors-block';
 import styles from './home-page.module.css';
-import { BlockWrapperProps } from '@/api/types';
+import type { BlockWrapperProps } from '@/api/types';
 
 const ContentWrapper: FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className={styles.contentWrapper}>{children}</div>

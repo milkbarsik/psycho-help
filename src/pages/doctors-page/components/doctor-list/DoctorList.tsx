@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import Doctor from '../doctor/Doctor';
 import styles from './DoctorList.module.css';
-import { therapist } from '@/api/types';
+import type { Therapist } from '@/api/types';
 
 interface Props {
-  doctors: therapist[];
+  doctors: Therapist[];
 }
 
 const DoctorList: FC<Props> = ({ doctors }) => {

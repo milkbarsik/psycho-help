@@ -3,13 +3,13 @@ import styles from './Doctor-page.module.css';
 import ServiceApi from '@/api/service-api';
 import { useFetch } from '@/api/useFetch';
 import { useEffect, useState } from 'react';
-import { therapist } from '@/api/types';
+import type { Therapist } from '@/api/types';
 import Loader from '@/components/UI/loader/loader';
 import Img from '@/components/UI/img/Img';
 import altPhoto from '@/assets/images/altPhotos/User_Accounts_alt.png';
 
 const DoctorPage = () => {
-  const [doctor, setDoctor] = useState<therapist | null>(null);
+  const [doctor, setDoctor] = useState<Therapist | null>(null);
   const { id } = useParams();
 
   const { fetching, isLoading, error } = useFetch(async () => {
@@ -42,7 +42,7 @@ const DoctorPage = () => {
         <div className={styles.card__wrapper}>
           <Img
             className={styles.img}
-            photo={`${process.env.REACT_APP_IMAGE_URL}` + doctor.photo}
+            photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}` + doctor.photo}
             altPhoto={altPhoto}
           />
           <div className={styles.card__content}>
