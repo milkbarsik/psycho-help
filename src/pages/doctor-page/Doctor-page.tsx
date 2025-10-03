@@ -1,12 +1,12 @@
 import { useParams } from 'react-router';
 import styles from './Doctor-page.module.css';
-import ServiceApi from '@/api/service-api';
-import { useFetch } from '@/api/useFetch';
+import ServiceApi from '@/shared/api/service-api';
+import { useFetch } from '@/shared/api/useFetch';
 import { useEffect, useState } from 'react';
-import { therapist } from '@/api/types';
-import Loader from '@/components/UI/loader/loader';
-import Img from '@/components/UI/img/Img';
-import altPhoto from '@/assets/images/altPhotos/User_Accounts_alt.png';
+import { therapist } from '@/shared/api/types';
+import Loader from '@/widgets/loader/loader';
+import Img from '@/shared/ui/img/Img';
+import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
 
 const DoctorPage = () => {
   const [doctor, setDoctor] = useState<therapist | null>(null);
