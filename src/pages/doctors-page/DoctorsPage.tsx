@@ -1,12 +1,12 @@
-import Title from '@/features/therapists/ui/title/Title';
+import Title from '@/features/therapists/ui/title';
 import styles from './DoctorPage.module.css';
 import ServiceApi from '@/shared/api/service-api';
 import { useFetch } from '@/shared/api/useFetch';
 
-import DoctorList from '@/features/therapists/ui/doctor-list/DoctorList';
+import DoctorList from '@/features/therapists/ui/doctor-list';
 import { useEffect, useState } from 'react';
 import { therapist } from '@/shared/api/types';
-import Loader from '@/widgets/loader/loader';
+import Loader from '@/shared/ui/loader/loader';
 
 const DoctorsPage = () => {
   const [doctors, setDoctors] = useState<therapist[]>([]);

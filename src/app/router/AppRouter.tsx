@@ -1,10 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { authRoutes, notAuthRoutes } from './routes';
 import { useAuth } from '@/features/auth/api/useAuth';
-import Loader from '@/widgets/loader/loader';
+import { Loader } from '@/shared/ui';
+import { useAppContext } from '@/app/context';
 
-const AppRouter = ({ isLoading }: { isLoading: boolean }) => {
-  const isAuth = useAuth(state => state.isAuth);
+const AppRouter = () => {
+  const isAuth = useAuth((state) => state.isAuth);
+  const { isAppLoading: isLoading } = useAppContext();
 
   if (isLoading) {
     return <Loader />;

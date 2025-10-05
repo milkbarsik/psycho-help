@@ -11,12 +11,11 @@ import { useAuth } from '@/features/auth/api/useAuth';
 import { appointmentsConsts } from './constants';
 import { useAppointment } from '@/features/personal-cabinet/model/appointment';
 import AppointmentDto from '@/entities/appointment/AppointmentDto';
-import Loader from '@/widgets/loader/loader';
+import Loader from '@/shared/ui/loader/loader';
 
 const PersonalCabinet: FC = () => {
-
-  const authUser = useAuth(state => state.user);
-  const appointment = useAppointment(state => state.appointment);
+  const authUser = useAuth((state) => state.user);
+  const appointment = useAppointment((state) => state.appointment);
 
   const [doctors, setDoctors] = useState<therapist[]>([]);
   const [appointments, setAppointments] = useState<GetAppointment[]>();
@@ -50,34 +49,23 @@ const PersonalCabinet: FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      {
-        isLoading &&
-        <Loader />
-      }
+      {isLoading && <Loader />}
       <main className={styles.main}>
         <h1 className={styles.h1}>Запись на прием</h1>
         <div className={styles.dateInput}>
           <ACalendar appointments={appointments} />
-          <AppointmentForm
-            doctors={doctors}
-          />
-          <button
-            className={styles.subButton}
-            type='button'
-            onClick={() => handleSendData()}
-          >
+          <AppointmentForm doctors={doctors} />
+          <button className={styles.subButton} type="button" onClick={() => handleSendData()}>
             Записаться
           </button>
         </div>
       </main>
       <aside className={styles.aside}>
-        {
-          (authUser && appointments)
-            ?
-            <PersonalData user={authUser} appointments={appointments} />
-            :
-            <p>{error.message}</p>
-        }
+        {authUser && appointments ? (
+          <PersonalData user={authUser} appointments={appointments} />
+        ) : (
+          <p>{error.message}</p>
+        )}
       </aside>
     </div>
   );

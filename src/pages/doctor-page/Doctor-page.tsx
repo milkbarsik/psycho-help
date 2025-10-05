@@ -4,7 +4,7 @@ import ServiceApi from '@/shared/api/service-api';
 import { useFetch } from '@/shared/api/useFetch';
 import { useEffect, useState } from 'react';
 import { therapist } from '@/shared/api/types';
-import Loader from '@/widgets/loader/loader';
+import Loader from '@/shared/ui/loader/loader';
 import Img from '@/shared/ui/img/Img';
 import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
 

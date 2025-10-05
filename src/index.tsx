@@ -5,16 +5,15 @@
 */
 
 /* Композиция проекта:
- В целом обычная для React (страницы делятся на компоненты и отдельно пишутся) 
+ В целом обычная для React (страницы делятся на компоненты и отдельно пишутся)
  В src/components сделаны переиспользуемые компоненты, которые могут появиться несколько раз за проект
  В src/pages сделаны собственно сами страницы сайта
  Элементы со стилями выделены в отдельный файл, откуда потом импортируются в файл компонента и там используются
  В папке API выведена вся работа с БД, .
 */
-
+import '@/shared/scss/index.scss';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './app/App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
