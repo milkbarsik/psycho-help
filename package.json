@@ -9,19 +9,21 @@
     "antd": "5.27.4",
     "antd-mask-input": "^2.0.7",
     "axios": "^1.12.2",
+    "dayjs": "^1.11.10",
+    "dayjs-plugin-utc": "0.1.2",
+    "express": "^5.1.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "react-router-dom": "7.9.3",
     "swiper": "^12.0.2",
-    "zustand": "^5.0.8",
-    "dayjs": "^1.11.10",
-    "dayjs-plugin-utc": "0.1.2"
+    "zustand": "^5.0.8"
   },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node mok-server/server.js"
   },
   "browserslist": {
     "production": [
