@@ -1,7 +1,11 @@
+:root{
+    font-size: 62.5%;
+}
+
 .wrapper {
     width: 100%;
     margin: 0 auto;
-    max-width: 1450px;
+    max-width: 145rem;
 }
 
 .list {
@@ -17,7 +21,7 @@
 .spaceBetween {
     display: flex;
     justify-content: space-between;
-    margin: 30px 0;
+    margin: 3rem 0;
 }
 
 .weekdaysWrapper {
@@ -29,12 +33,12 @@
     justify-content: space-between;
     list-style: none;
     padding: 0;
-    width: 1300px;
+    width: 130rem;
     margin: 0 auto;
 }
 
 .weekdaysElement {
-    width: 400px;
+    width: 40rem;
     text-align: center;
 }
 
@@ -63,9 +67,9 @@
     margin-top: 0;
     border-top: 1px dashed #717785;
     border-bottom: 1px dashed #717785;
-    padding: 15px 39px;
+    padding: 1.5rem 3.9rem;
     font-size: 2.2rem;
-    width: 414px;
+    width: 41.4rem;
 }
 
 .textBlock {
@@ -76,9 +80,9 @@
 .textList {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding-right: 300px;
-    margin: 20px 0px 20px 30px;
+    gap: 1.5rem;
+    padding-right: 30rem;
+    margin: 2rem 0px 2rem 3rem;
 }
 
 .detailedInformationItem {
