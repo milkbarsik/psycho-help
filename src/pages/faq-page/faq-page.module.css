@@ -1,5 +1,9 @@
+:root{
+    font-size: 62.5%;
+}
+
 .wrapper {
-    max-width: 1440px;
+    max-width: 144rem;
     margin: auto;
     width: 100%;
 }
@@ -11,8 +15,8 @@
     background: transparent;
     z-index: 0;
     position: relative;
-    padding-inline: 32px;
-    padding-bottom: 20px;
+    padding-inline: 3.2rem;
+    padding-bottom: 2rem;
 }
 
 .header {
@@ -20,8 +24,8 @@
 }
 
 .faqName {
-    margin-left: 73px;
-    margin-top: 79px;
+    margin-left: 7.3rem;
+    margin-top: 7.9rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,11 +38,11 @@
 }
 
 .wrapperQuestions {
-    max-width: 1440px;
+    max-width: 144rem;
     margin: auto;
     width: 100%;
-    margin-top: 28px;
-    margin-bottom: 97px;
+    margin-top: 2.8rem;
+    margin-bottom: 9.7rem;
 }
 
 .questions {
@@ -48,11 +52,11 @@
 
 .description {
     font-size: 2rem;
-    max-width: 364px;
-    margin-top: 10px;
+    max-width: 36.4rem;
+    margin-top: 1rem;
 }
 
 .image {
-    margin-right: 43px;
-    margin-top: 55px;
+    margin-right: 4.3rem;
+    margin-top: 5.5rem;
 }

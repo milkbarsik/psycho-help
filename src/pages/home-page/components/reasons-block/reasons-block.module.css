@@ -1,8 +1,12 @@
+:root{
+    font-size: 62.5%;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 36px;
+    gap: 2.4rem;
+    margin-top: 3.6rem;
 }
 
 .content {
@@ -11,7 +15,7 @@
     justify-content: space-between;
     align-items: center;
     height: 100%;
-    padding: 16px;
+    padding: 1.6rem;
     box-sizing: border-box;
 }
 
@@ -31,8 +35,8 @@
 .itemText {
     font-size: 1.6rem;
     font-weight: bold;
-    width: 292px;
+    width: 29.2rem;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 1rem;
     word-break: break-word;
 }

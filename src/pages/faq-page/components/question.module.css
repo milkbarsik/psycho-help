@@ -1,11 +1,15 @@
+:root{
+    font-size: 62.5%;
+}
+
 .wrapper {
     width: 100%;
     height: auto;
-    padding: 22px;
+    padding: 2.2rem;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    max-width: 1440px;
+    max-width: 144rem;
     margin: auto;
 }
 
@@ -18,8 +22,8 @@
 
 .button {
     border-radius: 50%;
-    height: 34px;
-    width: 34px;
+    height: 3.4rem;
+    width: 3.4rem;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -28,7 +32,7 @@
 
 .answer {
     color: #5E8BF4;
-    margin-top: 30px;
+    margin-top: 3rem;
     margin-left: calc((1vh + 1vw) / 2 + 34px);
 }
 

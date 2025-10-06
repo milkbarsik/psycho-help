@@ -1,3 +1,9 @@
+:root{
+    font-size: 62.5%;
+}
+
+
+
 .styledHeader {
     height: 100px;
     width: 100%;
@@ -5,13 +11,13 @@
     background-color: #5e8bf4;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .contentWrapper {
     display: flex;
     align-items: center;
-    max-width: 1440px;
+    max-width: 144rem;
     margin: auto;
     width: 100%;
 }
@@ -31,11 +37,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 2.8rem;
 }
 
 .modalWrapper {
-    width: 250px;
+    width: 25rem;
     display: flex;
     justify-content: space-between;
 }
