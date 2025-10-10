@@ -1,0 +1,705 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "FastAPI", "version": "0.1.0" },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api"
+    }
+  ],
+  "paths": {
+    "/users/user": {
+      "get": {
+        "tags": ["users"],
+        "summary": "User Token",
+        "operationId": "user_token_users_user_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
+            }
+          }
+        }
+      }
+    },
+    "/users/user/{id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "User",
+        "operationId": "user_users_user__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "email" },
+                { "type": "string", "format": "uuid" }
+              ],
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Register Users",
+        "operationId": "register_users_users_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UserCreateRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Login",
+        "operationId": "login_users_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/LoginRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Logout",
+        "operationId": "logout_users_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    },
+    "/appointments/": {
+      "get": {
+        "tags": ["appointments"],
+        "summary": "Get Appointments",
+        "operationId": "get_appointments_appointments__get",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/AppointmentBase" },
+                  "title": "Response Get Appointments Appointments  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appointments/create": {
+      "post": {
+        "tags": ["appointments"],
+        "summary": "Create Appointment",
+        "operationId": "create_appointment_appointments_create_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AppointmentCreateRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AppointmentBase" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appointments/{id}": {
+      "get": {
+        "tags": ["appointments"],
+        "summary": "Get Appointment",
+        "operationId": "get_appointment_appointments__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AppointmentBase" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appointments/{id}/cancel": {
+      "put": {
+        "tags": ["appointments"],
+        "summary": "Cancel Appointment",
+        "operationId": "cancel_appointment_appointments__id__cancel_put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reviews/{review_id}": {
+      "get": {
+        "tags": ["reviews"],
+        "summary": "Get Review",
+        "operationId": "get_review_reviews__review_id__get",
+        "parameters": [
+          {
+            "name": "review_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Review Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ReviewsBase" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles/{user_id}": {
+      "get": {
+        "tags": ["roles"],
+        "summary": "Get Roles",
+        "operationId": "get_roles_roles__user_id__get",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "User Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/UserRole" },
+                  "title": "Response Get Roles Roles  User Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["roles"],
+        "summary": "Add Roles",
+        "operationId": "add_roles_roles__user_id__put",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "User Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/UserRole" },
+                "title": "Roles"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["roles"],
+        "summary": "Delete Roles",
+        "operationId": "delete_roles_roles__user_id__delete",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "User Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/UserRole" },
+                "title": "Roles"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/therapists/{therapist_id}": {
+      "get": {
+        "tags": ["therapists"],
+        "summary": "Get Therapist",
+        "operationId": "get_therapist_therapists__therapist_id__get",
+        "parameters": [
+          {
+            "name": "therapist_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Therapist Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/TherapistBase" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/therapists/": {
+      "get": {
+        "tags": ["therapists"],
+        "summary": "Get Therapists",
+        "description": "Получить список психологов с пагинацией",
+        "operationId": "get_therapists_therapists__get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "minimum": 0, "default": 0, "title": "Skip" }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "exclusiveMinimum": 0, "default": 10, "title": "Take" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/TherapistBase" },
+                  "title": "Response Get Therapists Therapists  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image/{filename}": {
+      "get": {
+        "tags": ["images"],
+        "summary": "Get Dynamic Image",
+        "operationId": "get_dynamic_image_image__filename__get",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Filename" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AppointmentBase": {
+        "properties": {
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "patient_id": { "type": "string", "format": "uuid", "title": "Patient Id" },
+          "therapist_id": { "type": "string", "format": "uuid", "title": "Therapist Id" },
+          "type": { "$ref": "#/components/schemas/AppointmentType" },
+          "reason": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Reason" },
+          "status": { "$ref": "#/components/schemas/AppointmentStatus" },
+          "remind_time": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Remind Time"
+          },
+          "last_change_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Change Time"
+          },
+          "venue": { "type": "string", "title": "Venue" }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "patient_id",
+          "therapist_id",
+          "type",
+          "status",
+          "last_change_time",
+          "venue"
+        ],
+        "title": "AppointmentBase"
+      },
+      "AppointmentCreateRequest": {
+        "properties": {
+          "patient_id": { "type": "string", "format": "uuid", "title": "Patient Id" },
+          "therapist_id": { "type": "string", "format": "uuid", "title": "Therapist Id" },
+          "type": { "$ref": "#/components/schemas/AppointmentType" },
+          "reason": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Reason" },
+          "remind_time": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Remind Time"
+          },
+          "venue": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Venue" }
+        },
+        "type": "object",
+        "required": ["patient_id", "therapist_id", "type"],
+        "title": "AppointmentCreateRequest"
+      },
+      "AppointmentStatus": {
+        "type": "string",
+        "enum": ["Approved", "Accepted", "Cancelled", "Done"],
+        "title": "AppointmentStatus"
+      },
+      "AppointmentType": {
+        "type": "string",
+        "enum": ["Offline", "Online"],
+        "title": "AppointmentType"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LoginRequest": {
+        "properties": {
+          "email": { "type": "string", "format": "email", "title": "Email" },
+          "password": { "type": "string", "maxLength": 64, "minLength": 8, "title": "Password" }
+        },
+        "type": "object",
+        "required": ["email", "password"],
+        "title": "LoginRequest"
+      },
+      "ReviewsBase": { "properties": {}, "type": "object", "title": "ReviewsBase" },
+      "TherapistBase": {
+        "properties": {
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "first_name": { "type": "string", "title": "First Name" },
+          "middle_name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Middle Name"
+          },
+          "last_name": { "type": "string", "title": "Last Name" },
+          "phone_number": { "type": "string", "title": "Phone Number" },
+          "experience": { "type": "string", "title": "Experience" },
+          "qualification": { "type": "string", "title": "Qualification" },
+          "consult_areas": { "type": "string", "title": "Consult Areas" },
+          "description": { "type": "string", "title": "Description" },
+          "office": { "type": "string", "title": "Office" },
+          "education": { "type": "string", "title": "Education" },
+          "short_description": { "type": "string", "title": "Short Description" },
+          "photo": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Photo" }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "first_name",
+          "middle_name",
+          "last_name",
+          "phone_number",
+          "experience",
+          "qualification",
+          "consult_areas",
+          "description",
+          "office",
+          "education",
+          "short_description",
+          "photo"
+        ],
+        "title": "TherapistBase"
+      },
+      "UserCreateRequest": {
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "First Name"
+          },
+          "middle_name": {
+            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
+            "title": "Middle Name"
+          },
+          "last_name": { "type": "string", "maxLength": 50, "minLength": 1, "title": "Last Name" },
+          "phone_number": { "type": "string", "format": "phone", "title": "Phone Number" },
+          "email": {
+            "anyOf": [{ "type": "string", "format": "email" }, { "type": "null" }],
+            "title": "Email"
+          },
+          "social_media": {
+            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
+            "title": "Social Media"
+          },
+          "password": { "type": "string", "maxLength": 64, "minLength": 8, "title": "Password" }
+        },
+        "type": "object",
+        "required": ["first_name", "last_name", "phone_number", "password"],
+        "title": "UserCreateRequest"
+      },
+      "UserResponse": {
+        "properties": {
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "first_name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "First Name"
+          },
+          "middle_name": {
+            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
+            "title": "Middle Name"
+          },
+          "last_name": { "type": "string", "maxLength": 50, "minLength": 1, "title": "Last Name" },
+          "phone_number": { "type": "string", "format": "phone", "title": "Phone Number" },
+          "email": {
+            "anyOf": [{ "type": "string", "format": "email" }, { "type": "null" }],
+            "title": "Email"
+          },
+          "social_media": {
+            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
+            "title": "Social Media"
+          }
+        },
+        "type": "object",
+        "required": ["id", "first_name", "last_name", "phone_number"],
+        "title": "UserResponse"
+      },
+      "UserRole": { "type": "string", "enum": ["Therapist", "Administrator"], "title": "UserRole" },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
