@@ -1,96 +1,92 @@
-:root{
-    font-size: 62.5%;
-}
-
 .wrapper {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 145rem;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 145rem;
 }
 
 .list {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .centerSpan {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .spaceBetween {
-    display: flex;
-    justify-content: space-between;
-    margin: 3rem 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 3rem 0;
 }
 
 .weekdaysWrapper {
-    text-align: center;
+  text-align: center;
 }
 
 .weekdaysList {
-    display: flex;
-    justify-content: space-between;
-    list-style: none;
-    padding: 0;
-    width: 130rem;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  width: 130rem;
+  margin: 0 auto;
 }
 
 .weekdaysElement {
-    width: 40rem;
-    text-align: center;
+  width: 40rem;
+  text-align: center;
 }
 
 .weekdaysName {
-    font-size: 2rem;
-    margin-bottom: 0;
+  font-size: 2rem;
+  margin-bottom: 0;
 }
 
 .weekdaysTime {
-    font-size: 2.2rem;
-    font-weight: 600;
-    margin: 0;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin: 0;
 }
 
 .boldSpan {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .detailedInformation {
-    font-size: 1.8rem;
-    font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 .weekdaysDinner {
-    text-align: center;
-    margin-top: 0;
-    border-top: 1px dashed #717785;
-    border-bottom: 1px dashed #717785;
-    padding: 1.5rem 3.9rem;
-    font-size: 2.2rem;
-    width: 41.4rem;
+  text-align: center;
+  margin-top: 0;
+  border-top: 1px dashed #717785;
+  border-bottom: 1px dashed #717785;
+  padding: 1.5rem 3.9rem;
+  font-size: 2.2rem;
+  width: 41.4rem;
 }
 
 .textBlock {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .textList {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding-right: 30rem;
-    margin: 2rem 0px 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-right: 30rem;
+  margin: 2rem 0px 2rem 3rem;
 }
 
 .detailedInformationItem {
-    font-size: 1.4rem;
-    list-style: none;
-    color: #393939;
+  font-size: 1.4rem;
+  list-style: none;
+  color: #393939;
 }
 
 .detailedInformationTime {
-    font-weight: bold;
+  font-weight: bold;
 }

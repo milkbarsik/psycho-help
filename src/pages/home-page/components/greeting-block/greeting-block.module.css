@@ -1,90 +1,85 @@
-:root{
-    font-size: 62.5%;
-}
-
 .greetingBlock {
-    margin-top: 4.8rem;
-    display: flex;
+  margin-top: 4.8rem;
+  display: flex;
 }
 
 .greetingImageWrapper {
-    margin: auto;
-    max-width: 50vw;
-    margin-top: 4rem;
-    min-width: 35rem;
-    margin-left: 4.8rem;
+  margin: auto;
+  max-width: 50vw;
+  margin-top: 4rem;
+  min-width: 35rem;
+  margin-left: 4.8rem;
 }
 
 .blockItems {
-    margin-left: 14.5rem;
+  margin-left: 14.5rem;
 }
 
 .greetingTitle {
-    font-size: 3.6rem;
-    line-height: 4.4rem;
-    margin-top: 1.5rem;
+  font-size: 3.6rem;
+  line-height: 4.4rem;
+  margin-top: 1.5rem;
 }
 
 .greetingList {
-    margin-top: 5.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    width: 52.5rem;
+  margin-top: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 52.5rem;
 }
 
 .greetingList__item {
-    list-style: none;
-    font-weight: bold;
-    font-size: 2rem;
+  list-style: none;
+  font-weight: bold;
+  font-size: 2rem;
 }
 
 .importantTextWrapper {
-    background: #E8EFFD;
-    padding: 0.6rem;
-    border-radius: 2rem;
-    width: 51.2rem;
-    margin-left: auto;
-    margin-right: 1.7rem;
+  background: #e8effd;
+  padding: 0.6rem;
+  border-radius: 2rem;
+  width: 51.2rem;
+  margin-left: auto;
+  margin-right: 1.7rem;
 }
 
 .importantText {
-    color: #393939;
-    font-size: 1.6rem;
-    display: block;
-    padding: 0.4rem;
+  color: #393939;
+  font-size: 1.6rem;
+  display: block;
+  padding: 0.4rem;
 }
 
 .importantText__bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-
 .signupButton {
-    width: 40%;
-    background: #5e8bf4;
-    display: flex;
-    border-radius: 1rem;
-    align-items: center;
-    justify-content: center;
-    border: none;
+  width: 40%;
+  background: #5e8bf4;
+  display: flex;
+  border-radius: 1rem;
+  align-items: center;
+  justify-content: center;
+  border: none;
 }
 
 .signupButton__text {
-    padding: 1.4rem;
-    color: white;
-    font-size: 1.6rem;
-    font-weight: bold;
-    user-select: none;
+  padding: 1.4rem;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: bold;
+  user-select: none;
 }
 
 .title4 {
-    font-size: 1.6rem;
-    color: #5e8bf4;
-    text-transform: uppercase;
-    margin-top: 2rem;
+  font-size: 1.6rem;
+  color: #5e8bf4;
+  text-transform: uppercase;
+  margin-top: 2rem;
 }
 
 .buttonWrapper {
-    margin-top: 4.3rem;
+  margin-top: 4.3rem;
 }

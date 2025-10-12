@@ -1,62 +1,58 @@
-:root{
-    font-size: 62.5%;
-}
-
 .wrapper {
-    max-width: 144rem;
-    margin: auto;
-    width: 100%;
+  max-width: 144rem;
+  margin: auto;
+  width: 100%;
 }
 
 .headerContent {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    background: transparent;
-    z-index: 0;
-    position: relative;
-    padding-inline: 3.2rem;
-    padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: transparent;
+  z-index: 0;
+  position: relative;
+  padding-inline: 3.2rem;
+  padding-bottom: 2rem;
 }
 
 .header {
-    background: #d9e5ff;
+  background: #d9e5ff;
 }
 
 .faqName {
-    margin-left: 7.3rem;
-    margin-top: 7.9rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  margin-left: 7.3rem;
+  margin-top: 7.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .faq {
-    font-size: 4rem;
-    color: #5E8BF4;
-    margin: 0;
+  font-size: 4rem;
+  color: #5e8bf4;
+  margin: 0;
 }
 
 .wrapperQuestions {
-    max-width: 144rem;
-    margin: auto;
-    width: 100%;
-    margin-top: 2.8rem;
-    margin-bottom: 9.7rem;
+  max-width: 144rem;
+  margin: auto;
+  width: 100%;
+  margin-top: 2.8rem;
+  margin-bottom: 9.7rem;
 }
 
 .questions {
-    user-select: none;
-    font-size: 1.6rem;
+  user-select: none;
+  font-size: 1.6rem;
 }
 
 .description {
-    font-size: 2rem;
-    max-width: 36.4rem;
-    margin-top: 1rem;
+  font-size: 2rem;
+  max-width: 36.4rem;
+  margin-top: 1rem;
 }
 
 .image {
-    margin-right: 4.3rem;
-    margin-top: 5.5rem;
+  margin-right: 4.3rem;
+  margin-top: 5.5rem;
 }
