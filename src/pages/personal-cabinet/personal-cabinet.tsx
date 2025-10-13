@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react';
-import PersonalData from './components/personal-data/PersonalData';
+import PersonalData from '@/features/personal-cabinet/ui/personal-data/PersonalData';
 import type { FC } from 'react';
 import styles from './personal-cabinet.module.css';
-import ACalendar from './components/calendar/calendar';
-import AppointmentForm from './components/input-block/AppointmentForm';
-import type { GetAppointment, Therapist } from '@/api/types';
-import ServiceApi from '@/api/service-api';
-import { useFetch } from '@/api/useFetch';
-import { useAuth } from '@/api/auth/useAuth';
+import ACalendar from '@/features/personal-cabinet/ui/calendar/calendar';
+import AppointmentForm from '@/features/personal-cabinet/ui/input-block/AppointmentForm';
+import type { GetAppointment, Therapist } from '@/shared/api/types';
+import ServiceApi from '@/shared/api/service-api';
+import { useFetch } from '@/shared/api/useFetch';
+import { useAuth } from '@/features/auth/api/useAuth';
 import { appointmentsConsts } from './constants';
-import { useAppointment } from './storeOfAppointment/appointment';
-import AppointmentDto from './helpers/AppointmentDto';
-import Loader from '@/components/UI/loader/loader';
+import { useAppointment } from '@/features/personal-cabinet/model/appointment';
+import AppointmentDto from '@/entities/appointment/AppointmentDto';
+import Loader from '@/shared/ui/loader/loader';
 
 const PersonalCabinet: FC = () => {
-
-  const authUser = useAuth(state => state.user);
-	const appointment = useAppointment(state => state.appointment);
+  const authUser = useAuth((state) => state.user);
+  const appointment = useAppointment((state) => state.appointment);
 
   const [doctors, setDoctors] = useState<Therapist[]>([]);
   const [appointments, setAppointments] = useState<GetAppointment[]>();
@@ -28,7 +27,7 @@ const PersonalCabinet: FC = () => {
       setDoctors(therapists.data);
     }
 
-		setAppointments(appointmentsConsts.sort((a, b) => a.remind_time.localeCompare(b.remind_time)));
+    setAppointments(appointmentsConsts.sort((a, b) => a.remind_time.localeCompare(b.remind_time)));
     // const data = await ServiceApi.getAppointments(user ? user.id : '')
     // if (data.status === 200){
     //   setAppointments(data.data);
@@ -40,44 +39,33 @@ const PersonalCabinet: FC = () => {
   }, []);
 
   function handleSendData() {
-		let appointmentDto: AppointmentDto | null = new AppointmentDto(appointment, authUser?.id);
+    let appointmentDto: AppointmentDto | null = new AppointmentDto(appointment, authUser?.id);
 
     console.log('Appointment отправляется: ', appointmentDto);
     // Отправка на сервер будет тут
 
-		appointmentDto = null;
+    appointmentDto = null;
   }
 
   return (
     <div className={styles.wrapper}>
-			{
-				isLoading && 
-				<Loader />
-			}
+      {isLoading && <Loader />}
       <main className={styles.main}>
         <h1 className={styles.h1}>Запись на прием</h1>
         <div className={styles.dateInput}>
-          <ACalendar appointments={appointments}/>
-          <AppointmentForm
-            doctors={doctors}
-          />
-          <button
-						className={styles.subButton}
-						type='button'
-						onClick={() => handleSendData()}
-					>
+          <ACalendar appointments={appointments} />
+          <AppointmentForm doctors={doctors} />
+          <button className={styles.subButton} type="button" onClick={() => handleSendData()}>
             Записаться
           </button>
         </div>
       </main>
       <aside className={styles.aside}>
-        {
-					(authUser && appointments)
-					?
-						<PersonalData user={authUser} appointments={appointments}/> 
-					:
-        		<p>{error.message}</p>
-        }
+        {authUser && appointments ? (
+          <PersonalData user={authUser} appointments={appointments} />
+        ) : (
+          <p>{error.message}</p>
+        )}
       </aside>
     </div>
   );
