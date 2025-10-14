@@ -1,0 +1,40 @@
+.wrapper {
+    width: 100%;
+    height: auto;
+    padding: 2.2rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    max-width: 144rem;
+    margin: auto;
+}
+
+.ask {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button {
+    border-radius: 50%;
+    height: 3.4rem;
+    width: 3.4rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: calc((1vh + 1vw) / 2);
+}
+
+.answer {
+    color: #5E8BF4;
+    margin-top: 3rem;
+    margin-left: calc((1vh + 1vw) / 2 + 34px);
+}
+
+.p {
+    word-break: break-word;
+    flex-grow: 1;
+    width: 100%;
+    white-space: pre-wrap;
+}
