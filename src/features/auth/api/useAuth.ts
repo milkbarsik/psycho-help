@@ -7,7 +7,7 @@ type Tauth = {
   isAuth: boolean;
   user: User | null;
   setAuth: (value: boolean) => void;
-  setUser: (user: User) => void;
+  setUser: (user: User | null) => void;
   login: (email: string, password: string) => Promise<AxiosResponse<User>>;
   registration: (data: regData) => Promise<AxiosResponse<User>>;
   getUser: () => Promise<AxiosResponse<User>>;
@@ -21,7 +21,7 @@ export const useAuth = create<Tauth>((set, get) => ({
 
   setAuth: (value: boolean) => set((state) => ({ ...state, isAuth: value })),
 
-  setUser: (user: User) => set((state) => ({ ...state, user: { ...user } })),
+  setUser: (user: User | null) => set((state) => ({...state, user: user ? {...user}: null})),
 
   async login(email: string, password: string): Promise<AxiosResponse<User>> {
     const res = await AuthApi.login(email, password);
