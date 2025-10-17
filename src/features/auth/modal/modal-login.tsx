@@ -15,6 +15,8 @@ type Tprops = {
   setModalOpen: (param: boolean) => any;
 };
 
+const EMAIL_HINT = 'Введите вашу электронную почту в формате primer@gmail.com';
+
 const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   const [formValue, setFormValue] = useState({ ...INITIAL_FORM_VALUE });
   const [errors, setErrors] = useState({ ...INITIAL_FORM_VALUE });
@@ -93,7 +95,13 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
               onChange={handleInputChange}
               aria-details="Строка для ввода электронной почты"
             />
-            {errors.email && <span className={styles.errorText}>{errors.email}</span>}
+            {errors.email ? (
+              <span className={styles.errorText}>{errors.email}</span>
+            ) : (
+              <span className={styles.hintText}>
+                {'Введите вашу электронную почту в формате primer@gmail.com'}
+              </span>
+            )}
           </label>
           <label>
             <span>Пароль</span>

@@ -17,6 +17,12 @@ const INITIAL_FORM_VALUE = {
   role: '',
 };
 
+const HINTS = {
+  phone_number: 'Введите номер в формате +79999999999',
+  email: 'Введите вашу электронную почту в формате primer@gmail.com',
+  password: 'Пароль не менее 8 символов, с цифрой, буквой и спецсимволом',
+};
+
 type Tprops = {
   setWindow: (param: string) => any;
   isOpen: boolean;
@@ -221,7 +227,11 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               onChange={handleInputChange}
               value={formValue.phone_number}
             />
-            {errors.phone_number && <p className={styles.errorText}>{errors.phone_number}</p>}
+            {errors.phone_number ? (
+              <span className={styles.errorText}>{errors.phone_number}</span>
+            ) : (
+              <span className={styles.hintText}>{'HINTS.phone_number'}</span>
+            )}
           </label>
           <label>
             <span>Электронная почта</span>
@@ -232,7 +242,11 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               onChange={handleInputChange}
               aria-label="Строка для ввода электронной почты"
             />
-            {errors.email && <p className={styles.errorText}>{errors.email}</p>}
+            {errors.email ? (
+              <span className={styles.errorText}>{errors.email}</span>
+            ) : (
+              <span className={styles.hintText}>{HINTS.email}</span>
+            )}
           </label>
           <label>
             <span>Роль</span>
@@ -254,7 +268,11 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               onChange={handleInputChange}
               aria-label="Строка для ввода пароля"
             />
-            {errors.password && <p className={styles.errorText}>{errors.password}</p>}
+            {errors.password ? (
+              <span className={styles.errorText}>{errors.password}</span>
+            ) : (
+              <span className={styles.hintText}>{HINTS.password}</span>
+            )}
           </label>
           <label>
             <span>Повторите пароль</span>
