@@ -21,7 +21,11 @@ const ModalWindow: FC = () => {
 
   return (
     <div className={styles.buttonWrapper}>
-      <button className={styles.button} onClick={() => setModalOpen(!isModalOpen)}>
+      <button
+        className={styles.button}
+        onClick={() => setModalOpen(!isModalOpen)}
+        aria-label="Открыть окно входа"
+      >
         <img src={LoginIcon} alt="Иконка входа" />
       </button>
       {isModalOpen && render(modalWindow)}

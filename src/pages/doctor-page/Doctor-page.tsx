@@ -51,7 +51,9 @@ const DoctorPage = () => {
             <p className={[styles.text, styles.educ].join(' ')}>{doctor.education}</p>
             <p className={styles.textBold}>Обо мне:</p>
             <p className={styles.text}>{doctor.description}</p>
-            <button className={styles.btn}>Записаться</button>
+            <button className={styles.btn} aria-label="Кнопка записаться">
+              Записаться
+            </button>
           </div>
         </div>
         <h2 className={styles.subtitle}>Квалификация</h2>

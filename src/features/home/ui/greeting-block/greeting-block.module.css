@@ -57,12 +57,19 @@
 
 .signupButton {
   width: 40%;
-  background: #5e8bf4;
+  background: #486CC0;
   display: flex;
   border-radius: 1rem;
   align-items: center;
   justify-content: center;
   border: none;
+  outline: none;
+}
+
+.signupButton:focus {
+  outline: 2px solid #486CC0;
+  outline-offset: 2px;
+  background: #36508a;
 }
 
 .signupButton__text {
@@ -75,7 +82,7 @@
 
 .title4 {
   font-size: 1.6rem;
-  color: #5e8bf4;
+  color: #486CC0;
   text-transform: uppercase;
   margin-top: 2rem;
 }

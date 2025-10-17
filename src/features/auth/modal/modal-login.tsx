@@ -91,6 +91,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
               value={formValue.email}
               placeholder="primer@gmail.com"
               onChange={handleInputChange}
+              aria-details="Строка для ввода электронной почты"
             />
             {errors.email && <span className={styles.errorText}>{errors.email}</span>}
           </label>

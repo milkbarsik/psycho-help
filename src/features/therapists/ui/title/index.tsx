@@ -12,7 +12,7 @@ const Title = () => {
             вам справиться с различными жизненными ситуациями.
           </p>
         </div>
-        <img src={doctorImg} alt="" className={styles.titleImg} />
+        <img src={doctorImg} alt="Изображение диалога с психологом" className={styles.titleImg} />
       </div>
     </div>
   );

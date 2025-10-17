@@ -5,7 +5,8 @@
     width: 100%;
     margin: auto;
     padding-block: 24px;
-    background-color: #5e8bf4;
+    /* background-color: #5e8bf4; */
+    background-color: #486CC0;
     padding-inline: 0px;
 }
 
@@ -20,7 +21,8 @@
     position: absolute;
     width: 200vw;
     height: 103%;
-    background: rgb(94, 139, 244);
+    /* background: rgb(94, 139, 244); */
+    background: #486CC0;
     z-index: -1;
     top: 0;
     right: 0;
@@ -52,6 +54,14 @@
 .link {
     color: white;
     text-decoration: none;
+    outline: none;
+}
+
+.link:focus {
+    outline: 2px solid #486CC0;
+    outline-offset: 2px;
+    background: #36508a;
+    border-radius: 4px;
 }
 
 .textWrapper {

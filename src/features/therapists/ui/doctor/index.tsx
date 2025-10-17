@@ -27,7 +27,7 @@ const Doctor: FC<Props> = ({ doctor }) => {
       <Link className={styles.link} to={`/therapists/${doctor.id}`}>
         Подробнее
         <span className={styles.arrow_wrapper}>
-          <img className={styles.arrow} src={arrowLink} alt="" />
+          <img className={styles.arrow} src={arrowLink} alt="Изображение стрелки вправо" />
         </span>
       </Link>
     </div>

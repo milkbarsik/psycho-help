@@ -20,20 +20,28 @@ const Header = () => {
   return (
     <header className={styles.styledHeader}>
       <nav className={styles.contentWrapper}>
-        <Link to="/">
+        <Link to="/" aria-label="Вернуться на главную страницу">
           <Logo />
         </Link>
         <ul className={styles.contentList}>
           {items.map((item, index) => (
             <li key={index}>
-              <Link to={item.link} className={styles.link}>
+              <Link
+                to={item.link}
+                className={styles.link}
+                aria-label={`Перейти на страницу ${item.text}`}
+              >
                 {item.text}
               </Link>
             </li>
           ))}
           {isAuth ? (
             <li>
-              <Link to="/cabinet" className={styles.link}>
+              <Link
+                to="/cabinet"
+                className={styles.link}
+                aria-label="Перейти на страницу личного кабинета"
+              >
                 <Profile />
               </Link>
             </li>

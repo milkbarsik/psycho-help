@@ -19,6 +19,6 @@
     text-align: center;
 }
 
-.list_wrapper > * {
+.list_wrapper>* {
     flex: 0 0 calc(33.333% - 20px);
 }

@@ -21,7 +21,9 @@ describe('useFetch', () => {
   });
 
   it('должен обработать ошибку AxiosError и установить error', async () => {
-    const axiosError = new AxiosError('Request failed', 'ERR_BAD_REQUEST', {} as any, {}, { status: 400 } as any);
+    const axiosError = new AxiosError('Request failed', 'ERR_BAD_REQUEST', {} as any, {}, {
+      status: 400,
+    } as any);
     const mockFoo = vi.fn().mockRejectedValue(axiosError);
     const { result } = renderHook(() => useFetch(mockFoo));
 
