@@ -20,7 +20,9 @@
 
 .title {
     font-size: 4rem;
-    color: #5E8BF4;
+    /* color: #5E8BF4; */
+    /* color: #486CC0; */
+    color: #3D5CA6;
     margin-bottom: 20px;
 }
 
@@ -38,9 +40,7 @@
     padding-bottom: 50px;
 }
 
-.titleImg {
-
-}
+.titleImg {}
 
 @media (max-width: 1150px) {
     .titleImg {
@@ -66,7 +66,8 @@
 
     .title {
         font-size: 8em;
-        color: #5E8BF4;
+        /* color: #5E8BF4; */
+        color: #3D5CA6;
         margin-bottom: 20px;
     }
 
@@ -91,7 +92,8 @@
 @media (max-width: 500px) {
     .title {
         font-size: 6em;
-        color: #5E8BF4;
+        /* color: #5E8BF4; */
+        color: #3D5CA6;
         margin-bottom: 20px;
     }
 }

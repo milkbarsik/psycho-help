@@ -34,7 +34,8 @@
 .subButton {
     width: 100%;
     padding: 1.5rem;
-    background-color: #4285f4;
+    /* background-color: #4285f4; */
+    background-color: #486CC0;
     color: white;
     font-size: 2rem;
     font-weight: 600;

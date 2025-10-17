@@ -9,20 +9,21 @@ interface Props {
 }
 
 const AppointmentForm: FC<Props> = ({ doctors }) => {
-
-  const appointment = useAppointment(state => state.appointment);
-  const setAppointment = useAppointment(state => state.setAppointment);
+  const appointment = useAppointment((state) => state.appointment);
+  const setAppointment = useAppointment((state) => state.setAppointment);
 
   const handleLocation = (id: string) => {
     const currentDoctor = doctors.find((doctor) => doctor.id === id);
     if (currentDoctor) {
       setAppointment({ venue: currentDoctor.office });
     }
-  }
+  };
 
   return (
     <div className={styles.form}>
-      <h2 className={styles.date}>{getDayNameOfWeek(appointment.date)}, {appointment.date.split('-').at(-1)}</h2>
+      <h2 className={styles.date}>
+        {getDayNameOfWeek(appointment.date)}, {appointment.date.split('-').at(-1)}
+      </h2>
 
       <div className={styles.field}>
         <label className={styles.label}>Психолог</label>
@@ -38,12 +39,14 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
             }
           }}
         >
-          <option value="default" disabled>---Выберите психолога---</option>
-          {doctors.map(item =>
+          <option value="default" disabled>
+            ---Выберите психолога---
+          </option>
+          {doctors.map((item) => (
             <option key={item.id} value={item.id}>
               {[item.last_name, item.first_name, item.middle_name].join(' ')}
             </option>
-          )}
+          ))}
         </select>
       </div>
 
@@ -52,6 +55,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
           type="button"
           className={`${styles.formatButton} ${appointment.type === 'Online' ? styles.active : ''}`}
           onClick={() => setAppointment({ type: 'Online', venue: '' })}
+          aria-label="Кнопка выбора онлайн"
         >
           Онлайн
         </button>
@@ -61,8 +65,8 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
           onClick={() => {
             setAppointment({ type: 'Offline', venue: '' });
             handleLocation(appointment.therapist_id);
-          }
-          }
+          }}
+          aria-label="Кнопка выбора очно"
         >
           Очно
         </button>
@@ -71,22 +75,22 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
       <div className={styles.row}>
         <div className={styles.column}>
           <label className={styles.label}>Локация</label>
-          {
-            appointment.type === 'Offline'
-              ?
-              <p className={styles.location}>{appointment.venue}</p>
-              :
-              <select
-                value={appointment.venue}
-                className={styles.select}
-                onChange={(e) => setAppointment({ venue: e.target.value })}
-              >
-                <option value="" disabled>---Выберите платформу---</option>
-                <option value="discord">Discord</option>
-                <option value="Zoom">Zoom</option>
-                <option value="Telegram">Telegram</option>
-              </select>
-          }
+          {appointment.type === 'Offline' ? (
+            <p className={styles.location}>{appointment.venue}</p>
+          ) : (
+            <select
+              value={appointment.venue}
+              className={styles.select}
+              onChange={(e) => setAppointment({ venue: e.target.value })}
+            >
+              <option value="" disabled>
+                ---Выберите платформу---
+              </option>
+              <option value="discord">Discord</option>
+              <option value="Zoom">Zoom</option>
+              <option value="Telegram">Telegram</option>
+            </select>
+          )}
         </div>
         <div className={styles.columnSmall}>
           <label className={styles.label}>Время</label>

@@ -1,3 +1,3 @@
-export * from './title'
-export * from './doctor'
-export * from './doctor-list'
+export * from './title';
+export * from './doctor';
+export * from './doctor-list';

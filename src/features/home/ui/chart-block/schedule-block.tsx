@@ -48,9 +48,9 @@ const ChartBlock: FC = () => {
         </div>
       </div>
       <div className={styles.spaceBetween}>
-        <img src={lineVector} alt="line" />
-        <img src={ClockImage} alt="clock" />
-        <img src={lineVector} alt="line" />
+        <img src={lineVector} alt="Линия" />
+        <img src={ClockImage} alt="Часы" />
+        <img src={lineVector} alt="Линия" />
       </div>
       <h3>
         <span className={styles.detailedInformation}>

@@ -107,6 +107,7 @@
         font-size: 30px;
         font-weight: 500;
     }
+
     .textBold {
         margin-top: 60px;
         font-size: 28px;
@@ -133,10 +134,10 @@
     .card__wrapper {
         flex-wrap: wrap;
     }
+
     .img {
         width: 351px;
         height: 351px;
         margin: 0 auto;
     }
 }
-

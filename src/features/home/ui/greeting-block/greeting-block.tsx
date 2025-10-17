@@ -24,7 +24,7 @@ const GreatingBlock = () => {
             ))}
           </ul>
           <div className={styles.buttonWrapper}>
-            <button type="submit" className={styles.signupButton}>
+            <button type="submit" className={styles.signupButton} aria-label="Кнопка записаться">
               <span className={styles.signupButton__text}>Записаться</span>
             </button>
           </div>
