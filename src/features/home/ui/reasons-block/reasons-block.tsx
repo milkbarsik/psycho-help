@@ -9,7 +9,7 @@ const ReasonsBlock = () => {
           <div className={styles.imageWrapper}>
             <img src={item.image} alt="Иллюстрация с помощью" className={styles.image} />
           </div>
-          <h2 className={styles.itemText}>{item.title}</h2>
+          <h2 className={styles.itemText} dangerouslySetInnerHTML={{ __html: item.title }} />
         </div>
       ))}
     </div>

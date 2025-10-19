@@ -1,18 +1,23 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.4rem;
-  margin-top: 3.6rem;
+  gap: 1.6rem;
+  margin: 3.6rem auto 0 auto;
+  max-width: 120rem;
+  justify-self: center;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   height: 100%;
   padding: 1.6rem;
   box-sizing: border-box;
+  border: 1px solid rgba(99, 101, 107, 0.16);
+  border-radius: 2.8rem;
+  max-width: 39rem;
+  gap:1.6rem;
 }
 
 .imageWrapper {
@@ -29,10 +34,11 @@
 }
 
 .itemText {
-  font-size: 1.6rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 400;
   width: 29.2rem;
   text-align: center;
-  margin-top: 1rem;
+  list-style: 2.4rem;
+  /* margin: 1.6rem 0 0.8rem 0; */
   word-break: break-word;
 }
