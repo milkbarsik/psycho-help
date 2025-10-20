@@ -55,7 +55,12 @@ const PersonalCabinet: FC = () => {
         <div className={styles.dateInput}>
           <ACalendar appointments={appointments} />
           <AppointmentForm doctors={doctors} />
-          <button className={styles.subButton} type="button" onClick={() => handleSendData()}>
+          <button
+            className={styles.subButton}
+            type="button"
+            onClick={() => handleSendData()}
+            aria-label="Кнопка записаться"
+          >
             Записаться
           </button>
         </div>

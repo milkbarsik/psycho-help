@@ -13,32 +13,40 @@ const Header = () => {
     { link: '/', text: 'Главная' },
     { link: '/therapists', text: 'Психологи' },
     { link: '/', text: 'Новости' },
-    { link: '/', text: 'Полезные ресурсы' },
+    { link: '/', text: 'Полезные материалы' },
     { link: '/faq/', text: 'FAQ' },
   ];
 
   return (
     <header className={styles.styledHeader}>
       <nav className={styles.contentWrapper}>
-        <Link to="/">
+        <Link to="/" aria-label="Вернуться на главную страницу">
           <Logo />
         </Link>
         <ul className={styles.contentList}>
           {items.map((item, index) => (
-            <li key={index}>
-              <Link to={item.link} className={styles.link}>
+            <li key={index} className={styles.item}>
+              <Link
+                to={item.link}
+                className={styles.link}
+                aria-label={`Перейти на страницу ${item.text}`}
+              >
                 {item.text}
               </Link>
             </li>
           ))}
           {isAuth ? (
-            <li>
-              <Link to="/cabinet" className={styles.link}>
+            <li className={styles.item}>
+              <Link
+                to="/cabinet"
+                className={styles.link}
+                aria-label="Перейти на страницу личного кабинета"
+              >
                 <Profile />
               </Link>
             </li>
           ) : (
-            <li>
+            <li className={styles.item}>
               <ModalWindow />
             </li>
           )}

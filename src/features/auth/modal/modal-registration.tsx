@@ -17,6 +17,12 @@ const INITIAL_FORM_VALUE = {
   role: '',
 };
 
+const HINTS = {
+  phone_number: 'Введите номер в формате +79999999999',
+  email: 'Введите вашу электронную почту в формате primer@gmail.com',
+  password: 'Пароль не менее 8 символов, с цифрой, буквой и спецсимволом',
+};
+
 type Tprops = {
   setWindow: (param: string) => any;
   isOpen: boolean;
@@ -187,6 +193,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               value={formValue.first_name}
               placeholder="Введите имя"
               onChange={handleInputChange}
+              aria-label="Строка для ввода имени"
             />
             {errors.first_name && <p className={styles.errorText}>{errors.first_name}</p>}
           </label>
@@ -197,6 +204,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               value={formValue.middle_name}
               placeholder="Введите второе имя"
               onChange={handleInputChange}
+              aria-label="Строка для ввода второго имени при наличии"
             />
             {errors.middle_name && <p className={styles.errorText}>{errors.middle_name}</p>}
           </label>
@@ -207,13 +215,23 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               value={formValue.last_name}
               placeholder="Введите фамилию"
               onChange={handleInputChange}
+              aria-label="Строка для ввода фамилии"
             />
             {errors.last_name && <p className={styles.errorText}>{errors.last_name}</p>}
           </label>
           <label>
             <span>Номер телефона</span>
-            <MaskedInput name="phone_number" mask="+70000000000" onChange={handleInputChange} value={formValue.phone_number} />
-            {errors.phone_number && <p className={styles.errorText}>{errors.phone_number}</p>}
+            <MaskedInput
+              name="phone_number"
+              mask="+70000000000"
+              onChange={handleInputChange}
+              value={formValue.phone_number}
+            />
+            {errors.phone_number ? (
+              <span className={styles.errorText}>{errors.phone_number}</span>
+            ) : (
+              <span className={styles.hintText}>{'HINTS.phone_number'}</span>
+            )}
           </label>
           <label>
             <span>Электронная почта</span>
@@ -222,8 +240,13 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               value={formValue.email}
               placeholder="primer@gmail.com"
               onChange={handleInputChange}
+              aria-label="Строка для ввода электронной почты"
             />
-            {errors.email && <p className={styles.errorText}>{errors.email}</p>}
+            {errors.email ? (
+              <span className={styles.errorText}>{errors.email}</span>
+            ) : (
+              <span className={styles.hintText}>{HINTS.email}</span>
+            )}
           </label>
           <label>
             <span>Роль</span>
@@ -232,6 +255,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               value={formValue.role}
               placeholder="Student"
               onChange={handleInputChange}
+              aria-label="Строка для ввода роли"
             />
             {errors.role && <p className={styles.errorText}>{errors.role}</p>}
           </label>
@@ -242,8 +266,13 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               value={formValue.password}
               placeholder="Введите пароль"
               onChange={handleInputChange}
+              aria-label="Строка для ввода пароля"
             />
-            {errors.password && <p className={styles.errorText}>{errors.password}</p>}
+            {errors.password ? (
+              <span className={styles.errorText}>{errors.password}</span>
+            ) : (
+              <span className={styles.hintText}>{HINTS.password}</span>
+            )}
           </label>
           <label>
             <span>Повторите пароль</span>
@@ -252,6 +281,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
               value={formValue.confirm_password}
               placeholder="Введите пароль ещё раз"
               onChange={handleInputChange}
+              aria-label="Строка для повторного ввода пароля"
             />
             {errors.confirm_password && (
               <p className={styles.errorText}>{errors.confirm_password}</p>

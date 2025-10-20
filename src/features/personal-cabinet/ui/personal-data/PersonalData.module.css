@@ -4,26 +4,26 @@
 }
 
 .userInfo {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-	align-items: flex-start;
-	font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    font-size: 2rem;
 }
 
 .head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-		gap: 2rem;
+    gap: 2rem;
 }
 
 .userData {
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	gap: 1rem 1rem;
-	font-weight: bold;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1rem;
+    font-weight: bold;
 }
 
 .edit {
@@ -59,14 +59,14 @@
 }
 
 li {
-	list-style-type: none;
+    list-style-type: none;
 }
 
 button {
-	background: none;
-	border: none;
-	cursor: pointer;
-	height: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    height: auto;
 }
 
 .appointment__active {
@@ -147,7 +147,7 @@ button {
 
 .next__time_value {
     font-size: 2rem;
-} 
+}
 
 .next__FIO {
     font-size: 2rem;
