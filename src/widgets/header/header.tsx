@@ -13,7 +13,7 @@ const Header = () => {
     { link: '/', text: 'Главная' },
     { link: '/therapists', text: 'Психологи' },
     { link: '/', text: 'Новости' },
-    { link: '/', text: 'Полезные ресурсы' },
+    { link: '/', text: 'Полезные материалы' },
     { link: '/faq/', text: 'FAQ' },
   ];
 
@@ -25,7 +25,7 @@ const Header = () => {
         </Link>
         <ul className={styles.contentList}>
           {items.map((item, index) => (
-            <li key={index}>
+            <li key={index} className={styles.item}>
               <Link
                 to={item.link}
                 className={styles.link}
@@ -36,7 +36,7 @@ const Header = () => {
             </li>
           ))}
           {isAuth ? (
-            <li>
+            <li className={styles.item}>
               <Link
                 to="/cabinet"
                 className={styles.link}
@@ -46,7 +46,7 @@ const Header = () => {
               </Link>
             </li>
           ) : (
-            <li>
+            <li className={styles.item}>
               <ModalWindow />
             </li>
           )}

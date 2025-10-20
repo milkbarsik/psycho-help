@@ -36,10 +36,8 @@
     outline: none;
 }
 
-.link:focus {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-    background-color: #36508a;
+.link:focus-visible {
+    background: #36508a;
     border-radius: 4px;
 }
 
