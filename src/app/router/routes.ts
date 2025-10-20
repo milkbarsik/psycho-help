@@ -5,9 +5,29 @@ import { FaqPage } from '@/pages/faq-page';
 import { DoctorsPage } from '@/pages/doctors-page';
 import { DoctorPage } from '@/pages/doctor-page';
 
+/*
+ Тип маршрута:
+ - "path" — URL-путь
+ - "Component" — React-компонент, который будет отрисован по этому пути
+ 
+ Здесь использовалось "FC<any>", но "any" убрали,
+ так как все текущие страницы не принимают внешних пропсов.
+ 
+ Если позже появятся страницы с пропсами (например, компоненту нужно будет передавать userId),
+ можно сделать тип дженериком:
+ *ts
+ interface RoutePath<T = Record<string, unknown>> {
+   path: string;
+   Component: FC<T>;
+ }
+ и тогда конкретный маршрут можно будет описывать с указанием пропсов:
+ *ts
+ { path: '/example', Component: ExamplePage as FC<ExampleProps> }
+ */
+
 interface routePath {
   path: string;
-  Component: FC<any>;
+  Component: FC; // Компонент без пропсов
 }
 
 // Список всех урлов, а также компонентов, отрисовываемых при нахождении на одном из них
