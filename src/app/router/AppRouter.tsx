@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { Suspense } from 'react';
 import { authRoutes, notAuthRoutes } from './routes';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { Loader } from '@/shared/ui';
@@ -13,17 +14,19 @@ const AppRouter = () => {
   }
 
   return (
-    <Routes>
-      {isAuth &&
-        authRoutes.map(({ path, Component }) => (
-          <Route key={path} path={path} element={<Component />} />
-        ))}
-      {!isAuth &&
-        notAuthRoutes.map(({ path, Component }) => (
-          <Route key={path} path={path} element={<Component />} />
-        ))}
-      <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        {isAuth &&
+          authRoutes.map(({ path, Component }) => (
+            <Route key={path} path={path} element={<Component />} />
+          ))}
+        {!isAuth &&
+          notAuthRoutes.map(({ path, Component }) => (
+            <Route key={path} path={path} element={<Component />} />
+          ))}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Suspense>
   );
 };
 
