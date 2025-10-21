@@ -1,10 +1,10 @@
-import Logo from '@/shared/assets/images/Logo-2.svg?react';
-// import { ReactComponent as Bell } from '../../assets/images/header/bell.svg';
-import Profile from '@/shared/assets/images/header/profile.svg?react';
-import { Link } from 'react-router-dom';
-import styles from './header.module.css';
-import ModalWindow from '@/features/auth/modal/modal';
 import { useAuth } from '@/features/auth/api/useAuth';
+import styles from './header.module.css';
+import { Link } from 'react-router-dom';
+// import Logo from '@/shared/assets/images/Logo-2.svg?react';
+import Logo from './Logo.svg';
+import Profile from '@/shared/assets/images/header/profile.svg?react';
+import ModalWindow from '@/features/auth/modal/modal';
 
 const Header = () => {
   const { isAuth } = useAuth();
@@ -18,39 +18,45 @@ const Header = () => {
   ];
 
   return (
-    <header className={styles.styledHeader}>
-      <nav className={styles.contentWrapper}>
+    <header className={styles.header}>
+      <nav className={styles.header__nav}>
         <Link to="/" aria-label="Вернуться на главную страницу">
-          <Logo />
+          <img
+            src={Logo}
+            className={styles.header__logo}
+            alt="Логотип"
+            draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
+          />
         </Link>
-        <ul className={styles.contentList}>
+        <ul className={styles.header__list}>
           {items.map((item, index) => (
-            <li key={index} className={styles.item}>
+            <li key={index} className={styles.header__item}>
               <Link
                 to={item.link}
-                className={styles.link}
+                className={styles.header__link}
                 aria-label={`Перейти на страницу ${item.text}`}
               >
                 {item.text}
               </Link>
             </li>
           ))}
-          {isAuth ? (
-            <li className={styles.item}>
-              <Link
-                to="/cabinet"
-                className={styles.link}
-                aria-label="Перейти на страницу личного кабинета"
-              >
-                <Profile />
-              </Link>
-            </li>
-          ) : (
-            <li className={styles.item}>
-              <ModalWindow />
-            </li>
-          )}
         </ul>
+        {isAuth ? (
+          <div className={styles.header__item}>
+            <Link
+              to="/cabinet"
+              className={styles.header__link}
+              aria-label="Перейти на страницу личного кабинета"
+            >
+              <Profile />
+            </Link>
+          </div>
+        ) : (
+          <div className={styles.header__item}>
+            <ModalWindow />
+          </div>
+        )}
       </nav>
     </header>
   );
