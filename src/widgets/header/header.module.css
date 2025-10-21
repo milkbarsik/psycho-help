@@ -16,8 +16,17 @@
 .header__logo {
     display: flex;
     align-items: center;
-    user-select: none;
-    -webkit-user-drag: none;
+    color: #19191B;
+    cursor: pointer;
+    border: solid transparent;
+}
+
+.header__logo svg {
+    fill: currentColor;
+}
+
+.header__logo:hover {
+    color: #1B50F5;
 }
 
 .header__list {

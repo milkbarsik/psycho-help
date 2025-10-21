@@ -2,7 +2,7 @@ import { useAuth } from '@/features/auth/api/useAuth';
 import styles from './header.module.css';
 import { Link } from 'react-router-dom';
 // import Logo from '@/shared/assets/images/Logo-2.svg?react';
-import Logo from './Logo.svg';
+import Logo from './Logo.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
 
@@ -21,13 +21,7 @@ const Header = () => {
     <header className={styles.header}>
       <nav className={styles.header__nav}>
         <Link to="/" aria-label="Вернуться на главную страницу">
-          <img
-            src={Logo}
-            className={styles.header__logo}
-            alt="Логотип"
-            draggable={false}
-            onContextMenu={(e) => e.preventDefault()}
-          />
+          <Logo className={styles.header__logo} />
         </Link>
         <ul className={styles.header__list}>
           {items.map((item, index) => (
