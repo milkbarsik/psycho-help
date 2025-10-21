@@ -39,8 +39,6 @@ type Tprops = {
 
 const EMAIL_HINT = 'Введите вашу электронную почту в формате primer@gmail.com';
 
-const EMAIL_HINT = 'Введите вашу электронную почту в формате primer@gmail.com';
-
 const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   const [formValue, setFormValue] = useState({ ...INITIAL_FORM_VALUE });
   const [errors, setErrors] = useState({ ...INITIAL_FORM_VALUE });
@@ -123,7 +121,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
               <span className={styles.errorText}>{errors.email}</span>
             ) : (
               <span className={styles.hintText}>
-                {'Введите вашу электронную почту в формате primer@gmail.com'}
+                {EMAIL_HINT}
               </span>
             )}
           </label>

@@ -234,7 +234,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
             {errors.phone_number ? (
               <span className={styles.errorText}>{errors.phone_number}</span>
             ) : (
-              <span className={styles.errorText}>{HINTS.phone_number}</span>
+              <span className={styles.hintText}>{HINTS.phone_number}</span>
             )}
           </label>
           <label>
@@ -249,7 +249,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
             {errors.email ? (
               <span className={styles.errorText}>{errors.email}</span>
             ) : (
-              <span className={styles.errorText}>{HINTS.email}</span>
+              <span className={styles.hintText}>{HINTS.email}</span>
             )}
           </label>
           <label>
@@ -275,7 +275,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
             {errors.password ? (
               <span className={styles.errorText}>{errors.password}</span>
             ) : (
-              <span className={styles.errorText}>{HINTS.password}</span>
+              <span className={styles.hintText}>{HINTS.password}</span>
             )}
           </label>
           <label>

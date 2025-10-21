@@ -6,7 +6,9 @@
 
 .errorText {
     color: red;
-    font-size: 1.2rem;
+}
+.hintText {
+    opacity: 0.5;
 }
 
 .checkbox {
