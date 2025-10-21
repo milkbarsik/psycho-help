@@ -1,20 +1,22 @@
 import { AxiosError } from 'axios';
 import { useState } from 'react';
 
-interface error {
+interface FetchError { // Общепринятая конвенция, лучше писать с заглавной буквы
   message: string;
-  status: number | undefined;
+  status: number | undefined; // 
 }
 
 export type UseFetchReturn = {
   isLoading: boolean;
-  error: error;
+  error: FetchError;
   fetching: () => Promise<void>;
 };
 
-export function useFetch(foo: () => Promise<any>): UseFetchReturn {
+// Вместо "any" используем дженерик T
+// Теперь можно строго типизировать возвращаемое значение функции
+export function useFetch<T>(foo: () => Promise<T>): UseFetchReturn { 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<error>({ message: '', status: undefined });
+  const [error, setError] = useState<FetchError>({ message: '', status: undefined });
 
   const fetching = async () => {
     try {
@@ -33,3 +35,5 @@ export function useFetch(foo: () => Promise<any>): UseFetchReturn {
 
   return { fetching, isLoading, error };
 }
+
+

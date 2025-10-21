@@ -9,11 +9,35 @@ const INITIAL_FORM_VALUE = {
   password: '',
 };
 
-type Tprops = {
-  setWindow: (param: string) => any;
+/*
+Тип пропсов для модального окна входа:
+- "setWindow" — функция для переключения окна модалки (вход/регистрация)
+- "isOpen" — булевый флаг, открыто ли модальное окно
+- "setModalOpen" — функция для закрытия или открытия модального окна
+
+Здесь использовалось "any" для функций, чтобы не писать типы, но это убрано, 
+так как сейчас известно, какие значения реально передаются:
+
+- setWindow принимает только 'login' или 'reg'
+- setModalOpen принимает только булевое значение
+
+Если в будущем появятся новые состояния модалки (например "forgot"), 
+можно расширить тип union или же его вынести в отдельный файл:
+
+type TProps = {
+  setWindow: (param: 'login' | 'reg' | 'forgot') => void;
   isOpen: boolean;
-  setModalOpen: (param: boolean) => any;
+  setModalOpen: (param: boolean) => void;
 };
+*/
+
+type Tprops = {
+  setWindow: (param: 'login' | 'reg') => void;
+  isOpen: boolean;
+  setModalOpen: (param: boolean) => void;
+};
+
+const EMAIL_HINT = 'Введите вашу электронную почту в формате primer@gmail.com';
 
 const EMAIL_HINT = 'Введите вашу электронную почту в формате primer@gmail.com';
 

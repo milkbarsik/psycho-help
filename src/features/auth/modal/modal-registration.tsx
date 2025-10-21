@@ -23,10 +23,14 @@ const HINTS = {
   password: 'Пароль не менее 8 символов, с цифрой, буквой и спецсимволом',
 };
 
+
+// Здесь тоже самое что и с modal-login.tsx 
+// Заменяем any на конкретные union типы, т.к известно какие значения реально передаются
+
 type Tprops = {
-  setWindow: (param: string) => any;
+  setWindow: (param: 'log' | 'reg') => void;
   isOpen: boolean;
-  setModalOpen: (param: boolean) => any;
+  setModalOpen: (param: boolean) => void;
 };
 
 const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
