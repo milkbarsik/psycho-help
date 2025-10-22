@@ -4,7 +4,6 @@ import styles from './reasons-block.module.css';
 const ReasonsBlock = () => {
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>Чем психолог может помочь?</h2>
       <div className={styles.grid}>
         {REASONS_TO_VISIT.map((item, index) => (
           <div key={index} className={styles.card}>

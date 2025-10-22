@@ -16,31 +16,26 @@
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
 }
 
 .card {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     background-color: #ffffff;
     border-radius: 16px;
     padding: 32px 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #63656b16;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
 
 .imageWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 24px;
-    height: 120px;
 }
 
 .image {

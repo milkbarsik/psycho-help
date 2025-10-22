@@ -21,17 +21,20 @@
 
 .scheduleInfo {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 60px;
     margin-bottom: 40px;
 }
+
+
 
 .lunchInfo,
 .fridayInfo {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 8px;
+    padding: 24px;
+    background: #F9F9F9;
 }
 
 .lunchLabel,
@@ -55,7 +58,11 @@
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     margin: 0 auto;
-    max-width: 800px;
+}
+
+.scheduleIllustration {
+    color: #407BFF;
+    border: 1px solid #407BFF;
 }
 
 .illustrationPlaceholder {
