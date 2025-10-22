@@ -121,7 +121,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
               <span className={styles.errorText}>{errors.email}</span>
             ) : (
               <span className={styles.hintText}>
-                {'Введите вашу электронную почту в формате primer@gmail.com'}
+                {EMAIL_HINT}
               </span>
             )}
           </label>

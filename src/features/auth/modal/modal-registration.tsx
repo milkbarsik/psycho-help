@@ -234,7 +234,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
             {errors.phone_number ? (
               <span className={styles.errorText}>{errors.phone_number}</span>
             ) : (
-              <span className={styles.hintText}>{'HINTS.phone_number'}</span>
+              <span className={styles.hintText}>{HINTS.phone_number}</span>
             )}
           </label>
           <label>
