@@ -1,5 +1,5 @@
 .greeting {
-    max-width: 1206px;
+    max-width: 1200px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -39,8 +39,8 @@
 }
 
 .greeting__image {
-    width: 579px;
-    height: 371px;
+    width: 100%;
+    height: 100%;
 }
 
 .greeting__controls {
@@ -107,4 +107,85 @@
 
 .greeting__submit:active {
     background-color: #192F8F
+}
+
+@media (max-width: 1206px) {
+    .greeting {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .greeting {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .greeting__content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .greeting__block {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .greeting__title_wrapper {
+        text-align: center;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .greeting__subtitle_wrapper {
+        text-align: center;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .greeting__image_wrapper {
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .greeting__title_wrapper,
+    .greeting__subtitle_wrapper {
+        text-align: center;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 425px) {
+
+    .greeting__title_wrapper,
+    .greeting__subtitle_wrapper {
+        text-align: center;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .greeting__image_wrapper {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .greeting__option {
+        font-size: 2rem;
+        padding: 10px 40px;
+        border-radius: 12px;
+    }
 }

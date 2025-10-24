@@ -1,5 +1,7 @@
 import styles from './calls-block.module.css';
-import PsychologistsImage from '../psychologists.png';
+import CallsDesktop from '@/features/home/ui/5-calls-block/img/calls-desktop.png';
+import CallsTablet from '@/features/home/ui/5-calls-block/img/calls-tablet.png';
+import CallsMobile from '@/features/home/ui/5-calls-block/img/calls-mobile.png';
 
 const CallsBlock = () => {
   return (
@@ -11,10 +13,18 @@ const CallsBlock = () => {
         </span>
       </div>
       <div className={styles.calls__content}>
-        <img src={PsychologistsImage} alt="Иллюстрация диалога" className={styles.calls__image} />
+        <div className={styles.calls__image_wrapper}>
+          <picture>
+            <source media="(max-width: 425px)" srcSet={CallsMobile} />
+            <source media="(max-width: 768px)" srcSet={CallsTablet} />
+            <img src={CallsDesktop} className={styles.calls__image} alt="Иллюстрация диалога" />
+          </picture>
+        </div>
         <div className={styles.calls__block}>
           <div className={styles.calls__item}>
-            <span>Горячая линия Московской службы психологической помощи населению:</span>
+            <span className={styles.calls__title}>
+              Горячая линия Московской службы психологической помощи населению:
+            </span>
             <div className={styles.calls__1_grid}>
               <a className={styles.calls__phone} href="tel:8 (495) 051">
                 8 (495) 051

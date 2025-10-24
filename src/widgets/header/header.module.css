@@ -35,6 +35,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    transition: right 0.3s ease;
 }
 
 .header__item {
@@ -56,7 +57,6 @@
     background-color: #EEF5FF;
 }
 
-
 .header__link:active,
 .header__link:active:hover {
     background: none;
@@ -67,4 +67,42 @@
 .header__link:focus-visible {
     border-radius: 4px;
     border-color: #1B50F5;
+}
+
+.burger {
+    display: none;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .header {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .burger {
+        display: flex;
+        z-index: 1000;
+    }
+
+    .header__list {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        flex-direction: column;
+        background: #fff;
+        align-items: flex-end;
+        width: fit-content;
+        height: 100%;
+        padding: 2rem;
+        padding-top: 4rem;
+        z-index: 2000;
+    }
+
+    .header__list_open {
+        right: 0;
+        z-index: 2000;
+    }
 }
