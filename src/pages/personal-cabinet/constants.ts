@@ -1,13 +1,14 @@
-import type { GetAppointment } from '@/shared/api/types';
+import type { Appointment } from '@/entities/appointment/types';
+import { EAppointmentStatus, EAppointmentType } from '@/entities/appointment/enums';
 
-export const appointmentsConsts: GetAppointment[] = [
+export const appointmentsConsts: Appointment[] = [
   {
     id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     patient_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     therapist_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    type: 'Offline',
+    type: EAppointmentType.OFFLINE,
     reason: 'String',
-    status: 'Accepted',
+    status: EAppointmentStatus.ACCEPTED,
     remind_time: '2025-05-09T07:59:17.799Z',
     last_change_time: '2025-04-29T07:59:17.800Z',
     venue: 'место проведения',
@@ -16,9 +17,9 @@ export const appointmentsConsts: GetAppointment[] = [
     id: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
     patient_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     therapist_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    type: 'Offline',
+    type: EAppointmentType.OFFLINE,
     reason: 'String',
-    status: 'Approved',
+    status: EAppointmentStatus.APPROVED,
     remind_time: '2025-05-05T07:59:17.799Z',
     last_change_time: '2025-05-01T07:59:17.800Z',
     venue: 'место проведения',
@@ -27,9 +28,9 @@ export const appointmentsConsts: GetAppointment[] = [
     id: '3fa85f64-5717-4562-b3fc-2c963f66afa8',
     patient_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     therapist_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    type: 'Offline',
+    type: EAppointmentType.ONLINE,
     reason: 'string',
-    status: 'Approved',
+    status: EAppointmentStatus.APPROVED,
     remind_time: '2025-04-30T07:59:17.799Z',
     last_change_time: '2025-04-30T07:59:17.800Z',
     venue: 'место проведения',
