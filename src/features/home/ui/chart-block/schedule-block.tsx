@@ -1,6 +1,4 @@
 import type { FC } from 'react';
-import ClockImage from '@/shared/assets/images/main/chart/clock.svg';
-import lineVector from '@/shared/assets/images/main/chart/line.svg';
 import styles from './schedule-block.module.css';
 import type { TextBlockProps } from '@/shared/api/types';
 

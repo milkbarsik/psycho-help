@@ -5,6 +5,7 @@ import GreetingBlock from '@/features/home/ui/greeting-block/greeting-block';
 import ReasonsBlock from '@/features/home/ui/reasons-block/reasons-block';
 import FeaturesBlock from '@/features/home/ui/features-block/features-block';
 import ChartBlock from '@/features/home/ui/chart-block/schedule-block';
+import InformationBlock from '@/features/home/ui/information-block/information-block';
 // import TherapistsBlock from './components/doctors-block/doctors-block';
 import styles from './home-page.module.css';
 
@@ -38,6 +39,7 @@ const blocks: BlockWrapperProps[] = [
     name: 'features',
   },
   { component: ChartBlock, title: 'График работы', name: 'chart' },
+  { component: InformationBlock, name: 'information',title:'Мы всегда рядом' },
 ];
 
 const BlockWrapper = React.forwardRef<HTMLDivElement, BlockWrapperProps>(
