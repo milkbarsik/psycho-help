@@ -1,7 +1,8 @@
 import { type QueryObserverOptions, queryOptions } from '@tanstack/react-query';
-import { $serviceClient } from '@/shared/api/http';
+import { $api } from '@/shared/api/http';
 import type { ResponseError } from '@/shared/api';
-import type { User, RegistrationData, LoginData } from '../types';
+import type { User } from '../types';
+import { authApi } from '@/entities/auth/api/api.ts';
 
 export const authQueryKey = {
   user: 'auth.user',
@@ -11,26 +12,7 @@ export const authQueries = {
   getUser: (options?: Partial<QueryObserverOptions<User, ResponseError>>) =>
     queryOptions<User, ResponseError>({
       queryKey: [authQueryKey.user],
-      queryFn: async () => {
-        const res = await $serviceClient.get<User>('/users/user');
-        return res.data;
-      },
+      queryFn: authApi.getUser,
       ...options,
     }),
-};
-
-export const authApi = {
-  login: async (data: LoginData): Promise<User> => {
-    const res = await $serviceClient.post<User>('/users/login', data);
-    return res.data;
-  },
-
-  registration: async (data: RegistrationData): Promise<User> => {
-    const res = await $serviceClient.post<User>('/users/register', data);
-    return res.data;
-  },
-
-  logout: async (): Promise<void> => {
-    await $serviceClient.post('/users/logout');
-  },
 };
