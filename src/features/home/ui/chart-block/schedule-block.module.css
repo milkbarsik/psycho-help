@@ -1,92 +1,28 @@
 .wrapper {
   width: 100%;
-  margin: 0 auto;
-  max-width: 145rem;
+  margin: 4.8rem auto;
+  max-width: 120rem;
 }
 
-.list {
-  list-style: none;
-  padding: 0;
-}
-
-.centerSpan {
-  display: flex;
-  justify-content: center;
-}
-
-.spaceBetween {
+.schedule{
   display: flex;
   justify-content: space-between;
-  margin: 3rem 0;
 }
 
-.weekdaysWrapper {
-  text-align: center;
+.timeWrapper{
+  background-color: rgba(249, 249, 249, 1);
+  padding: 2.4rem;
+  max-width: 39rem;
+  width: 100%;
 }
 
-.weekdaysList {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  padding: 0;
-  width: 130rem;
-  margin: 0 auto;
+.timeWrapper h3{
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: rgba(49, 50, 53, 0.52);
 }
 
-.weekdaysElement {
-  width: 40rem;
-  text-align: center;
-}
-
-.weekdaysName {
-  font-size: 2rem;
-  margin-bottom: 0;
-}
-
-.weekdaysTime {
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.boldSpan {
-  font-weight: 600;
-}
-
-.detailedInformation {
-  font-size: 1.8rem;
-  font-weight: 500;
-}
-
-.weekdaysDinner {
-  text-align: center;
-  margin-top: 0;
-  border-top: 1px dashed #717785;
-  border-bottom: 1px dashed #717785;
-  padding: 1.5rem 3.9rem;
-  font-size: 2.2rem;
-  width: 41.4rem;
-}
-
-.textBlock {
-  display: flex;
-  align-items: center;
-}
-
-.textList {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding-right: 30rem;
-  margin: 2rem 0px 2rem 3rem;
-}
-
-.detailedInformationItem {
-  font-size: 1.4rem;
-  list-style: none;
-  color: #393939;
-}
-
-.detailedInformationTime {
-  font-weight: bold;
+.timeWrapper p{
+  font-size: 2.4rem;
+  line-height: 2.8rem;
 }

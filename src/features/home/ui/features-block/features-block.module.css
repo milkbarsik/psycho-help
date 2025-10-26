@@ -1,42 +1,103 @@
-.featuresBlock {
+.featuresBlock{
+    max-height: 61.2rem;
+    height: 100vh;
+}
+
+.container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 2rem;
-    margin: 0 4rem;
-    margin-top: 4.4rem;
+    grid-template-columns: 1fr 1fr 1fr ;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 120rem;
+    margin: 5rem auto;
+    
 }
 
-.featureItem {
-    margin-bottom: 2.4rem;
-}
-
-.title {
-    margin: 0;
-    font-size: 1.8rem;
-}
-
-.desc {
-    font-size: 1.4rem;
-}
-
-.contentWrapper {
+.item1 {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    background-color: #407BFE;
+    color: #fff;
     display: flex;
-    gap: 1.6rem;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 2.8rem;
+    padding: 2.5rem;
+    max-height: 61.2rem;
+    height: 100vh;
 }
 
-.imageWrapper {
-    flex-shrink: 0;
-    width: 4.8rem;
-    height: 4.8rem;
+.item2, .item3, .item4 {
+    grid-column: span 1;
+}
+
+.item1 a {
+    background-color: rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 1.2rem;
+    max-width: 17.2rem;
+    height: 6rem;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.imageWrapper img {
+.item1 h2{
+    font-size: 3.2rem;
+    line-height: 3.6rem;
+    color: rgba(255, 255, 255, 1);
+}
+
+.item1 p{
+    font-size: 1.6rem;
+    line-height: 2,4rem;
+    color: rgba(255, 255, 255, 1);
+    margin: 1.2rem 0 0 0;
+}
+
+.item2{
+    background-color: rgba(99, 101, 107, 0.04);
+    grid-column: 2/3;
+    grid-row: 1 / 2;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    padding: 2.4rem;
+}
+
+.item3{
+    background-color: rgba(99, 101, 107, 0.04);
+    grid-column: 3/4;
+    grid-row: 1 / 2;
+    width: 100%;
+    height: 100%;
+    padding: 2.4rem;
+}
+
+.item2 h2, .item3 h2, .item4 h2{
+    font-size: 3.2rem;
+    line-height: 3.6rem;
+    color: rgba(25, 25, 27, 1);
+}
+
+.item2 p, .item3 p, .item4 p{
+    font-size: 1.6rem;
+    line-height: 2,4rem;
+    color: rgba(25, 25, 27, 1);
+    margin: 1.2rem 0 0 0;
+    
+}
+
+.item4{
+    background-color: rgba(99, 101, 107, 0.04);
+    grid-column: 2/4;
+    grid-row: 2 / 3;
+    width: 100%;
+    height: 100%;
+    padding: 2.4rem;
+}
+
+.item4 p{
+    max-width: 45rem;
 }
