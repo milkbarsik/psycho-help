@@ -46,3 +46,31 @@ const DoctorsPage = () => {
 };
 
 export default DoctorsPage;
+
+
+
+
+
+
+// Для мок данных
+
+// import Title from '@/features/therapists/ui/title';
+// import styles from './DoctorPage.module.css';
+// import DoctorList from '@/features/therapists/ui/doctor-list';
+// import { useState } from 'react';
+// import type { Therapist } from '@/shared/api/types';
+// import { mockDoctors } from '@/shared/api/mockDoctors';
+
+// const DoctorsPage = () => {
+//   const [doctors] = useState<Therapist[]>(mockDoctors);
+
+//   return (
+//     <div className={styles.wrapper}>
+//       <Title />
+//       <DoctorList doctors={doctors} />
+//     </div>
+//   );
+// };
+
+// export default DoctorsPage;
+
