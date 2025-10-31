@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { GetAppointment, User } from '@/shared/api/types';
+import type { User } from '@/shared/api/types';
 import { useFetch } from '@/shared/api/useFetch';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { useNavigate } from 'react-router-dom';
@@ -9,13 +9,10 @@ import userImg from '@/shared/assets/images/appointments/user.svg';
 import venueImg from '@/shared/assets/images/appointments/geo.svg';
 import editAppointmentImg from '@/shared/assets/images/appointments/edit.svg';
 import points from '@/shared/assets/images/appointments/3points.svg';
-
 import { formatDateToCustomString } from '@/shared/lib/dateFunctions';
+import type { Appointment } from '@/entities/appointment/types';
 
-const PersonalData: FC<{ user: User; appointments: GetAppointment[] }> = ({
-  user,
-  appointments,
-}) => {
+const PersonalData: FC<{ user: User; appointments: Appointment[] }> = ({ user, appointments }) => {
   const { logOut } = useAuth();
   const navigate = useNavigate();
   const sortedAppointments = appointments.sort((a, b) =>

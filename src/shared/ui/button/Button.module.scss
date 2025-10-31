@@ -1,0 +1,31 @@
+.button {
+    color: var(--white-color);
+    font-size: 1.6rem;
+    font-weight: bold;
+    user-select: none;
+    display: flex;
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    transition: var(--transition);
+    outline: 2px solid transparent;
+
+    &.medium {
+        padding: 1.4rem;
+    }
+
+    &.primary {
+        background: var(--primary-color);
+
+        &:hover {
+            background: var(--primary-focus-color);
+        }
+
+        &:focus {
+            outline: 2px solid var(--primary-outline-color);
+            outline-offset: 2px;
+            background: var(--primary-focus-color)
+        }
+    }
+}

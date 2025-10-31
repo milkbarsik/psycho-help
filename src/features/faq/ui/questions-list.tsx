@@ -1,5 +1,6 @@
 import Question from './question';
 import styles from './questions-list.module.css';
+import map from 'lodash/map';
 
 const QuestionsList = ({
   questions,
@@ -8,7 +9,7 @@ const QuestionsList = ({
 }) => {
   return (
     <div className={styles.wrapper}>
-      {questions.map((questionObj) => (
+      {map(questions, (questionObj) => (
         <Question
           ask={questionObj.ask}
           id={questionObj.id}

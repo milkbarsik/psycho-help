@@ -10,7 +10,7 @@ interface Props {
   doctor: Therapist;
 }
 
-const Doctor: FC<Props> = ({ doctor }) => {
+export const DoctorCard: FC<Props> = ({ doctor }) => {
   return (
     <div className={styles.wrapper}>
       <Img
@@ -33,5 +33,3 @@ const Doctor: FC<Props> = ({ doctor }) => {
     </div>
   );
 };
-
-export default Doctor;
