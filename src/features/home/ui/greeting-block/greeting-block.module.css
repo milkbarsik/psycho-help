@@ -1,20 +1,16 @@
 .greetingBlock {
-
   display: flex;
-  
+
   gap: 1.6rem;
   max-height: 42rem;
   max-width: 120rem;
   margin: 0 auto;
   margin-top: 4.8rem;
-  
 }
 
 .greetingImageWrapper {
   margin: auto;
   max-width: 59.4rem;
-  
-  
 }
 
 .greetingImage {
@@ -24,7 +20,6 @@
 }
 
 .blockItems {
-
   max-width: 59rem;
   max-height: 42.2rem;
 }
@@ -33,12 +28,12 @@
   font-size: 4.8rem;
   line-height: 5.2rem;
   font-weight: 600;
-  
+
   max-width: 59rem;
   width: 100vw;
 }
 
-.greetingDescription{
+.greetingDescription {
   font-size: 2rem;
   line-height: 2.8rem;
   margin: 2rem 1.6rem 0 0;
@@ -80,12 +75,29 @@
 
 .signupButton {
   width: 100%;
-  background: #1B50F5;
+  background: #1b50f5;
   display: flex;
   border-radius: 1rem;
   align-items: center;
   justify-content: center;
   border: none;
+  margin: 0.6rem 0 0 0;
+}
+
+.signupButton:hover {
+  background: rgba(21, 59, 225, 1);
+}
+
+.signupButton:active {
+  background: rgba(25, 47, 143, 1);
+}
+
+.signupButton:disabled {
+  background: rgba(229, 229, 231, 1);
+}
+
+.signupButton:disabled .signupButton__text {
+  color: rgba(49, 50, 53, 0.32);
 }
 
 .signupButton__text {
@@ -108,57 +120,71 @@
   max-width: 39.2rem;
 }
 
-.typeButtonWrapper{
+.typeButtonWrapper {
   display: flex;
   gap: 0.4rem;
+  
 }
 
-.onlineSingup{
+.onlineSingup {
   width: 19.4rem;
   height: 10rem;
   font-size: 1.6rem;
   line-height: 2.4rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 1.6rem 0;
   background-color: rgba(249, 249, 249, 1);
   border-radius: 1.6rem;
+  transition: background-color 0.3s ease;
 }
 
-.oflineSingup{
+.oflineSingup {
   width: 19.4rem;
   height: 10rem;
   font-size: 1.6rem;
   line-height: 2.4rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 1.6rem 0;
   background-color: rgba(249, 249, 249, 1);
   border-radius: 1.6rem;
+  transition: background-color 0.3s ease;
 }
 
-.onlineSingupImg{
+.onlineSingupImg {
   width: 2.5rem;
   align-self: center;
+  filter: brightness(0) saturate(100%);
 }
 
-.oflineSingupImg{
+.oflineSingupImg {
   width: 2.5rem;
   align-self: center;
+  filter: brightness(0) saturate(100%);
 }
 
-.onlineSingup:active .onlineSingupImg{
-  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(213deg) brightness(96%) contrast(96%);
-  }
-
-.oflineSingup:active .onlineSingupImg{
-  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(213deg) brightness(96%) contrast(96%);
+.onlineSingup span,
+.oflineSingup span {
+  color: rgba(0, 0, 0, 1);
 }
 
-.onlineSingup:active span {
-  color: rgba(27, 80, 245, 1);
+.onlineSingup:hover,
+.oflineSingup:hover {
+  background-color: rgba(229, 229, 231, 1);
 }
 
-.oflineSingup:active span {
+.onlineSingup.active .onlineSingupImg,
+.oflineSingup.active .oflineSingupImg {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(213deg)
+    brightness(96%) contrast(96%);
+}
+
+.onlineSingup.active span,
+.oflineSingup.active span {
   color: rgba(27, 80, 245, 1);
 }

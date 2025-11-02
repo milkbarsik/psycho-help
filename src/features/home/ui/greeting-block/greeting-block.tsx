@@ -1,4 +1,5 @@
 // import { Flex } from 'antd';
+import { useState } from 'react';
 import GreetingImage from '@/shared/assets/images/help_blue_t 1.png';
 import OnlineImage from '@/shared/assets/images/main_page_display.svg'
 import OfflineImage from '@/shared/assets/images/main_page_profile.svg'
@@ -6,6 +7,8 @@ import OfflineImage from '@/shared/assets/images/main_page_profile.svg'
 import styles from './greeting-block.module.css';
 
 const GreatingBlock = () => {
+  const [selectedType, setSelectedType] = useState<'online' | 'offline' | null>(null);
+
   return (
     <div className={styles.greetingBlock}>
         <div className={styles.blockItems}>
@@ -17,11 +20,17 @@ const GreatingBlock = () => {
           </p>
           <div className={styles.buttonWrapper}>
             <div className={styles.typeButtonWrapper}>
-              <button className={styles.oflineSingup}>
+              <button 
+                className={`${styles.oflineSingup} ${selectedType === 'offline' ? styles.active : ''}`}
+                onClick={() => setSelectedType('offline')}
+              >
                 <img src={OfflineImage} className={styles.oflineSingupImg}/>
                 <span>лично</span>
               </button>
-              <button className={styles.onlineSingup}>
+              <button 
+                className={`${styles.onlineSingup} ${selectedType === 'online' ? styles.active : ''}`}
+                onClick={() => setSelectedType('online')}
+              >
                 <img src={OnlineImage} className={styles.onlineSingupImg}/>
                 <span>онлайн</span>
               </button>
