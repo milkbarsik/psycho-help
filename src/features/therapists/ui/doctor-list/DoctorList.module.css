@@ -1,44 +1,43 @@
 .wrapper {
-    margin-top: 80px;
-    margin-bottom: 60px;
+  margin-bottom: 6rem; /* 60px → 6rem */
 }
 
 .title {
-    font-size: 3.6rem;
-    text-align: center;
-    font-weight: 600;
-    margin-bottom: 40px;
-    color: black;
+  font-size: var(--fs-xl); /* 3.6rem */
+  text-align: center;
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 4rem; /* 40px → 4rem */
+  color: var(--color-black);
 }
 
 .list_wrapper {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* расстояние между карточками */
-    flex-wrap: wrap;
+  width: 90%;
+  max-width: 120rem; /* 1200px → 120rem */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem; /* 16px */
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .list_wrapper > * {
-    flex: 0 0 calc(33.333% - 20px); /* 3 карточки в ряд */
-    margin-bottom: 20px;
+  flex: 0 0 calc(33.333% - 1.1rem); /* 11px → 1.1rem */
 }
 
 /* Мобильные стили */
 @media screen and (max-width: 900px) {
-    .list_wrapper > * {
-        flex: 0 0 calc(50% - 15px); /* 2 карточки в ряд на планшете */
-    }
+  .list_wrapper > * {
+    flex: 0 0 calc(50% - 1.5rem); /* 15px → 1.5rem */
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .list_wrapper > * {
-        flex: 0 0 100%; /* 1 карточка в ряд на телефоне */
-    }
+  .list_wrapper > * {
+    flex: 0 0 100%;
+  }
 
-    .title {
-        font-size: 2.8rem;
-    }
+  .title {
+    font-size: 2.8rem;
+  }
 }

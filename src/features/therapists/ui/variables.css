@@ -1,0 +1,54 @@
+:root {
+  /* =========================
+     Цвета
+     ========================= */
+  --color-black: #000000;
+  --color-dark-gray: #19191b;
+  --color-gray: #313235;
+  --color-white: #ffffff;
+  --color-gray-light: #f4f4f4;
+  --color-blue-primary: #1b50f5;
+  --color-blue-light: #d6e3f5;
+  --color-bg-light: #d9e5ff;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+
+  /* =========================
+     Шрифты
+     ========================= */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* =========================
+     Размер шрифта (rem)
+     1rem = 10px
+     ========================= */
+  --fs-xs: 1.6rem;    /* 16px */
+  --fs-sm: 2rem;      /* 20px */
+  --fs-md: 2.4rem;    /* 24px */
+  --fs-lg: 3.2rem;    /* 32px */
+  --fs-xl: 3.6rem;    /* 36px */
+  --fs-xxl: 4rem;     /* 40px */
+  --fs-xxxl: 6rem;    /* 60px */
+
+  /* =========================
+     Отступы (rem)
+     ========================= */
+  --spacing-xs: 0.8rem;   /* 8px */
+  --spacing-sm: 1.2rem;   /* 12px */
+  --spacing-md: 1.6rem;   /* 16px */
+  --spacing-lg: 2.4rem;   /* 24px */
+  --spacing-xl: 3.2rem;   /* 32px */
+
+  /* =========================
+     Радиусы (rem)
+     ========================= */
+  --radius-sm: 1.2rem;    /* 12px */
+  --radius-md: 1.6rem;    /* 16px */
+  --radius-lg: 2rem;      /* 20px */
+
+  /* =========================
+     Тени
+     ========================= */
+  --shadow-md: 0 0.4rem 1.2rem var(--color-shadow); /* 4px 12px */
+}

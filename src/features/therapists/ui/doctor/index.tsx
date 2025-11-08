@@ -23,7 +23,7 @@ const Doctor: FC<Props> = ({ doctor, linkToDetails = true }) => {
         {[doctor.last_name, doctor.first_name].join(' ')}
       </p>
 
-      <p className={styles.speciality}>{doctor.education}</p>
+      <p className={styles.speciality}>{doctor.qualification}</p>
       <p className={styles.experience}>Опыт {doctor.experience} лет</p>
 
       <p className={styles.consult_label}>С чем работает:</p>

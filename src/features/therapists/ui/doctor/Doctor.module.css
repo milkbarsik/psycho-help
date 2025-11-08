@@ -1,72 +1,67 @@
 .wrapper {
-  max-width: 389px;
+  max-width: 38.9rem; /* 389px */
   width: 100%;
-  border-radius: 16px;
-  overflow: scroll;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  padding: 12px;
+  padding: 1.2rem; /* 12px */
   transition: transform 0.2s;
-  /* max-height: 640px;
-  height: 100%; */
-  aspect-ratio: 389 / 637; /* пропорции всей карточки */
 }
 
 .wrapper:hover {
-  transform: translateY(-4px);
+  transform: translateY(-0.4rem); /* 4px */
 }
 
 .photo {
   width: 100%;
-  aspect-ratio: 1 / 1; /* квадрат 365x365 */
-  /* height: 365px; */
-  border-radius: 12px;
+  aspect-ratio: 1 / 1; /* квадрат */
+  border-radius: var(--radius-sm);
   background-repeat: no-repeat;
   background-size: cover;
-  /* background-position: center; */
-  margin-bottom: 12px;
+  margin-bottom: 1.2rem; /* 12px */
   transition: all 0.3s ease;
 }
 
 .fio {
-  color: #000000;
-  font-size: 3.2rem;
-  font-weight: 500;
-  margin: 0 0 6px 0;
+  color: var(--color-black);
+  font-size: var(--fs-lg); /* 3.2rem */
+  font-weight: var(--font-weight-medium);
+  margin: 0 0 0.6rem 0; /* 6px */
 }
 
 .speciality {
-  font-size: 2rem;
-  color: #19191b;
-  margin-bottom: 6px;
+  font-size: var(--fs-sm); /* 2rem */
+  color: var(--color-dark-gray);
+  margin-bottom: 0.6rem; /* 6px */
 }
 
 .experience {
-  font-size: 2rem;
-  font-weight: 400;
-  color: #313235;
-  opacity: 72%;
-  margin-bottom: 1.5rem;
+  font-size: var(--fs-sm); /* 2rem */
+  font-weight: var(--font-weight-regular);
+  color: var(--color-gray);
+  opacity: 0.72;
+  margin-bottom: 1.5rem; /* 15px → 1.5rem */
 }
 
 .consult_label {
-  font-size: 2.4rem;
-  font-weight: 500;
-  margin-top: 8px;
-  color: black;
+  font-size: 2.4rem; /* оставим пока так, можно вынести в переменные fs */
+  font-weight: var(--font-weight-medium);
+  margin-top: 0.8rem;
+  color: var(--color-black);
 }
 
 .consult_areas {
-  font-size: 2rem;
-  color: #313235;
-  opacity: 72%;
-
-  margin-top: 2px;
+  font-size: var(--fs-sm);
+  color: var(--color-gray);
+  opacity: 0.72;
+  margin-top: 0.2rem;
   line-height: 1.5;
 }
 
+/* Адаптивность */
 @media (max-width: 1150px) {
   .fio {
     font-size: 2.8rem;
@@ -75,7 +70,7 @@
   .consult_areas,
   .speciality,
   .experience {
-    font-size: 1.6rem;
+    font-size: var(--fs-xs); /* 1.6rem */
   }
 
   .consult_label {
@@ -83,22 +78,8 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
   .wrapper {
     margin: 0 auto;
   }
-
-  /* .fio {
-    font-size: 2rem;
-  }
-
-  .consult_areas,
-  .speciality,
-  .experience {
-    font-size: 1.3rem;
-  }
-
-  .consult_label {
-    font-size: 1.8rem;
-  } */
 }

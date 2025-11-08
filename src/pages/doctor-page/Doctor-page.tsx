@@ -47,8 +47,8 @@ const DoctorPage = () => {
           />
           <div className={styles.card__content}>
             <p className={styles.thirsname}>{doctor.last_name.toUpperCase()}</p>
-            <p className={styles.IF}>{doctor?.first_name}</p>
-            <p className={[styles.text, styles.educ].join(' ')}>{doctor.education}</p>
+            <p className={styles.IF}>{[doctor?.first_name, doctor.middle_name].join(' ')}</p>
+            <p className={[styles.text, styles.educ].join(' ')}>{doctor.qualification}</p>
             <p className={styles.textBold}>Обо мне:</p>
             <p className={styles.text}>{doctor.description}</p>
             <button className={styles.btn} aria-label="Кнопка записаться">
