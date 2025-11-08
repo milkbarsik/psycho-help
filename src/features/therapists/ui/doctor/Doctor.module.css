@@ -1,5 +1,5 @@
 .wrapper {
-  max-width: 38.9rem; /* 389px */
+  max-width: 38.9rem; 
   width: 100%;
   height: 100%;
   border-radius: var(--radius-md);
@@ -7,12 +7,12 @@
   box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  padding: 1.2rem; /* 12px */
+  padding: 1.2rem; 
   transition: transform 0.2s;
 }
 
 .wrapper:hover {
-  transform: translateY(-0.4rem); /* 4px */
+  transform: translateY(-0.4rem); 
 }
 
 .photo {
@@ -21,7 +21,7 @@
   border-radius: var(--radius-sm);
   background-repeat: no-repeat;
   background-size: cover;
-  margin-bottom: 1.2rem; /* 12px */
+  margin-bottom: 1.2rem; 
   transition: all 0.3s ease;
 }
 
@@ -29,25 +29,25 @@
   color: var(--color-black);
   font-size: var(--fs-lg); /* 3.2rem */
   font-weight: var(--font-weight-medium);
-  margin: 0 0 0.6rem 0; /* 6px */
+  margin: 0 0 0.6rem 0;
 }
 
 .speciality {
-  font-size: var(--fs-sm); /* 2rem */
+  font-size: var(--fs-sm); 
   color: var(--color-dark-gray);
-  margin-bottom: 0.6rem; /* 6px */
+  margin-bottom: 0.6rem; 
 }
 
 .experience {
-  font-size: var(--fs-sm); /* 2rem */
+  font-size: var(--fs-sm);
   font-weight: var(--font-weight-regular);
   color: var(--color-gray);
   opacity: 0.72;
-  margin-bottom: 1.5rem; /* 15px → 1.5rem */
+  margin-bottom: 1.5rem; 
 }
 
 .consult_label {
-  font-size: 2.4rem; /* оставим пока так, можно вынести в переменные fs */
+  font-size: 2.4rem;
   font-weight: var(--font-weight-medium);
   margin-top: 0.8rem;
   color: var(--color-black);
@@ -61,7 +61,6 @@
   line-height: 1.5;
 }
 
-/* Адаптивность */
 @media (max-width: 1150px) {
   .fio {
     font-size: 2.8rem;
