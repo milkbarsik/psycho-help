@@ -4,7 +4,6 @@ import Footer from '@/widgets/footer/footer';
 import { AppContextProvider } from '@/app/context/provider';
 import styles from './App.module.scss';
 import AppRouter from './router/AppRouter';
-import '../features/therapists/ui/variables.css';
 
 
 function App() {

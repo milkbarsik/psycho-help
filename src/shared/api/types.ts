@@ -33,7 +33,7 @@ export type Therapist = {
   email: string;
   social_media?: string;
   password: string;
-  // education: string;
+  education: string;
   experience: string;
   qualification: string;
   consult_areas: string;
