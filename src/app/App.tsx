@@ -5,6 +5,7 @@ import { AppContextProvider } from '@/app/context/provider';
 import styles from './App.module.scss';
 import AppRouter from './router/AppRouter';
 
+
 function App() {
   return (
     <AppContextProvider>
