@@ -10,11 +10,6 @@ servers:
   - url: http://185.128.105.126:8000
     description: Сервер разработки
 
-  # - url: http://localhost:8080
-  #   description: Локальный сервер разработки
-  # - url: http://185.128.105.126:8080
-  #   description: Сервер разработки
-
 components:
   securitySchemes:
     bearerAuth:
@@ -67,29 +62,29 @@ components:
       properties:
         first_name:
           type: string
-          example: 'Иван'
+          example: "Иван"
         middle_name:
           type: string
           nullable: true
-          example: 'Иванович'
+          example: "Иванович"
         last_name:
           type: string
-          example: 'Иванов'
+          example: "Иванов"
         phone_number:
           type: string
-          example: '+79001234567'
+          example: "+79001234567"
         email:
           type: string
           format: email
-          example: 'ivan@example.com'
+          example: "ivan@example.com"
         password:
           type: string
           minLength: 8
-          example: 'strongPassword123'
+          example: "strongPassword123"
         role:
           type: string
           enum: [Student, Therapist, Administrator, Stuff]
-          example: 'Student'
+          example: "Student"
 
     LoginRequest:
       type: object
@@ -100,10 +95,10 @@ components:
         email:
           type: string
           format: email
-          example: 'ivan@example.com'
+          example: "ivan@example.com"
         password:
           type: string
-          example: 'strongPassword123'
+          example: "strongPassword123"
 
     TokenResponse:
       type: object
@@ -113,7 +108,7 @@ components:
           example: 200
         token:
           type: string
-          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 
     AppointmentBase:
       type: object
@@ -219,6 +214,7 @@ components:
           enum: [Student, Therapist, Administrator, Stuff]
 
 paths:
+
   /users/{user_id}:
     get:
       tags:
