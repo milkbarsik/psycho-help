@@ -41,11 +41,11 @@ const GreatingBlock = () => {
           </div>
         </div>
 
-      <div>
-        <div className={styles.greetingImageWrapper}>
-          <img src={GreetingImage} alt="Иллюстрация на главной странице" className={styles.greetingImage}/>
+        <div>
+          <div className={styles.greetingImageWrapper}>
+            <img src={GreetingImage} alt="Иллюстрация на главной странице" className={styles.greetingImage}/>
+          </div>
         </div>
-      </div>
     </div>
   );
 };
