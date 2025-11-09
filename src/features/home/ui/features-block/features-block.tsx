@@ -1,5 +1,7 @@
-import { FEATURES_OF_WORK } from '@/features/home/config/constants';
+// import { FEATURES_OF_WORK } from '@/features/home/config/constants';
 import styles from './features-block.module.css';
+import goodPsycho from '@/shared/assets/images/goodPsycho.svg';
+import timeSwitch from '@/shared/assets/images/timeSwitch.svg';
 
 const FeaturesBlock = () => {
   return (
@@ -10,6 +12,7 @@ const FeaturesBlock = () => {
             <h2>Компетентые психологи</h2>
             <p>Наши специалисты имеют высшее психологическое образование и практический опыт. Мы гарантируем бережную и профессиональную помощь</p>
           </div>
+          <img src={goodPsycho} alt="psychologist" className={styles.goodPsycho} />
           <a>
             <span>Смотреть всех</span>
           </a>
@@ -23,11 +26,11 @@ const FeaturesBlock = () => {
           <p>Очная встреча в вузе или дистанционно по телефону, через мессенджеры, Zoom, Skype или e-mail</p>
         </div>
         <div className={styles.item4}>
-          <div className="wrapper">
+          <div className={styles.wrapper}>
             <h2>Перенос или пропуск <br/>консультации</h2>
             <p>Если встречу нужно перенести, просьба сообщить об этом заранее. Пропуск без предупреждения не допускается</p>
           </div>
-          {/* <img src="" alt="" /> */}
+            <img src={timeSwitch} alt="time switch" className={styles.timeSwitch} />
           </div>
       </div>
     </div>

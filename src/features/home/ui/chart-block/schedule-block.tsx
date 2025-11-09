@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import styles from './schedule-block.module.css';
 import type { TextBlockProps } from '@/shared/api/types';
+import scheduleImage from '@/shared/assets/images/time.svg';
 
 const items: TextBlockProps[] = [
   {
@@ -15,10 +16,10 @@ const items: TextBlockProps[] = [
     info:'Обед',
     title: '13:00 – 13:45',
   },
-
+ 
   
 ];
-
+ 
 const ChartBlock: FC = () => {
   return (
     <div className={styles.wrapper}>
@@ -30,7 +31,7 @@ const ChartBlock: FC = () => {
           </div>
         ))}
       </div>
-      {/* <img src="" alt="" /> */}
+      <img src={scheduleImage} alt="schedule" className={styles.image} />
     </div>
   );
 };
