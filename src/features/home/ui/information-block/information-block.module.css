@@ -1,111 +1,113 @@
-.wrapper {
-  background-color: white;
-  padding: 1.6rem 0;
-  margin: 0 0 15rem 0;
-}
+@media (min-width: 1440px) {
+  .wrapper {
+    background-color: white;
+    padding: 1.6rem 0;
+    margin: 0 0 15rem 0;
+  }
 
-.container {
-  max-width: 120rem;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
+  .container {
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
 
-.header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #333;
-  margin: 0 0 1rem 0;
-  line-height: 1.2;
-}
+  .title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
 
-.subtitle {
-  font-size: 2rem;
-  color: #666;
-  margin: 0;
-  line-height: 2.4rem;
-  max-width: 80rem;
-  margin: 0 auto;
-}
+  .subtitle {
+    font-size: 2rem;
+    color: #666;
+    margin: 0;
+    line-height: 2.4rem;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
 
-.content {
-  display: flex;
-  gap: 3rem;
-  align-items: flex-start;
-}
-
-
-.illustrationImage {
-  
-  height: 56rem;
-  position: relative;
-}
-
-.illustrationImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-}
+  .content {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+  }
 
 
-.contactCards {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+  .illustrationImage {
+    
+    height: 56rem;
+    position: relative;
+  }
 
-.contactCard {
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 2.4rem;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  max-width: 39rem;
-  padding: 2.4rem;
-}
+  .illustrationImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 
-.cardTitle {
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: #333;
-  margin: 0 0 1rem 0;
-  line-height: 2.4rem;
-}
+  }
 
-.phoneNumbers {
-  display: flex;
-  gap: 2rem;
-}
 
-.phoneNumber {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
+  .contactCards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
-.number {
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: rgba(27, 80, 245, 1);
-  line-height: 2.8rem;
-}
+  .contactCard {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 2.4rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    max-width: 39rem;
+    padding: 2.4rem;
+  }
 
-.label {
-  font-size: 1.2rem;
-  color: rgba(49, 50, 53, 0.52);
-  font-weight: 400;
-  line-height: 1.6rem;
-}
+  .cardTitle {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #333;
+    margin: 0 0 1rem 0;
+    line-height: 2.4rem;
+  }
 
-.note {
-  font-size: 1.2rem;
-  color: rgba(49, 50, 53, 0.52);
-  font-weight: 400;
-  line-height: 1.6rem;
+  .phoneNumbers {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .phoneNumber {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .number {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: rgba(27, 80, 245, 1);
+    line-height: 2.8rem;
+  }
+
+  .label {
+    font-size: 1.2rem;
+    color: rgba(49, 50, 53, 0.52);
+    font-weight: 400;
+    line-height: 1.6rem;
+  }
+
+  .note {
+    font-size: 1.2rem;
+    color: rgba(49, 50, 53, 0.52);
+    font-weight: 400;
+    line-height: 1.6rem;
+  }
 }
 

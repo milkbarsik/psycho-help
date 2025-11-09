@@ -1,33 +1,72 @@
-.wrapper {
-  width: 100%;
-  margin: 4.8rem auto;
-  max-width: 120rem;
+@media (min-width: 730px) and (max-width: 1219px) {
+  .wrapper {
+    max-width: 720px;
+    margin: 3.2rem auto;
+  }
+
+  .schedule {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.6rem;
+  }
+
+  .timeWrapper {
+    background-color: rgba(249, 249, 249, 1);
+    padding: 1.6rem;
+    border-radius: 1.6rem;
+    flex: 1;
+    text-align: center;
+  }
+
+  .timeWrapper h3 {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: rgba(49, 50, 53, 0.52);
+  }
+
+  .timeWrapper p {
+    font-size: 2rem;
+    line-height: 2.4rem;
+  }
+
+  .image {
+    width: 100%;
+    margin-top: 2.4rem;
+  }
 }
 
-.schedule{
-  display: flex;
-  justify-content: space-between;
-}
+@media (min-width: 1220px) {
+  .wrapper {
+    width: 100%;
+    margin: 4.8rem auto;
+    max-width: 120rem;
+  }
 
-.timeWrapper{
-  background-color: rgba(249, 249, 249, 1);
-  padding: 2.4rem;
-  max-width: 39rem;
-  width: 100%;
-}
+  .schedule{
+    display: flex;
+    justify-content: space-between;
+  }
 
-.timeWrapper h3{
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  color: rgba(49, 50, 53, 0.52);
-}
+  .timeWrapper{
+    background-color: rgba(249, 249, 249, 1);
+    padding: 2.4rem;
+    max-width: 39rem;
+    width: 100%;
+  }
 
-.timeWrapper p{
-  font-size: 2.4rem;
-  line-height: 2.8rem;
-}
+  .timeWrapper h3{
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: rgba(49, 50, 53, 0.52);
+  }
 
-.image {
-  width: 120rem;
-  margin: 1.5rem 0 0 0;
+  .timeWrapper p{
+    font-size: 2.4rem;
+    line-height: 2.8rem;
+  }
+
+  .image {
+    width: 120rem;
+    margin: 1.5rem 0 0 0;
+  }
 }

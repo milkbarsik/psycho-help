@@ -9,8 +9,13 @@ const FeaturesBlock = () => {
       <div className={styles.container}>
         <div className={styles.item1}>
           <div className={styles.wrapper}>
-            <h2>Компетентые психологи</h2>
-            <p>Наши специалисты имеют высшее психологическое образование и практический опыт. Мы гарантируем бережную и профессиональную помощь</p>
+            <div>
+              <h2>Компетентные психологи</h2>
+              <p>Наши специалисты имеют высшее психологическое образование и практический опыт. Мы гарантируем бережную и профессиональную помощь</p>
+            </div>
+            <a>
+              <span>Смотреть всех</span>
+            </a>
           </div>
           <img src={goodPsycho} alt="psychologist" className={styles.goodPsycho} />
           <a>

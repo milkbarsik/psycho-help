@@ -1,189 +1,336 @@
-.greetingBlock {
-  display: flex;
-  justify-content: center;
-  gap: 1.6rem;
-  max-height: 42rem;
-  max-width: 120rem;
-  margin: 4.8rem auto 0 auto;
+@media (min-width: 730px) and (max-width: 1220px) {
+  .greetingBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 72rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .blockItems {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .greetingTitle {
+    font-size: 3.2rem;
+    line-height: 3.6rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 2rem 0;
+    width: 100%;
+  }
+
+  .greetingDescription {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    text-align: center;
+    margin: 0 0 3rem 0;
+    width: 100%;
+  }
+
+  .buttonWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+    margin-top: 0;
+  }
+
+  .typeButtonWrapper {
+    display: flex;
+    gap: 1.6rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .onlineSingup,
+  .oflineSingup {
+    flex: 1;
+    max-width: 20rem;
+    height: 10rem;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6rem 0;
+    background-color: rgba(232, 239, 253, 1);
+    border-radius: 1.6rem;
+    border: none;
+    transition: background-color 0.3s ease;
+    gap: 0.8rem;
+  }
+
+  .onlineSingupImg,
+  .oflineSingupImg {
+    width: 3rem;
+    height: 3rem;
+    filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(213deg)
+      brightness(96%) contrast(96%);
+  }
+
+  .onlineSingup span,
+  .oflineSingup span {
+    color: rgba(27, 80, 245, 1);
+    font-weight: 500;
+  }
+
+  .onlineSingup:hover,
+  .oflineSingup:hover {
+    background-color: rgba(209, 224, 252, 1);
+  }
+
+  .onlineSingup.active,
+  .oflineSingup.active {
+    background-color: rgba(232, 239, 253, 1);
+  }
+
+  .signupButton {
+    width: 100%;
+    max-width: 42rem;
+    background: #1b50f5;
+    display: flex;
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    margin: 0;
+  }
+
+  .signupButton:hover {
+    background: rgba(21, 59, 225, 1);
+  }
+
+  .signupButton:active {
+    background: rgba(25, 47, 143, 1);
+  }
+
+  .signupButton:disabled {
+    background: rgba(229, 229, 231, 1);
+  }
+
+  .signupButton:disabled .signupButton__text {
+    color: rgba(49, 50, 53, 0.32);
+  }
+
+  .signupButton__text {
+    padding: 1.4rem;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    user-select: none;
+  }
+
+  .greetingImageWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  .greetingImage {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
 }
 
-.greetingImageWrapper {
-  margin: auto;
-  width: 100vw;
-  max-width: 59.4rem;
-}
+@media (min-width: 1220px) {
+  .greetingBlock {
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+    max-height: 42rem;
+    max-width: 120rem;
+    margin: 4.8rem auto 0 auto;
+  }
 
-.greetingImage {
-  max-width: 100%;
-  width: 100vw;
-  height: auto;
-  object-fit: cover;
-}
+  .greetingImageWrapper {
+    margin: auto;
+    width: 100vw;
+    max-width: 59.4rem;
+  }
 
-.blockItems {
-  max-width: 59rem;
-  max-height: 42.2rem;
-}
+  .greetingImage {
+    max-width: 100%;
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+  }
 
-.greetingTitle {
-  font-size: 4.8rem;
-  line-height: 5.2rem;
-  font-weight: 600;
-  max-width: 59rem;
-  width: 100vw;
-}
+  .blockItems {
+    max-width: 59rem;
+    max-height: 42.2rem;
+  }
 
-.greetingDescription {
-  font-size: 2rem;
-  line-height: 2.8rem;
-  margin: 2rem 1.6rem 0 0;
-}
+  .greetingTitle {
+    font-size: 4.8rem;
+    line-height: 5.2rem;
+    font-weight: 600;
+    max-width: 59rem;
+    width: 100vw;
+  }
 
-.greetingList {
-  margin-top: 5.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  width: 52.5rem;
-}
+  .greetingDescription {
+    font-size: 2rem;
+    line-height: 2.8rem;
+    margin: 2rem 1.6rem 0 0;
+  }
 
-.greetingList__item {
-  list-style: none;
-  font-weight: bold;
-  font-size: 2rem;
-}
+  .greetingList {
+    margin-top: 5.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: 52.5rem;
+  }
 
-.importantTextWrapper {
-  background: #e8effd;
-  padding: 0.6rem;
-  border-radius: 2rem;
-  width: 51.2rem;
-  margin-left: auto;
-  margin-right: 1.7rem;
-}
+  .greetingList__item {
+    list-style: none;
+    font-weight: bold;
+    font-size: 2rem;
+  }
 
-.importantText {
-  color: #393939;
-  font-size: 1.6rem;
-  display: block;
-  padding: 0.4rem;
-}
+  .importantTextWrapper {
+    background: #e8effd;
+    padding: 0.6rem;
+    border-radius: 2rem;
+    width: 51.2rem;
+    margin-left: auto;
+    margin-right: 1.7rem;
+  }
 
-.importantText__bold {
-  font-weight: bold;
-}
+  .importantText {
+    color: #393939;
+    font-size: 1.6rem;
+    display: block;
+    padding: 0.4rem;
+  }
 
-.signupButton {
-  width: 100%;
-  background: #1b50f5;
-  display: flex;
-  border-radius: 1rem;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  margin: 0.6rem 0 0 0;
-}
+  .importantText__bold {
+    font-weight: bold;
+  }
 
-.signupButton:hover {
-  background: rgba(21, 59, 225, 1);
-}
+  .signupButton {
+    width: 100%;
+    background: #1b50f5;
+    display: flex;
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    margin: 0.6rem 0 0 0;
+  }
 
-.signupButton:active {
-  background: rgba(25, 47, 143, 1);
-}
+  .signupButton:hover {
+    background: rgba(21, 59, 225, 1);
+  }
 
-.signupButton:disabled {
-  background: rgba(229, 229, 231, 1);
-}
+  .signupButton:active {
+    background: rgba(25, 47, 143, 1);
+  }
 
-.signupButton:disabled .signupButton__text {
-  color: rgba(49, 50, 53, 0.32);
-}
+  .signupButton:disabled {
+    background: rgba(229, 229, 231, 1);
+  }
 
-.signupButton__text {
-  padding: 1.4rem;
-  color: white;
-  font-size: 1.6rem;
-  font-weight: bold;
-  user-select: none;
-}
+  .signupButton:disabled .signupButton__text {
+    color: rgba(49, 50, 53, 0.32);
+  }
 
-.title4 {
-  font-size: 1.6rem;
-  color: #5e8bf4;
-  text-transform: uppercase;
-  margin-top: 2rem;
-}
+  .signupButton__text {
+    padding: 1.4rem;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    user-select: none;
+  }
 
-.buttonWrapper {
-  margin-top: 4.3rem;
-  max-width: 39.2rem;
-}
+  .title4 {
+    font-size: 1.6rem;
+    color: #5e8bf4;
+    text-transform: uppercase;
+    margin-top: 2rem;
+  }
 
-.typeButtonWrapper {
-  display: flex;
-  gap: 0.4rem;
-}
+  .buttonWrapper {
+    margin-top: 4.3rem;
+    max-width: 39.2rem;
+  }
 
-.onlineSingup {
-  width: 19.4rem;
-  height: 10rem;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.6rem 0;
-  background-color: rgba(249, 249, 249, 1);
-  border-radius: 1.6rem;
-  transition: background-color 0.3s ease;
-}
+  .typeButtonWrapper {
+    display: flex;
+    gap: 0.4rem;
+  }
 
-.oflineSingup {
-  width: 19.4rem;
-  height: 10rem;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.6rem 0;
-  background-color: rgba(249, 249, 249, 1);
-  border-radius: 1.6rem;
-  transition: background-color 0.3s ease;
-}
+  .onlineSingup {
+    width: 19.4rem;
+    height: 10rem;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6rem 0;
+    background-color: rgba(249, 249, 249, 1);
+    border-radius: 1.6rem;
+    transition: background-color 0.3s ease;
+  }
 
-.onlineSingupImg {
-  width: 2.5rem;
-  align-self: center;
-  filter: brightness(0) saturate(100%);
-}
+  .oflineSingup {
+    width: 19.4rem;
+    height: 10rem;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6rem 0;
+    background-color: rgba(249, 249, 249, 1);
+    border-radius: 1.6rem;
+    transition: background-color 0.3s ease;
+  }
 
-.oflineSingupImg {
-  width: 2.5rem;
-  align-self: center;
-  filter: brightness(0) saturate(100%);
-}
+  .onlineSingupImg {
+    width: 2.5rem;
+    align-self: center;
+    filter: brightness(0) saturate(100%);
+  }
 
-.onlineSingup span,
-.oflineSingup span {
-  color: rgba(0, 0, 0, 1);
-}
+  .oflineSingupImg {
+    width: 2.5rem;
+    align-self: center;
+    filter: brightness(0) saturate(100%);
+  }
 
-.onlineSingup:hover,
-.oflineSingup:hover {
-  background-color: rgba(229, 229, 231, 1);
-}
+  .onlineSingup span,
+  .oflineSingup span {
+    color: rgba(0, 0, 0, 1);
+  }
 
-.onlineSingup.active .onlineSingupImg,
-.oflineSingup.active .oflineSingupImg {
-  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(213deg)
-    brightness(96%) contrast(96%);
-}
+  .onlineSingup:hover,
+  .oflineSingup:hover {
+    background-color: rgba(229, 229, 231, 1);
+  }
 
-.onlineSingup.active span,
-.oflineSingup.active span {
-  color: rgba(27, 80, 245, 1);
+  .onlineSingup.active .onlineSingupImg,
+  .oflineSingup.active .oflineSingupImg {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(213deg)
+      brightness(96%) contrast(96%);
+  }
+
+  .onlineSingup.active span,
+  .oflineSingup.active span {
+    color: rgba(27, 80, 245, 1);
+  }
 }
