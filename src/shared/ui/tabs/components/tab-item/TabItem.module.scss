@@ -1,0 +1,35 @@
+@use '@/shared/scss/mixins/media-breakpoints' as *;
+@use '@/shared/scss/mixins/font-sizes' as *;
+@use '@/shared/scss/mixins/utils' as *;
+
+.tab {
+    --transition: .3s ease;
+    
+    @include TextM;
+    background: var(--interactive-neutral-secondary);
+    color: var(--labels-neutral-primary);
+    border-radius: var(--radius-sm);
+    padding-inline: var(--radius-md);
+    padding-block: .75rem;
+    transition: var(--transition);
+
+    &.active {
+        color: var(--labels-neutral-inverted-primary);
+        background: var(--interactive-brand-primary);
+    }
+
+    @include media-hover {
+        background: var(--interactive-brand-hover-secondary);
+        color: var(--labels-brand-primary);
+    }
+
+    @include media-tablet {
+        padding: 1rem 2.2rem;
+        @include TextLButton
+    }
+
+    @include media-desktop {
+        @include TextL;
+        padding: 1.6rem 6.4rem;
+    }
+}
