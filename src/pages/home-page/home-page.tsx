@@ -7,7 +7,6 @@ import FeaturesBlock from '@/features/home/ui/features-block/features-block';
 import ChartBlock from '@/features/home/ui/chart-block/schedule-block';
 // import TherapistsBlock from './components/doctors-block/doctors-block';
 import styles from './home-page.module.css';
-import map from 'lodash/map';
 
 const ContentWrapper: FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className={styles.contentWrapper}>{children}</div>
@@ -69,8 +68,12 @@ const HomePage: FC = () => {
 
   return (
     <div>
-      {map(blocks, (block, index) => (
-        <BlockWrapper key={index} {...block} ref={(el) => (refs.current[index] = el)} />
+      {blocks.map((block, index) => (
+        <BlockWrapper
+          key={`home-page-${index}`}
+          {...block}
+          ref={(el) => (refs.current[index] = el)}
+        />
       ))}
     </div>
   );

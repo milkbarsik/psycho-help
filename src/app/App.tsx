@@ -7,7 +7,7 @@ import AppRouter from './router/AppRouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import ru_RU from 'antd/locale/ru_RU';
-import { appTheme } from '@/app/utils';
+import { appTheme } from '@/app/theme';
 
 dayjs.locale('ru');
 

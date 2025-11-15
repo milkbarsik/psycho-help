@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import type { Appointment } from '@/entities/appointment/types';
-import { EAppointmentType } from '@/entities/appointment/enums';
 
 interface IAppointment {
   appointment: Appointment;
@@ -10,7 +9,7 @@ interface IAppointment {
 export const useAppointment = create<IAppointment>((set) => ({
   appointment: {
     therapist_id: 'default',
-    type: EAppointmentType.ONLINE,
+    type: 'Online',
     reason: '',
     date: '',
     remind_time: '',

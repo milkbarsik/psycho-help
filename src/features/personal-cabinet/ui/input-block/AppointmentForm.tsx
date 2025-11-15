@@ -3,9 +3,7 @@ import styles from './AppointmentForm.module.css';
 import { useAppointment } from '@/features/personal-cabinet/model/appointment';
 import { getDayNameOfWeek } from '@/shared/lib/dateFunctions';
 import type { Therapist } from '@/entities/therapist/types';
-import { split } from 'lodash';
-import { EAppointmentType } from '@/entities/appointment/enums';
-import cn from 'classnames';
+import clsx from 'clsx';
 
 interface Props {
   doctors: Therapist[];
@@ -26,7 +24,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
   return (
     <div className={styles.form}>
       <h2 className={styles.date}>
-        {getDayNameOfWeek(appointment?.date || '')}, {split(appointment.date, '-').at(-1)}
+        {getDayNameOfWeek(appointment?.date || '')}, {appointment?.date?.split('-').at(-1)}
       </h2>
 
       <div className={styles.field}>
@@ -58,18 +56,18 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
         <button
           type="button"
           className={`${styles.formatButton} ${appointment.type === 'Online' ? styles.active : ''}`}
-          onClick={() => setAppointment({ type: EAppointmentType.ONLINE, venue: '' })}
+          onClick={() => setAppointment({ type: 'Online', venue: '' })}
           aria-label="Кнопка выбора онлайн"
         >
           Онлайн
         </button>
         <button
           type="button"
-          className={cn(styles.formatButton, {
-            [styles.active]: appointment.type === EAppointmentType.OFFLINE,
+          className={clsx(styles.formatButton, {
+            [styles.active]: appointment.type === 'Offline',
           })}
           onClick={() => {
-            setAppointment({ type: EAppointmentType.OFFLINE, venue: '' });
+            setAppointment({ type: 'Offline', venue: '' });
             handleLocation(appointment?.therapist_id);
           }}
           aria-label="Кнопка выбора очно"
