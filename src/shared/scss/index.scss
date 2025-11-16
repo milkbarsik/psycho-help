@@ -3,6 +3,4 @@
 @use 'swiper/css/navigation' as *;
 @use 'swiper/css/pagination' as *;
 @use 'swiper/css/effect-fade' as *;
-@use 'global' as *;
-@use 'root' as *;
-@use 'variables' as *;
+@use 'base';
