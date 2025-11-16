@@ -1,0 +1,9 @@
+@use 'media-breakpoints' as *;
+
+@mixin media-hover {
+    @include media-tablet {
+        &:hover {
+            @content;
+        }
+    }
+}

@@ -1,0 +1,33 @@
+@use '@/shared/scss/mixins/media-breakpoints' as *;
+@use '@/shared/scss/mixins/font-sizes' as *;
+@use '@/shared/scss/mixins/utils' as *;
+
+.wrapper {
+    .testList {
+        grid-template-columns: 1fr;
+
+        display: grid;
+        padding-inline: 1rem;
+        gap: 1.2rem;
+        justify-items: center;
+        justify-content: center;
+
+        .readBtn {
+            background: var(--interactive-brand-secondary);
+            color: var(--labels-brand-primary);
+            width: 100%;
+            padding: var(--spacing-padding-xl);
+            border-radius: var(--radius-xl);
+        }
+
+        @include media-tablet {
+            grid-template-columns: repeat(auto-fit, minmax(0, 35rem));
+            padding: 0;
+            gap: 1.6rem;
+        }
+
+        @include media-desktop {
+            grid-template-columns: 1fr;
+        }
+    }
+}

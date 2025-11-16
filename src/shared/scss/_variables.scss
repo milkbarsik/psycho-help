@@ -4,7 +4,7 @@
     в качестве переменной.
 
     Цвета в :root должны быть чётко обозначены и не вызывать лишних зависимостей.
-    Если переменная для цвета нужна, но её зависимости неизвестны, 
+    Если переменная для цвета нужна, но её зависимости неизвестны,
     то её следует определять в формате переменных scss: $abobus: #somehex;
 
     Текущие правила могут и должны дополняться.
@@ -15,54 +15,81 @@
     Перенесены из src/features/therapists/ui/varables.css (author: Кушжетеров И. Х., @Ibragim29052003)
 */
 :root {
+    --color-black: #000000;
+    --color-dark-gray: #19191b;
+    --color-gray: #313235;
+    --color-white: #ffffff;
+    --color-gray-light: #f9f9f9;
+    --color-blue-primary: #1b50f5;
+    --color-blue-light: #d6e3f5;
+    --color-bg-light: #d9e5ff;
+    --color-shadow: rgba(0, 0, 0, 0.1);
 
-  --color-black: #000000;
-  --color-dark-gray: #19191b;
-  --color-gray: #313235;
-  --color-white: #ffffff;
-  --color-gray-light: #f9f9f9;
-  --color-blue-primary: #1b50f5;
-  --color-blue-light: #d6e3f5;
-  --color-bg-light: #d9e5ff;
-  --color-shadow: rgba(0, 0, 0, 0.1);
+    /* =========================
+       color tokens
+       ========================= */
+    --labels-neutral-primary: #19191b;
+    --labels-neutral-secondary: #6b6a6d;
+    --labels-neutral-tetriary: #6b6a6d;
+    --labels-neutral-quanternary: #BCD6FF;
+    --labels-brand-primary: #1c50f6;
+    --labels-neutral-inverted-primary: #ffffff;
 
-  /* =========================
-     Шрифты
-     ========================= */
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
+    --border-brand-strong: #1B50F5;
+    --border-neutral-base: #63656B29;
 
-  /* =========================
-     Размер шрифта (rem)
-     1rem = 10px
-     ========================= */
-  --fs-xs: 1.6rem;    /* 16px */
-  --fs-sm: 2rem;      /* 20px */
-  --fs-md: 2.4rem;    /* 24px */
-  --fs-lg: 3.2rem;    /* 32px */
-  --fs-xl: 3.6rem;    /* 36px */
-  --fs-xxl: 4rem;     /* 40px */
-  --fs-xxxl: 6rem;    /* 60px */
+    --interactive-neutral-secondary: #F9F9F9;
 
-  /* =========================
-     Отступы (rem)
-     ========================= */
-  --spacing-xs: 0.8rem;   /* 8px */
-  --spacing-sm: 1.2rem;   /* 12px */
-  --spacing-md: 1.6rem;   /* 16px */
-  --spacing-lg: 2.4rem;   /* 24px */
-  --spacing-xl: 3.2rem;   /* 32px */
+    --interactive-brand-primary: #1B50F5;
+    --interactive-brand-secondary: #EEF5FF;
+    --interactive-brand-hover-secondary: #D9E7FF;
 
-  /* =========================
-     Радиусы (rem)
-     ========================= */
-  --radius-sm: 1.2rem;    /* 12px */
-  --radius-md: 1.6rem;    /* 16px */
-  --radius-lg: 2rem;      /* 20px */
+    --fills-neutral-none: #FFFFFF;
+    --fills-neutral-tetriary: #63656B14;
 
-  /* =========================
-     Тени
-     ========================= */
-  --shadow-md: 0 0.4rem 1.2rem var(--color-shadow); /* 4px 12px */
+    /* =========================
+       Шрифты
+       ========================= */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+
+    /* =========================
+       Размер шрифта (rem)
+       1rem = 10px
+       ========================= */
+    --fs-xs: 1.6rem; /* 16px */
+    --fs-sm: 2rem; /* 20px */
+    --fs-md: 2.4rem; /* 24px */
+    --fs-lg: 3.2rem; /* 32px */
+    --fs-xl: 3.6rem; /* 36px */
+    --fs-xxl: 4rem; /* 40px */
+    --fs-xxxl: 6rem; /* 60px */
+
+    /* =========================
+       Отступы (rem)
+       ========================= */
+    --spacing-xs: 0.8rem; /* 8px */
+    --spacing-sm: 1.2rem; /* 12px */
+    --spacing-md: 1.6rem; /* 16px */
+    --spacing-lg: 2.4rem; /* 24px */
+    --spacing-xl: 3.2rem; /* 32px */
+
+    --spacing-padding-m: .8rem; /* 8px */
+    --spacing-padding-xl: 1.6rem; /* 16px */
+
+    /* =========================
+       Радиусы (rem)
+       ========================= */
+    --radius-sm: 1.2rem; /* 12px */
+    --radius-md: 1.6rem; /* 16px ?? */
+    --radius-xl: 1.6rem; /* 16px */
+    --radius-lg: 2rem; /* 20px */
+    --radius-3xl: 2.4rem; /* 24px */
+    --radius-4xl: 2.8rem; /* 28px */
+
+    /* =========================
+       Тени
+       ========================= */
+    --shadow-md: 0 0.4rem 1.2rem var(--color-shadow); /* 4px 12px */
 }

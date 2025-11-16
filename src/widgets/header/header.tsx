@@ -13,7 +13,7 @@ const Header = () => {
     { link: '/', text: 'Главная' },
     { link: '/therapists', text: 'Психологи' },
     { link: '/', text: 'Новости' },
-    { link: '/', text: 'Полезные материалы' },
+    { link: '/resources', text: 'Полезные материалы' },
     { link: '/faq/', text: 'FAQ' },
   ];
 
