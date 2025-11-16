@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { TRANSLATES } from './consts/translates.ts';
 import { ResourceEntities } from '@/pages/resources-page/consts/entities.ts';
 import { Articles } from '@/pages/resources-page/entities/articles';
+import { Tests } from '@/pages/resources-page/entities/tests';
+import { Polls } from '@/pages/resources-page/entities/polls';
 
 const TABS = [
   {
@@ -16,12 +18,12 @@ const TABS = [
   {
     id: ResourceEntities.TESTS,
     label: TRANSLATES.tests,
-    content: <></>,
+    content: <Tests />,
   },
   {
     id: ResourceEntities.POLLS,
     label: TRANSLATES.polls,
-    content: <></>,
+    content: <Polls />,
   },
 ] as ITab[];
 

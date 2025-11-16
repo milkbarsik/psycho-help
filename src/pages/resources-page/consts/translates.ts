@@ -13,4 +13,5 @@ export const TRANSLATES = {
   articles: 'Статьи',
   tests: 'Тесты',
   read: 'Читать',
+  pass: 'Пройти',
 };
