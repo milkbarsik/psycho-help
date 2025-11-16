@@ -3,11 +3,11 @@
 }
 
 .title {
-  font-size: var(--fs-xl); /* 3.6rem */
+  font-size: 3.6rem;
   text-align: center;
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600;
   margin-bottom: 4rem; 
-  color: var(--color-black);
+  color: black;
 }
 
 .list_wrapper {

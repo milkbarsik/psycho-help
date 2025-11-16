@@ -2,9 +2,8 @@
   max-width: 38.9rem; 
   width: 100%;
   height: 100%;
-  border-radius: var(--radius-md);
-  background-color: var(--color-white);
-  box-shadow: var(--shadow-md);
+  border-radius: 0.8rem;
+  background-color: white;
   display: flex;
   flex-direction: column;
   padding: 1.2rem; 
@@ -17,8 +16,8 @@
 
 .photo {
   width: 100%;
-  aspect-ratio: 1 / 1; /* квадрат */
-  border-radius: var(--radius-sm);
+  aspect-ratio: 1 / 1;
+  border-radius: 1.2rem;
   background-repeat: no-repeat;
   background-size: cover;
   margin-bottom: 1.2rem; 
@@ -26,36 +25,36 @@
 }
 
 .fio {
-  color: var(--color-black);
-  font-size: var(--fs-lg); /* 3.2rem */
-  font-weight: var(--font-weight-medium);
+  color: black;
+  font-size: 3.2rem;
+  font-weight: 500;
   margin: 0 0 0.6rem 0;
 }
 
 .speciality {
-  font-size: var(--fs-sm); 
-  color: var(--color-dark-gray);
+  font-size: 2rem; 
+  color: #19191b;
   margin-bottom: 0.6rem; 
 }
 
 .experience {
-  font-size: var(--fs-sm);
-  font-weight: var(--font-weight-regular);
-  color: var(--color-gray);
+  font-size: 2rem;
+  font-weight: 400;
+  color: #313235;
   opacity: 0.72;
   margin-bottom: 1.5rem; 
 }
 
 .consult_label {
   font-size: 2.4rem;
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   margin-top: 0.8rem;
-  color: var(--color-black);
+  color: black;
 }
 
 .consult_areas {
-  font-size: var(--fs-sm);
-  color: var(--color-gray);
+  font-size: 2rem;
+  color: #313235;
   opacity: 0.72;
   margin-top: 0.2rem;
   line-height: 1.5;
@@ -69,7 +68,7 @@
   .consult_areas,
   .speciality,
   .experience {
-    font-size: var(--fs-xs); /* 1.6rem */
+    font-size: 1.6rem;
   }
 
   .consult_label {
