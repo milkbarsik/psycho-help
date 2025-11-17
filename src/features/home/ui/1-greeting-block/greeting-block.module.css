@@ -158,6 +158,7 @@
 
 @media (max-width: 767px) {
 
+
     .greeting__title_wrapper,
     .greeting__subtitle_wrapper {
         text-align: center;
@@ -168,13 +169,36 @@
 }
 
 @media (max-width: 425px) {
+    .greeting {
+        margin-top: 44px;
+    }
 
     .greeting__title_wrapper,
     .greeting__subtitle_wrapper {
         text-align: center;
-        width: 80%;
+        width: 90%;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .greeting__title {
+        font-size: 2.8rem;
+        line-height: 36px;
+    }
+
+    .greeting__subtitle {
+        font-size: 1.6rem;
+        line-height: 24px;
+    }
+
+    .greeting__text {
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .greeting__option_icon {
+        width: 24px;
+        height: 24px;
     }
 
     .greeting__image_wrapper {

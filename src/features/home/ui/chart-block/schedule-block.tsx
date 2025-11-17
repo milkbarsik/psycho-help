@@ -1,4 +1,7 @@
 import styles from './schedule-block.module.css';
+import ScheduleDesktop from '@/features/home/ui/chart-block/img/schedule-desktop.png';
+import ScheduleTablet from '@/features/home/ui/chart-block/img/schedule-tablet.png';
+import ScheduleMobile from '@/features/home/ui/chart-block/img/schedule-mobile.png';
 
 const ScheduleBlock = () => {
   return (
@@ -19,7 +22,12 @@ const ScheduleBlock = () => {
           </div>
         </div>
         <div className={styles.scheduleIllustration}>
-          <span className={styles.illustrationPlaceholder}>Иллюстрация предметов</span>
+          <picture className={styles.scheduleImageWrapper}>
+            <source media="(max-width: 425px)" srcSet={ScheduleMobile} />
+            <source media="(max-width: 768px)" srcSet={ScheduleTablet} />
+            <img src={ScheduleDesktop} alt="" className={styles.scheduleImage} />
+          </picture>
+          {/* <span className={styles.illustrationPlaceholder}>Иллюстрация предметов</span> */}
         </div>
       </div>
     </section>

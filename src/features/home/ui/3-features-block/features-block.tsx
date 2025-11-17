@@ -1,4 +1,11 @@
 import styles from './features-block.module.css';
+// import FeatureDesktop_1 from '@/features/home/ui/3-features-block/img/1/features-desktop.png';
+// import FeatureTablet_1 from '@/features/home/ui/3-features-block/img/1/features-tablet.png';
+// import FeatureMobile_1 from '@/features/home/ui/3-features-block/img/1/features-mobile.png';
+
+import FeatureDesktop_2 from '@/features/home/ui/3-features-block/img/2/features-desktop.png';
+import FeatureTablet_2 from '@/features/home/ui/3-features-block/img/2/features-tablet.png';
+import FeatureMobile_2 from '@/features/home/ui/3-features-block/img/2/features-mobile.png';
 
 const FeaturesBlock = () => {
   return (
@@ -11,6 +18,11 @@ const FeaturesBlock = () => {
               Наши специалисты имеют высшее психологическое образование и практический опыт. Мы
               гарантируем бережную и профессиональную помощь
             </span>
+            {/* <picture className={styles.features__1_image_wrapper}>
+              <source media="(max-width: 425px)" srcSet={FeatureMobile_1} />
+              <source media="(max-width: 768px)" srcSet={FeatureTablet_1} />
+              <img src={FeatureDesktop_1} alt="" className={styles.features__1_image} />
+            </picture> */}
           </div>
           <button className={styles.features__1_button}>Смотреть всех</button>
         </div>
@@ -30,11 +42,18 @@ const FeaturesBlock = () => {
         </div>
         <div className={styles.features__grid_4}>
           <div className={styles.features__4_content}>
-            <span className={styles.features__4_title}>Перенос или пропуск консультации</span>
-            <span className={styles.features__4_text}>
-              Если встречу нужно перенести, просьба сообщить об этом заранее. Пропуск без
-              предупреждения не допускается
-            </span>
+            <div className={styles.features_4_block}>
+              <span className={styles.features__4_title}>Перенос или пропуск консультации</span>
+              <span className={styles.features__4_text}>
+                Если встречу нужно перенести, просьба сообщить об этом заранее. Пропуск без
+                предупреждения не допускается
+              </span>
+            </div>
+            <picture className={styles.features__1_image_wrapper}>
+              <source media="(max-width: 425px)" srcSet={FeatureMobile_2} />
+              <source media="(max-width: 768px)" srcSet={FeatureTablet_2} />
+              <img src={FeatureDesktop_2} alt="" className={styles.features__2_image} />
+            </picture>
           </div>
         </div>
       </div>
