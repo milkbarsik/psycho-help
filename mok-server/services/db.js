@@ -125,7 +125,7 @@ export const therapists = [
     office: "Кабинет 101",
     education: "МГУ, факультет психологии",
     short_description: "Клинический психолог, КПТ",
-    photo: "src/assets/images/doctors/doctorsPictures/abasova.jpg",
+    photo: "src/shared/assets/images/doctors/doctorsPictures/abasova.jpg",
   },
   {
     id: "ce8780c2-a068-42f6-a956-393af412c9b4",
@@ -140,7 +140,7 @@ export const therapists = [
     office: "Кабинет 205",
     education: "СПбГУ, клиническая психология",
     short_description: "Психотерапевт, гештальт-терапия",
-    photo: "src/assets/images/doctors/doctorsPictures/orlova.jpg",
+    photo: "src/shared/assets/images/doctors/doctorsPictures/orlova.jpg",
   },
   {
     id: "03ebe85b-1722-4740-96e7-7b73949bf464",
@@ -155,7 +155,7 @@ export const therapists = [
     office: "Кабинет 156",
     education: "РГПУ им. Герцена, детская психология",
     short_description: "Детский психолог, арт-терапия",
-    photo: "src/assets/images/doctors/doctorsPictures/safronova.jpg",
+    photo: "src/shared/assets/images/doctors/doctorsPictures/safronova.jpg",
   },
   {
     id: "d630ebe0-db39-4f35-ab3a-8def3c68b322",
@@ -170,16 +170,16 @@ export const therapists = [
     office: "Кабинет 302",
     education: "МГППУ, семейная психология",
     short_description: "Семейный психолог, системный подход",
-    photo: "src/assets/images/doctors/doctorsPictures/abasova.jpg",
+    photo: "src/shared/assets/images/doctors/doctorsPictures/abasova.jpg",
   }
 ];
 
 
 export const appointments = [
   {
-    id: "a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p1",
-    patient_id: "2b3c4d5e-6f7g-8h9i-0j1k-l2m3n4o5p6q7", // Дмитрий Иванов (student)
-    therapist_id: "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6", // Анна Петрова (therapist)
+    id: "e2d91fb0-df3a-4b52-a95b-6733bc4cab5a",
+    patient_id: "07ca7972-611e-4ba8-b33b-9fcbacfec92d", // Дмитрий Иванов (student)
+    therapist_id: "814fd532-496e-4e2a-aa4f-904221f2e58e", // Анна Петрова (therapist)
     type: "Offline",
     reason: "Тревожное расстройство",
     status: "Approved",
@@ -188,9 +188,9 @@ export const appointments = [
     venue: "Кабинет 101"
   },
   {
-    id: "a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p2",
-    patient_id: "5e6f7g8h-9i0j-1k2l-3m4n-o5p6q7r8s9t0", // Ольга Новикова (student)
-    therapist_id: "4d5e6f7g-8h9i-0j1k-2l3m-n4o5p6q7r8s9", // Сергей Козлов (therapist)
+    id: "bff09224-240e-4b35-85de-5292b0e3e990",
+    patient_id: "83a4b12d-4209-4837-b6bb-867581148536", // Ольга Новикова (student)
+    therapist_id: "8081f504-3f58-4a05-85a4-04e9e1376fe2", // Сергей Козлов (therapist)
     type: "Online",
     reason: "Панические атаки",
     status: "Pending",
@@ -199,9 +199,9 @@ export const appointments = [
     venue: "Zoom конференция"
   },
   {
-    id: "a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p3",
-    patient_id: "8h9i0j1k-2l3m-4n5o-6p7q-r8s9t0u1v2w3", // Павел Соколов (student)
-    therapist_id: "7g8h9i0j-1k2l-3m4n-5o6p-q7r8s9t0u1v2", // Татьяна Волкова (therapist)
+    id: "ab250a9b-bf0a-4cb8-88c9-230ce8b1d32a",
+    patient_id: "e7f8fe89-7c04-4b58-a554-4d7ffad5c72d", // Павел Соколов (student)
+    therapist_id: "c3bad279-815d-4ba4-b918-277f562d6ca2", // Татьяна Волкова (therapist)
     type: "Offline",
     reason: "Подростковый кризис",
     status: "Approved",
@@ -210,9 +210,9 @@ export const appointments = [
     venue: "Кабинет 156"
   },
   {
-    id: "a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p4",
-    patient_id: "2b3c4d5e-6f7g-8h9i-0j1k-l2m3n4o5p6q7", // Дмитрий Иванов (student)
-    therapist_id: "9i0j1k2l-3m4n-5o6p-7q8r-s9t0u1v2w3x4", // Наталья Лебедева (therapist)
+    id: "0cf2e2e5-bf34-4cf6-b207-2fb2e8725738",
+    patient_id: "07ca7972-611e-4ba8-b33b-9fcbacfec92d", // Дмитрий Иванов (student) — совпадает с записью 1
+    therapist_id: "61f4aab7-ac79-4e83-8052-48acd6533eae", // Наталья Лебедева (therapist)
     type: "Offline",
     reason: "Семейные конфликты",
     status: "Completed",
@@ -221,9 +221,9 @@ export const appointments = [
     venue: "Кабинет 302"
   },
   {
-    id: "a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p5",
-    patient_id: "5e6f7g8h-9i0j-1k2l-3m4n-o5p6q7r8s9t0", // Ольга Новикова (student)
-    therapist_id: "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6", // Анна Петрова (therapist)
+    id: "26f618a6-777f-4948-97d1-28042f2a9696",
+    patient_id: "83a4b12d-4209-4837-b6bb-867581148536", // Ольга Новикова (student) — совпадает с записью 2
+    therapist_id: "814fd532-496e-4e2a-aa4f-904221f2e58e", // Анна Петрова (therapist) — совпадает с записью 1
     type: "Online",
     reason: "Депрессивное состояние",
     status: "Cancelled",
@@ -232,5 +232,6 @@ export const appointments = [
     venue: "Skype консультация"
   }
 ];
+
 
 export const tokens = new Map();

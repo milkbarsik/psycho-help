@@ -2,6 +2,7 @@ import express from 'express';
 import router from './api-router.js';
 import axios from 'axios';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import cookieParser from 'cookie-parser';
 import fs from 'fs';
 import path from 'path';
 
@@ -28,6 +29,9 @@ process.argv.forEach((val, index) => {
 
 const app = express();
 
+app.use(cookieParser());
+app.use(express.json());
+
 if (should_reroute) {
   try {
     console.assert(
@@ -49,7 +53,11 @@ if (should_reroute) {
 }
 
 if (!should_reroute) {
-  app.use('/api', router);
+  let apiPath = (new URL(process.env.VITE_REACT_APP_API_URL)).pathname;
+  if (apiPath !== '/' && apiPath.endsWith('/')) {
+    apiPath = apiPath.slice(0, -1);
+  }
+  app.use(apiPath, router);
   app.get('/image/*imagesPath', (req, res) => {
     fs.access(path.join(process.cwd(), ...req.params.imagesPath), fs.constants.F_OK, (err) => {
       if (err) {

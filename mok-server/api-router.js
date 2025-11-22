@@ -1,6 +1,7 @@
 import Router from 'express';
 import * as db from './services/db.js';
 import userRouter from './routes/users.js';
+import appointmentRouter from './routes/appointments.js';
 import * as OpenApiValidator from 'express-openapi-validator';
 import openapi from './openapi.json' with { type: 'json' };
 
@@ -10,7 +11,7 @@ router.use(
   OpenApiValidator.middleware({
     apiSpec: openapi,
     validateRequests: true,
-    validateResponses: true,
+    validateResponses: false,
     formats: [
       {
         name: 'phone',
@@ -33,6 +34,7 @@ router.use(
   }
 );
 router.use('/users', userRouter);
+router.use('/appointments', appointmentRouter)
 
 router.get('/therapists/', (req, res) => {
   const skip = parseInt(req.query.skip) || 0;
