@@ -1,0 +1,22 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.errorText {
+    color: red;
+}
+.hintText {
+    opacity: 0.5;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.registerButton {
+    width: 110px;
+    min-width: unset;
+}

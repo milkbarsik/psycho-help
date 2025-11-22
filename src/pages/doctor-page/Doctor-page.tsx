@@ -1,12 +1,12 @@
 import { useParams } from 'react-router';
 import styles from './Doctor-page.module.css';
-import ServiceApi from '@/api/service-api';
-import { useFetch } from '@/api/useFetch';
+import ServiceApi from '@/shared/api/service-api';
+import { useFetch } from '@/shared/api/useFetch';
 import { useEffect, useState } from 'react';
-import type { Therapist } from '@/api/types';
-import Loader from '@/components/UI/loader/loader';
-import Img from '@/components/UI/img/Img';
-import altPhoto from '@/assets/images/altPhotos/User_Accounts_alt.png';
+import type { Therapist } from '@/shared/api/types';
+import Loader from '@/shared/ui/loader/loader';
+import Img from '@/shared/ui/img/Img';
+import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
 
 const DoctorPage = () => {
   const [doctor, setDoctor] = useState<Therapist | null>(null);
@@ -33,7 +33,7 @@ const DoctorPage = () => {
   } else if (!doctor) {
     return (
       <div>
-        <h3>{error.message}</h3>
+        <h3>{error.message || 'Данные не найдены'}</h3>
       </div>
     );
   } else {
@@ -48,10 +48,12 @@ const DoctorPage = () => {
           <div className={styles.card__content}>
             <p className={styles.thirsname}>{doctor.last_name.toUpperCase()}</p>
             <p className={styles.IF}>{[doctor?.first_name, doctor.middle_name].join(' ')}</p>
-            <p className={[styles.text, styles.educ].join(' ')}>{doctor.education}</p>
+            <p className={[styles.text, styles.educ].join(' ')}>{doctor.qualification}</p>
             <p className={styles.textBold}>Обо мне:</p>
             <p className={styles.text}>{doctor.description}</p>
-            <button className={styles.btn}>Записаться</button>
+            <button className={styles.btn} aria-label="Кнопка записаться">
+              Записаться
+            </button>
           </div>
         </div>
         <h2 className={styles.subtitle}>Квалификация</h2>

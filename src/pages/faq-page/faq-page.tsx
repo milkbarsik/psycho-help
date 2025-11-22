@@ -1,5 +1,5 @@
-import QuestionsList from './components/questions-list';
-import FaqImage from '../../assets/images/main/faq/questions_blue_t 1.png';
+import QuestionsList from '@/features/faq/ui/questions-list';
+import FaqImage from '@/shared/assets/images/main/faq/questions_blue_t 1.png';
 import styles from './faq-page.module.css';
 import { faq } from './constants';
 
