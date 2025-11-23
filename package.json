@@ -1,6 +1,7 @@
 {
   "name": "psycho-help",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@ant-design/compatible": "5.1.4",
@@ -20,9 +21,12 @@
   },
   "scripts": {
     "dev": "vite",
+    "start": "concurrently --kill-others \"vite\" \"node mok-server/server.js --skip-connect\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node mok-server/server.js",
+    "test": "vitest"
   },
   "browserslist": {
     "production": [
@@ -47,9 +51,14 @@
     "@types/react-dom": "^18.3.0",
     "@types/swiper": "^5.4.3",
     "@vitejs/plugin-react": "^5.0.4",
+    "concurrently": "^9.2.1",
+    "cookie-parser": "^1.4.7",
     "eslint": "^9.36.0",
+    "express": "^5.1.0",
     "eslint-plugin-react-hooks": "^6.1.0",
     "eslint-plugin-react-refresh": "^0.4.23",
+    "express-openapi-validator": "^5.6.0",
+    "http-proxy-middleware": "^3.0.5",
     "jsdom": "^27.0.0",
     "prettier": "^3.6.2",
     "sass": "^1.93.2",

@@ -1,49 +1,83 @@
 .wrapper {
-    max-width: 284px;
-    width: 100%;
+  max-width: 38.9rem; 
+  width: 100%;
+  height: 100%;
+  border-radius: 0.8rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem; 
+  transition: transform 0.2s;
+}
+
+.wrapper:hover {
+  transform: translateY(-0.4rem); 
 }
 
 .photo {
-    width: 284px;
-    height: 284px;
-    border-radius: 20px;
-    background-size: cover;
-    background-position: 50% 20%;
-    background-repeat: no-repeat;
-    overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 1.2rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 1.2rem; 
+  transition: all 0.3s ease;
 }
 
 .fio {
-    color: #000000;
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 0;
-    margin-top: 18px;
+  color: black;
+  font-size: 3.2rem;
+  font-weight: 500;
+  margin: 0 0 0.6rem 0;
 }
 
-.education {
-    color: #393939;
-    font-size: 1.6rem;
-}
-
-.short_desc {
-    color: #393939;
-    font-size: 1.6rem;
+.speciality {
+  font-size: 2rem; 
+  color: #19191b;
+  margin-bottom: 0.6rem; 
 }
 
 .experience {
-    font-size: 1.8rem;
-    font-weight: 600;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #313235;
+  opacity: 0.72;
+  margin-bottom: 1.5rem; 
 }
 
-.link {
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 110px;
+.consult_label {
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin-top: 0.8rem;
+  color: black;
 }
 
-.arrow {
-    margin-top: 10px;
+.consult_areas {
+  font-size: 2rem;
+  color: #313235;
+  opacity: 0.72;
+  margin-top: 0.2rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1150px) {
+  .fio {
+    font-size: 2.8rem;
+  }
+
+  .consult_areas,
+  .speciality,
+  .experience {
+    font-size: 1.6rem;
+  }
+
+  .consult_label {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .wrapper {
+    margin: 0 auto;
+  }
 }

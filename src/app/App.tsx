@@ -11,6 +11,7 @@ import { appTheme } from '@/app/theme';
 
 dayjs.locale('ru');
 
+
 function App() {
   const client = new QueryClient({
     defaultOptions: {
