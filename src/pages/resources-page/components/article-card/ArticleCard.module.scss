@@ -3,7 +3,6 @@
 @use '@/shared/scss/mixins/media-breakpoints' as *;
 
 .wrapper {
-    --transition: .3s ease;
     padding: .8rem .8rem 1.4rem .8rem;
     outline: 0.1rem solid transparent;
     border: 0.1rem solid var(--border-neutral-base);
@@ -15,7 +14,7 @@
     gap: 1.2rem;
     display: flex;
     flex-direction: column;
-    transition: var(--transition);
+    transition: .3s ease;
 
     .info {
         @include TextS;
@@ -99,7 +98,12 @@
             align-items: center;
 
             .imageWrapper {
-                aspect-ratio: 480/300;
+                flex: 1;
+                max-width: 48rem;
+            }
+
+            .content {
+                flex: 1;
             }
         }
     }

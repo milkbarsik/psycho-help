@@ -3,15 +3,13 @@
 @use '@/shared/scss/mixins/utils' as *;
 
 .tab {
-    --transition: .3s ease;
-    
     @include TextM;
     background: var(--interactive-neutral-secondary);
     color: var(--labels-neutral-primary);
     border-radius: var(--radius-sm);
     padding-inline: var(--radius-md);
     padding-block: .75rem;
-    transition: var(--transition);
+    transition: .3s ease;
 
     &.active {
         color: var(--labels-neutral-inverted-primary);
