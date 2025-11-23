@@ -11,14 +11,14 @@ export const therapistQueries = {
   list: (options?: Partial<QueryObserverOptions<Therapist[], ResponseError>>) =>
     queryOptions<Therapist[], ResponseError>({
       queryKey: [therapistQueryKey.list],
-      queryFn: () => $api.get('/therapists/'),
+      queryFn: async () => (await $api.get('/therapists/')).data,
       ...options,
     }),
 
   byId: (id: string, options?: Partial<QueryObserverOptions<Therapist, ResponseError>>) =>
     queryOptions<Therapist, ResponseError>({
       queryKey: [therapistQueryKey.byId],
-      queryFn: () => $api.get(`/therapists/${id}`),
+      queryFn: async () => (await $api.get(`/therapists/${id}`)).data,
       enabled: !!id,
       ...options,
     }),

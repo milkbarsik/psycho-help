@@ -1,5 +1,4 @@
 import { type QueryObserverOptions, queryOptions } from '@tanstack/react-query';
-import { $api } from '@/shared/api/http';
 import type { ResponseError } from '@/shared/api';
 import type { User } from '../types';
 import { authApi } from '@/entities/auth/api/api.ts';

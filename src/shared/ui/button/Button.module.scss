@@ -1,5 +1,4 @@
 .button {
-    --transition: .3s ease;
     color: white;
     font-size: 1.6rem;
     font-weight: bold;
@@ -9,7 +8,10 @@
     align-items: center;
     justify-content: center;
     width: fit-content;
-    transition: var(--transition);
+    transition: 
+        outline .3s ease,
+        background .3s ease,
+        outline-offset .3s ease;
     outline: 2px solid transparent;
 
     &.medium {

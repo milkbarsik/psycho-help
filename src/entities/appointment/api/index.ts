@@ -12,7 +12,7 @@ export const appointmentQueries = {
   list: (options?: Partial<QueryObserverOptions<Appointment[], ResponseError>>) =>
     queryOptions<Appointment[], ResponseError>({
       queryKey: [appointmentQueryKey.list],
-      queryFn: () => $api.get('/appointments/'),
+      queryFn: async () => (await $api.get('/appointments/')).data,
       ...options,
     }),
 };
