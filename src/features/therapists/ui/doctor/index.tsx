@@ -10,7 +10,7 @@ interface Props {
   linkToDetails?: boolean; // если true — карточка кликабельная
 }
 
-const Doctor: FC<Props> = ({ doctor, linkToDetails = true }) => {
+export const DoctorCard: FC<Props> = ({ doctor, linkToDetails = true }) => {
   const content = (
     <div className={styles.wrapper}>
       <Img
@@ -40,5 +40,3 @@ const Doctor: FC<Props> = ({ doctor, linkToDetails = true }) => {
     </Link>
   );
 };
-
-export default Doctor;

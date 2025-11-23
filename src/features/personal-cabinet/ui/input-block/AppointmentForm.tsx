@@ -1,8 +1,9 @@
 import type { FC } from 'react';
 import styles from './AppointmentForm.module.css';
-import type { Therapist } from '@/shared/api/types';
 import { useAppointment } from '@/features/personal-cabinet/model/appointment';
 import { getDayNameOfWeek } from '@/shared/lib/dateFunctions';
+import type { Therapist } from '@/entities/therapist/types';
+import clsx from 'clsx';
 
 interface Props {
   doctors: Therapist[];
@@ -12,7 +13,8 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
   const appointment = useAppointment((state) => state.appointment);
   const setAppointment = useAppointment((state) => state.setAppointment);
 
-  const handleLocation = (id: string) => {
+  const handleLocation = (id?: string) => {
+    if (!id) return;
     const currentDoctor = doctors.find((doctor) => doctor.id === id);
     if (currentDoctor) {
       setAppointment({ venue: currentDoctor.office });
@@ -22,7 +24,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
   return (
     <div className={styles.form}>
       <h2 className={styles.date}>
-        {getDayNameOfWeek(appointment.date)}, {appointment.date.split('-').at(-1)}
+        {getDayNameOfWeek(appointment?.date || '')}, {appointment?.date?.split('-').at(-1)}
       </h2>
 
       <div className={styles.field}>
@@ -61,10 +63,12 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
         </button>
         <button
           type="button"
-          className={`${styles.formatButton} ${appointment.type === 'Offline' ? styles.active : ''}`}
+          className={clsx(styles.formatButton, {
+            [styles.active]: appointment.type === 'Offline',
+          })}
           onClick={() => {
             setAppointment({ type: 'Offline', venue: '' });
-            handleLocation(appointment.therapist_id);
+            handleLocation(appointment?.therapist_id);
           }}
           aria-label="Кнопка выбора очно"
         >
