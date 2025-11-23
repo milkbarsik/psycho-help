@@ -1,3 +1,149 @@
+@media (min-width: 320px) and (max-width: 730px){
+    .featuresBlock {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      width: 100%;
+      max-width: 32rem;
+      margin: 0 auto;
+      padding: 0.8rem 0;
+    }
+    .item1, .item2, .item3, .item4 {
+      background: #fff;
+      border-radius: 2.4rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+      width: 100%;
+      min-height: 12rem;
+    }
+    .item1 {
+      background: #407BFE;
+      color: #fff;
+      align-items: flex-start;
+      text-align: left;
+      gap: 0;
+      padding: 1.6rem;
+      padding-bottom: 2.4rem;
+      order: 4;
+      position: relative;
+      min-height: auto;
+      overflow: hidden;
+    }
+    .item2 {
+      order: 3;
+    }
+    .item3 {
+      order: 2;
+    }
+    .item4 {
+      order: 1;
+    }
+    .item1 .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 19rem;
+      width: 100%;
+      z-index: 2;
+      position: relative; 
+    }
+    .item1 h2 {
+      font-size: 2rem;
+      line-height: 2.8rem;
+      font-weight: 600;
+      margin: 0 0 0.8rem 0;
+      color: #fff;
+      text-align: left;
+    }
+    .item1 p {
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      margin: 0;
+      color: #fff;
+      text-align: left;
+      width: 100%;
+    }
+
+    
+
+    .item1 .wrapper a {
+      background: #000;
+      color: #fff;
+      border-radius: 1.2rem;
+      padding: 0.8rem 1.6rem;
+      font-size: 1.2rem;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 0;
+      
+      max-width: 16rem;
+      height: 3.2rem;
+    }
+    .degreeImage {
+      position: absolute;
+      top: 1.6rem;
+      left: 1.6rem;
+      width: 4.8rem;
+      height: 4.8rem;
+      z-index: 1;
+    }
+    .goodPsycho {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 12rem;
+      height: auto;
+      z-index: 1;
+      object-fit: contain;
+      width: 25rem;
+    }
+    .item2 h2, .item3 h2, .item4 h2 {
+      font-size: 2rem;
+      line-height: 2.8rem;
+      font-weight: 600;
+      margin: 0 0 0.8rem 0;
+      
+    }
+    .item2 p, .item3 p, .item4 p {
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      margin: 0;
+      color: rgba(49, 50, 53, 0.52);
+    }
+    .item4 {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+      padding-bottom: 2.4rem;
+    }
+    .item4 .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.8rem;
+      width: 100%;
+    }
+    .timeSwitch {
+      width: 25rem;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+
 @media (min-width: 730px) and (max-width: 1220px) {
   .featuresBlock {
     max-width: 72rem;

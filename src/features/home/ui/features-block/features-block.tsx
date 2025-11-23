@@ -3,11 +3,13 @@ import styles from './features-block.module.css';
 import goodPsycho from '@/shared/assets/images/goodPsycho.svg';
 import timeSwitch from '@/shared/assets/images/timeSwitch.svg';
 
+
 const FeaturesBlock = () => {
   return (
     <div className={styles.featuresBlock}>
       <div className={styles.container}>
         <div className={styles.item1}>
+
           <div className={styles.wrapper}>
             <div>
               <h2>Компетентные психологи</h2>
@@ -18,9 +20,6 @@ const FeaturesBlock = () => {
             </a>
           </div>
           <img src={goodPsycho} alt="psychologist" className={styles.goodPsycho} />
-          <a>
-            <span>Смотреть всех</span>
-          </a>
         </div>
         <div className={styles.item2}>
           <h2>График работы</h2>

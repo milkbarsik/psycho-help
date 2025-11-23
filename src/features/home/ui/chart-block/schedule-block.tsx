@@ -24,8 +24,8 @@ const ChartBlock: FC = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.schedule}>
-        {items.map((block)=>(
-          <div className={styles.timeWrapper}>
+        {items.map((block, index)=>(
+          <div key={index} className={styles.timeWrapper}>
               <h3 className={styles.day}>{block.info}</h3>
               <p className={styles.time}>{block.title}</p>
           </div>
