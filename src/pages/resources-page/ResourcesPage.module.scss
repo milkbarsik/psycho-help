@@ -1,0 +1,120 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+
+.wrapper {
+    --container-max-width: 120.6rem;
+    --container-inline-padding: 1rem;
+    --container-block-padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    padding-inline: var(--container-inline-padding);
+    padding-bottom: 9.6rem;
+
+    .content {
+        padding-block: var(--container-block-padding) 0;
+    }
+
+    .top {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 1.6rem;
+        padding-block: 3.5rem 4.8rem;
+
+        .image {
+            width: 100%;
+            position: relative;
+            height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: .8rem;
+            text-align: center;
+            align-items: center;
+
+            .title {
+                color: var(--color-label-neutral-primary);
+                font: var(--font-h2);
+            }
+
+            .features {
+                color: var(--color-label-neutral-secondary);
+                display: flex;
+                font: var(--font-text-large);
+                list-style: none;
+            }
+        }
+    }
+
+    .tabsContent {
+        margin-top: 2rem;
+    }
+
+    @include past-tablet {
+        --container-inline-padding: 5.6rem;
+        --container-block-padding: 3.6rem;
+
+        padding-bottom: 9.6rem;
+
+        .tabsContent {
+            margin-top: 3.6rem;
+        }
+
+        .top {
+            padding-block: 6.5rem 7.4rem;
+
+            .info {
+                gap: 2.2rem;
+            }
+            .image {
+                height: 50.9rem
+            }
+        }
+    }
+
+    @include past-desktop {
+        --container-inline-padding: 1.6rem;
+        --container-block-padding: 7.4rem;
+
+        padding-bottom: 14.8rem;
+        max-width: calc(var(--container-max-width) + var(--container-inline-padding) * 2);
+
+        .tabsContent {
+            margin-top: 4.8rem;
+        }
+
+        .top {
+            flex-direction: row;
+            height: 56rem;
+            align-items: center;
+
+            .info {
+                align-items: flex-start;
+                text-align: start;
+                width: 50%;
+            }
+
+            .image {
+                width: 50%;
+
+                img {
+                    position: absolute;
+                    left: 50%;
+                    right: 50%;
+                    top: 50%;
+                    bottom: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+    }
+}

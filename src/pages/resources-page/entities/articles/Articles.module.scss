@@ -1,0 +1,50 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+
+    .showMore {
+        width: fit-content
+    }
+    
+    .articleList {
+        grid-template-columns: 1fr;
+
+        display: grid;
+        padding-inline: 1rem;
+        gap: 1.2rem;
+        justify-items: center;
+        justify-content: center;
+
+        .readBtn {
+            background: var(--color-interactive-brand-secondary);
+            color: var(--color-label-brand-primary);
+            width: 100%;
+            padding: 1.6rem;
+            border-radius: 1.6rem;
+        }
+
+        
+    }
+
+    @include past-tablet {
+        gap: 3.6rem;
+
+        .articleList {
+            grid-template-columns: repeat(auto-fit, minmax(0, 35rem));
+            padding: 0;
+            gap: 1.6rem;
+        }
+    }
+
+    @include past-desktop {
+        gap: 4.8rem;
+
+        .articleList {
+            grid-template-columns: 1fr;
+        }
+    }
+}
