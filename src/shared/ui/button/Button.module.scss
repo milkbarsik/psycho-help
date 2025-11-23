@@ -1,0 +1,24 @@
+
+.button {
+    border-radius: 1.6rem;
+    padding: 1.6rem;
+
+    &.primary {
+        color: var(--color-label-neutral-inverted-primary);
+        background-color: var(--color-interactive-brand-primary);
+        font: var(--font-text-large-button);
+
+        &:hover {
+            background-color: var(--color-interactive-brand-hover);
+        }
+
+        &:active {
+            background-color: var(--color-interactive-brand-active);
+        }
+        
+        &:disabled {
+            color: var(--label-neutral-quanternary);
+            background-color: var(--color-interactive-brand-disabled);
+        }
+    }
+}

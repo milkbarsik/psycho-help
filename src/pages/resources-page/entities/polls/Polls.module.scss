@@ -1,6 +1,4 @@
-@use '@/shared/scss/mixins/media-breakpoints' as *;
-@use '@/shared/scss/mixins/font-sizes' as *;
-@use '@/shared/scss/mixins/utils' as *;
+@use '@/shared/scss/abstracts/breakpoints' as *;
 
 .wrapper {
     .passList {
@@ -13,20 +11,20 @@
         justify-content: center;
 
         .passBtn {
-            background: var(--interactive-brand-secondary);
-            color: var(--labels-brand-primary);
+            background: var(--color-interactive-brand-secondary);
+            color: var(--color-label-brand-primary);
             width: 100%;
-            padding: var(--spacing-padding-xl);
-            border-radius: var(--radius-xl);
+            padding: 1.6rem;
+            border-radius: 1.6rem;
         }
 
-        @include media-tablet {
+        @include past-tablet {
             grid-template-columns: repeat(auto-fit, minmax(0, 35rem));
             padding: 0;
             gap: 1.6rem;
         }
 
-        @include media-desktop {
+        @include past-desktop {
             grid-template-columns: 1fr;
         }
     }

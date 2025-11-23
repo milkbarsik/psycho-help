@@ -1,8 +1,15 @@
-@use '@/shared/scss/mixins/media-breakpoints' as *;
-@use '@/shared/scss/mixins/font-sizes' as *;
-@use '@/shared/scss/mixins/utils' as *;
+@use '@/shared/scss/abstracts/breakpoints' as *;
 
 .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+
+    .showMore {
+        width: fit-content
+    }
+    
     .articleList {
         grid-template-columns: 1fr;
 
@@ -13,20 +20,30 @@
         justify-content: center;
 
         .readBtn {
-            background: var(--interactive-brand-secondary);
-            color: var(--labels-brand-primary);
+            background: var(--color-interactive-brand-secondary);
+            color: var(--color-label-brand-primary);
             width: 100%;
-            padding: var(--spacing-padding-xl);
-            border-radius: var(--radius-xl);
+            padding: 1.6rem;
+            border-radius: 1.6rem;
         }
 
-        @include media-tablet {
+        
+    }
+
+    @include past-tablet {
+        gap: 3.6rem;
+
+        .articleList {
             grid-template-columns: repeat(auto-fit, minmax(0, 35rem));
             padding: 0;
             gap: 1.6rem;
         }
+    }
 
-        @include media-desktop {
+    @include past-desktop {
+        gap: 4.8rem;
+
+        .articleList {
             grid-template-columns: 1fr;
         }
     }

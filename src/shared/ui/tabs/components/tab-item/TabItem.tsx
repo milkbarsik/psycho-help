@@ -1,5 +1,4 @@
 import React, { type FC, type KeyboardEvent } from 'react';
-import type { TabVariant, TabSize } from '../../index';
 import styles from './TabItem.module.scss';
 import clsx from 'clsx';
 
@@ -8,8 +7,6 @@ export interface ITabItemProps {
   label: string;
   isActive: boolean;
   disabled?: boolean;
-  variant?: TabVariant;
-  size?: TabSize;
   onClick: (id: string) => void;
   onKeyDown: (e: KeyboardEvent<HTMLButtonElement>, id: string) => void;
   tabRef?: (el: HTMLButtonElement | null) => void;
@@ -20,8 +17,6 @@ export const TabItem: FC<ITabItemProps> = ({
   label,
   isActive,
   disabled = false,
-  variant = 'primary',
-  size = 'medium',
   onClick,
   onKeyDown,
   tabRef,
@@ -39,7 +34,7 @@ export const TabItem: FC<ITabItemProps> = ({
   return (
     <button
       ref={tabRef}
-      className={clsx(styles.tab, styles[variant], styles[size], {
+      className={clsx(styles.tab, {
         [styles.active]: isActive,
         [styles.disabled]: disabled,
       })}

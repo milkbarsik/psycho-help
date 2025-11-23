@@ -1,33 +1,33 @@
-@use '@/shared/scss/mixins/media-breakpoints' as *;
-@use '@/shared/scss/mixins/font-sizes' as *;
-@use '@/shared/scss/mixins/utils' as *;
+@use '@/shared/scss/abstracts/breakpoints' as *;
 
 .tab {
-    @include TextM;
-    background: var(--interactive-neutral-secondary);
-    color: var(--labels-neutral-primary);
-    border-radius: var(--radius-sm);
-    padding-inline: var(--radius-md);
+    font: var(--font-text-medium);
+    background: var(--color-interactive-neutral-secondary);
+    color: var(--color-label-neutral-primary);
+    border-radius: 1.2rem;
+    padding-inline: 1.6rem;
     padding-block: .75rem;
     transition: .3s ease;
 
     &.active {
-        color: var(--labels-neutral-inverted-primary);
-        background: var(--interactive-brand-primary);
+        color: var(--color-label-neutral-inverted-primary);
+        background: var(--color-interactive-brand-primary);
     }
 
-    @include media-hover {
-        background: var(--interactive-brand-hover-secondary);
-        color: var(--labels-brand-primary);
+    @include past-tablet {
+        &:hover {
+            background: var(--color-interactive-brand-hover-secondary);
+            color: var(--color-label-brand-primary);
+        }
     }
 
-    @include media-tablet {
+    @include past-tablet {
         padding: 1rem 2.2rem;
-        @include TextLButton
+        font: var(--font-text-large-button);
     }
 
-    @include media-desktop {
-        @include TextL;
+    @include past-desktop {
+        font: var(--font-text-large);
         padding: 1.6rem 6.4rem;
     }
 }

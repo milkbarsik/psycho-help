@@ -1,13 +1,11 @@
-@use '@/shared/scss/mixins/font-sizes' as *;
-@use '@/shared/scss/mixins/utils' as *;
-@use '@/shared/scss/mixins/media-breakpoints' as *;
+@use '@/shared/scss/abstracts/breakpoints' as *;
 
 .wrapper {
     padding: .8rem .8rem 1.4rem .8rem;
     outline: 0.1rem solid transparent;
-    border: 0.1rem solid var(--border-neutral-base);
-    border-radius: var(--radius-4xl);
-    background: #FFFFFF;
+    border: 0.1rem solid var(--color-border-neutral-base);
+    border-radius: 2.8rem;
+    background: var(--color-fill-neutral-none);
     max-width: 30rem;
     width: 100%;
     height: auto;
@@ -17,7 +15,7 @@
     transition: .3s ease;
 
     .info {
-        @include TextS;
+        font: var(--font-text-small);
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -27,9 +25,9 @@
         height: 18.4rem;
         min-height: 18.4rem;
         width: 100%;
-        border-radius: var(--radius-3xl);
+        border-radius: 2.4rem;
         overflow: hidden;
-        background: var(--labels-neutral-quanternary);
+        background: var(--color-fill-neutral-quaternary);
     }
 
     .content {
@@ -39,12 +37,12 @@
         padding-inline: .8rem;
 
         .title {
-            @include H4;
+            font: var(--font-h4);
         }
 
         .description {
-            color: var(--labels-neutral-secondary);
-            @include TextM;
+            color: var(--color-label-neutral-secondary);
+            font: var(--font-text-medium);
 
             &.ellipse {
                 overflow: hidden;
@@ -59,7 +57,7 @@
     }
 
 
-    @include media-tablet {
+    @include past-tablet {
         height: auto;
         width: 35rem;
         padding: 1rem;
@@ -74,12 +72,12 @@
         .content {
 
             .title {
-                @include H4;
+                font: var(--font-h4);
             }
         }
     }
 
-    @include media-desktop {
+    @include past-desktop {
         width: 38.6rem;
         max-width: initial;
         height: 60rem;
@@ -103,11 +101,11 @@
         }
     }
 
-    @include media-hover {
-        &.clickable {
+    @include past-tablet {
+        &.clickable:hover {
             cursor: pointer;
-            border-color: var(--border-brand-strong);
-            outline-color: var(--border-brand-strong);
+            border-color: var(--color-border-brand-strong);
+            outline-color: var(--color-border-brand-strong);
         }
     }
 }

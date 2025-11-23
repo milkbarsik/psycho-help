@@ -1,4 +1,4 @@
-@use '@/shared/scss/mixins/media-breakpoints' as *;
+@use '@/shared/scss/abstracts/breakpoints' as *;
 @use '@/shared/scss/mixins/font-sizes' as *;
 
 .tabsContainer {
@@ -18,11 +18,11 @@
         width: 100%;
     }
 
-    @include media-tablet {
+    @include past-tablet {
         gap: 1.2rem;
     }
 
-    @include media-desktop {
+    @include past-desktop {
         gap: 1.6rem;
     }
 }
