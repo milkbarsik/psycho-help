@@ -1,5 +1,13 @@
 import { create } from 'zustand';
-import type { Appointment } from '@/entities/appointment/types';
+
+export type Appointment = {
+  therapist_id: string;
+  type: 'Online' | 'Offline';
+  reason: string;
+  date: string;
+  time: string;
+  venue: string;
+};
 
 interface IAppointment {
   appointment: Appointment;
@@ -12,7 +20,6 @@ export const useAppointment = create<IAppointment>((set) => ({
     type: 'Online',
     reason: '',
     date: '',
-    remind_time: '',
     time: '10:30',
     venue: '',
   },

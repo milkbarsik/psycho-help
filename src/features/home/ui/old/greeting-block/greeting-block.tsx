@@ -2,7 +2,6 @@ import { Flex } from 'antd';
 import GreetingImage from '@/shared/assets/images/help_blue_t 1.png';
 import { SERVICE_PROPS } from '@/features/home/config/constants';
 import styles from './greeting-block.module.css';
-import { Button } from '@/shared/ui';
 
 const GreatingBlock = () => {
   return (
@@ -25,7 +24,9 @@ const GreatingBlock = () => {
             ))}
           </ul>
           <div className={styles.buttonWrapper}>
-            <Button aria-label={'Кнопка записаться'}>Записаться</Button>
+            <button type="submit" className={styles.signupButton} aria-label="Кнопка записаться">
+              <span className={styles.signupButton__text}>Записаться</span>
+            </button>
           </div>
         </div>
       </div>

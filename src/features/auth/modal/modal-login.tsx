@@ -15,13 +15,13 @@ const INITIAL_FORM_VALUE = {
 - "isOpen" — булевый флаг, открыто ли модальное окно
 - "setModalOpen" — функция для закрытия или открытия модального окна
 
-Здесь использовалось "any" для функций, чтобы не писать типы, но это убрано,
+Здесь использовалось "any" для функций, чтобы не писать типы, но это убрано, 
 так как сейчас известно, какие значения реально передаются:
 
 - setWindow принимает только 'login' или 'reg'
 - setModalOpen принимает только булевое значение
 
-Если в будущем появятся новые состояния модалки (например "forgot"),
+Если в будущем появятся новые состояния модалки (например "forgot"), 
 можно расширить тип union или же его вынести в отдельный файл:
 
 type TProps = {
@@ -120,7 +120,9 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
             {errors.email ? (
               <span className={styles.errorText}>{errors.email}</span>
             ) : (
-              <span className={styles.hintText}>{EMAIL_HINT}</span>
+              <span className={styles.hintText}>
+                {EMAIL_HINT}
+              </span>
             )}
           </label>
           <label>

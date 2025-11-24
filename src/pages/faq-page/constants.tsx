@@ -1,9 +1,3 @@
-export const TRANSLATES = {
-  title: 'FAQ',
-  description: 'Здесь вы сможете найти ответы на интересующие вас вопросы.',
-  imgAlt: 'Изображение на странице с вопросами',
-};
-
 export const faq = [
   {
     id: 1,

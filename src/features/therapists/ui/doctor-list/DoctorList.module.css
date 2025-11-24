@@ -1,43 +1,24 @@
 .wrapper {
-  margin-bottom: 6rem; 
-}
-
-.title {
-  font-size: 3.6rem;
-  text-align: center;
-  font-weight: 600;
-  margin-bottom: 4rem; 
-  color: black;
+    margin-top: 150px;
+    margin-bottom: 43px;
 }
 
 .list_wrapper {
-  width: 90%;
-  max-width: 120rem;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  gap: 1.6rem; 
-  flex-wrap: wrap;
-  align-items: stretch;
+    width: 90%;
+    max-width: 1128px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    gap: 100px;
+    flex-wrap: wrap;
 }
 
-.list_wrapper > * {
-  flex: 0 0 calc(33.333% - 1.1rem); 
+.title {
+    font-size: 4.8rem;
+    text-align: center;
 }
 
-/* Мобильные стили */
-@media screen and (max-width: 900px) {
-  .list_wrapper > * {
-    flex: 0 0 calc(50% - 1.5rem); 
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .list_wrapper > * {
-    flex: 0 0 100%;
-  }
-
-  .title {
-    font-size: 2.8rem;
-  }
+.list_wrapper>* {
+    flex: 0 0 calc(33.333% - 20px);
 }

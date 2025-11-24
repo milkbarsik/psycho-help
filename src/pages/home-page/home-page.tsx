@@ -63,11 +63,7 @@ const HomePage: FC = () => {
   return (
     <div>
       {blocks.map((block, index) => (
-        <BlockWrapper
-          key={`home-page-${index}`}
-          {...block}
-          ref={(el) => (refs.current[index] = el)}
-        />
+        <BlockWrapper key={index} {...block} ref={(el) => (refs.current[index] = el)} />
       ))}
     </div>
   );

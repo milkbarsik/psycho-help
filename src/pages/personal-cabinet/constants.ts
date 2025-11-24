@@ -1,6 +1,6 @@
-import type { Appointment } from '@/entities/appointment/types';
+import type { GetAppointment } from '@/shared/api/types';
 
-export const appointmentsConsts: Appointment[] = [
+export const appointmentsConsts: GetAppointment[] = [
   {
     id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     patient_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -27,7 +27,7 @@ export const appointmentsConsts: Appointment[] = [
     id: '3fa85f64-5717-4562-b3fc-2c963f66afa8',
     patient_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     therapist_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    type: 'Online',
+    type: 'Offline',
     reason: 'string',
     status: 'Approved',
     remind_time: '2025-04-30T07:59:17.799Z',

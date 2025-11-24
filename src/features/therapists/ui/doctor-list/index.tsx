@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { DoctorCard } from '../doctor';
+import Index from '../doctor';
 import styles from './DoctorList.module.css';
 import type { Therapist } from '@/shared/api/types';
 
@@ -13,7 +13,7 @@ const DoctorList: FC<Props> = ({ doctors }) => {
       <h2 className={styles.title}>Выбрать специалиста</h2>
       <div className={styles.list_wrapper}>
         {doctors.map((doctor) => (
-          <DoctorCard doctor={doctor} key={doctor.id} />
+          <Index doctor={doctor} key={doctor.id} />
         ))}
       </div>
     </div>
