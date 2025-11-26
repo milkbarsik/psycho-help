@@ -44,6 +44,10 @@
     object-fit: contain;
 }
 
+.mirroredImage {
+    transform: scaleX(-1);
+}
+
 .text {
     font-size: 18px;
     font-weight: 500;
@@ -51,6 +55,7 @@
     margin: 0;
     color: #000000;
     line-height: 1.4;
+    white-space: pre-line;
 }
 
 @media (max-width: 1024px) {
