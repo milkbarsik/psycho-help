@@ -1,75 +1,37 @@
-import type { FC } from 'react';
-import ClockImage from '@/shared/assets/images/main/chart/clock.svg';
-import lineVector from '@/shared/assets/images/main/chart/line.svg';
 import styles from './schedule-block.module.css';
-import type { TextBlockProps } from '@/shared/api/types';
+import ScheduleDesktop from '@/features/home/ui/chart-block/img/schedule-desktop.png';
+import ScheduleTablet from '@/features/home/ui/chart-block/img/schedule-tablet.png';
+import ScheduleMobile from '@/features/home/ui/chart-block/img/schedule-mobile.png';
 
-const items: TextBlockProps[] = [
-  {
-    title:
-      'Горячая линия Московской службы психологической помощи населению - 8 (495) 051 (с городского телефона) и 051 (с мобильного телефона)',
-    info: 'Режим работы: круглосуточно',
-  },
-  {
-    title:
-      'Горячая линия по оказанию психологической помощи студенческой молодежи организованной Минобрнауки России - 8 (800) 222-55-71',
-    info: 'Режим работы: круглосуточно',
-  },
-  {
-    title: 'Телефон доверия для детей, подростков и их родителей - 8 (800) 2000-122',
-    info: 'Режим работы: круглосуточно',
-  },
-  {
-    title:
-      'Горячая линия центра экстренной психологической помощи МЧС России - 8 (495) 989-50-50 (бесплатно по Москве)',
-    info: 'Режим работы: круглосуточно',
-  },
-];
-
-const ChartBlock: FC = () => {
+const ScheduleBlock = () => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.weekdaysWrapper}>
-        <ul className={styles.weekdaysList}>
-          <li className={styles.weekdaysElement}>
-            <p className={styles.weekdaysName}>Понедельник - Четверг</p>
-            <p className={styles.weekdaysTime}>9:30 - 18:30</p>
-          </li>
-          <li className={styles.weekdaysElement}>
-            <p className={styles.weekdaysName}>Пятница</p>
-            <p className={styles.weekdaysTime}>9:30 - 17:15</p>
-          </li>
-        </ul>
-        <div className={styles.centerSpan}>
-          <p className={styles.weekdaysDinner}>
-            <span className={styles.boldSpan}>Обед: </span>
-            <span>13:00 - 13:45</span>
-          </p>
+    <section className={styles.section}>
+      <div className={styles.scheduleSection}>
+        <div className={styles.scheduleInfo}>
+          <div className={styles.lunchInfo}>
+            <span className={styles.lunchLabel}>Понедельник - Четверг</span>
+            <span className={styles.lunchTime}>9:00 – 18:30</span>
+          </div>
+          <div className={styles.lunchInfo}>
+            <span className={styles.lunchLabel}>Пятница</span>
+            <span className={styles.lunchTime}>9:30 – 17:15</span>
+          </div>
+          <div className={styles.fridayInfo}>
+            <span className={styles.fridayLabel}>Обед</span>
+            <span className={styles.fridayTime}>13:00 – 13:45</span>
+          </div>
+        </div>
+        <div className={styles.scheduleIllustration}>
+          <picture className={styles.scheduleImageWrapper}>
+            <source media="(max-width: 425px)" srcSet={ScheduleMobile} />
+            <source media="(max-width: 768px)" srcSet={ScheduleTablet} />
+            <img src={ScheduleDesktop} alt="" className={styles.scheduleImage} />
+          </picture>
+          {/* <span className={styles.illustrationPlaceholder}>Иллюстрация предметов</span> */}
         </div>
       </div>
-      <div className={styles.spaceBetween}>
-        <img src={lineVector} alt="Линия" />
-        <img src={ClockImage} alt="Часы" />
-        <img src={lineVector} alt="Линия" />
-      </div>
-      <h3>
-        <span className={styles.detailedInformation}>
-          В выходные и праздничные дни, ночью, за срочной психологической помощью можно обратиться
-          по следующим телефонам:
-        </span>
-      </h3>
-      <div className={styles.textBlock}>
-        <ul className={styles.textList}>
-          {items.map((block, index) => (
-            <li key={index} className={styles.detailedInformationItem}>
-              <p>{block.title}</p>
-              <p className={styles.detailedInformationTime}>{block.info}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </section>
   );
 };
 
-export default ChartBlock;
+export default ScheduleBlock;

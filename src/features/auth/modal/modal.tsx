@@ -3,7 +3,8 @@ import type { FC } from 'react';
 import ModalRegistration from './modal-registration';
 import styles from './modal.module.css';
 import ModalLogin from './modal-login';
-import LoginIcon from '@/shared/assets/images/login-icon.svg';
+// import LoginIcon from '@/shared/assets/images/login-icon.svg';
+import Auth from './Auth.svg?react';
 const ModalWindow: FC = () => {
   const [modalWindow, setModalWindow] = React.useState<string>('log');
   const [isModalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -26,7 +27,8 @@ const ModalWindow: FC = () => {
         onClick={() => setModalOpen(!isModalOpen)}
         aria-label="Открыть окно входа"
       >
-        <img src={LoginIcon} alt="Иконка входа" />
+        <Auth />
+        <span>Войти</span>
       </button>
       {isModalOpen && render(modalWindow)}
     </div>

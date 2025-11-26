@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useLocation } from 'react-router-dom';
-import GreetingBlock from '@/features/home/ui/greeting-block/greeting-block';
+import GreetingBlock from '@/features/home/ui/1-greeting-block/greeting-block';
 import ReasonsBlock from '@/features/home/ui/reasons-block/reasons-block';
-import FeaturesBlock from '@/features/home/ui/features-block/features-block';
+import FeaturesBlock from '@/features/home/ui/3-features-block/features-block';
 import ChartBlock from '@/features/home/ui/chart-block/schedule-block';
+import CallsBlock from '@/features/home/ui/5-calls-block/calls-block';
 // import TherapistsBlock from './components/doctors-block/doctors-block';
 import styles from './home-page.module.css';
 
@@ -27,17 +28,10 @@ interface BlockWrapperProps {
 
 const blocks: BlockWrapperProps[] = [
   { component: GreetingBlock, name: 'Greeting' },
-  {
-    component: ReasonsBlock,
-    title: 'С чем может помочь психолог?',
-    name: 'reasons',
-  },
-  {
-    component: FeaturesBlock,
-    title: 'Особенности работы службы',
-    name: 'features',
-  },
+  { component: ReasonsBlock, title: 'Чем психолог может помочь?', name: 'reasons' },
+  { component: FeaturesBlock, title: 'Особенности работы', name: 'features' },
   { component: ChartBlock, title: 'График работы', name: 'chart' },
+  { component: CallsBlock, title: 'Мы всегда рядом', name: 'calls' },
 ];
 
 const BlockWrapper = React.forwardRef<HTMLDivElement, BlockWrapperProps>(

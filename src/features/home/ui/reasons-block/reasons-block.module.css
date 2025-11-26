@@ -1,38 +1,112 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.4rem;
-  margin-top: 3.6rem;
+.section {
+    padding: 80px 0;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  padding: 1.6rem;
-  box-sizing: border-box;
+.title {
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 60px 0;
+    color: #000000;
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 32px 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #63656b16;
+}
+
 
 .imageWrapper {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
 }
 
 .image {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
-.itemText {
-  font-size: 1.6rem;
-  font-weight: bold;
-  width: 29.2rem;
-  text-align: center;
-  margin-top: 1rem;
-  word-break: break-word;
+.mirroredImage {
+    transform: scaleX(-1);
+}
+
+.text {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
+    color: #000000;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+    }
+
+    .title {
+        font-size: 40px;
+    }
+    .section {
+        padding: 60px 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .grid {
+        display: flex;
+        gap: 16px;
+        padding: 0 16px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .card {
+        flex: 0 0 280px;
+        min-width: 280px;
+        padding: 24px 20px;
+    }
+
+    .title {
+        font-size: 32px;
+        margin-bottom: 40px;
+        padding: 0 16px;
+    }
+
+}
+
+@media (max-width: 768px) {
+ 
+    .imageWrapper {
+        margin-bottom: 20px;
+    }
+
+    .text {
+        font-size: 16px;
+    }
 }

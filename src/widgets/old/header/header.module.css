@@ -1,0 +1,48 @@
+.styledHeader {
+    height: 100px;
+    width: 100%;
+    margin: auto;
+    /* background-color: #5e8bf4; */
+    background-color: #486CC0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contentWrapper {
+    display: flex;
+    align-items: center;
+    max-width: 144rem;
+    margin: auto;
+    width: 100%;
+}
+
+.contentList {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    flex-grow: 1;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    outline: none;
+}
+
+.link:focus-visible {
+    background: #36508a;
+    border-radius: 4px;
+}
+
+.modalWrapper {
+    width: 25rem;
+    display: flex;
+    justify-content: space-between;
+}

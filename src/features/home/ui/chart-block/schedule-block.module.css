@@ -1,92 +1,129 @@
-.wrapper {
-  width: 100%;
-  margin: 0 auto;
-  max-width: 145rem;
+.section {
+    padding: 80px 0;
 }
 
-.list {
-  list-style: none;
-  padding: 0;
+.title {
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 60px 0;
+    color: #000000;
 }
 
-.centerSpan {
-  display: flex;
-  justify-content: center;
+
+
+.scheduleSection {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.spaceBetween {
-  display: flex;
-  justify-content: space-between;
-  margin: 3rem 0;
+
+.scheduleInfo {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 40px;
 }
 
-.weekdaysWrapper {
-  text-align: center;
+
+
+.lunchInfo,
+.fridayInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px;
+    background: #F9F9F9;
+    width: 100%;
+    border-radius: 24px;
 }
 
-.weekdaysList {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  padding: 0;
-  width: 130rem;
-  margin: 0 auto;
+.lunchLabel,
+.fridayLabel {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000000;
 }
 
-.weekdaysElement {
-  width: 40rem;
-  text-align: center;
+.lunchTime,
+.fridayTime {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000000;
 }
 
-.weekdaysName {
-  font-size: 2rem;
-  margin-bottom: 0;
+.scheduleIllustration {
+    /* background-color: #ffffff; */
+    /* padding: 60px 40px; */
+    /* text-align: center; */
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); */
+    border-radius: 16px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-.weekdaysTime {
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin: 0;
+.scheduleImage {
+    width: 100%;
 }
 
-.boldSpan {
-  font-weight: 600;
+/* .scheduleIllustration {
+    color: #407BFF;
+    border: 1px solid #407BFF;
+} */
+
+.illustrationPlaceholder {
+    font-size: 18px;
+    color: #486CC0;
+    font-weight: 500;
 }
 
-.detailedInformation {
-  font-size: 1.8rem;
-  font-weight: 500;
+@media (max-width: 1024px) {
+    .title {
+        font-size: 40px;
+    }
 }
 
-.weekdaysDinner {
-  text-align: center;
-  margin-top: 0;
-  border-top: 1px dashed #717785;
-  border-bottom: 1px dashed #717785;
-  padding: 1.5rem 3.9rem;
-  font-size: 2.2rem;
-  width: 41.4rem;
+@media (max-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
+
+    .title {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+
+    .scheduleInfo {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* .scheduleIllustration {
+        padding: 40px 20px;
+    } */
+
+    .illustrationPlaceholder {
+        font-size: 16px;
+    }
 }
 
-.textBlock {
-  display: flex;
-  align-items: center;
-}
+@media (max-width: 425px) {
+    .scheduleIllustration {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        /* растянуть блок на всю ширину экрана */
+        overflow: visible;
+        border-radius: 0;
+        height: auto;
+    }
 
-.textList {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding-right: 30rem;
-  margin: 2rem 0px 2rem 3rem;
-}
-
-.detailedInformationItem {
-  font-size: 1.4rem;
-  list-style: none;
-  color: #393939;
-}
-
-.detailedInformationTime {
-  font-weight: bold;
+    .scheduleImage {
+        width: 140vw;
+        /* картинка шире экрана */
+        max-width: none;
+        margin-left: -20vw;
+        /* смещение влево */
+        height: auto;
+    }
 }
