@@ -1,31 +1,53 @@
 @use '@/shared/scss/abstracts/breakpoints' as *;
 
 .wrapper {
-    .testList {
-        grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
 
-        display: grid;
-        padding-inline: 1rem;
-        gap: 1.2rem;
-        justify-items: center;
-        justify-content: center;
-
-        .readBtn {
-            background: var(--color-interactive-brand-secondary);
-            color: var(--color-label-brand-primary);
-            width: 100%;
-            padding: 1.6rem;
-            border-radius: 1.6rem;
-        }
-
-        @include past-tablet {
-            grid-template-columns: repeat(auto-fit, minmax(0, 35rem));
-            padding: 0;
-            gap: 1.6rem;
-        }
-
-        @include past-desktop {
-            grid-template-columns: 1fr;
-        }
+  .showMore {
+    width: fit-content;
+    padding-inline: 12.6rem;
+    background-color: var(--color-interactive-brand-hover-secondary);
+    color: var(--color-label-brand-primary);
+    &:hover {
+      color: var(--color-interactive-brand-hover-secondary);
     }
+  }
+  .testList {
+    grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+
+    display: grid;
+    padding-inline: 1rem;
+    gap: 1.2rem;
+    justify-items: center;
+    justify-content: center;
+
+    .readBtn {
+      background: var(--color-interactive-brand-secondary);
+      color: var(--color-label-brand-primary);
+      width: 100%;
+      padding: 1.6rem;
+      border-radius: 1.6rem;
+    }
+
+    @include past-tablet {
+      .testList {
+        padding: 0;
+        gap: 1.6rem;
+      }
+    }
+
+    @include past-desktop {
+      gap: 1.6rem;
+    }
+  }
+
+  @include mobile-specific {
+    .showMore {
+      width: 100%;
+      padding-inline: 1rem;
+    }
+  }
 }

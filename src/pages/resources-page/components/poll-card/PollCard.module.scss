@@ -6,7 +6,7 @@
     border: 0.1rem solid var(--color-border-neutral-base);
     border-radius: 2.8rem;
     background: var(--color-fill-neutral-none);
-    max-width: 30rem;
+    // max-width: 30rem;
     width: 100%;
     height: auto;
     gap: 1.2rem;
@@ -59,10 +59,10 @@
 
     @include past-tablet {
         height: auto;
-        width: 35rem;
+        min-width: 35rem;
         padding: 1rem;
         gap: 2rem;
-        max-width: 40rem;
+        // max-width: 40rem;
 
         .imageWrapper {
             height: 23rem;
@@ -96,7 +96,12 @@
             align-items: center;
 
             .imageWrapper {
-                aspect-ratio: 480/300;
+                flex: 1;
+                max-width: 48rem;
+            }
+
+            .content {
+                flex: 1;
             }
         }
     }

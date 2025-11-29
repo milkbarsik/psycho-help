@@ -6,20 +6,19 @@
   border: 0.1rem solid var(--color-border-neutral-base);
   border-radius: 2.8rem;
   background: var(--color-fill-neutral-none);
-  max-width: 30rem;
+  // max-width: 30rem;
   width: 100%;
   height: auto;
   gap: 1.2rem;
   display: flex;
   flex-direction: column;
-  transition: .3s ease;
+  transition: 0.3s ease;
 
   .info {
-    font: var(--font-text-large);
+    font: var(--font-text-medium);
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
   }
 
   .imageWrapper {
@@ -29,7 +28,6 @@
     border-radius: 2.4rem;
     overflow: hidden;
     background: var(--color-fill-neutral-quaternary);
-    max-width: 45rem;
   }
 
   .content {
@@ -59,24 +57,28 @@
 
   @include past-tablet {
     height: auto;
-    width: 35rem;
+    min-width: 35rem;
     padding: 1rem;
     gap: 2rem;
-    max-width: 40rem;
+    // max-width: 40rem;
 
     .imageWrapper {
       height: 23rem;
       min-height: 23rem;
     }
 
-    .info {
-      margin-top: 5rem;
-    }
-
     .content {
       .title {
         font: var(--font-h4);
       }
+    }
+    &.clickable:hover {
+      cursor: pointer;
+      border-color: var(--color-border-brand-strong);
+      outline-color: var(--color-border-brand-strong);
+    }
+    .info {
+      font: var(--font-text-large);
     }
   }
 
@@ -92,22 +94,19 @@
 
     &.desktop {
       padding: 0.8rem;
-      flex-direction: row;
+
       width: auto;
       height: auto;
       align-items: center;
 
       .imageWrapper {
-        aspect-ratio: 480/300;
+        flex: 1;
+        max-width: 48rem;
       }
-    }
-  }
 
-  @include past-tablet {
-    &.clickable:hover {
-      cursor: pointer;
-      border-color: var(--color-border-brand-strong);
-      outline-color: var(--color-border-brand-strong);
+      .content {
+        flex: 1;
+      }
     }
   }
 }

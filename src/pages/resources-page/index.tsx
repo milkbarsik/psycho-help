@@ -17,13 +17,13 @@ const TABS = [
   },
   {
     id: ResourceEntities.TESTS,
-    label: TRANSLATES.tests,
     content: <Tests />,
+    label: TRANSLATES.tests,
   },
   {
     id: ResourceEntities.POLLS,
-    label: TRANSLATES.polls,
     content: <Polls />,
+    label: TRANSLATES.polls,
   },
 ] as ITab[];
 
