@@ -27,7 +27,7 @@ $breakpoint-tablet: 634px;
 }
 
 @mixin past-desktop {
-    @media (min-width: $breakpoint-tablet) {
+    @media (min-width: $breakpoint-desktop) {
         @content;
     }
 }

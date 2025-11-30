@@ -1,0 +1,33 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+
+.tab {
+    font: var(--font-text-medium);
+    background: var(--color-interactive-neutral-secondary);
+    color: var(--color-label-neutral-primary);
+    border-radius: 1.2rem;
+    padding-inline: 1.6rem;
+    padding-block: .75rem;
+    transition: .3s ease;
+
+    &.active {
+        color: var(--color-label-neutral-inverted-primary);
+        background: var(--color-interactive-brand-primary);
+    }
+
+    @include past-tablet {
+        &:hover {
+            background: var(--color-interactive-brand-hover-secondary);
+            color: var(--color-label-brand-primary);
+        }
+    }
+
+    @include past-tablet {
+        padding: 1rem 2.2rem;
+        font: var(--font-text-large-button);
+    }
+
+    @include past-desktop {
+        font: var(--font-text-large);
+        padding: 1.6rem 6.4rem;
+    }
+}
