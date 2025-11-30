@@ -4,6 +4,33 @@
 
 .button {
     background: none;
-    border: none;
+    border: 2px solid transparent;
     user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 2rem;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.button svg {
+    stroke: currentColor;
+}
+
+.button:hover {
+    color: #1B50F5;
+    background-color: #EEF5FF;
+}
+
+.button:active,
+.button:active:hover {
+    background: none;
+    border-color: #1B50F5;
+    color: #1B50F5;
+}
+
+.button:focus-visible {
+    border-radius: 4px;
+    border-color: #1B50F5;
 }

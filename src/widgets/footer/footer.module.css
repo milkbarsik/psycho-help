@@ -1,108 +1,279 @@
-.wrapper {
-    color: white;
-    position: relative;
-    z-index: 0;
-    width: 100%;
-    margin: auto;
-    padding-block: 24px;
-    /* background-color: #5e8bf4; */
+.footer {
     background-color: #486CC0;
-    padding-inline: 0px;
+    color: #ffffff;
+    padding: 60px 0 30px 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.contentWrapper {
-    max-width: 1440px;
-    margin: auto;
-    width: 100%;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
 }
 
-.wrapperBefore {
-    content: '';
+/* Фоновые буквы */
+.backgroundLetters {
     position: absolute;
-    width: 200vw;
-    height: 103%;
-    /* background: rgb(94, 139, 244); */
-    background: #486CC0;
-    z-index: -1;
-    top: 0;
-    right: 0;
     bottom: 0;
-    left: -100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 200px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+    pointer-events: none;
 }
 
-.flexWrap {
+/* Верхняя секция */
+.topSection {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.socials {
-    display: flex;
+.logoSection {
+    flex-shrink: 0;
 }
 
-.iconBox {
-    margin: 0 calc((1vh + 1vw) / 5);
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.2;
+    text-transform: lowercase;
+}
+
+.contactInfo {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    margin: 0 40px;
+}
+
+.contactItem {
+    display: flex;
     align-items: center;
+    gap: 8px;
 }
 
-.icon {
-    width: auto;
-    height: auto;
+.contactLabel {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    min-width: 80px;
 }
 
-.link {
-    color: white;
+.contactValue {
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
     text-decoration: none;
-    outline: none;
+    transition: color 0.3s ease;
 }
 
-.link:focus-visible {
-    background: #36508a;
-    border-radius: 4px;
+.contactValue:hover {
+    color: #e0e0e0;
 }
 
-.textWrapper {
-    margin-top: 30px;
+.socialSection {
     display: flex;
-    justify-content: space-between;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.socialLink {
+    display: flex;
     align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-.fontSize__18 {
-    font-size: 1.8rem;
+.socialLink:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
-.fontSize__16 {
-    font-size: 1.6rem;
+.socialIcon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
 }
 
-.fontSize__14 {
-    font-size: 1.4rem;
+/* Секция с адресами */
+.addressesSection {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 120px;
+    margin-bottom: 40px;
 }
 
-.textBlock {
+.addressItem {
+    text-align: left;
+    position: relative;
+    padding: 40px 0;
+    min-height: 200px;
+}
+
+.addressBackgroundLetters {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 230px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.08);
+    z-index: 1;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.addressStreet {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+    position: relative;
+    z-index: 2;
+}
+
+.addressAuditorium {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.3;
+    position: relative;
+    z-index: 2;
+}
+
+/* Копирайт */
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.copyright p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
     margin: 0;
 }
 
-.phone {
-    margin-top: 20px;
-    font-size: 1.4rem;
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .topSection {
+        flex-direction: column;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .contactInfo {
+        margin: 0;
+        width: 100%;
+    }
+
+    .addressesSection {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 100px;
+    }
+
+    .addressBackgroundLetters {
+        font-size: 180px;
+    }
+
+    .backgroundLetters {
+        font-size: 180px;
+    }
 }
 
-.text {
-    margin: 0;
-    font-size: 1.8rem;
-    word-break: break-word;
-    max-width: 700px;
-    font-size: 1.6rem;
-}
+@media (max-width: 768px) {
+    .footer {
+        padding: 40px 0 20px 0;
+    }
 
-.list {
-    list-style: none;
-    padding: 0;
-}
+    .container {
+        padding: 0 16px;
+    }
 
-.listItem {
-    padding-left: 0;
+    .topSection {
+        gap: 20px;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .contactItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .contactLabel {
+        min-width: auto;
+        font-size: 14px;
+    }
+
+    .contactValue {
+        font-size: 14px;
+    }
+
+    .socialSection {
+        gap: 12px;
+    }
+
+    .socialLink {
+        width: 40px;
+        height: 40px;
+    }
+
+    .socialIcon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .addressesSection {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .addressBackgroundLetters {
+        font-size: 180px;
+    }
+
+    .addressStreet {
+        font-size: 14px;
+    }
+
+    .addressAuditorium {
+        font-size: 13px;
+    }
+
+    .backgroundLetters {
+        font-size: 100px;
+    }
+
+    .copyright p {
+        font-size: 12px;
+    }
 }

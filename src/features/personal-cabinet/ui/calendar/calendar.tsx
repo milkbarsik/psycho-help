@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { FC, CSSProperties } from 'react';
-import { Calendar, ConfigProvider, theme } from 'antd';
+import { Calendar, theme } from 'antd';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import ru_RU from 'antd/locale/ru_RU';
 import styles from './calendar.module.css';
 import { useAppointment } from '@/features/personal-cabinet/model/appointment';
-import type { GetAppointment } from '@/shared/api/types';
 import Marker from './marker/marker';
-
-dayjs.locale('ru');
+import type { Appointment } from '@/entities/appointment/types';
 
 // Accepted, Approved, Cancelled, Done
 const specialDatesTypes: Record<string, string> = {
@@ -20,7 +17,7 @@ const specialDatesTypes: Record<string, string> = {
 };
 
 type Props = {
-  appointments: GetAppointment[] | undefined;
+  appointments?: Appointment[];
 };
 
 const ACalendar: FC<Props> = ({ appointments }) => {
@@ -79,32 +76,19 @@ const ACalendar: FC<Props> = ({ appointments }) => {
   };
 
   return (
-    <ConfigProvider
-      locale={ru_RU}
-      theme={{
-        components: {
-          Calendar: {
-            fullBg: 'transparent',
-            fullPanelBg: 'transparent',
-            fontSize: 16,
-          },
-        },
-      }}
-    >
-      <div style={{ width: '100%', borderRadius: token.borderRadiusLG }}>
-        <Calendar
-          fullscreen={false}
-          onChange={onChange}
-          value={selectedDate}
-          fullCellRender={dateFullCellRender}
-        />
-        <div className={styles.markers}>
-          <Marker text="Прием подтвержден" type="Approved" />
-          <Marker text="Прием не подтвержден" type="Accepted" />
-          <Marker text="Выбранная дата" type="selected" />
-        </div>
+    <div style={{ width: '100%', borderRadius: token.borderRadiusLG }}>
+      <Calendar
+        fullscreen={false}
+        onChange={onChange}
+        value={selectedDate}
+        fullCellRender={dateFullCellRender}
+      />
+      <div className={styles.markers}>
+        <Marker text="Прием подтвержден" type="Approved" />
+        <Marker text="Прием не подтвержден" type="Accepted" />
+        <Marker text="Выбранная дата" type="selected" />
       </div>
-    </ConfigProvider>
+    </div>
   );
 };
 

@@ -8,6 +8,11 @@ export type regData = {
   role: string;
 };
 
+export interface ResponseError {
+  message: string;
+  status: number | undefined;
+}
+
 export type User = {
   id: string;
   first_name: string;
@@ -42,41 +47,11 @@ export type Therapist = {
   office: string;
 };
 
-export type PostAppointment = {
-  patient_id: string;
-  therapist_id: string;
-  type: 'Offline' | 'Online';
-  reason: string;
-  remind_time: string;
-  venue: string;
-};
-
-export type GetAppointment = {
-  id: string;
-  patient_id: string;
-  therapist_id: string;
-  type: 'Offline' | 'Online';
-  reason: string;
-  status: 'Approved' | 'Accepted' | 'Cancelled' | 'Done';
-  remind_time: string;
-  last_change_time: string;
-  venue: string;
-};
-
 export type TextBlockProps = {
   title: string;
   info: string;
 };
 
-export type BlockWrapperProps = {
-  component: (() => JSX.Element) | React.FC;
-  name: string;
-  title?: string;
-};
-export type Pagination = {
-  pageNo?: number;
-  pageSize?: number;
-};
 
 // export interface User {
 //   userId: number;

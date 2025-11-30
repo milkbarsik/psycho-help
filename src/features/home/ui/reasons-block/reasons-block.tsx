@@ -3,16 +3,22 @@ import styles from './reasons-block.module.css';
 
 const ReasonsBlock = () => {
   return (
-    <div className={styles.grid}>
-      {REASONS_TO_VISIT.map((item) => (
-        <div key={item.title} className={styles.content}>
-          <div className={styles.imageWrapper}>
-            <img src={item.image} alt="Иллюстрация с помощью" className={styles.image} />
+    <section className={styles.section}>
+      <div className={styles.grid}>
+        {REASONS_TO_VISIT.map((item, index) => (
+          <div key={index} className={styles.card}>
+            <div className={styles.imageWrapper}>
+              <img
+                src={item.image}
+                alt="Иллюстрация"
+                className={`${styles.image} ${index === 0 ? styles.mirroredImage : ''}`}
+              />
+            </div>
+            <p className={styles.text}>{item.title}</p>
           </div>
-          <h2 className={styles.itemText}>{item.title}</h2>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </section>
   );
 };
 

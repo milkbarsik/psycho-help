@@ -1,27 +1,13 @@
 import Title from '@/features/therapists/ui/title';
 import styles from './DoctorPage.module.css';
-import ServiceApi from '@/shared/api/service-api';
-import { useFetch } from '@/shared/api/useFetch';
-
 import DoctorList from '@/features/therapists/ui/doctor-list';
-import { useEffect, useState } from 'react';
-import type { Therapist } from '@/shared/api/types';
 import Loader from '@/shared/ui/loader/loader';
+import { useQuery } from '@tanstack/react-query';
+import { therapistQueries } from '@/entities/therapist/api';
+import { Result } from 'antd';
 
 const DoctorsPage = () => {
-  const [doctors, setDoctors] = useState<Therapist[]>([]);
-
-  const { fetching, isLoading, error } = useFetch(async () => {
-    const res = await ServiceApi.getTherapists();
-    if (res.status === 200) {
-      setDoctors(res.data);
-    }
-  });
-
-  useEffect(() => {
-    fetching();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data: doctors, isLoading, error } = useQuery(therapistQueries.list());
 
   if (isLoading) {
     return (
@@ -29,20 +15,21 @@ const DoctorsPage = () => {
         <Loader />
       </div>
     );
-  } else if (!doctors) {
+  }
+  if (!doctors || error) {
     return (
       <div>
-        <h3>{error.message}</h3>
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.wrapper}>
-        <Title />
-        <DoctorList doctors={doctors} />
+        <Result status={'error'} title={error?.message} />
       </div>
     );
   }
+
+  return (
+    <div className={styles.wrapper}>
+      <Title />
+      <DoctorList doctors={doctors} />
+    </div>
+  );
 };
 
 export default DoctorsPage;

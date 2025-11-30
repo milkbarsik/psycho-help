@@ -1,24 +1,34 @@
-
 .button {
-    border-radius: 1.6rem;
-    padding: 1.6rem;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    user-select: none;
+    display: flex;
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    transition: 
+        outline .3s ease,
+        background .3s ease,
+        outline-offset .3s ease;
+    outline: 2px solid transparent;
+
+    &.medium {
+        padding: 1.4rem;
+    }
 
     &.primary {
-        color: var(--color-label-neutral-inverted-primary);
-        background-color: var(--color-interactive-brand-primary);
-        font: var(--font-text-large-button);
+        background: #486CC0;
 
         &:hover {
-            background-color: var(--color-interactive-brand-hover);
+            background: #36508a;
         }
 
-        &:active {
-            background-color: var(--color-interactive-brand-active);
-        }
-        
-        &:disabled {
-            color: var(--label-neutral-quanternary);
-            background-color: var(--color-interactive-brand-disabled);
+        &:focus {
+            outline: 2px solid #486CC0;
+            outline-offset: 2px;
+            background: #36508a
         }
     }
 }
