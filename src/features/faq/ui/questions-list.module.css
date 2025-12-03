@@ -1,7 +1,9 @@
 .wrapper {
-    border-radius: 0;
-    overflow: hidden;
-    height: auto;
-    background: transparent;
-    padding: 0 14.6rem;
+    padding-top: 3.6rem;
+}
+
+@media (max-width: 634px) {
+    .wrapper {
+        padding-top: 2.4rem;
+    }
 }

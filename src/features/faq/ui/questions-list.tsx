@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Question from './question';
 import styles from './questions-list.module.css';
 
@@ -6,6 +7,11 @@ const QuestionsList = ({
 }: {
   questions: Array<{ id: number; ask: string; answer: string }>;
 }) => {
+  const [openId, setOpenId] = useState<number | null>(null);
+
+  function handleToggle(id: number) {
+    setOpenId((prev) => (prev === id ? null : id));
+  }
   return (
     <div className={styles.wrapper}>
       {questions.map((questionObj) => (
@@ -14,6 +20,8 @@ const QuestionsList = ({
           id={questionObj.id}
           answer={questionObj.answer}
           key={questionObj.id}
+          onToggle={handleToggle}
+          isActive={openId === questionObj.id}
         />
       ))}
     </div>
