@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Modal, Input } from 'antd';
-import styles from './modal-login.module.css';
+import styles from './modal.module.css';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { useFetch } from '@/shared/api/useFetch';
+import EyeIcon from './icons/Eye.svg?react';
+import EyeOffIcon from './icons/EyeOff.svg?react';
 
 const INITIAL_FORM_VALUE = {
   email: '',
@@ -32,18 +33,17 @@ type TProps = {
 */
 
 type Tprops = {
-  setWindow: (param: 'login' | 'reg') => void;
+  setWindow: (param: 'log' | 'reg' | 'forgot' | 'change') => void;
   isOpen: boolean;
   setModalOpen: (param: boolean) => void;
 };
-
-const EMAIL_HINT = 'Введите вашу электронную почту в формате primer@gmail.com';
 
 const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
   const [formValue, setFormValue] = useState({ ...INITIAL_FORM_VALUE });
   const [errors, setErrors] = useState({ ...INITIAL_FORM_VALUE });
   const [open, setOpen] = useState(isOpen);
-  // const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login } = useAuth();
 
@@ -94,67 +94,99 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
     }));
   };
 
+  if (!open) return null;
+
   return (
-    <>
-      <Modal
-        open={open}
-        title="Вход"
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="submit" type="primary" loading={isLoading} onClick={handleOk}>
-            Войти
-          </Button>,
-        ]}
-      >
+    <div className={styles.modalOverlay} onClick={handleCancel}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.modalHeaderAuth}>
+          <h2 className={styles.modalTitle}>Вход</h2>
+          <button
+            className={styles.closeButton}
+            onClick={handleCancel}
+            aria-label="Закрыть окно входа"
+          >
+            ✕
+          </button>
+        </div>
+
         <form className={styles.form}>
           <label>
             <span>Электронная почта</span>
-            <Input
+            <input
+              type="email"
               name="email"
               value={formValue.email}
               placeholder="primer@gmail.com"
               onChange={handleInputChange}
+              className={styles.input}
               aria-details="Строка для ввода электронной почты"
             />
-            {errors.email ? (
-              <span className={styles.errorText}>{errors.email}</span>
-            ) : (
-              <span className={styles.hintText}>{EMAIL_HINT}</span>
-            )}
+            {errors.email && <span className={styles.errorText}>{errors.email}</span>}
           </label>
           <label>
             <span>Пароль</span>
-            <Input.Password
-              name="password"
-              value={formValue.password}
-              placeholder="Введите пароль"
-              onChange={handleInputChange}
-            />
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={formValue.password}
+                placeholder="Введите пароль"
+                onChange={handleInputChange}
+                className={styles.passwordInput}
+              />
+              <button
+                type="button"
+                className={styles.showPassButton}
+                onClick={() => setShowPassword((s) => !s)}
+                aria-pressed={showPassword}
+                aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+              >
+                {showPassword ? <EyeIcon /> : <EyeOffIcon />}
+              </button>
+            </div>
             {errors.password && <span className={styles.errorText}>{errors.password}</span>}
           </label>
-          {/* <Checkbox
-            style={{ display: 'flex' }}
-            checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)}
-          >
-            Запомнить меня
-          </Checkbox> */}
-          <p>
-            <a href="/forgot-password">Забыли пароль?</a>
-          </p>
-          <p>У вас еще нет учетной записи?</p>
-          <Button type="default" onClick={() => setWindow('reg')} className={styles.registerButton}>
-            <span>Регистрация</span>
-          </Button>
+          <div className={styles.rememberContainer}>
+            <div className={styles.rememberCheckbox}>
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className={styles.checkbox}
+              />
+              Запомнить меня
+            </div>
+            <a
+              className={styles.forgotLink}
+              onClick={(e) => {
+                e.preventDefault();
+                setWindow('forgot');
+              }}
+            >
+              Забыли пароль?
+            </a>
+          </div>
         </form>
-        <p style={{ color: 'red' }}>
-          {error.status === 401
-            ? 'Неверный логин или пароль'
-            : error.message !== '' && error.message}
-        </p>
-      </Modal>
-    </>
+
+        {error.status === 401 && <p className={styles.errorMessage}>Неверный логин или пароль</p>}
+        {error.message !== '' && error.status !== 401 && (
+          <p className={styles.errorMessage}>{error.message}</p>
+        )}
+
+        <div className={styles.footer}>
+          <button className={styles.submitButton} onClick={handleOk} disabled={isLoading}>
+            {isLoading ? 'Загрузка...' : 'Войти'}
+          </button>
+          <p className={styles.Suggestion}>
+            <span>У вас еще нет учетной записи?</span>{' '}
+            <a className={styles.ModalSwitcher} onClick={() => setWindow('reg')}>
+              Регистрация
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 
