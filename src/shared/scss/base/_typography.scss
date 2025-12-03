@@ -89,11 +89,11 @@ $font-weight-semi-bold: 600;
 @include breakpoints.past-tablet {
   :root {
     --font-header-letter-spacing: -0.15rem;
-    --font-h1: #{$font-weight-semi-bold 3.6rem/4.4rem $font-family-header};
+    --font-h1: #{$font-weight-semi-bold 4.8rem/5.6rem $font-family-header};
     --font-h2: #{$font-weight-semi-bold 4rem/4.8rem $font-family-header};
-    --font-h3: #{$font-weight-semi-bold 2.4rem/3.2rem $font-family-header};
-    --font-h4: #{$font-weight-semi-bold 2rem/2.8rem $font-family-header};
-    --font-h5: #{$font-weight-semi-bold 1.8rem/2.4rem $font-family-header};
+    --font-h3: #{$font-weight-semi-bold 3.2rem/4rem $font-family-header};
+    --font-h4: #{$font-weight-semi-bold 2.8rem/3.2rem $font-family-header};
+    --font-h5: #{$font-weight-semi-bold 2.4rem/2.8rem $font-family-header};
     --font-text-large: #{$font-weight-regular 2rem/2.8rem $font-family-body};
     --font-text-large-button: #{$font-weight-medium 2rem/2.8rem $font-family-body};
     --font-text-medium: #{$font-weight-regular 1.6rem/2.4rem $font-family-body};
