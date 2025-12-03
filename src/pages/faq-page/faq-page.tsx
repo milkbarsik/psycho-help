@@ -6,19 +6,15 @@ import { faq, TRANSLATES } from './constants';
 const FaqPage = () => {
   return (
     <>
-      <div className={styles.header}>
+      <div className={styles.container}>
         <div className={styles.wrapper}>
-          <div className={styles.headerContent}>
-            <div className={styles.faqName}>
+          <div className={styles.header}>
+            <div className={styles.headline}>
               <h1 className={styles.faq}>{TRANSLATES.title}</h1>
               <p className={styles.description}>{TRANSLATES.description}</p>
             </div>
             <img src={FaqImage} alt={TRANSLATES.imgAlt} className={styles.image} />
           </div>
-        </div>
-      </div>
-      <div className={styles.wrapperQuestions}>
-        <div className={styles.questions}>
           <QuestionsList questions={faq} />
         </div>
       </div>

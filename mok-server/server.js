@@ -30,7 +30,6 @@ process.argv.forEach((val, index) => {
 const app = express();
 
 app.use(cookieParser());
-app.use(express.json());
 
 if (should_reroute) {
   try {
@@ -67,6 +66,8 @@ if (!should_reroute) {
     });
   });
 }
+
+app.use(express.json());
 
 app.listen(8000, () => {
   console.log('\x1b[32m%s\x1b[0m', 'Local server succesfully started as http://localhost:8000')

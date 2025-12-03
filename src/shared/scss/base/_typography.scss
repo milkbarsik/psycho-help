@@ -75,11 +75,12 @@ $font-weight-semi-bold: 600;
 
 :root {
   --font-header-letter-spacing: -0.1rem;
+  --font-header-letter-spacing-h5: -0.1rem;
   --font-h1: #{$font-weight-semi-bold 3.6rem/4.4rem $font-family-header};
   --font-h2: #{$font-weight-semi-bold 2.8rem/3.6rem $font-family-header};
-  --font-h3: #{$font-weight-semi-bold 2.4rem/3.2rem $font-family-header};
-  --font-h4: #{$font-weight-semi-bold 2rem/2.8rem $font-family-header};
-  --font-h5: #{$font-weight-semi-bold 1.8rem/2.4rem $font-family-header};
+  --font-h3: #{$font-weight-medium 2.4rem/3.2rem $font-family-header};
+  --font-h4: #{$font-weight-medium 2rem/2.8rem $font-family-header};
+  --font-h5: #{$font-weight-medium 1.8rem/2.4rem $font-family-header};
   --font-text-medium: #{$font-weight-regular 1.6rem/2.4rem $font-family-body};
   --font-text-medium-button: #{$font-weight-semi-bold 1.6rem/2.4rem $font-family-body};
   --font-text-small: #{$font-weight-regular 1.2rem/1.6rem $font-family-body};
@@ -89,11 +90,11 @@ $font-weight-semi-bold: 600;
 @include breakpoints.past-tablet {
   :root {
     --font-header-letter-spacing: -0.15rem;
-    --font-h1: #{$font-weight-semi-bold 3.6rem/4.4rem $font-family-header};
+    --font-h1: #{$font-weight-semi-bold 4.8rem/5.6rem $font-family-header};
     --font-h2: #{$font-weight-semi-bold 4rem/4.8rem $font-family-header};
-    --font-h3: #{$font-weight-semi-bold 2.4rem/3.2rem $font-family-header};
-    --font-h4: #{$font-weight-semi-bold 2rem/2.8rem $font-family-header};
-    --font-h5: #{$font-weight-semi-bold 1.8rem/2.4rem $font-family-header};
+    --font-h3: #{$font-weight-semi-bold 3.2rem/4rem $font-family-header};
+    --font-h4: #{$font-weight-medium 2.8rem/3.2rem $font-family-header};
+    --font-h5: #{$font-weight-medium 2.4rem/2.8rem $font-family-header};
     --font-text-large: #{$font-weight-regular 2rem/2.8rem $font-family-body};
     --font-text-large-button: #{$font-weight-medium 2rem/2.8rem $font-family-body};
     --font-text-medium: #{$font-weight-regular 1.6rem/2.4rem $font-family-body};
@@ -108,8 +109,8 @@ $font-weight-semi-bold: 600;
     --font-h1: #{$font-weight-semi-bold 6rem/6.8rem $font-family-header};
     --font-h2: #{$font-weight-semi-bold 4.8rem/5.2rem $font-family-header};
     --font-h3: #{$font-weight-semi-bold 4rem/4.4rem $font-family-header};
-    --font-h4: #{$font-weight-semi-bold 3.2rem/3.6rem $font-family-header};
-    --font-h5: #{$font-weight-semi-bold 2.4rem/2.8rem $font-family-header};
+    --font-h4: #{$font-weight-medium 3.2rem/3.6rem $font-family-header};
+    --font-h5: #{$font-weight-medium 2.4rem/2.8rem $font-family-header};
     --font-text-large: #{$font-weight-regular 2rem/2.8rem $font-family-body};
     --font-text-large-button: #{$font-weight-medium 2rem/2.8rem $font-family-body};
     --font-text-medium: #{$font-weight-regular 1.6rem/2.4rem $font-family-body};
@@ -120,5 +121,9 @@ $font-weight-semi-bold: 600;
 
 @mixin header($level) {
   font: var(--font-h#{$level});
-  letter-spacing: var(--font-header-letter-spacing);
+  @if $level == 5 {
+    letter-spacing: var(--font-header-letter-spacing-h5); // the hell do i know why designers chose to use 0.1 specifically on h5
+  } @else {
+    letter-spacing: var(--font-header-letter-spacing);
+  }
 }
