@@ -82,6 +82,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex-grow: 1;
 }
 
 .input {
@@ -286,4 +287,11 @@
 .button:focus-visible {
     border-radius: 4px;
     border-color: #1B50F5;
+}
+
+.names {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
 }
