@@ -1,27 +1,40 @@
-import type { ButtonHTMLAttributes } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import styles from './Button.module.scss';
 import clsx from 'clsx';
 
 export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary';
+  variant?: 'primary' | 'secondary';
   size?: 'medium';
+  iconPosition?: 'left' | 'right';
+  icon?: ReactNode;
 }
 
 export const Button = ({
   variant = 'primary',
   size = 'medium',
   children,
+  className,
+  iconPosition = 'left',
+  icon,
   ...props
 }: IButtonProps) => {
   const { disabled } = props || {};
+  const content = (
+    <>
+      {iconPosition === 'left' && <div className={styles.icon}>{icon}</div>}
+      {children}
+      {iconPosition === 'right' && <div className={styles.icon}>{icon}</div>}
+    </>
+  );
   return (
     <button
       {...props}
-      className={clsx(styles.button, styles[variant], styles[size], {
+      className={clsx(styles.button, styles[variant], className, styles[size], {
         [styles.disabled]: disabled,
+        [styles.hasIcon]: !!icon,
       })}
     >
-      {children}
+      {content}
     </button>
   );
 };
