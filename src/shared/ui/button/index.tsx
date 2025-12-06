@@ -19,12 +19,14 @@ export const Button = ({
   ...props
 }: IButtonProps) => {
   const { disabled } = props || {};
-  const content = (
+  const content = icon ? (
     <>
       {iconPosition === 'left' && <div className={styles.icon}>{icon}</div>}
       {children}
       {iconPosition === 'right' && <div className={styles.icon}>{icon}</div>}
     </>
+  ) : (
+    children
   );
   return (
     <button
