@@ -1,0 +1,130 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+
+.wrapper {
+  --container-max-width: 80rem;
+  --container-inline-padding: 1.2rem;
+  --container-block-padding: 6rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: calc(var(--container-max-width) + var(--container-inline-padding) * 2);
+  gap: 1.2rem;
+  margin: 0 auto;
+  padding-inline: var(--container-inline-padding);
+  padding-block: var(--container-block-padding);
+}
+
+.counter {
+  font: var(--font-text-large);
+  color: var(--color-label-neutral-tetriary);
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-bottom: 4rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.option {
+  padding: 1.6rem 2.4rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  background-color: var(--color-interactive-neutral-secondary);
+  outline: 1px solid transparent;
+
+  &:hover {
+    background-color: var(--color-interactive-neutral-hover-secondary);
+  }
+
+  &.selected {
+    outline-color: var(--color-interactive-brand-primary);
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.buttonAction {
+  padding: 1.6rem 7.75rem;
+  border-radius: 1.6rem;
+  font: var(--font-text-large-button);
+  transition: background-color 0.3s ease;
+
+  &Complete,
+  &Next {
+    color: var(--color-background-neutral-primary);
+    background-color: var(--color-interactive-brand-primary);
+    &:hover {
+      background-color: var(--color-border-brand-base);
+    }
+  }
+
+  &Back {
+    background-color: var(--color-interactive-brand-secondary);
+    color: var(--color-label-brand-primary);
+
+    &:hover {
+      background-color: var(--color-border-brand-base);
+    }
+  }
+}
+
+@include past-desktop {
+  .title {
+    font: var(--font-h4);
+  }
+
+  .option {
+    font: var(--font-text-large-button);
+  }
+}
+
+@include past-tablet {
+  .wrapper {
+    --container-max-width: 70.6rem;
+    --container-inline-padding: 1.6rem;
+  }
+  .title {
+    font: var(--font-h4);
+  }
+  .option {
+    font: var(--font-text-large-button);
+  }
+}
+@include mobile-specific {
+  .counter {
+    font: var(--font-text-medium);
+  }
+
+  .title {
+    font: var(--font-h4);
+  }
+
+  .option {
+    font: var(--font-text-medium);
+  }
+
+  .buttonAction {
+    padding-inline: 4.85rem;
+    font: var(--font-text-medium);
+  }
+
+  .question {
+    padding-bottom: 2.4rem;
+  }
+
+  .buttons {
+    gap: 1rem;
+  }
+}

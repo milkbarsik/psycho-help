@@ -4,7 +4,7 @@ import { PersonalCabinet } from '@/pages/personal-cabinet';
 import { FaqPage } from '@/pages/faq-page';
 import { DoctorsPage } from '@/pages/doctors-page';
 import { DoctorPage } from '@/pages/doctor-page';
-import { ResourcesPage } from '@/pages';
+import { ResourcesPage, TestPage } from '@/pages';
 
 /*
  Тип маршрута:
@@ -51,6 +51,10 @@ export const authRoutes: routePath[] = [
     Component: ResourcesPage,
   },
   {
+    path: '/test/:id',
+    Component: TestPage,
+  },
+  {
     path: '/therapists/:id',
     Component: DoctorPage,
   },
@@ -74,6 +78,10 @@ export const notAuthRoutes: routePath[] = [
     Component: ResourcesPage,
   },
   {
+    path: '/test/:id',
+    Component: TestPage,
+  },
+  {
     path: '/therapists/',
     Component: DoctorsPage,
   },
@@ -82,3 +90,4 @@ export const notAuthRoutes: routePath[] = [
     Component: DoctorPage,
   },
 ];
+
