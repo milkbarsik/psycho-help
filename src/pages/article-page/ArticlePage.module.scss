@@ -1,8 +1,8 @@
 @use '@/shared/scss/abstracts/breakpoints' as *;
 
 .wrapper {
-    padding: 2.4rem 1.6rem;
-
+    padding: 2.4rem 1rem 5.3rem 1rem;
+    
     display: flex;
     flex-direction: column;
     max-width: 70rem;
@@ -38,6 +38,7 @@
         font: var(--font-h2);
         color: var(--color-label-neutral-primary);
         margin-block: .9rem;
+        letter-spacing: -.15rem;
     }
 
     .content {

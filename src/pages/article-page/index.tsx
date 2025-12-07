@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './ArticlePage.module.scss';
 import { mockArticlePageData } from './mocks';
 import { TRANSLATES as t } from './constants';
@@ -63,13 +63,13 @@ export const ArticlePage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.top}>
-        <button className={styles.backButton} onClick={handleBack}>
+        <Link to="/resources" className={styles.backButton}>
           <LeftOutlined />
           {t.materials}
-        </button>
+        </Link>
 
         <div className={styles.info}>
-          <p className={styles.date}>{dayjs(data.date).format('DD/MM/YYYY')}</p>
+          <p className={styles.date}>{dayjs(data.date).format('DD.MM.YYYY')}</p>
           <p className={styles.author}>{data.author}</p>
         </div>
       </div>
