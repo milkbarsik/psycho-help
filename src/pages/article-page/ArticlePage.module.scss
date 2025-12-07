@@ -38,7 +38,7 @@
         font: var(--font-h2);
         color: var(--color-label-neutral-primary);
         margin-block: .9rem;
-        letter-spacing: -.15rem;
+        letter-spacing: var(--font-header-letter-spacing);
     }
 
     .content {
@@ -56,11 +56,13 @@
         }
         & > h1 {
             font: var(--font-h2);
+            letter-spacing: var(--font-header-letter-spacing);
             margin-bottom: 2.4rem;
             color: var(--color-label-neutral-primary);
         }
         & > h2 {
             font: var(--font-h3);
+            letter-spacing: var(--font-header-letter-spacing);
             margin-bottom: 2.4rem;
             color: var(--color-label-neutral-primary);
         }
@@ -123,9 +125,7 @@
                 overflow: hidden;
             }
             & > h1 {
-                font: var(--font-h2);
                 margin-bottom: 2.4rem;
-                color: var(--color-label-neutral-primary);
             }
             & > h2 {
                 margin-bottom: 2.8rem;
