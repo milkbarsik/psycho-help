@@ -4,17 +4,24 @@ import { ArticleCard } from '@/pages/resources-page/components';
 import { TRANSLATES } from '@/pages/resources-page/consts';
 import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const initialArticles = articleMocks.slice(0, 5);
 
+const MOCK_ARTICLE_ID = 1;
+
 export const Articles = () => {
   const [articles, setArticles] = useState(initialArticles);
-
+  const navigate = useNavigate();
   const handleShowMore = () => {
     setArticles(articleMocks);
-  }
+  };
 
   const isShowMoreVisible = articles.length < articleMocks.length;
+
+  const handleOpenArticle = (id: number | string) => {
+    navigate(`/article/${id}`);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -29,7 +36,16 @@ export const Articles = () => {
                 value: item.date,
               }}
               description={item.description}
-              bottomSlot={<button className={styles.readBtn}>{TRANSLATES.read}</button>}
+              bottomSlot={
+                <Button
+                  variant="secondary"
+                  // TODO: добавить настоящий id, когда появится бэк
+                  onClick={handleOpenArticle.bind(null, MOCK_ARTICLE_ID)}
+                  className={styles.readBtn}
+                >
+                  {TRANSLATES.read}
+                </Button>
+              }
               hasHorizontalDesktopVersion
               key={`articles-${index}`}
             />
@@ -37,7 +53,11 @@ export const Articles = () => {
         })}
       </div>
 
-      {isShowMoreVisible && <Button className={styles.showMore} onClick={handleShowMore}>Показать ещё</Button>}
+      {isShowMoreVisible && (
+        <Button className={styles.showMore} onClick={handleShowMore}>
+          Показать ещё
+        </Button>
+      )}
     </div>
   );
 };
