@@ -3,7 +3,7 @@
 .wrapper {
   --container-max-width: 100%;
   --container-inline-padding: 1.2rem;
-  --container-block-padding: 5.5rem 8.5rem;
+  --container-block-padding: 7.4rem 10.2rem;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -22,7 +22,7 @@
 .question {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1.6rem;
   padding-bottom: 3.9rem;
 }
 
@@ -84,9 +84,11 @@
   .wrapper {
     --container-max-width: 70.6rem;
     --container-inline-padding: 1.6rem;
+    --container-block-padding: 6rem 8.4rem;
   }
   .title {
     font: var(--font-h4);
+    letter-spacing: var(--font-header-letter-spacing);
   }
   .option {
     font: var(--font-text-large-button);
@@ -99,10 +101,10 @@
 @include past-desktop {
   .wrapper {
     --container-max-width: 79.6rem;
+    --container-block-padding: 8.1rem 8.5rem;
   }
   .title {
     font: var(--font-h4);
-    letter-spacing: var(--font-header-letter-spacing);
   }
 
   .option {
@@ -111,6 +113,9 @@
 
   .buttonAction {
     border-radius: 1.6rem;
+  }
+  .question {
+    gap: 2.3rem;
   }
 }
 
