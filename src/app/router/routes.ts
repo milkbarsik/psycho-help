@@ -5,6 +5,7 @@ import { FaqPage } from '@/pages/faq-page';
 import { DoctorsPage } from '@/pages/doctors-page';
 import { DoctorPage } from '@/pages/doctor-page';
 import { ResourcesPage, TestPage } from '@/pages';
+import { ArticlePage } from '@/pages/article-page';
 
 /*
  Тип маршрута:
@@ -62,6 +63,10 @@ export const authRoutes: routePath[] = [
     path: '/cabinet',
     Component: PersonalCabinet,
   },
+   {
+    path: "/article/:id",
+    Component: ArticlePage
+  }
 ];
 
 export const notAuthRoutes: routePath[] = [
@@ -89,5 +94,9 @@ export const notAuthRoutes: routePath[] = [
     path: '/therapists/:id',
     Component: DoctorPage,
   },
+  {
+    path: "/article/:id",
+    Component: ArticlePage
+  }
 ];
 
