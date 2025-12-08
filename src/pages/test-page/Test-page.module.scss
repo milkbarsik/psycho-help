@@ -1,9 +1,9 @@
 @use '@/shared/scss/abstracts/breakpoints' as *;
 
 .wrapper {
-  --container-max-width: 80rem;
+  --container-max-width: 100%;
   --container-inline-padding: 1.2rem;
-  --container-block-padding: 6rem;
+  --container-block-padding: 5.5rem 8.5rem;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -23,7 +23,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  padding-bottom: 4rem;
+  padding-bottom: 3.9rem;
 }
 
 .options {
@@ -34,7 +34,7 @@
 
 .option {
   padding: 1.6rem 2.4rem;
-  border-radius: 1rem;
+  border-radius: 0.9rem;
   cursor: pointer;
   transition: 0.3s ease;
   background-color: var(--color-interactive-neutral-secondary);
@@ -57,7 +57,7 @@
 
 .buttonAction {
   padding: 1.6rem 7.75rem;
-  border-radius: 1.6rem;
+  border-radius: 0.8rem;
   font: var(--font-text-large-button);
   transition: background-color 0.3s ease;
 
@@ -80,16 +80,6 @@
   }
 }
 
-@include past-desktop {
-  .title {
-    font: var(--font-h4);
-  }
-
-  .option {
-    font: var(--font-text-large-button);
-  }
-}
-
 @include past-tablet {
   .wrapper {
     --container-max-width: 70.6rem;
@@ -101,7 +91,29 @@
   .option {
     font: var(--font-text-large-button);
   }
+  .buttonAction {
+    border-radius: 1.2rem;
+  }
 }
+
+@include past-desktop {
+  .wrapper {
+    --container-max-width: 79.6rem;
+  }
+  .title {
+    font: var(--font-h4);
+    letter-spacing: var(--font-header-letter-spacing);
+  }
+
+  .option {
+    font: var(--font-text-large-button);
+  }
+
+  .buttonAction {
+    border-radius: 1.6rem;
+  }
+}
+
 @include mobile-specific {
   .counter {
     font: var(--font-text-medium);
@@ -109,6 +121,11 @@
 
   .title {
     font: var(--font-h4);
+    letter-spacing: var(--font-header-letter-spacing);
+  }
+
+  .options {
+    gap: 0.4rem;
   }
 
   .option {
@@ -121,10 +138,10 @@
   }
 
   .question {
-    padding-bottom: 2.4rem;
+    padding-bottom: 1.2rem;
   }
 
   .buttons {
-    gap: 1rem;
+    gap: 0.4rem;
   }
 }
