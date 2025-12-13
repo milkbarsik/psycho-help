@@ -27,7 +27,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "node mok-server/server.js",
-    "test": "vitest"
+    "test": "vitest",
+    "playwright": "npx playwright test --ui"
   },
   "browserslist": {
     "production": [

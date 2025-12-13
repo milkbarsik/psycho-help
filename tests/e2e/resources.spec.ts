@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Проверка статей', async ({ page }) => {
-  await page.goto('http://localhost:3000/resources');
+  await page.goto('/resources');
   const cards = page.locator('[class*=articleList] > div');
   await expect(cards).toHaveCount(5);
   await page.getByRole('button', { name: 'Показать ещё' }).click();
