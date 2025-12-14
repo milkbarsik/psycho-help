@@ -11,6 +11,7 @@ interface Props {
 }
 
 export const DoctorCard: FC<Props> = ({ doctor, linkToDetails = true }) => {
+  console.log(doctor);
   const content = (
     <div className={styles.wrapper}>
       <Img
@@ -18,16 +19,15 @@ export const DoctorCard: FC<Props> = ({ doctor, linkToDetails = true }) => {
         photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}` + doctor.photo}
         altPhoto={altPhoto}
       />
+      <div className={styles.info}>
+        <p className={styles.fio}>{[doctor.last_name, doctor.first_name].join(' ')}</p>
 
-      <p className={styles.fio}>
-        {[doctor.last_name, doctor.first_name].join(' ')}
-      </p>
+        <p className={styles.speciality}>{doctor.qualification}</p>
+        <p className={styles.experience}>Опыт {doctor.experience} лет</p>
 
-      <p className={styles.speciality}>{doctor.qualification}</p>
-      <p className={styles.experience}>Опыт {doctor.experience} лет</p>
-
-      <p className={styles.consult_label}>С чем работает:</p>
-      <p className={styles.consult_areas}>{doctor.consult_areas}</p>
+        <p className={styles.consult_label}>С чем работает:</p>
+        <p className={styles.consult_areas}>{doctor.consult_areas}</p>
+      </div>
     </div>
   );
 

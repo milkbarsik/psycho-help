@@ -4,7 +4,7 @@
 .wrapper {
   width: 100%;
   max-width: 119.9rem; 
-  margin: 6rem auto 24.5rem auto;
+  margin: 60px auto 60px auto;
 }
 
 .container {
@@ -58,7 +58,7 @@
   align-items: center;
   flex-direction: column;
   gap: 0.8rem;
-  padding: 1rem 1.6rem; 
+  padding: clamp(12px, 1vh, 16px) clamp(48px, 4vw, 70px);
   border-radius: 1.2rem;
   background: #f9f9f9;
   color: #333;
