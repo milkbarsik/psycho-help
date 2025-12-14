@@ -22,36 +22,60 @@
             height: 2.4rem;
         }
     }
+    &.color-brand {
+        &.secondary {
+            background-color: var(--color-interactive-brand-secondary);    
+            color: var(--color-label-brand-primary);
 
-    &.secondary {
-        background-color: var(--color-interactive-brand-secondary);    
-        color: var(--color-label-brand-primary);
+            &:hover {
+                background-color: var(--color-interactive-brand-hover-secondary)
+            }
 
-        &:hover {
-            background-color: var(--color-interactive-brand-hover-secondary)
+            &:active {
+                background-color: var(--color-interactive-brand-active-secondary);
+            }
+
+            &:disabled {
+                background-color: var(--color-interactive-neutral-disable);
+                color: var(--color-label-neutral-quaternary);
+            }
         }
 
-        &:active {
-            background-color: var(--color-interactive-brand-active-secondary);
-        }
+    
+        
+        &.primary {
+            background: #486CC0;
 
-        &:disabled {
-            background-color: var(--color-interactive-neutral-disable);
-            color: var(--color-label-neutral-quaternary);
+            &:hover {
+                background: #36508a;
+            }
+
+            &:focus {
+                outline: 2px solid #486CC0;
+                outline-offset: 2px;
+                background: #36508a
+            }
+
         }
     }
 
-    &.primary {
-        background: #486CC0;
+    &.color-neutral {
+        &.primary {
+            background-color: var(--color-interactive-neutral-primary);
+            color: var(--color-label-neutral-inverted-primary);
 
-        &:hover {
-            background: #36508a;
-        }
+            &:hover {
+                background-color: var(--color-interactive-neutral-hover);
+            }
 
-        &:focus {
-            outline: 2px solid #486CC0;
-            outline-offset: 2px;
-            background: #36508a
+            &:active {
+                background-color: var(--color-interactive-neutral-active);
+            }
+
+            &:disabled {
+                background-color: var(--color-interactive-neutral-disable);
+                color: var(--color-label-neutral-quaternary);
+            }
         }
     }
 

@@ -5,7 +5,7 @@ import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const initialTests = testMocks.slice(0, 5);
+const initialTests = testMocks.slice(0, 6);
 
 export const Tests = () => {
   const [tests, setTests] = useState(initialTests);
