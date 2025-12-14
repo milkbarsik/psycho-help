@@ -79,6 +79,7 @@
 }
 
 .greeting__option:active,
+.greeting__selected,
 .greeting__option:active:hover {
     background: none;
     border-color: #1B50F5;

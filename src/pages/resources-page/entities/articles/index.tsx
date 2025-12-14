@@ -6,7 +6,7 @@ import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const initialArticles = articleMocks.slice(0, 5);
+const initialArticles = articleMocks.slice(0, 6);
 
 const MOCK_ARTICLE_ID = 1;
 

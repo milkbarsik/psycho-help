@@ -1,30 +1,40 @@
-import styles from './features-block.module.css';
-// import FeatureDesktop_1 from '@/features/home/ui/3-features-block/img/1/features-desktop.png';
-// import FeatureTablet_1 from '@/features/home/ui/3-features-block/img/1/features-tablet.png';
-// import FeatureMobile_1 from '@/features/home/ui/3-features-block/img/1/features-mobile.png';
+import styles from './features-block.module.scss';
+import FeatureDesktop_1 from '@/features/home/ui/3-features-block/img/1/features-desktop.png';
+import FeatureTablet_1 from '@/features/home/ui/3-features-block/img/1/features-tablet.png';
+import FeatureMobile_1 from '@/features/home/ui/3-features-block/img/1/features-mobile.png';
 
 import FeatureDesktop_2 from '@/features/home/ui/3-features-block/img/2/features-desktop.png';
 import FeatureTablet_2 from '@/features/home/ui/3-features-block/img/2/features-tablet.png';
 import FeatureMobile_2 from '@/features/home/ui/3-features-block/img/2/features-mobile.png';
+import { Button } from '@/shared/ui';
+import { useNavigate } from 'react-router-dom';
 
 const FeaturesBlock = () => {
+  const navigate = useNavigate()
+
+  const handleShowAllTherapists = () => {
+    navigate('/therapists')
+  }
+
   return (
     <div className={styles.features}>
       <div className={styles.features__grid}>
         <div className={styles.features__grid_1}>
+          <picture className={styles.features__1_image_wrapper}>
+            <source media="(max-width: 425px)" srcSet={FeatureMobile_1} />
+            <source media="(max-width: 768px)" srcSet={FeatureTablet_1} />
+            <img src={FeatureDesktop_1} alt="" className={styles.features__1_image} />
+          </picture>
           <div className={styles.features__1_content}>
             <span className={styles.features__1_title}>Компетентые психологи</span>
             <span className={styles.features__1_text}>
               Наши специалисты имеют высшее психологическое образование и практический опыт. Мы
               гарантируем бережную и профессиональную помощь
             </span>
-            {/* <picture className={styles.features__1_image_wrapper}>
-              <source media="(max-width: 425px)" srcSet={FeatureMobile_1} />
-              <source media="(max-width: 768px)" srcSet={FeatureTablet_1} />
-              <img src={FeatureDesktop_1} alt="" className={styles.features__1_image} />
-            </picture> */}
           </div>
-          <button className={styles.features__1_button}>Смотреть всех</button>
+          <Button onClick={handleShowAllTherapists} color='neutral'>
+            Смотреть всех
+          </Button>
         </div>
         <div className={styles.features__grid_2}>
           <span className={styles.features__2_title}>График работы</span>
@@ -49,7 +59,7 @@ const FeaturesBlock = () => {
                 предупреждения не допускается
               </span>
             </div>
-            <picture className={styles.features__1_image_wrapper}>
+            <picture className={styles.features__5_image_wrapper}>
               <source media="(max-width: 425px)" srcSet={FeatureMobile_2} />
               <source media="(max-width: 768px)" srcSet={FeatureTablet_2} />
               <img src={FeatureDesktop_2} alt="" className={styles.features__2_image} />
