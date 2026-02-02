@@ -69,10 +69,10 @@ const Header = () => {
           <li className={styles.header__item}>
             {isAuth ? (
               <Link to="/cabinet" className={styles.header__link}>
-                <Profile />
+                <Profile className={styles.profileIcon} />
               </Link>
             ) : (
-              <ModalWindow />
+              <ModalWindow /> 
             )}
           </li>
         </ul>
