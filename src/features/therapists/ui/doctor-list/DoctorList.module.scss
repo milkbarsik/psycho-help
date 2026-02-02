@@ -1,10 +1,11 @@
 @use '@/shared/scss/abstracts/breakpoints' as *;
+@use '@/shared/scss/base/_typography.scss' as *;
 
 .wrapper {
   margin-block: 4.8rem 9.6rem; 
 
   .title {
-    font: var(--font-h2);
+    @include header(2);
     margin-bottom: 2rem;
     color: var(--color-interactive-neutral-primary);
     text-align: center;
