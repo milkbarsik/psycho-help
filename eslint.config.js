@@ -9,9 +9,6 @@ export default defineConfig([
   globalIgnores(['build']),
   {
     files: ['**/*.{ts,tsx}'],
-    plugins: {
-      'unused-imports': unusedImports,
-    },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
