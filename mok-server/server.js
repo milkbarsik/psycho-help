@@ -52,6 +52,7 @@ if (should_reroute) {
 }
 
 if (!should_reroute) {
+  app.use(express.json());
   let apiPath = (new URL(process.env.VITE_REACT_APP_API_URL)).pathname;
   if (apiPath !== '/' && apiPath.endsWith('/')) {
     apiPath = apiPath.slice(0, -1);
@@ -67,7 +68,7 @@ if (!should_reroute) {
   });
 }
 
-app.use(express.json());
+
 
 app.listen(8000, () => {
   console.log('\x1b[32m%s\x1b[0m', 'Local server succesfully started as http://localhost:8000')
