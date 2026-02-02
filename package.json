@@ -32,7 +32,7 @@
     "format": "prettier --write .",
     "format:staged": "prettier --write $(git diff --cached --name-only | grep -E '\\.(ts|tsx|js|jsx|json|css|scss|md)$')",
     "format:diff": "prettier --write $(git diff --name-only HEAD~1 | grep -E '\\.(ts|tsx|js|jsx|json|css|scss|md)$')",
-    "prepare": "husky install",
+    "prepare": "husky",
     "preview": "vite preview",
     "server": "node mok-server/server.js",
     "test": "vitest"
