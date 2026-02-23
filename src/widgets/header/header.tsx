@@ -3,7 +3,6 @@ import { useAuth } from '@/features/auth/api/useAuth';
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
 import Logo from './Logo.svg?react';
-import Burger from '@/widgets/Burger.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
 
@@ -40,18 +39,27 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.header__nav}>
-        <Link to="/" aria-label="Вернуться на главную страницу">
-          <Logo className={styles.header__logo} />
+        <Link
+          to="/"
+          className={`${styles.header__logo} ${menuOpen ? styles.header__logo_open : ''}`}
+          aria-label="Вернуться на главную страницу"
+        >
+          <Logo />
         </Link>
         <button
-          className={styles.burger}
+          className={`${styles.header__burger} ${menuOpen ? styles.header__burger_open : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Открыть меню"
+          aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
+          // aria-expanded={menuOpen}
+          // aria-controls="main-navigation"
           ref={burgerRef}
         >
-          <Burger />
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
         <ul
+          // id="main-navigation"
           className={`${styles.header__list} ${menuOpen ? styles.header__list_open : ''}`}
           ref={menuRef}
         >
@@ -66,7 +74,7 @@ const Header = () => {
               </Link>
             </li>
           ))}
-          <li className={styles.header__item}>
+          <li className={styles.header__auth}>
             {isAuth ? (
               <Link to="/cabinet" className={styles.header__link}>
                 <Profile />
