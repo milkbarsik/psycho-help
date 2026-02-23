@@ -11,9 +11,11 @@
     align-items: center;
     z-index: 1000;
     font-size: 16px;
+    font: var(--font-text-medium);
 }
 
 .modalContent {
+    box-sizing: border-box;
     background: white;
     border-radius: 12px;
     max-width: 718px;
@@ -23,12 +25,6 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     padding: clamp(16px, 2.5vw, 36px);
 }
-
-/* .modalHeader {
-    display: flex;
-    align-items: center;
-    position: relative;
-} */
 
 .modalHeaderAuth {
     display: flex;
@@ -297,16 +293,15 @@
 }
 
 .button:hover {
-    background-color: #EEF5FF;
-    border: 1px solid #EEF5FF;
-    color: #1B50F5;
+    background-color: var(--color-interactive-brand-secondary);
+    border: 1px solid var(--color-interactive-brand-secondary);
+    color: var(--color-interactive-brand-primary);
 }
 
-.button:active,
-.button:active:hover {
+.button:active {
     background-color: transparent;
-    border-color: #1B50F5;
-    color: #1B50F5;
+    border-color: var(--color-border-brand-strong);
+    color: var(--color-interactive-brand-primary);
 }
 
 .button:focus-visible {
@@ -324,18 +319,18 @@
     .button:hover {
         background-color: var(--color-interactive-brand-secondary);
         border: 1px solid var(--color-interactive-brand-secondary);
-        color: var(--color-label-brand-primary);
+        color: var(--color-interactive-brand-primary);
     }
 
     .button:active {
-        background-color: var(--color-fill-brand-primary);
-        border: 1px solid var(--color-border-brand-strong);
+        background-color: transparent;
+        border: 1px solid var(--color-interactive-brand-secondary);
         color: var(--color-label-neutral-inverted-primary);
     }
 }
+
 @media (max-width: 425px) {
     .button {
-        margin-top: 0.3rem;
-        padding: 1.2rem;
+        padding: 1rem;
     }
 }

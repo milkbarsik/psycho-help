@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
@@ -20,20 +20,18 @@ const Header = () => {
     { link: '/faq/', text: 'FAQ' },
   ];
 
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+  }, []);
+
   useEffect(() => {
-    if (!menuOpen) return;
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        burgerRef.current &&
-        !burgerRef.current.contains(event.target as Node)
-      ) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    if (menuOpen) {
+      const initialOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = initialOverflow;
+      };
+    }
   }, [menuOpen]);
 
   return (
@@ -41,7 +39,7 @@ const Header = () => {
       <nav className={styles.header__nav}>
         <Link
           to="/"
-          className={`${styles.header__logo} ${menuOpen ? styles.header__logo_open : ''}`}
+          className={styles.header__logo}
           aria-label="Вернуться на главную страницу"
         >
           <Logo />
@@ -50,16 +48,13 @@ const Header = () => {
           className={`${styles.header__burger} ${menuOpen ? styles.header__burger_open : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
-          // aria-expanded={menuOpen}
-          // aria-controls="main-navigation"
           ref={burgerRef}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </button>
         <ul
-          // id="main-navigation"
           className={`${styles.header__list} ${menuOpen ? styles.header__list_open : ''}`}
           ref={menuRef}
         >
@@ -74,13 +69,13 @@ const Header = () => {
               </Link>
             </li>
           ))}
-          <li className={styles.header__auth}>
+          <li className={styles.header__item}>
             {isAuth ? (
               <Link to="/cabinet" className={styles.header__link}>
-                <Profile />
+                <Profile className={styles.profileIcon} />
               </Link>
             ) : (
-              <ModalWindow />
+              <ModalWindow onMenuClose={closeMenu} />
             )}
           </li>
         </ul>
