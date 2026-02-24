@@ -1,10 +1,21 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+@use '@/shared/scss/base/_typography.scss' as *;
+
 /*
   Я пофиксил этот файл по возможности своей лени. С остальным пусть разбирается кто-то другой
 */
 .wrapper {
   width: 100%;
   max-width: 119.9rem; 
-  margin: 6rem auto 24.5rem auto;
+  margin: 3.5rem auto 9.6rem;
+  
+  @include past-tablet {
+    margin: 4.5rem auto 4.8rem;
+  }
+  
+  @include past-desktop {
+    margin: 6rem auto 7.4rem auto;
+  }
 }
 
 .container {
@@ -19,7 +30,7 @@
 
 
 .title {
-  font-size: 6rem; 
+  @include header(2);
   color: #19191b;
   margin-bottom: 2rem; 
 }
@@ -126,7 +137,6 @@
 
 @media (max-width: 1150px) {
   .title {
-    font-size: 4rem;
     margin-bottom: 2rem;
   }
 
@@ -205,6 +215,12 @@
 }
 
 @media (max-width: 600px) {
+  .containerTabButton {
+    margin-top: 2.4rem;
+  }
+  .title {
+    margin-bottom: 0.6rem;
+  }
   .container {
     padding-inline: 1rem;
   }

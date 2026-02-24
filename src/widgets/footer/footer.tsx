@@ -1,6 +1,7 @@
 import VkIcon from '@/shared/assets/images/footer/vk.svg';
 import TgIcon from '@/shared/assets/images/footer/tg.svg';
-import styles from './footer.module.css';
+import styles from './footer.module.scss';
+import FooterLogo from '@/shared/assets/images/footer/logo.svg?react'
 
 const Footer = () => {
   const addresses = [
@@ -39,7 +40,7 @@ const Footer = () => {
         {/* Верхняя секция с логотипом, контактами и соцсетями */}
         <div className={styles.topSection}>
           <div className={styles.logoSection}>
-            <h3 className={styles.logo}>московский политех</h3>
+            <div className={styles.logo}><FooterLogo /></div>
           </div>
           
           <div className={styles.contactInfo}>
@@ -67,8 +68,10 @@ const Footer = () => {
           {addresses.map((address, index) => (
             <div key={index} className={styles.addressItem}>
               <div className={styles.addressBackgroundLetters}>{address.letters}</div>
-              <p className={styles.addressStreet}>{address.street}</p>
-              <p className={styles.addressAuditorium}>{address.auditorium}</p>
+              <div className={styles.adressItemContent}>
+                <p className={styles.addressStreet}>{address.street}</p>
+                <p className={styles.addressAuditorium}>{address.auditorium}</p>
+              </div>
             </div>
           ))}
         </div>

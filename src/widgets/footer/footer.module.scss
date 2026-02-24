@@ -1,5 +1,7 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+
 .footer {
-    background-color: #486CC0;
+    background-color: var(--color-background-brand-primary);
     color: #ffffff;
     padding: 60px 0 30px 0;
     position: relative;
@@ -54,15 +56,25 @@
 
 .contactInfo {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
-    flex: 1;
-    margin: 0 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: fit-content;
+    margin: 0 70px 0 auto;
+
+    @include past-tablet {
+        gap: 36px;
+    }
+
+    @include past-desktop {
+        gap: 70px;
+    }
+    
 }
 
 .contactItem {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
 }
 
@@ -118,29 +130,33 @@
 /* Секция с адресами */
 .addressesSection {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 120px;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     margin-bottom: 40px;
 }
 
 .addressItem {
     text-align: left;
     position: relative;
-    padding: 40px 0;
-    min-height: 200px;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
-.addressBackgroundLetters {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 230px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.08);
-    z-index: 1;
-    pointer-events: none;
-    white-space: nowrap;
+    .adressItemContent {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+    }
+
+    .addressBackgroundLetters {
+        font-size: 23rem;
+        font-stretch: condensed;
+        line-height: .9;
+        color: var(--color-label-brand-quaternary);
+        opacity: 0.1;
+        font-weight: 900;
+        pointer-events: none;
+        white-space: nowrap;
+    }
 }
 
 .addressStreet {
@@ -192,7 +208,8 @@
 
     .addressesSection {
         grid-template-columns: repeat(2, 1fr);
-        gap: 100px;
+        column-gap: 1.6rem;
+        row-gap: 1.2rem;
     }
 
     .addressBackgroundLetters {
@@ -210,7 +227,7 @@
     }
 
     .container {
-        padding: 0 16px;
+        padding: 0 1rem;
     }
 
     .topSection {
@@ -254,7 +271,7 @@
 
     .addressesSection {
         grid-template-columns: 1fr;
-        gap: 60px;
+        gap: 1.2rem;
     }
 
     .addressBackgroundLetters {

@@ -265,3 +265,13 @@
         padding: 1rem;
     }
 }
+
+.profileIcon {
+    width: 2.8rem;
+    height: 2.8rem;
+}
+
+.profileIcon > path {
+    stroke-width: 0.2px;
+    fill: #19191B;
+}
