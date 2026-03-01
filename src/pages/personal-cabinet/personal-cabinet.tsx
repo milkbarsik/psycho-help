@@ -61,8 +61,6 @@ const PersonalCabinet: FC = () => {
     (therapistId?: string) => {
       if (!therapistId) return 'Специалист не назначен';
       if (!doctors) return 'Загрузка данных...';
-      console.log('doctors', doctors);
-      console.log('therapistId', therapistId);
       const doctor = doctors.find((d: Therapist) => d.id === therapistId);
 
       if (!doctor) return 'Неизвестный специалист';
