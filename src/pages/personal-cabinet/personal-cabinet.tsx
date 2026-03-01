@@ -16,6 +16,7 @@ import AppointmentForm from '@/features/personal-cabinet/ui/input-block/Appointm
 import Sidebar from '@/features/personal-cabinet/ui/sidebar/Sidebar';
 import GreetingCard from '@/features/personal-cabinet/ui/greeting-card/GreetingCard';
 import AppointmentCard from '@/features/personal-cabinet/ui/appointment-card/AppointmentCard';
+import PersonalData from '@/features/personal-cabinet/ui/personal-data/PersonalData';
 
 import styles from './personal-cabinet.module.scss';
 import { appointmentsConsts } from './constants';
@@ -32,7 +33,7 @@ const PersonalCabinet: FC = () => {
     appointmentQueries.list(),
   );
 
-  const appointmentsData = serverAppointments || appointmentsConsts;
+  const appointmentsData = serverAppointments?.length ? serverAppointments : appointmentsConsts;
 
   const { upcoming, past } = useMemo(() => {
     const now = dayjs();
@@ -159,9 +160,9 @@ const PersonalCabinet: FC = () => {
           </div>
         )}
 
-        {activeTab === 'profile' && (
-          <div>
-            <h1 className={styles.h1}>Профиль</h1>
+        {activeTab === 'profile' && authUser && (
+          <div className={styles.profileTab}>
+            <PersonalData user={authUser} />
           </div>
         )}
       </main>
