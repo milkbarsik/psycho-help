@@ -67,6 +67,7 @@
     font-size: 2rem;
     padding: 16px 64px;
     border-radius: 12px;
+    transition: 0.3s;
 }
 
 .greeting__option_icon {
@@ -99,6 +100,7 @@
     border-radius: 12px;
     font-size: 2rem;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .greeting__submit:hover {

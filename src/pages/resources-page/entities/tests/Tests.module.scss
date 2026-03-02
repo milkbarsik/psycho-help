@@ -11,6 +11,7 @@
     padding-inline: 12.6rem;
     background-color: var(--color-interactive-brand-hover-secondary);
     color: var(--color-label-brand-primary);
+    transition: 0.3s;
     &:hover {
       color: var(--color-interactive-brand-hover-secondary);
     }

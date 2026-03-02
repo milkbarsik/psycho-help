@@ -70,6 +70,7 @@
     border-radius: 12px;
     width: fit-content;
     font-weight: 500;
+    transition: 0.3s;
 }
 
 .features__1_button:hover {

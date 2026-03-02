@@ -19,6 +19,7 @@
     color: #19191B;
     cursor: pointer;
     border: solid transparent;
+    transition: 0.3s;
 }
 
 .header__logo svg {
@@ -50,6 +51,7 @@
     border: 2px solid transparent;
     padding: 6px;
     border-radius: 12px;
+    transition: 0.3s;
 }
 
 .header__link:hover {

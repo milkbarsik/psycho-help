@@ -48,6 +48,10 @@
     transition: 0.2s;
 }
 
+.button {
+    transition: 0.3s;
+}
+
 .button:hover {
     color: red;
 }

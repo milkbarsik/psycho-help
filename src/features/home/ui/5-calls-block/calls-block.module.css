@@ -56,6 +56,7 @@
     padding: 4px;
     width: fit-content;
     border-radius: 12px;
+    transition: 0.3s;
 }
 
 .calls__phone:hover {
