@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import ru_RU from 'antd/locale/ru_RU';
 import { appTheme } from '@/app/theme';
+import { BackToTop } from '@/shared/ui';
 
 dayjs.locale('ru');
 
@@ -31,6 +32,7 @@ function App() {
               <AppRouter />
             </Layout.Content>
             <Footer />
+            <BackToTop />
           </Layout>
         </AppContextProvider>
       </ConfigProvider>
