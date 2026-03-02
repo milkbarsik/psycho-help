@@ -8,6 +8,7 @@ import {
   assignRole,
   createPsychologist,
   deletePsychologist,
+  updateUser,
 } from '../services/user.js';
 import { isAuthenticated } from '../lib/auth.js';
 
@@ -84,15 +85,13 @@ router.patch('/user', isAuthenticated, async (req, res) => {
     delete updates.password;
     delete updates.id;
 
-    const updatedUser = await findUserBy({ id: userId });
+    const updatedUser = await updateUser(userId, updates);
 
     if (!updatedUser) {
       return res.status(404).json({ detail: 'User not found' });
     }
 
-    const updated = { ...updatedUser, ...updates };
-
-    const { password, ...userResponse } = updated;
+    const { password, ...userResponse } = updatedUser;
     res.status(200).json(userResponse);
   } catch (e) {
     res.status(400).json({ detail: e.message });

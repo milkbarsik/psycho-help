@@ -77,7 +77,6 @@ const CustomSelect: FC<{
     [onChange],
   );
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
@@ -124,7 +123,7 @@ const CustomSelect: FC<{
 };
 
 const PersonalData: FC<PersonalDataProps> = ({ user }) => {
-  const { logOut } = useAuth();
+  const { logOut, setUser } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -146,6 +145,12 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
   const [formData, setFormData] = useState<FormData>(originalData);
 
   const [errors, setErrors] = useState<FormErrors>({});
+
+  const [nameErrors, setNameErrors] = useState<{
+    first_name?: string;
+    last_name?: string;
+    middle_name?: string;
+  }>({});
 
   const hasUnsavedChanges = useCallback(() => {
     return JSON.stringify(formData) !== JSON.stringify(originalData) || avatar !== user?.avatar_url;
@@ -192,6 +197,35 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     [formData.status],
   );
 
+  const validateNameField = useCallback(
+    (name: 'first_name' | 'last_name' | 'middle_name', value: string): string | undefined => {
+      switch (name) {
+        case 'first_name':
+        case 'last_name':
+          if (!value.trim()) return 'Обязательное поле';
+          if (value.trim() && value.length < 2) return 'Минимум 2 символа';
+          if (value.trim() && !/^[а-яА-ЯёЁa-zA-Z-]+$/.test(value)) return 'Только буквы и дефис';
+          break;
+        case 'middle_name':
+          if (value.trim() && !/^[а-яА-ЯёЁa-zA-Z-]+$/.test(value)) return 'Только буквы и дефис';
+          break;
+      }
+      return undefined;
+    },
+    [],
+  );
+
+  const handleNameInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+
+      const error = validateNameField(name as 'first_name' | 'last_name' | 'middle_name', value);
+      setNameErrors((prev) => ({ ...prev, [name]: error }));
+    },
+    [validateNameField],
+  );
+
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
@@ -210,6 +244,61 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
   const handleNameEdit = useCallback(() => {
     setIsEditingName(!isEditingName);
   }, [isEditingName]);
+
+  const validateNameFields = useCallback((): boolean => {
+    const newErrors: { first_name?: string; last_name?: string; middle_name?: string } = {};
+    let isValid = true;
+
+    const firstNameError = validateNameField('first_name', formData.first_name);
+    if (firstNameError) {
+      newErrors.first_name = firstNameError;
+      isValid = false;
+    }
+
+    const lastNameError = validateNameField('last_name', formData.last_name);
+    if (lastNameError) {
+      newErrors.last_name = lastNameError;
+      isValid = false;
+    }
+
+    const middleNameError = validateNameField('middle_name', formData.middle_name);
+    if (middleNameError) {
+      newErrors.middle_name = middleNameError;
+      isValid = false;
+    }
+
+    setNameErrors(newErrors);
+    return isValid;
+  }, [formData, validateNameField]);
+
+  const handleSaveName = useCallback(async () => {
+    if (!validateNameFields()) {
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const res = await AuthApi.updateProfile({
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        middle_name: formData.middle_name,
+        phone_number: formData.phone_number,
+        email: formData.email,
+        status: formData.status,
+        study_group: formData.study_group,
+      });
+      setOriginalData(formData);
+      setIsEditingName(false);
+      setNameErrors({});
+      setUser(res.data);
+      messageApi.success('ФИО сохранено');
+    } catch (error) {
+      console.error('Failed to update name:', error);
+      messageApi.error('Не удалось сохранить ФИО');
+    } finally {
+      setIsSaving(false);
+    }
+  }, [formData, validateNameFields, messageApi, setUser]);
 
   const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -250,7 +339,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
 
       setIsSaving(true);
       try {
-        await AuthApi.updateProfile({
+        const res = await AuthApi.updateProfile({
           first_name: formData.first_name,
           last_name: formData.last_name,
           middle_name: formData.middle_name,
@@ -261,6 +350,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
         });
         setOriginalData(formData);
         setIsEditingName(false);
+        setUser(res.data);
         messageApi.success('Изменения сохранены');
       } catch (error) {
         console.error('Failed to update profile:', error);
@@ -269,7 +359,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
         setIsSaving(false);
       }
     },
-    [formData, validateForm, messageApi],
+    [formData, validateForm, messageApi, setUser],
   );
 
   const handleLogout = useCallback(async () => {
@@ -325,45 +415,90 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
         <div className={styles.header}>
           <div className={styles.nameWrapper}>
             {isEditingName ? (
-              <>
-                <input
-                  type="text"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleInputChange}
-                  placeholder="Фамилия"
-                  aria-label="Фамилия"
-                />
-                <input
-                  type="text"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleInputChange}
-                  placeholder="Имя"
-                  aria-label="Имя"
-                />
-                <input
-                  type="text"
-                  name="middle_name"
-                  value={formData.middle_name}
-                  onChange={handleInputChange}
-                  placeholder="Отчество"
-                  aria-label="Отчество"
-                />
-              </>
+              <div className={styles.nameEditContainer}>
+                <div className={styles.nameFieldsRow}>
+                  <div className={styles.nameInputWrapper}>
+                    <input
+                      type="text"
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleNameInputChange}
+                      placeholder="Фамилия"
+                      aria-label="Фамилия"
+                      className={nameErrors.last_name ? styles.inputError : ''}
+                    />
+                    {nameErrors.last_name && (
+                      <span className={styles.nameErrorText}>{nameErrors.last_name}</span>
+                    )}
+                  </div>
+                  <div className={styles.nameInputWrapper}>
+                    <input
+                      type="text"
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleNameInputChange}
+                      placeholder="Имя"
+                      aria-label="Имя"
+                      className={nameErrors.first_name ? styles.inputError : ''}
+                    />
+                    {nameErrors.first_name && (
+                      <span className={styles.nameErrorText}>{nameErrors.first_name}</span>
+                    )}
+                  </div>
+                  <div className={styles.nameInputWrapper}>
+                    <input
+                      type="text"
+                      name="middle_name"
+                      value={formData.middle_name}
+                      onChange={handleNameInputChange}
+                      placeholder="Отчество"
+                      aria-label="Отчество"
+                      className={nameErrors.middle_name ? styles.inputError : ''}
+                    />
+                    {nameErrors.middle_name && (
+                      <span className={styles.nameErrorText}>{nameErrors.middle_name}</span>
+                    )}
+                  </div>
+                </div>
+                <div className={styles.nameActions}>
+                  <button
+                    type="button"
+                    className={styles.saveNameButton}
+                    onClick={handleSaveName}
+                    aria-label="Сохранить имя"
+                    disabled={isSaving}
+                  >
+                    {isSaving ? 'Сохранение...' : 'Сохранить'}
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.cancelNameButton}
+                    onClick={() => {
+                      setIsEditingName(false);
+                      setFormData(originalData);
+                      setNameErrors({});
+                    }}
+                    aria-label="Отмена"
+                  >
+                    Отмена
+                  </button>
+                </div>
+              </div>
             ) : (
               <h2 className={styles.name}>
-                {user?.last_name} {user?.first_name} {user?.middle_name}
+                {formData.last_name} {formData.first_name} {formData.middle_name}
               </h2>
             )}
-            <button
-              type="button"
-              className={styles.editButton}
-              onClick={handleNameEdit}
-              aria-label={isEditingName ? 'Сохранить имя' : 'Редактировать имя'}
-            >
-              <EditIcon />
-            </button>
+            {!isEditingName && (
+              <button
+                type="button"
+                className={styles.editButton}
+                onClick={handleNameEdit}
+                aria-label={isEditingName ? 'Сохранить имя' : 'Редактировать имя'}
+              >
+                <EditIcon />
+              </button>
+            )}
           </div>
         </div>
 
@@ -460,6 +595,9 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
         </div>
 
         <div className={styles.actions}>
+          <button type="submit" className={styles.saveButton} disabled={isSaving}>
+            {isSaving ? 'Сохранение...' : 'Сохранить изменения'}
+          </button>
           <button
             type="button"
             className={styles.logoutButton}

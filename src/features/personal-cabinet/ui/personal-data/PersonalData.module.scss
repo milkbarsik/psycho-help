@@ -1,35 +1,32 @@
-@use '../../../../shared/scss/abstracts/breakpoints' as *;
-@use '../../../../shared/scss/abstracts/colors' as *;
-
 // Миксин для полей ввода
 @mixin input-field {
   width: 100%;
   padding: 1.2rem 1.6rem;
-  border: 1px solid $neutral-200;
+  border: 1px solid var(--color-border-neutral-soft);
   border-radius: 0.8rem;
   font-size: 1.6rem;
-  color: $neutral-900;
-  background-color: $neutral-0;
+  color: var(--color-label-neutral-primary);
+  background-color: var(--color-background-neutral-primary);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
   outline: none;
 
   &:hover {
-    border-color: $neutral-400;
+    border-color: var(--color-fill-neutral-primary);
   }
 
   &:focus {
-    border-color: $accent-brand-500;
-    box-shadow: 0 0 0 3px rgba($accent-brand-500, 0.15);
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
   }
 
   &::placeholder {
-    color: $neutral-400;
+    color: var(--color-label-neutral-quaternary);
   }
 
   &:disabled {
-    background-color: $neutral-50;
+    background-color: var(--color-background-neutral-secondary);
     cursor: not-allowed;
   }
 }
@@ -39,7 +36,7 @@
   display: block;
   margin-bottom: 0.6rem;
   font-weight: 500;
-  color: $neutral-700;
+  color: var(--color-label-neutral-secondary);
 }
 
 // Миксин для редактируемого поля
@@ -48,26 +45,26 @@
   align-items: center;
   gap: 0.8rem;
   padding: 1.2rem;
-  border: 1px solid $neutral-200;
+  border: 1px solid var(--color-border-neutral-soft);
   border-radius: 0.8rem;
-  background-color: $neutral-0;
+  background-color: var(--color-background-neutral-primary);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
   position: relative;
 
   &:hover {
-    border-color: $neutral-400;
+    border-color: var(--color-fill-neutral-primary);
   }
 
   &:focus-within {
-    border-color: $accent-brand-500;
-    box-shadow: 0 0 0 3px rgba($accent-brand-500, 0.15);
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
   }
 
   &.editing {
-    border-color: $accent-brand-500;
-    box-shadow: 0 0 0 3px rgba($accent-brand-500, 0.15);
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
   }
 
   input {
@@ -75,12 +72,12 @@
     border: none;
     outline: none;
     font-size: 1.6rem;
-    color: $neutral-900;
+    color: var(--color-label-neutral-primary);
     background: transparent;
     padding: 0;
 
     &::placeholder {
-      color: $neutral-400;
+      color: var(--color-label-neutral-quaternary);
     }
   }
 }
@@ -91,25 +88,25 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.6rem;
-  border: 1px solid $neutral-200;
+  border: 1px solid var(--color-border-neutral-soft);
   border-radius: 0.8rem;
-  background-color: $neutral-0;
+  background-color: var(--color-background-neutral-primary);
   cursor: pointer;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
   width: 100%;
   font-size: 1.6rem;
-  color: $neutral-900;
+  color: var(--color-label-neutral-primary);
   text-align: left;
 
   &:hover {
-    border-color: $neutral-400;
+    border-color: var(--color-fill-neutral-primary);
   }
 
   &.focused {
-    border-color: $accent-brand-500;
-    box-shadow: 0 0 0 3px rgba($accent-brand-500, 0.15);
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
   }
 
   .selectValue {
@@ -118,7 +115,7 @@
 
   .selectArrow {
     transition: transform 0.2s ease;
-    color: $neutral-500;
+    color: var(--color-label-neutral-tetriary);
 
     &.open {
       transform: rotate(180deg);
@@ -132,7 +129,7 @@
   gap: 2.4rem;
   max-width: 1200px;
 
-  @include past-tablet {
+  @media (min-width: 634px) {
     grid-template-columns: 320px 1fr;
     gap: 3.2rem;
   }
@@ -143,7 +140,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1.6rem;
-  background-color: $neutral-0;
+  background-color: var(--color-background-neutral-primary);
 
   font-family: var(--text-font-family);
 }
@@ -169,21 +166,21 @@
     font-size: 16.4rem;
     color: var(--color-label-neutral-secondary);
 
-    @include tablet-specific {
+    @media (min-width: 634px) and (max-width: 1023px) {
       font-size: 12rem;
     }
 
-    @include mobile-specific {
+    @media (max-width: 633px) {
       font-size: 10rem;
     }
   }
 
-  @include tablet-specific {
+  @media (min-width: 634px) and (max-width: 1023px) {
     width: 20rem;
     height: 20rem;
   }
 
-  @include mobile-specific {
+  @media (max-width: 633px) {
     width: 17rem;
     height: 17rem;
   }
@@ -227,7 +224,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  background-color: $neutral-0;
+  background-color: var(--color-background-neutral-primary);
 
   font-family: var(--text-font-family);
   font: var(--font-text-medium);
@@ -242,20 +239,103 @@
   h2 {
     font-size: 2rem;
     font-weight: 600;
-    color: $neutral-900;
+    color: var(--color-label-neutral-primary);
     margin: 0;
   }
 }
 
 .nameWrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1.2rem;
 
   .name {
     font-size: 2rem;
     font-weight: 600;
-    color: $neutral-900;
+    color: var(--color-label-neutral-primary);
+  }
+}
+
+.nameEditContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.nameFieldsRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+
+  @media (min-width: 634px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.nameInputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  input {
+    @include input-field;
+    height: 4.8rem;
+    padding: 1.2rem 1.6rem;
+
+    &.inputError {
+      border-color: var(--color-label-danger-primary);
+
+      &:focus {
+        border-color: var(--color-label-danger-primary);
+        box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.15);
+      }
+    }
+  }
+}
+
+.nameErrorText {
+  font-size: 1.2rem;
+  color: var(--color-label-danger-primary);
+  padding-left: 0.4rem;
+}
+
+.nameActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.saveNameButton {
+  padding: 0.8rem 1.6rem;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-background-neutral-primary);
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-interactive-brand-hover);
+  }
+}
+
+.cancelNameButton {
+  padding: 0.8rem 1.6rem;
+  background-color: transparent;
+  color: var(--color-label-neutral-secondary);
+  border: 1px solid var(--color-border-neutral-soft);
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-background-neutral-secondary);
+    border-color: var(--color-fill-neutral-primary);
   }
 }
 
@@ -267,13 +347,13 @@
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: $neutral-100;
+    background-color: var(--color-interactive-brand-disable);
   }
 
   svg {
     width: 2.4rem;
     height: 2.4rem;
-    color: $neutral-600;
+    color: var(--color-interactive-neutral-hover);
   }
 }
 
@@ -293,7 +373,7 @@
 
   &:focus-within {
     label {
-      color: $accent-brand-500;
+      color: var(--color-label-brand-secondary);
     }
   }
 
@@ -308,7 +388,7 @@
 
   .errorText {
     font-size: 1.2rem;
-    color: $accent-status-red;
+    color: var(--color-label-danger-primary);
     margin-top: 0.4rem;
   }
 }
@@ -329,8 +409,8 @@
   top: calc(100% + 0.4rem);
   left: 0;
   right: 0;
-  background-color: $neutral-0;
-  border: 1px solid $neutral-200;
+  background-color: var(--color-background-neutral-primary);
+  border: 1px solid var(--color-border-neutral-soft);
   border-radius: 0.8rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 100;
@@ -340,17 +420,17 @@
 .selectOption {
   padding: 1.2rem 1.6rem;
   font-size: 1.6rem;
-  color: $neutral-900;
+  color: var(--color-label-neutral-primary);
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: $neutral-100;
+    background-color: var(--color-interactive-brand-disable);
   }
 
   &.selected {
-    background-color: rgba($accent-brand-500, 0.1);
-    color: $accent-brand-500;
+    background-color: rgba(64, 123, 254, 0.1);
+    color: var(--color-label-brand-secondary);
   }
 }
 
@@ -359,7 +439,7 @@
   grid-template-columns: 1fr;
   gap: 1.6rem;
 
-  @include past-tablet {
+  @media (min-width: 634px) {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -369,9 +449,9 @@
   align-items: center;
   gap: 0.8rem;
   padding: 1.2rem;
-  border: 1px solid $neutral-200;
+  border: 1px solid var(--color-border-neutral-soft);
   border-radius: 0.8rem;
-  background-color: $neutral-0;
+  background-color: var(--color-background-neutral-primary);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -379,12 +459,12 @@
   box-sizing: border-box;
 
   &:hover {
-    border-color: $neutral-400;
+    border-color: var(--color-fill-neutral-primary);
   }
 
   &:focus-within {
-    border-color: $accent-brand-500;
-    box-shadow: 0 0 0 3px rgba($accent-brand-500, 0.15);
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
   }
 
   input {
@@ -392,13 +472,13 @@
     border: none;
     outline: none;
     font-size: 1.6rem;
-    color: $neutral-900;
+    color: var(--color-label-neutral-primary);
     background: transparent;
     padding: 0;
     height: 100%;
 
     &::placeholder {
-      color: $neutral-400;
+      color: var(--color-label-neutral-quaternary);
     }
 
     &:focus {
@@ -419,18 +499,18 @@
     svg {
       width: 2rem;
       height: 2rem;
-      color: $neutral-500;
+      color: var(--color-label-neutral-tetriary);
     }
 
     &:hover svg {
-      color: $neutral-700;
+      color: var(--color-interactive-neutral-hover);
     }
   }
 }
 
 .changePasswordLink {
   font: var(--font-text-medium);
-  color: $accent-brand-600;
+  color: var(--color-interactive-brand-primary);
   background: none;
   border: none;
   cursor: pointer;
@@ -438,7 +518,7 @@
   margin-left: auto;
 
   &:hover {
-    color: $accent-brand-700;
+    color: var(--color-interactive-brand-hover);
   }
 }
 
@@ -471,7 +551,7 @@
   }
 
   &:disabled {
-    background-color: $neutral-300;
+    background-color: var(--color-interactive-neutral-disable);
     cursor: not-allowed;
   }
 
@@ -486,21 +566,20 @@
   align-items: center;
   gap: 0.8rem;
   padding: 1.2rem 2rem;
-  background-color: $accent-brand-600;
-  color: $neutral-0;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-background-neutral-primary);
   border: none;
   border-radius: 0.8rem;
-  font-size: 1.4rem;
-  font-weight: 600;
+  font: var(--font-text-medium);
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: $accent-brand-700;
+    background-color: var(--color-interactive-brand-hover);
   }
 
   &:disabled {
-    background-color: $neutral-300;
+    background-color: var(--color-interactive-neutral-disable);
     cursor: not-allowed;
   }
 }

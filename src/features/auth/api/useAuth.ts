@@ -14,7 +14,7 @@ type Tauth = {
   logOut: () => Promise<AxiosResponse>;
 };
 
-export const useAuth = create<Tauth>((set, get) => ({
+export const useAuth = create<Tauth>((set, _get) => ({
   isAuth: false,
   user: null,
   remember_me: false,
@@ -25,7 +25,8 @@ export const useAuth = create<Tauth>((set, get) => ({
 
   async login(email: string, password: string): Promise<AxiosResponse<User>> {
     const res = await AuthApi.login(email, password);
-    set((state) => ({ ...state, isAuth: true, user: { ...res.data } }));
+    const userRes = await AuthApi.getUser();
+    set((state) => ({ ...state, isAuth: true, user: { ...userRes.data } }));
     return res;
   },
 
