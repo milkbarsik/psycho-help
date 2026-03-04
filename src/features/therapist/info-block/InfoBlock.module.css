@@ -79,7 +79,7 @@
 
 .btns {
     width: 100%;
-    max-width: 438px;
+    max-width: 500px;
     display: flex;
     justify-content: space-between;
     margin-top: 24px;
@@ -88,13 +88,16 @@
 .infoBtn {
     color: var(--color-label-neutral-primary);
     font-size: 2rem;
+    border-radius: 16px;
+    padding: 4px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
 .infoBtnActive {
     color: var(--color-label-neutral-inverted-primary);
     background-color: var(--color-interactive-neutral-hover);
-    padding: 4px 16px;
-    border-radius: 16px;
 }
 
 .supInfo {

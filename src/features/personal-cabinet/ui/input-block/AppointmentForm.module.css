@@ -2,39 +2,25 @@
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px;
-}
-
-.field {
-  margin-bottom: 20px;
-}
-
-.date {
-  font-size: 4rem;
-  margin-bottom: 15px;
+  padding: 0 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
 }
 
 .label {
   display: block;
-  font-size: 14px;
-  color: #7b7b7b;
-  margin-bottom: 6px;
+  font-size: 2.4rem;
+  color: var(--color-label-neutral-primary);
+  font-weight: 500;
 }
 
-.select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  background: #fff;
-}
-
-.format {
+.format__btns {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  gap: 16px;
   width: 40%;
+  margin-top: 24px;
 }
 
 .formatButton {
@@ -48,30 +34,8 @@
 }
 
 .active {
-  background-color: #E1E1E1;
-  border: 1px #989898 solid;
-}
-
-.row {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.column {
-  flex: 1;
-}
-
-.columnSmall {
-  width: 100px;
-}
-
-.location {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 16px;
+  background-color: var(--color-interactive-neutral-primary);
+  color: var(--color-label-neutral-inverted-primary);
 }
 
 .textarea {
@@ -83,21 +47,105 @@
   font-size: 16px;
   resize: none;
   background: #fff;
+  margin-top: 24px
 }
 
-.submitButton {
+
+.location__btns {
+  margin-top: 24px;
+}
+
+.location__element {
+  display: flex;
+  gap: 8px;
+}
+
+.mainInfo {
+  display: flex;
+  color: var(--color-label-neutral-primary);
+  gap: 36px;
+  margin-top: 24px;
+}
+
+.imgWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.photo{
+  width: 244px;
+  height: 267px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.name {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.line {
   width: 100%;
-  padding: 14px;
-  background-color: #4285f4;
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
+  height: 1px;
+  background-color: var(--color-border-neutral-base);
+  margin: 24px 0;
 }
 
-.submitButton:hover {
-  background-color: #357ae8;
+.qual {
+  font-size: 2rem
+}
+
+.exp {
+  font-size: 2rem;
+  color: var(--color-label-neutral-secondary);
+}
+
+.office {
+  font-size: 1.6rem;
+  color: var(--color-label-neutral-secondary);
+}
+
+.consultAreas {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+  max-width: 467px;
+  flex-wrap: wrap;
+}
+
+.consultArea {
+  color: var(--color-label-neutral-secondary);
+  border: var(--color-border-neutral-base) 1px solid;
+  padding: 4px 16px;
+  border-radius: 16px;
+}
+
+.subButton {
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-label-neutral-inverted-primary);
+  border: none;
+  width: 289px;
+  font-size: 2rem;
+  padding: 16px 0;
+  border-radius: 16px;
+  align-self: self-end;
+  cursor: pointer;
 }

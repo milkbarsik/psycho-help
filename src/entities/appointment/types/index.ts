@@ -5,7 +5,7 @@ export type Appointment = {
   type?: AppointmentType;
   reason?: string;
   status?: AppointmentStatusType;
-  remind_time: string;
+  remind_time?: string;
   last_change_time?: string;
   venue?: string;
   date?: string;

@@ -11,7 +11,7 @@ import AppointmentDto from '@/entities/appointment/AppointmentDto';
 import type { Appointment } from '@/entities/appointment/types';
 
 import Loader from '@/shared/ui/loader/loader';
-import ACalendar from '@/features/personal-cabinet/ui/calendar/calendar';
+// import ACalendar from '@/features/personal-cabinet/ui/calendar/calendar';
 import AppointmentForm from '@/features/personal-cabinet/ui/input-block/AppointmentForm';
 import Sidebar from '@/features/personal-cabinet/ui/sidebar/Sidebar';
 import GreetingCard from '@/features/personal-cabinet/ui/greeting-card/GreetingCard';
@@ -147,13 +147,9 @@ const PersonalCabinet: FC = () => {
 
         {activeTab === 'book' && (
           <div className={styles.bookTab}>
-            <h1 className={styles.h1}>Запись на прием</h1>
             <div className={styles.dateInput}>
-              <ACalendar appointments={appointmentsData} />
+              {/* <ACalendar appointments={appointmentsData} /> */}
               <AppointmentForm doctors={doctors || []} />
-              <button className={styles.subButton} type="button" onClick={handleSendData}>
-                Записаться
-              </button>
             </div>
           </div>
         )}
