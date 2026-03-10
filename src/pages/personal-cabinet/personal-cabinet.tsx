@@ -4,10 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import dayjs from 'dayjs';
 import { useAuth } from '@/features/auth/api/useAuth';
-import { useAppointment } from '@/features/personal-cabinet/model/appointment';
 import { therapistQueries } from '@/entities/therapist/api';
 import { appointmentQueries } from '@/entities/appointment/api';
-import AppointmentDto from '@/entities/appointment/AppointmentDto';
 import type { Appointment } from '@/entities/appointment/types';
 
 import Loader from '@/shared/ui/loader/loader';
@@ -24,7 +22,6 @@ import type { Therapist } from '@/entities/therapist/types';
 
 const PersonalCabinet: FC = () => {
   const authUser = useAuth((state) => state.user);
-  const appointment = useAppointment((state) => state.appointment);
 
   const [activeTab, setActiveTab] = useState<'main' | 'book' | 'profile'>('main');
 
@@ -69,12 +66,6 @@ const PersonalCabinet: FC = () => {
     },
     [doctors],
   );
-
-  const handleSendData = () => {
-    const appointmentDto = new AppointmentDto(appointment, authUser?.id);
-    console.log('Appointment отправляется: ', appointmentDto);
-    // TODO Отправка
-  };
 
   const isLoading = isLoadingDoctors || isLoadingAppointments;
 

@@ -1,18 +1,15 @@
 @use '@/shared/scss/abstracts/breakpoints' as *;
 @use '@/shared/scss/base/_typography.scss' as *;
 
-/*
-  Я пофиксил этот файл по возможности своей лени. С остальным пусть разбирается кто-то другой
-*/
 .wrapper {
   width: 100%;
-  max-width: 119.9rem; 
+  max-width: 119.9rem;
   margin: 3.5rem auto 9.6rem;
-  
+
   @include past-tablet {
     margin: 4.5rem auto 4.8rem;
   }
-  
+
   @include past-desktop {
     margin: 6rem auto 7.4rem auto;
   }
@@ -28,16 +25,15 @@
   border-bottom-right-radius: 2rem;
 }
 
-
 .title {
   @include header(2);
   color: #19191b;
-  margin-bottom: 2rem; 
+  margin-bottom: 2rem;
 }
 
 .text {
   color: #393939;
-  font-size: 2rem; 
+  font-size: 2rem;
 }
 .content {
   display: flex;
@@ -50,7 +46,7 @@
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  padding-bottom: 5rem; 
+  padding-bottom: 5rem;
 }
 
 .titleImg {
@@ -69,13 +65,14 @@
   align-items: center;
   flex-direction: column;
   gap: 0.8rem;
-  padding: 1rem 1.6rem; 
+  padding: 1rem 1.6rem;
   border-radius: 1.2rem;
   background: #f9f9f9;
   color: #333;
   font-size: 1.6rem;
   transition: background-color 0.3s ease;
   flex: 1;
+  border-width: 0;
 }
 
 .tab:hover {
@@ -100,9 +97,8 @@
   width: 100%;
 }
 
-
 .icon {
-  width: 2.4rem; 
+  width: 2.4rem;
   height: 2.4rem;
   stroke: currentColor;
   fill: none;
@@ -146,9 +142,9 @@
   }
 }
 
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
   .titleImg {
-    max-width: 49.7rem; 
+    max-width: 49.7rem;
     height: auto;
   }
 }
@@ -161,7 +157,7 @@
     justify-content: center;
     margin: 0 auto;
     background-color: inherit;
-    padding: 0 5.7rem; 
+    padding: 0 5.7rem;
   }
 
   .titleImg {
