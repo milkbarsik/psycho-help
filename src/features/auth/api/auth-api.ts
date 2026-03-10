@@ -1,6 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import { $serviceClient } from '@/shared/api/http';
 import type { User, UserProfileUpdate, regData } from '@/shared/api/types';
+import type { UserPasswordUpdate } from '@/entities/auth/types';
 
 export default class AuthApi {
   static async login(email: string, password: string): Promise<AxiosResponse<User>> {
@@ -24,7 +25,11 @@ export default class AuthApi {
   }
 
   static async updateProfile(data: UserProfileUpdate): Promise<AxiosResponse<User>> {
-    const res = await $serviceClient.patch<User>('/users/user', data);
+    const res = await $serviceClient.put<User>('/users/me', data);
+    return res;
+  }
+  static async updatePassword(data: UserPasswordUpdate): Promise<AxiosResponse<User>> {
+    const res = await $serviceClient.post<User>('/users/me/password', data);
     return res;
   }
 }

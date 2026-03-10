@@ -77,13 +77,11 @@ router.get('/user/:id', async (req, res) => {
   res.status(200).json(userResponse);
 });
 
-router.patch('/user', isAuthenticated, async (req, res) => {
+router.put('/me', isAuthenticated, async (req, res) => {
   try {
     const userId = req.user.id;
-    const updates = req.body;
 
-    delete updates.password;
-    delete updates.id;
+    const updates = req.body;
 
     const updatedUser = await updateUser(userId, updates);
 
@@ -93,6 +91,16 @@ router.patch('/user', isAuthenticated, async (req, res) => {
 
     const { password, ...userResponse } = updatedUser;
     res.status(200).json(userResponse);
+  } catch (e) {
+    res.status(400).json({ detail: e.message });
+  }
+});
+router.post('/me/password', isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { new_password } = req.body;
+    await updateUser(userId, { password: new_password });
+    res.status(200).json({});
   } catch (e) {
     res.status(400).json({ detail: e.message });
   }

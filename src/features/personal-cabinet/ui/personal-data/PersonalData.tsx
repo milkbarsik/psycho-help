@@ -8,8 +8,8 @@ import {
   type MouseEvent,
 } from 'react';
 import type { FC } from 'react';
-import { UserOutlined, EyeOutlined, EyeInvisibleOutlined, DownOutlined } from '@ant-design/icons';
-import { Modal, message } from 'antd';
+import { UserOutlined, DownOutlined } from '@ant-design/icons';
+import { Modal, message, Input } from 'antd';
 import { useAuth } from '@/features/auth/api/useAuth';
 import AuthApi from '@/features/auth/api/auth-api';
 import EditIcon from '@/shared/assets/images/cabinet/edit.svg?react';
@@ -51,7 +51,6 @@ const statusOptions: SelectOption[] = [
   { value: 'admin', label: 'Администратор' },
 ];
 
-// Кастомный селект компонент
 const CustomSelect: FC<{
   value: 'student' | 'teacher' | 'admin';
   onChange: (value: 'student' | 'teacher' | 'admin') => void;
@@ -128,9 +127,16 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [isEditingName, setIsEditingName] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [avatar, setAvatar] = useState<string | null>(user?.avatar_url || null);
+
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [isSavingPassword, setIsSavingPassword] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    old_password: '',
+    new_password: '',
+    confirm_password: '',
+  });
 
   const [originalData, setOriginalData] = useState<FormData>({
     first_name: user?.first_name || '',
@@ -143,18 +149,46 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
   });
 
   const [formData, setFormData] = useState<FormData>(originalData);
-
   const [errors, setErrors] = useState<FormErrors>({});
-
   const [nameErrors, setNameErrors] = useState<{
     first_name?: string;
     last_name?: string;
     middle_name?: string;
   }>({});
 
-  const hasUnsavedChanges = useCallback(() => {
-    return JSON.stringify(formData) !== JSON.stringify(originalData) || avatar !== user?.avatar_url;
-  }, [formData, originalData, avatar, user]);
+  // TODO: solve unsaved changes tab discarding
+
+  //   const hasUnsavedChanges = useCallback(() => {
+  //  return JSON.stringify(formData) !== JSON.stringify(originalData) || avatar !== user?.avatar_url;
+  // }, [formData, originalData, avatar, user]);
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  //     if (hasUnsavedChanges()) {
+  //       e.preventDefault();
+  //     }
+  //   };
+
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+  //   return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  // }, [hasUnsavedChanges]);
+
+  // const blocker = useBlocker(
+  //   ({ currentLocation, nextLocation }) =>
+  //     hasUnsavedChanges() && currentLocation.pathname !== nextLocation.pathname,
+  // );
+
+  // useEffect(() => {
+  //   if (blocker.state === 'blocked') {
+  //     Modal.confirm({
+  //       title: 'У вас есть несохранённые изменения',
+  //       content: 'Хотите покинуть страницу? Внесенные изменения не будут сохранены.',
+  //       okText: 'Покинуть',
+  //       cancelText: 'Остаться',
+  //       onOk: () => blocker.proceed?.(),
+  //       onCancel: () => blocker.reset?.(),
+  //     });
+  //   }
+  // }, [blocker]);
 
   useEffect(() => {
     const newOriginalData: FormData = {
@@ -272,9 +306,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
   }, [formData, validateNameField]);
 
   const handleSaveName = useCallback(async () => {
-    if (!validateNameFields()) {
-      return;
-    }
+    if (!validateNameFields()) return;
 
     setIsSaving(true);
     try {
@@ -331,10 +363,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
 
   const handleSubmit = useCallback(
     async (e?: FormEvent) => {
-      if (e) {
-        e.preventDefault();
-      }
-
+      if (e) e.preventDefault();
       if (!validateForm()) return;
 
       setIsSaving(true);
@@ -351,7 +380,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
         setOriginalData(formData);
         setIsEditingName(false);
         setUser(res.data);
-        messageApi.success('Изменения сохранены');
+        messageApi.success('Изменения профиля сохранены');
       } catch (error) {
         console.error('Failed to update profile:', error);
         messageApi.error('Не удалось сохранить изменения');
@@ -362,254 +391,327 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     [formData, validateForm, messageApi, setUser],
   );
 
-  const handleLogout = useCallback(async () => {
-    if (hasUnsavedChanges()) {
-      Modal.confirm({
-        title: 'У вас есть несохранённые изменения',
-        content: 'Хотите сохранить изменения перед выходом?',
-        okText: 'Сохранить и выйти',
-        cancelText: 'Выйти без сохранения',
-        onOk: async () => {
-          await handleSubmit();
-          await logOut();
-        },
-        onCancel: async () => {
-          await logOut();
-        },
-      });
-    } else {
-      try {
-        await logOut();
-      } catch (error) {
-        console.error('Logout failed:', error);
-      }
+  const handlePasswordSubmit = useCallback(async () => {
+    if (!passwordData.new_password || !passwordData.old_password) {
+      messageApi.error('Заполните все поля');
+      return;
     }
-  }, [logOut, handleSubmit, hasUnsavedChanges]);
+    if (passwordData.new_password !== passwordData.confirm_password) {
+      messageApi.error('Новые пароли не совпадают');
+      return;
+    }
+
+    setIsSavingPassword(true);
+    try {
+      await AuthApi.updatePassword({
+        new_password: passwordData.new_password,
+        old_password: passwordData.old_password,
+      });
+      messageApi.success('Пароль успешно изменён');
+      setIsPasswordModalOpen(false);
+      setPasswordData({ old_password: '', new_password: '', confirm_password: '' });
+    } catch (error: unknown) {
+      console.error('Failed to update password:', error);
+      messageApi.error('Ошибка при смене пароля');
+    } finally {
+      setIsSavingPassword(false);
+    }
+  }, [passwordData, messageApi]);
+
+  const handleLogout = useCallback(() => {
+    Modal.confirm({
+      title: 'Подтверждение выхода',
+      content: 'Вы уверены, что хотите выйти из аккаунта?',
+      okText: 'Выйти',
+      cancelText: 'Отмена',
+      onOk: async () => {
+        try {
+          await logOut();
+        } catch (error) {
+          console.error('Logout failed:', error);
+        }
+      },
+    });
+  }, [logOut]);
 
   return (
-    <form className={styles.container} onSubmit={handleSubmit}>
-      {contextHolder}
-      <div className={styles.avatarSection}>
-        <div className={styles.avatar}>
-          {avatar ? (
-            <img src={avatar} alt="Аватар пользователя" />
-          ) : (
-            <UserOutlined className={styles.avatarIcon} />
-          )}
-        </div>
-        <div className={styles.avatarUpload}>
-          <EditIcon />
-          <label htmlFor="avatar-upload">Изменить фотографию</label>
-        </div>
-        <input
-          ref={fileInputRef}
-          type="file"
-          id="avatar-upload"
-          accept="image/*"
-          className={styles.hiddenInput}
-          onChange={handleFileChange}
-        />
-      </div>
-
-      <div className={styles.profileSection}>
-        <div className={styles.header}>
-          <div className={styles.nameWrapper}>
-            {isEditingName ? (
-              <div className={styles.nameEditContainer}>
-                <div className={styles.nameFieldsRow}>
-                  <div className={styles.nameInputWrapper}>
-                    <input
-                      type="text"
-                      name="last_name"
-                      value={formData.last_name}
-                      onChange={handleNameInputChange}
-                      placeholder="Фамилия"
-                      aria-label="Фамилия"
-                      className={nameErrors.last_name ? styles.inputError : ''}
-                    />
-                    {nameErrors.last_name && (
-                      <span className={styles.nameErrorText}>{nameErrors.last_name}</span>
-                    )}
-                  </div>
-                  <div className={styles.nameInputWrapper}>
-                    <input
-                      type="text"
-                      name="first_name"
-                      value={formData.first_name}
-                      onChange={handleNameInputChange}
-                      placeholder="Имя"
-                      aria-label="Имя"
-                      className={nameErrors.first_name ? styles.inputError : ''}
-                    />
-                    {nameErrors.first_name && (
-                      <span className={styles.nameErrorText}>{nameErrors.first_name}</span>
-                    )}
-                  </div>
-                  <div className={styles.nameInputWrapper}>
-                    <input
-                      type="text"
-                      name="middle_name"
-                      value={formData.middle_name}
-                      onChange={handleNameInputChange}
-                      placeholder="Отчество"
-                      aria-label="Отчество"
-                      className={nameErrors.middle_name ? styles.inputError : ''}
-                    />
-                    {nameErrors.middle_name && (
-                      <span className={styles.nameErrorText}>{nameErrors.middle_name}</span>
-                    )}
-                  </div>
-                </div>
-                <div className={styles.nameActions}>
-                  <button
-                    type="button"
-                    className={styles.saveNameButton}
-                    onClick={handleSaveName}
-                    aria-label="Сохранить имя"
-                    disabled={isSaving}
-                  >
-                    {isSaving ? 'Сохранение...' : 'Сохранить'}
-                  </button>
-                  <button
-                    type="button"
-                    className={styles.cancelNameButton}
-                    onClick={() => {
-                      setIsEditingName(false);
-                      setFormData(originalData);
-                      setNameErrors({});
-                    }}
-                    aria-label="Отмена"
-                  >
-                    Отмена
-                  </button>
-                </div>
-              </div>
+    <>
+      <form className={styles.container} onSubmit={handleSubmit}>
+        {contextHolder}
+        <div className={styles.avatarSection}>
+          <div className={styles.avatar}>
+            {avatar ? (
+              <img src={avatar} alt="Аватар пользователя" />
             ) : (
-              <h2 className={styles.name}>
-                {formData.last_name} {formData.first_name} {formData.middle_name}
-              </h2>
-            )}
-            {!isEditingName && (
-              <button
-                type="button"
-                className={styles.editButton}
-                onClick={handleNameEdit}
-                aria-label={isEditingName ? 'Сохранить имя' : 'Редактировать имя'}
-              >
-                <EditIcon />
-              </button>
+              <UserOutlined className={styles.avatarIcon} />
             )}
           </div>
+          <div className={styles.avatarUpload}>
+            <EditIcon />
+            <label htmlFor="avatar-upload">Изменить фотографию</label>
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            id="avatar-upload"
+            accept="image/*"
+            className={styles.hiddenInput}
+            onChange={handleFileChange}
+          />
         </div>
 
-        <div className={styles.fieldsGrid}>
-          <div className={styles.field}>
-            <label>Ваш статус</label>
-            <CustomSelect
-              value={formData.status}
-              onChange={handleStatusChange}
-              label="Ваш статус"
-            />
+        <div className={styles.profileSection}>
+          <div className={styles.header}>
+            <div className={styles.nameWrapper}>
+              {isEditingName ? (
+                <div className={styles.nameEditContainer}>
+                  <div className={styles.nameFieldsRow}>
+                    <div className={styles.nameInputWrapper}>
+                      <input
+                        type="text"
+                        name="last_name"
+                        value={formData.last_name}
+                        onChange={handleNameInputChange}
+                        placeholder="Фамилия"
+                        className={nameErrors.last_name ? styles.inputError : ''}
+                      />
+                      {nameErrors.last_name && (
+                        <span className={styles.nameErrorText}>{nameErrors.last_name}</span>
+                      )}
+                    </div>
+                    <div className={styles.nameInputWrapper}>
+                      <input
+                        type="text"
+                        name="first_name"
+                        value={formData.first_name}
+                        onChange={handleNameInputChange}
+                        placeholder="Имя"
+                        className={nameErrors.first_name ? styles.inputError : ''}
+                      />
+                      {nameErrors.first_name && (
+                        <span className={styles.nameErrorText}>{nameErrors.first_name}</span>
+                      )}
+                    </div>
+                    <div className={styles.nameInputWrapper}>
+                      <input
+                        type="text"
+                        name="middle_name"
+                        value={formData.middle_name}
+                        onChange={handleNameInputChange}
+                        placeholder="Отчество"
+                        className={nameErrors.middle_name ? styles.inputError : ''}
+                      />
+                      {nameErrors.middle_name && (
+                        <span className={styles.nameErrorText}>{nameErrors.middle_name}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className={styles.nameActions}>
+                    <button
+                      type="button"
+                      className={styles.saveNameButton}
+                      onClick={handleSaveName}
+                      disabled={isSaving}
+                    >
+                      {isSaving ? 'Сохранение...' : 'Сохранить'}
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.cancelNameButton}
+                      onClick={() => {
+                        setIsEditingName(false);
+                        setFormData(originalData);
+                        setNameErrors({});
+                      }}
+                    >
+                      Отмена
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <h2 className={styles.name}>
+                  {formData.last_name} {formData.first_name} {formData.middle_name}
+                </h2>
+              )}
+              {!isEditingName && (
+                <button
+                  type="button"
+                  className={styles.editButton}
+                  onClick={handleNameEdit}
+                  aria-label="Редактировать имя"
+                >
+                  <EditIcon />
+                </button>
+              )}
+            </div>
           </div>
 
-          {formData.status === 'student' && (
+          <div className={styles.fieldsGrid}>
             <div className={styles.field}>
-              <label htmlFor="study_group">Учебная группа</label>
+              <label>Ваш статус</label>
+              <CustomSelect
+                value={formData.status}
+                onChange={handleStatusChange}
+                label="Ваш статус"
+              />
+            </div>
+
+            {formData.status === 'student' && (
+              <div className={styles.field}>
+                <label htmlFor="study_group">Учебная группа</label>
+                <div className={styles.editableField}>
+                  <input
+                    type="text"
+                    id="study_group"
+                    name="study_group"
+                    value={formData.study_group}
+                    onChange={handleInputChange}
+                    placeholder="Введите номер группы"
+                    aria-invalid={!!errors.study_group}
+                  />
+                  <button type="button" className={styles.editButton}>
+                    <EditIcon />
+                  </button>
+                </div>
+                {errors.study_group && (
+                  <span className={styles.errorText}>{errors.study_group}</span>
+                )}
+              </div>
+            )}
+
+            <div className={styles.field}>
+              <label htmlFor="phone_number">Номер телефона</label>
               <div className={styles.editableField}>
                 <input
-                  type="text"
-                  id="study_group"
-                  name="study_group"
-                  value={formData.study_group}
+                  type="tel"
+                  id="phone_number"
+                  name="phone_number"
+                  value={formData.phone_number}
                   onChange={handleInputChange}
-                  placeholder="Введите номер группы"
-                  aria-invalid={!!errors.study_group}
+                  placeholder="+7 (999) 123-45-67"
+                  aria-invalid={!!errors.phone_number}
                 />
-                <button type="button" className={styles.editButton} aria-label="Редактировать">
+                <button type="button" className={styles.editButton}>
                   <EditIcon />
                 </button>
               </div>
-              {errors.study_group && <span className={styles.errorText}>{errors.study_group}</span>}
+              {errors.phone_number && (
+                <span className={styles.errorText}>{errors.phone_number}</span>
+              )}
             </div>
-          )}
 
-          <div className={styles.field}>
-            <label htmlFor="phone_number">Номер телефона</label>
-            <div className={styles.editableField}>
-              <input
-                type="tel"
-                id="phone_number"
-                name="phone_number"
-                value={formData.phone_number}
-                onChange={handleInputChange}
-                placeholder="+7 (999) 123-45-67"
-                aria-invalid={!!errors.phone_number}
-              />
-              <button type="button" className={styles.editButton} aria-label="Редактировать">
-                <EditIcon />
-              </button>
+            <div className={styles.field}>
+              <label htmlFor="email">Электронная почта</label>
+              <div className={styles.editableField}>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="example@mail.ru"
+                  aria-invalid={!!errors.email}
+                />
+                <button type="button" className={styles.editButton}>
+                  <EditIcon />
+                </button>
+              </div>
+              {errors.email && <span className={styles.errorText}>{errors.email}</span>}
             </div>
-            {errors.phone_number && <span className={styles.errorText}>{errors.phone_number}</span>}
-          </div>
 
-          <div className={styles.field}>
-            <label htmlFor="email">Электронная почта</label>
-            <div className={styles.editableField}>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="example@mail.ru"
-                aria-invalid={!!errors.email}
-              />
-              <button type="button" className={styles.editButton} aria-label="Редактировать">
-                <EditIcon />
-              </button>
-            </div>
-            {errors.email && <span className={styles.errorText}>{errors.email}</span>}
-          </div>
-
-          <div className={styles.field}>
-            <label htmlFor="password">Пароль</label>
-            <div className={styles.passwordField}>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                placeholder="Введите новый пароль"
-              />
+            <div className={styles.field}>
+              <label>Пароль</label>
+              <div className={styles.passwordField}>
+                <input
+                  type="password"
+                  placeholder="*********"
+                  disabled
+                  style={{ backgroundColor: 'transparent' }}
+                />
+              </div>
               <button
                 type="button"
-                className={styles.togglePassword}
-                onClick={() => setShowPassword(!showPassword)}
-                aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                className={styles.changePasswordLink}
+                onClick={() => setIsPasswordModalOpen(true)}
               >
-                {!showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                Сменить пароль?
               </button>
             </div>
-            <button type="button" className={styles.changePasswordLink}>
-              Сменить пароль?
+          </div>
+
+          <div className={styles.actions}>
+            <button type="submit" className={styles.saveButton} disabled={isSaving}>
+              {isSaving ? 'Сохранение...' : 'Сохранить изменения'}
+            </button>
+            <button
+              type="button"
+              className={styles.logoutButton}
+              onClick={handleLogout}
+              disabled={isSaving}
+            >
+              <ExitIcon />
+              {isSaving ? 'Сохранение...' : 'Выйти'}
             </button>
           </div>
         </div>
+      </form>
 
-        <div className={styles.actions}>
-          <button type="submit" className={styles.saveButton} disabled={isSaving}>
-            {isSaving ? 'Сохранение...' : 'Сохранить изменения'}
-          </button>
-          <button
-            type="button"
-            className={styles.logoutButton}
-            onClick={handleLogout}
-            disabled={isSaving}
-          >
-            <ExitIcon />
-            {isSaving ? 'Сохранение...' : 'Выйти'}
-          </button>
+      <Modal
+        title="Смена пароля"
+        open={isPasswordModalOpen}
+        onOk={handlePasswordSubmit}
+        onCancel={() => {
+          setIsPasswordModalOpen(false);
+          setPasswordData({ old_password: '', new_password: '', confirm_password: '' });
+        }}
+        confirmLoading={isSavingPassword}
+        okText="Сохранить"
+        cancelText="Отмена"
+        destroyOnHidden
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '20px' }}>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', color: '#666' }}>
+              Старый пароль
+            </label>
+            <Input.Password
+              size="large"
+              placeholder="Введите старый пароль"
+              value={passwordData.old_password}
+              onChange={(e) =>
+                setPasswordData((prev) => ({ ...prev, old_password: e.target.value }))
+              }
+            />
+          </div>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', color: '#666' }}>
+              Новый пароль
+            </label>
+            <Input.Password
+              size="large"
+              placeholder="Введите новый пароль"
+              value={passwordData.new_password}
+              onChange={(e) =>
+                setPasswordData((prev) => ({ ...prev, new_password: e.target.value }))
+              }
+            />
+          </div>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', color: '#666' }}>
+              Подтвердите пароль
+            </label>
+            <Input.Password
+              size="large"
+              placeholder="Повторите новый пароль"
+              value={passwordData.confirm_password}
+              onChange={(e) =>
+                setPasswordData((prev) => ({ ...prev, confirm_password: e.target.value }))
+              }
+            />
+          </div>
         </div>
-      </div>
-    </form>
+      </Modal>
+    </>
   );
 };
 
