@@ -1,0 +1,30 @@
+.wrapper {
+    max-width: 120rem;
+    width: 100%;
+    display: flex;
+    gap: 2.4rem;
+    flex-direction: column;
+    margin: 6.4rem auto 14.8rem;
+    /*background: #D9E5FF;*/
+}
+
+.container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.description {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 9.6rem;
+    color: #5E8BF4;
+}
+
+.subtitle {
+    font-size: 2.4rem;
+    max-width: 53rem;
+}

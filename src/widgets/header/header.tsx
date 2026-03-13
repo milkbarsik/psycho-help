@@ -16,7 +16,7 @@ const Header = () => {
   const items = [
     { link: '/', text: 'Главная' },
     { link: '/therapists', text: 'Психологи' },
-    { link: '/', text: 'Новости' },
+    { link: '/news', text: 'Новости' },
     { link: '/resources', text: 'Полезные материалы' },
     { link: '/faq/', text: 'FAQ' },
   ];

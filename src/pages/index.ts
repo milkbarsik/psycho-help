@@ -5,3 +5,4 @@ export * from './home-page';
 export * from './personal-cabinet';
 export * from './resources-page';
 export * from './test-page';
+export * from './news-page'

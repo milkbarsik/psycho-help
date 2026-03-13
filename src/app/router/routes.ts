@@ -2,9 +2,10 @@ import type { FC } from 'react';
 import { HomePage } from '@/pages/home-page';
 import { PersonalCabinet } from '@/pages/personal-cabinet';
 import { FaqPage } from '@/pages/faq-page';
+import { NewsPage } from '@/pages/news-page';
 import { DoctorsPage } from '@/pages/doctors-page';
 import { DoctorPage } from '@/pages/doctor-page';
-import { ResourcesPage, TestPage } from '@/pages';
+import {  ResourcesPage, TestPage } from '@/pages';
 import { ArticlePage } from '@/pages/article-page';
 
 /*
@@ -63,10 +64,14 @@ export const authRoutes: routePath[] = [
     path: '/cabinet',
     Component: PersonalCabinet,
   },
-   {
-    path: "/article/:id",
-    Component: ArticlePage
-  }
+  {
+    path: '/article/:id',
+    Component: ArticlePage,
+  },
+  {
+    path: '/news',
+    Component: NewsPage,
+  },
 ];
 
 export const notAuthRoutes: routePath[] = [
@@ -97,6 +102,10 @@ export const notAuthRoutes: routePath[] = [
   {
     path: "/article/:id",
     Component: ArticlePage
-  }
+  },
+  {
+    path: '/news',
+    Component: NewsPage,
+  },
 ];
 

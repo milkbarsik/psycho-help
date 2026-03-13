@@ -1,0 +1,27 @@
+.card {
+    background: #EEF5FF;
+    border-radius: 20px;
+    padding: 16px 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    color: #444;
+    font-weight: 700;
+}
+
+.title {
+    font-size: 17px;
+    font-weight: 500;
+    margin: 16px 0;
+    line-height: 1.4;
+    flex-grow: 1;
+
+}
+
