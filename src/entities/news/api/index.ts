@@ -33,3 +33,14 @@ export const newsQueries = {
       ...options,
     }),
 };
+
+export const newsApi = {
+  create: async (newNews: Omit<NewsDto, 'id'>): Promise<NewsDto> => {
+    const { data } = await $api.post<NewsDto>('/news/', newNews);
+    return data;
+  },
+
+  delete: async (id: number | string): Promise<void> => {
+    await $api.delete(`/news/${id}/`);
+  },
+};
