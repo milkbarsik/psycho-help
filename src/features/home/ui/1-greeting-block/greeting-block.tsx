@@ -2,8 +2,7 @@ import styles from './greeting-block.module.css';
 import GreetingDesktop from '@/features/home/ui/1-greeting-block/img/greeting-desktop.png';
 import GreetingTablet from '@/features/home/ui/1-greeting-block/img/greeting-tablet.png';
 import GreetingMobile from '@/features/home/ui/1-greeting-block/img/greeting-mobile.png';
-import Personally from '@/features/home/ui/personally.svg?react';
-import Online from '@/features/home/ui/online.svg?react';
+import AppointmentModule from '@/widgets/appointment-module';
 
 const GreetingBlock = () => {
   return (
@@ -23,19 +22,10 @@ const GreetingBlock = () => {
               </span>
             </div>
           </div>
-          <div className={styles.greeting__controls}>
-            <div className={styles.greeting__options}>
-              <button className={styles.greeting__option}>
-                <Personally className={styles.greeting__option_icon} />
-                <span className={styles.greeting__option_text}>лично</span>
-              </button>
-              <button className={styles.greeting__option}>
-                <Online className={styles.greeting__option_icon} />
-                <span className={styles.greeting__option_text}>онлайн</span>
-              </button>
-            </div>
-            <button className={styles.greeting__submit}>Записаться</button>
-          </div>
+          <AppointmentModule 
+            pageType="main" 
+            redirectPath="/cabinet"
+          />
         </div>
         <div className={styles.greeting__image_wrapper}>
           <picture>
