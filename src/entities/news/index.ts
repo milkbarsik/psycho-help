@@ -1,2 +1,2 @@
 export * from './api';
-export * from './types';
+export type { NewsDto } from './types';

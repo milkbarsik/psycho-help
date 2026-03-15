@@ -1,14 +1,15 @@
 import React from 'react';
-import { NewsCard } from '../news-card/news-card.tsx';
-import { TelegramBanner } from '../telegram-banner/telegram-banner.tsx';
-import { useNews } from '@/entities/news/api/useNews';
+import { useQuery } from '@tanstack/react-query';
+import { newsQueries } from '@/entities/news';
+import { NewsCard } from '../news-card/news-card';
+import { TelegramBanner } from '../telegram-banner/telegram-banner';
 import styles from './news-grid.module.css';
 
 export const NewsGrid: React.FC = () => {
-  const { data: news, isError } = useNews();
+  const { data: news, isLoading } = useQuery(newsQueries.list());
 
-  if (isError) {
-    return <main className={styles.container}>Произошла ошибка при загрузке</main>;
+  if (isLoading) {
+    return <main className={styles.container}>Загрузка...</main>;
   }
 
   return (

@@ -1,42 +1,35 @@
+import { type QueryObserverOptions, queryOptions } from '@tanstack/react-query';
 import { $api } from '@/shared/api/http';
+import type { ResponseError } from '@/shared/api';
 import type { NewsDto } from '../types';
+import { MOCK_NEWS } from '../constants/mock-news';
 
-const MOCK_NEWS: NewsDto[] = [
-  {
-    id: 1,
-    category: 'Анонс мероприятия',
-    date: '24.11.2025',
-    title: 'Психологи университета приглашают на ПСИХОparty в честь Дня психолога',
-  },
-  {
-    id: 2,
-    category: 'Отчет о мероприятии',
-    date: '25.11.2025',
-    title: 'В университете успешно прошел праздник ПСИХОparty с арт-практиками и чаепитием',
-  },
-  {
-    id: 3,
-    category: 'Анонс мероприятия',
-    date: '18.04.2025',
-    title: 'Психолог Ольга Сафронова проведет мастерскую по профилактике выгорания',
-  },
-  {
-    id: 4,
-    category: 'Анонс мероприятия',
-    date: '25.12.2025',
-    title: 'В Московском Политехе пройдет круглый стол с экспертами',
-  },
-];
+export const newsQueryKey = {
+  list: 'news.list',
+  byId: 'news.byId',
+};
 
-export const getNews = async (): Promise<NewsDto[]> => {
-  try {
-    const response = await $api.get<NewsDto[]>('/news');
-    return response.data;
-  } catch (error) {
-    console.warn('Backend /news not found, returning MOCK_NEWS:', error);
+export const newsQueries = {
+  list: (options?: Partial<QueryObserverOptions<NewsDto[], ResponseError>>) =>
+    queryOptions<NewsDto[], ResponseError>({
+      queryKey: [newsQueryKey.list],
+      queryFn: async () => {
+        try {
+          const { data } = await $api.get<NewsDto[]>('/news/');
+          return data;
+        } catch (error) {
+          console.warn('Backend /news/ failed, using MOCK_NEWS', error);
+          return MOCK_NEWS;
+        }
+      },
+      ...options,
+    }),
 
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(MOCK_NEWS), 400);
-    });
-  }
+  byId: (id: string, options?: Partial<QueryObserverOptions<NewsDto, ResponseError>>) =>
+    queryOptions<NewsDto, ResponseError>({
+      queryKey: [newsQueryKey.byId, id],
+      queryFn: async () => (await $api.get(`/news/${id}/`)).data,
+      enabled: !!id,
+      ...options,
+    }),
 };
