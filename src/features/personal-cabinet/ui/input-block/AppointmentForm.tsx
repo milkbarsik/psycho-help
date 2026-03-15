@@ -166,6 +166,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
                 <div className={styles.mainInfo}>
                   <div className={styles.imgWrapper}>
                     <Img
+                      key={currentTherapist?.id || currentTherapist?.photo}
                       className={styles.photo} 
                       photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}${currentTherapist.photo}`} 
                       altPhoto={altPhoto}
