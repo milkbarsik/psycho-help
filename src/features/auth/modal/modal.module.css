@@ -10,6 +10,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    font-size: 16px;
     font: var(--font-text-medium);
 }
 
@@ -66,6 +67,11 @@
     justify-content: center;
     color: #999;
     transition: color 0.3s;
+}
+
+.modalHeaderPassword .closeButton {
+    position: absolute;
+    right: 0;
 }
 
 .modalHeaderPassword .closeButton {
@@ -321,6 +327,13 @@
     color: #ff4d4f;
 }
 
+.names {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
 .button {
     background: none;
     border: 1px solid transparent;
@@ -359,12 +372,6 @@
     border-color: #1B50F5;
 }
 
-.names {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    flex-wrap: wrap;
-}
 .input:has(+ .errorText) {
 border: 1px solid #ff4d4f;
 }
@@ -398,4 +405,3 @@ border: 1px solid #ff4d4f;
         padding: 1rem;
     }
 }
-
