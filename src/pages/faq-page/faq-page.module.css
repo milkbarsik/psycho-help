@@ -66,3 +66,10 @@
     margin-bottom: 9.6rem;
   }
 }
+
+[data-theme='dark'] {
+  .description {
+    color: #98989a;
+  }
+  
+}
