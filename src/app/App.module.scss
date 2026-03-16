@@ -4,3 +4,13 @@
     width: 100vw;
     background: #ffffff;
 }
+[data-theme='dark'] {
+    .layout {
+        background: #0c0d0d;
+        color-scheme: dark;
+
+    }
+    h2 {
+    color: #ffffff;
+  }
+}

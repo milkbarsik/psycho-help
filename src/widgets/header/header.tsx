@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@/shared/hooks/useTheme';
 import styles from './header.module.css';
 import Logo from './Logo.svg?react';
+import LogoDark from './Logo-dark.svg?react';
 import Burger from '@/widgets/Burger.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
@@ -12,6 +14,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLUListElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
+  const { theme } = useTheme();
 
   const items = [
     { link: '/', text: 'Главная' },
@@ -41,7 +44,7 @@ const Header = () => {
     <header className={styles.header}>
       <nav className={styles.header__nav}>
         <Link to="/" aria-label="Вернуться на главную страницу">
-          <Logo className={styles.header__logo} />
+          {theme === "light" ? <Logo className={styles.header__logo} /> : <LogoDark className={styles.header__logo} />}
         </Link>
         <button
           className={styles.burger}

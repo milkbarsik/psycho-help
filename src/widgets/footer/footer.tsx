@@ -1,8 +1,12 @@
+import { useTheme } from '@/shared/hooks/useTheme';
 import VkIcon from '@/shared/assets/images/footer/vk.svg';
 import TgIcon from '@/shared/assets/images/footer/tg.svg';
+import Sun from '@/shared/assets/images/footer/sun.svg';
+import Moon from '@/shared/assets/images/footer/moon.svg';
 import styles from './footer.module.css';
 
 const Footer = () => {
+  const { theme, toggleTheme } = useTheme();
   const addresses = [
     {
       street: 'ул. Большая Семёновская, 38',
@@ -31,17 +35,27 @@ const Footer = () => {
     { icon: TgIcon, alt: 'Telegram', link: 'https://t.me/spp_mospolytech' }
   ];
 
+  
+
   return (
     <footer className={styles.footer}>
+      <button
+          className={styles.themeToggle}
+          onClick={toggleTheme}
+          aria-label={theme === 'light' ? 'Переключить на тёмную тему' : 'Переключить на светлую тему'}
+        >
+          <img src={theme === 'light' ? Moon : Sun}   />
+          
+        </button>
       <div className={styles.container}>
         
-        
+
         {/* Верхняя секция с логотипом, контактами и соцсетями */}
         <div className={styles.topSection}>
           <div className={styles.logoSection}>
             <h3 className={styles.logo}>московский политех</h3>
           </div>
-          
+
           <div className={styles.contactInfo}>
             <div className={styles.contactItem}>
               <span className={styles.contactLabel}>Телефон:</span>
@@ -52,7 +66,7 @@ const Footer = () => {
               <a href="mailto:psycholog@mospolytech.ru" className={styles.contactValue}>psycholog@mospolytech.ru</a>
             </div>
           </div>
-          
+
           <div className={styles.socialSection}>
             {socialLinks.map((social, index) => (
               <a key={index} href={social.link} className={styles.socialLink} target="_blank" rel="noopener noreferrer">

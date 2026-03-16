@@ -127,3 +127,24 @@
         height: auto;
     }
 }
+
+[data-theme="dark"]{
+    .lunchInfo,
+    .fridayInfo{
+        background-color: #1e1e1f;
+    }
+
+    .lunchLabel,
+    .fridayLabel {
+        color: #ffffff;
+    }
+
+    .lunchTime,
+    .fridayTime {
+        color: #ffffff;
+    }
+
+    .illustrationPlaceholder {
+        color: #ffffff;
+    }
+}
