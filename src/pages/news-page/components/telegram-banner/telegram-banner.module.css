@@ -1,54 +1,116 @@
 .banner {
-    background: #f0f7ff;
-    border-radius: 12px;
-    padding: 32px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    width: 320px;
+  background: #f0f7ff;
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  position: relative;
 }
 
 .title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
 .text {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 24px;
+  font-size: 20px;
+  margin-bottom: 24px;
 }
 
 .iconWrapper {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 .tgIcon {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
 }
 
-.button {
-    background: #407BFE;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.buttonPC {
+  text-align: center;
+  background: #407bfe;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
 }
 
-.button:hover {
-    color: white;
-    background: rgba(64, 123, 254, 0.84);
+.buttonFN {
+  text-align: center;
+  background: #407bfe;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: none;
+  width: 100%;
 }
 
-.button:active {
-    scale: 0.97;
+.buttonPC:hover,
+.buttonFN:hover {
+  color: white;
+  background: #153be1;
+}
+
+.buttonPC:active,
+.buttonFN:active {
+  scale: 0.97;
+  background-color: #192f8f;
+}
+
+@media screen and (max-width: 900px) {
+  .banner {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .buttonPC {
+    display: none;
+  }
+
+  .buttonFN {
+    display: inline-block;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+@media screen and (max-width: 702px) {
+  .banner {
+    flex-direction: column;
+  }
+
+  .buttonPC {
+    display: inline-block;
+  }
+
+  .buttonFN {
+    display: none;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
 }
