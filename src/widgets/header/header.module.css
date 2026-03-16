@@ -117,6 +117,9 @@
   .header__link {
     color: #ffffff;
   }
+  .header__link:hover{
+    color: #19191b;
+  }
   .burger path {
     stroke: #ffffff;
   }

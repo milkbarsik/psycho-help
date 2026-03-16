@@ -32,6 +32,10 @@
   .rememberCheckbox {
     color: #ffffff;
   }
+  .modalDesc,
+  .hintText {
+    color: #98989a;
+  }
 }
 
 .modalHeader {
