@@ -44,7 +44,11 @@
             .title {
                 color: var(--color-label-neutral-primary);
                 font: var(--font-h2);
+
+
             }
+
+
 
             .features {
                 color: var(--color-label-neutral-secondary);
@@ -75,6 +79,7 @@
             .info {
                 gap: 2.2rem;
             }
+
             .image {
                 height: 50.9rem
             }
@@ -116,5 +121,12 @@
                 }
             }
         }
+    }
+}
+
+
+[data-theme="dark"] {
+    .features {
+        color: #98989a !important;
     }
 }
