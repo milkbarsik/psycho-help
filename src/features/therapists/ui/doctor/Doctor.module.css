@@ -1,17 +1,17 @@
 .wrapper {
-  max-width: 38.9rem; 
+  max-width: 38.9rem;
   width: 100%;
   height: 100%;
   border-radius: 0.8rem;
   background-color: white;
   display: flex;
   flex-direction: column;
-  padding: 1.2rem; 
+  padding: 1.2rem;
   transition: transform 0.2s;
 }
 
 .wrapper:hover {
-  transform: translateY(-0.4rem); 
+  transform: translateY(-0.4rem);
 }
 
 .photo {
@@ -20,7 +20,7 @@
   border-radius: 1.2rem;
   background-repeat: no-repeat;
   background-size: cover;
-  margin-bottom: 1.2rem; 
+  margin-bottom: 1.2rem;
   transition: all 0.3s ease;
 }
 
@@ -32,9 +32,9 @@
 }
 
 .speciality {
-  font-size: 2rem; 
+  font-size: 2rem;
   color: #19191b;
-  margin-bottom: 0.6rem; 
+  margin-bottom: 0.6rem;
 }
 
 .experience {
@@ -42,7 +42,7 @@
   font-weight: 400;
   color: #313235;
   opacity: 0.72;
-  margin-bottom: 1.5rem; 
+  margin-bottom: 1.5rem;
 }
 
 .consult_label {
@@ -79,5 +79,21 @@
 @media (max-width: 600px) {
   .wrapper {
     margin: 0 auto;
+  }
+}
+
+[data-theme='dark'] {
+  .wrapper {
+    background-color: #0c0d0d;
+    border: 1px solid #63656b;
+  }
+  .fio,
+  .speciality,
+  .consult_label {
+    color: #ffffff;
+  }
+  .experience,
+  .consult_areas {
+    color: #98989a;
   }
 }

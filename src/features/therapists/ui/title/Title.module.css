@@ -3,7 +3,7 @@
 */
 .wrapper {
   width: 100%;
-  max-width: 119.9rem; 
+  max-width: 119.9rem;
   margin: 6rem auto 24.5rem auto;
 }
 
@@ -17,16 +17,15 @@
   border-bottom-right-radius: 2rem;
 }
 
-
 .title {
-  font-size: 6rem; 
+  font-size: 6rem;
   color: #19191b;
-  margin-bottom: 2rem; 
+  margin-bottom: 2rem;
 }
 
 .text {
   color: #393939;
-  font-size: 2rem; 
+  font-size: 2rem;
 }
 .content {
   display: flex;
@@ -39,7 +38,7 @@
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  padding-bottom: 5rem; 
+  padding-bottom: 5rem;
 }
 
 .titleImg {
@@ -58,7 +57,7 @@
   align-items: center;
   flex-direction: column;
   gap: 0.8rem;
-  padding: 1rem 1.6rem; 
+  padding: 1rem 1.6rem;
   border-radius: 1.2rem;
   background: #f9f9f9;
   color: #333;
@@ -89,9 +88,8 @@
   width: 100%;
 }
 
-
 .icon {
-  width: 2.4rem; 
+  width: 2.4rem;
   height: 2.4rem;
   stroke: currentColor;
   fill: none;
@@ -136,9 +134,9 @@
   }
 }
 
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
   .titleImg {
-    max-width: 49.7rem; 
+    max-width: 49.7rem;
     height: auto;
   }
 }
@@ -151,7 +149,7 @@
     justify-content: center;
     margin: 0 auto;
     background-color: inherit;
-    padding: 0 5.7rem; 
+    padding: 0 5.7rem;
   }
 
   .titleImg {
@@ -213,5 +211,28 @@
   }
   .containerTabButton {
     padding-inline: 0;
+  }
+}
+
+[data-theme='dark'] {
+  .title {
+    color: #ffffff;
+  }
+  .text {
+    color: #98989a;
+  }
+  .tab {
+    background-color: #4a4c50;
+    color: #ffffff;
+  }
+  .tab.active {
+    background-color: #1b50f5;
+  }
+  .icon path {
+    stroke: #ffffff;
+  }
+  .button {
+    background-color: #ffffff;
+    color: #19191b;
   }
 }
