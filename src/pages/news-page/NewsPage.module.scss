@@ -1,0 +1,201 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+@use '@/shared/scss/base/_typography.scss' as *;
+
+.wrapper {
+  margin: 6.1rem auto 12.8rem;
+}
+
+.blue {
+  background-color: var(--color-fill-brand-tetriary);
+}
+
+.hero {
+  max-width: 144rem;
+  margin: 0 auto;
+  padding: 10rem 12rem;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem 5rem;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 9.6rem;
+  line-height: 11.3rem;
+  color: var(--color-label-brand-secondary);
+}
+
+.text {
+  max-width: 52.9rem;
+  height: 100%;
+  font-size: 2.4rem;
+  line-height: 2.8rem;
+  color: #393939;
+}
+
+.image {
+  margin: -10rem 0;
+  grid-row: span 2;
+  max-width: 59.9rem;
+}
+
+@media (max-width: 1200px) {
+  .wrapper {
+    margin: 3.7rem auto 9.8rem;
+  }
+
+  .hero {
+    margin: 0;
+    padding: 0 5.7rem 2.8rem;
+    justify-items: center;
+    gap: 0;
+  }
+
+  .title {
+    grid-column: span 2;
+    font-size: 7rem;
+    line-height: 8.2rem;
+  }
+
+  .text {
+    grid-row: 2 / 3;
+    line-height: 2.9rem;
+  }
+
+  .image {
+    margin: -3rem 0 0;
+    grid-row: span 1;
+    max-width: 29.3rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .wrapper {
+    margin: 1.6rem auto 7.4rem;
+  }
+
+  .hero {
+    max-width: 144rem;
+    padding: 1.7rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .title {
+    font-size: 3.6rem;
+    line-height: 4.2rem;
+  }
+
+  .text {
+    padding: 2rem 1.6rem 1.9rem;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+  }
+
+  .image {
+    margin: 0;
+    max-width: 100%;
+  }
+}
+
+.telegramWrapper {
+  max-width: 120rem;
+  margin: 0 auto;
+}
+
+.telegramBanner {
+  margin: 0 5.7rem;
+  padding: 3.8rem 3.6rem 3rem;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background-color: var(--color-fill-brand-quaternary);
+  border-radius: 1.6rem;
+  gap: 2.9rem 5rem;
+}
+
+.telegramTitle {
+  font-weight: 600;
+  font-size: 4rem;
+  line-height: 4.4rem;
+  letter-spacing: -0.04em;
+  color: var(--neutral-1000);
+  // color: var(--color-label-neutral-primary);
+}
+
+.telegramText {
+  font-size: 2rem;
+  line-height: 2.8rem;
+  color: var(--neutral-1000);
+  // color: var(--color-label-neutral-secondary);
+}
+
+.telegramIcon {
+  grid-row: 1 / 4;
+  grid-column: 2;
+  justify-self: center;
+  max-height: 100%;
+}
+
+.telegramLink {
+  justify-self: start;
+  border-radius: 1.6rem;
+  padding: 1rem 3.5rem;
+  background-color: var(--color-fill-brand-primary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  color: #fff;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--color-interactive-brand-hover);
+    color: #fff;
+  }
+}
+
+@media (max-width: 1200px) {
+  .telegramBanner {
+    gap: 2.9rem 0;
+  }
+
+  .telegramTitle {
+    font-size: 3.2rem;
+    line-height: 4rem;
+    letter-spacing: -0.05em;
+  }
+}
+
+@media (max-width: 720px) {
+  .telegramBanner {
+    margin: 0 1rem;
+    padding: 3.3rem 2.5rem 3.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .telegramTitle {
+    font-size: 2.8rem;
+    line-height: 3.6rem;
+    letter-spacing: -0.05em;
+  }
+
+  .telegramText {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+
+  .telegramIcon {
+    max-height: 19.4rem;
+  }
+
+  .telegramLink {
+    padding: 1rem 2.4rem;
+  }
+}
