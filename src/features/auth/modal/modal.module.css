@@ -10,22 +10,24 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    font-size: 16px;
+    font: var(--font-text-medium);
 }
 
 .modalContent {
+    box-sizing: border-box;
     background: white;
     border-radius: 20px;
     max-width: 718px;
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 4px 16px rzgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     padding: clamp(16px, 2.5vw, 36px);
 }
 
-.modalHeader {
+.modalHeaderAuth {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     position: relative;
 }
@@ -33,6 +35,7 @@
 .modalHeaderPassword {
     display: flex;
     justify-content: center;
+    align-items: center;
     position: relative;
 }
 
@@ -51,8 +54,6 @@
 }
 
 .closeButton {
-    position: absolute;
-    right: 0;
     background: none;
     border: none;
     font-size: 24px;
@@ -65,6 +66,11 @@
     justify-content: center;
     color: #999;
     transition: color 0.3s;
+}
+
+.modalHeaderPassword .closeButton {
+    position: absolute;
+    right: 0;
 }
 
 .closeButton:hover {
@@ -84,6 +90,10 @@
     flex-direction: column;
     gap: 8px;
     flex-grow: 1;
+}
+
+.form label.checkboxLabel {
+    flex-direction: row;
 }
 
 .input {
@@ -118,7 +128,6 @@
 
 .checkboxLabel {
     display: flex;
-    flex-direction: row !important;
     align-items: center;  
     justify-content: start;   
     gap: 8px;                
@@ -158,7 +167,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-     border: 2px solid blue;  
 }
 
 .checkbox:checked + .checkbox_custom::after {
@@ -179,7 +187,7 @@
 }
 
 .checkbox + .checkbox_custom:hover {
-    box-shadow: 0 0 0 4.5px rgba(238, 245, 255);  /* Легкая тень */
+    box-shadow: 0 0 0 4.5px rgba(238, 245, 255);  
     transition: all 0.3s ease;
 }
 
@@ -315,14 +323,19 @@
 
 .button {
     background: none;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     user-select: none;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.8rem;
+    font-weight: 500;
     font-size: 2rem;
-    padding: 16px;
-    border-radius: 12px;
+    line-height: 2.8rem;
+    padding: 1.5rem;
+    border-radius: 1.2rem;
+    text-decoration: none;
+    color: var(--color-label-neutral-primary);
+    transition: .3s all;
 }
 
 .button svg {
@@ -330,15 +343,15 @@
 }
 
 .button:hover {
-    color: #1B50F5;
-    background-color: #EEF5FF;
+    background-color: var(--color-interactive-brand-secondary);
+    border: 1px solid var(--color-interactive-brand-secondary);
+    color: var(--color-interactive-brand-primary);
 }
 
-.button:active,
-.button:active:hover {
-    background: none;
-    border-color: #1B50F5;
-    color: #1B50F5;
+.button:active {
+    background-color: transparent;
+    border-color: var(--color-border-brand-strong);
+    color: var(--color-interactive-brand-primary);
 }
 
 .button:focus-visible {
@@ -356,10 +369,33 @@
 border: 1px solid #ff4d4f;
 }
 
-.passwordInput:has(+ ) {
-border: 1px solid #ff4d4f;
-}
-
 .passwordWrapper:has(+ .errorText) .passwordInput {
 border: 1px solid #ff4d4f;
 }
+
+@media (max-width: 1024px) {
+    .button {
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+        color: var(--color-label-neutral-inverted-primary);
+    }
+
+    .button:hover {
+        background-color: var(--color-interactive-brand-secondary);
+        border: 1px solid var(--color-interactive-brand-secondary);
+        color: var(--color-interactive-brand-primary);
+    }
+
+    .button:active {
+        background-color: transparent;
+        border: 1px solid var(--color-interactive-brand-secondary);
+        color: var(--color-label-neutral-inverted-primary);
+    }
+}
+
+@media (max-width: 425px) {
+    .button {
+        padding: 1rem;
+    }
+}
+
