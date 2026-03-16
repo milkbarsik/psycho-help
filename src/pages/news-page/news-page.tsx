@@ -8,7 +8,7 @@ const NewsPage = () => {
       <div className={styles.hero}>
         <div className={styles.wrapper}>
           <div className={styles.description}>
-            <div>
+            <div className={styles.content}>
               <h1 className={styles.title}>Новости</h1>
               <p className={styles.subtitle}>
                 Здесь вы всегда будете в курсе последних событий, анонсов и изменений в работе нашей
