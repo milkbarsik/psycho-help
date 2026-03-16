@@ -1,6 +1,9 @@
 {
   "openapi": "3.1.0",
-  "info": { "title": "FastAPI", "version": "0.1.0" },
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
   "servers": [
     {
       "url": "http://localhost:8000/api"
@@ -16,7 +19,11 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
             }
           }
         }
@@ -32,21 +39,31 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid", "title": "Id" }
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -60,7 +77,11 @@
         "operationId": "register_users_users_register_post",
         "requestBody": {
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/UserCreateRequest" } }
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateRequest"
+              }
+            }
           },
           "required": true
         },
@@ -68,14 +89,20 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -89,7 +116,11 @@
         "operationId": "login_users_login_post",
         "requestBody": {
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/LoginRequest" } }
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
           },
           "required": true
         },
@@ -97,14 +128,20 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -119,7 +156,164 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Refresh Token",
+        "operationId": "refresh_token_users_refresh_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "put": {
+        "tags": ["users"],
+        "summary": "Update My Profile",
+        "description": "Обновление своего профиля (требуется авторизация)",
+        "operationId": "update_my_profile_users_me_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "put": {
+        "tags": ["users"],
+        "summary": "Update User By Id",
+        "description": "Обновление профиля любого пользователя (только для администраторов)",
+        "operationId": "update_user_by_id_users__user_id__put",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "User Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me/password": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Change My Password",
+        "description": "Смена пароля текущего пользователя",
+        "operationId": "change_my_password_users_me_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordChangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Change My Password Users Me Password Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
@@ -136,7 +330,15 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "User Id"
             }
           }
@@ -148,7 +350,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/AppointmentBase" },
+                  "items": {
+                    "$ref": "#/components/schemas/AppointmentBase"
+                  },
                   "title": "Response Get Appointments Appointments  Get"
                 }
               }
@@ -158,7 +362,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -174,7 +380,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/AppointmentCreateRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/AppointmentCreateRequest"
+              }
             }
           },
           "required": true
@@ -183,14 +391,20 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/AppointmentBase" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentBase"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -208,21 +422,31 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid", "title": "Id" }
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/AppointmentBase" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentBase"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -233,26 +457,36 @@
       "put": {
         "tags": ["appointments"],
         "summary": "Cancel Appointment",
-        "description": "Отменить запись на прием",
+        "description": "Отменить запись на прием (для пациента)",
         "operationId": "cancel_appointment_appointments__id__cancel_put",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid", "title": "Id" }
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -269,21 +503,31 @@
             "name": "review_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid", "title": "Review Id" }
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Review Id"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/ReviewsBase" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewsBase"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -301,13 +545,21 @@
             "name": "user_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid", "title": "User Id" }
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "User Id"
+            }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/RoleAssignRequest" } }
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleAssignRequest"
+              }
+            }
           }
         },
         "responses": {
@@ -317,7 +569,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": { "type": "string" },
+                  "additionalProperties": {
+                    "type": "string"
+                  },
                   "title": "Response Assign Role Roles  User Id  Assign Post"
                 }
               }
@@ -327,7 +581,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -345,13 +601,21 @@
             "name": "user_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid", "title": "User Id" }
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "User Id"
+            }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/RoleRemoveRequest" } }
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleRemoveRequest"
+              }
+            }
           }
         },
         "responses": {
@@ -361,7 +625,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": { "type": "string" },
+                  "additionalProperties": {
+                    "type": "string"
+                  },
                   "title": "Response Remove Role Roles  User Id  Remove Post"
                 }
               }
@@ -371,7 +637,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -389,7 +657,11 @@
             "name": "psychologist_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid", "title": "Psychologist Id" }
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Psychologist Id"
+            }
           }
         ],
         "responses": {
@@ -397,7 +669,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/PsychologistResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/PsychologistResponse"
+                }
               }
             }
           },
@@ -405,7 +679,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -420,7 +696,11 @@
             "name": "psychologist_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid", "title": "Psychologist Id" }
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Psychologist Id"
+            }
           }
         ],
         "responses": {
@@ -430,7 +710,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": { "type": "string" },
+                  "additionalProperties": {
+                    "type": "string"
+                  },
                   "title": "Response Delete Psychologist Endpoint Therapists  Psychologist Id  Delete"
                 }
               }
@@ -440,7 +722,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -489,7 +773,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/PsychologistResponse" },
+                  "items": {
+                    "$ref": "#/components/schemas/PsychologistResponse"
+                  },
                   "title": "Response Get Psychologists Therapists  Get"
                 }
               }
@@ -499,7 +785,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -513,7 +801,9 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PsychologistCreateRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PsychologistCreateRequest"
+              }
             }
           }
         },
@@ -522,7 +812,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/PsychologistResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/PsychologistResponse"
+                }
               }
             }
           },
@@ -530,7 +822,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -633,25 +927,236 @@
       "get": {
         "tags": ["images"],
         "summary": "Get Dynamic Image",
+        "description": "Получить изображение по имени файла.",
         "operationId": "get_dynamic_image_image__filename__get",
         "parameters": [
           {
             "name": "filename",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "title": "Filename" }
+            "schema": {
+              "type": "string",
+              "title": "Filename"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Create Application Endpoint",
+        "operationId": "create_application_endpoint_applications__post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["applications"],
+        "summary": "Get Applications",
+        "operationId": "get_applications_applications__get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/ApplicationStatus"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationResponse"
+                  },
+                  "title": "Response Get Applications Applications  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}": {
+      "get": {
+        "tags": ["applications"],
+        "summary": "Get Application",
+        "operationId": "get_application_applications__application_id__get",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Application Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["applications"],
+        "summary": "Update Application",
+        "operationId": "update_application_applications__application_id__patch",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Application Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -661,17 +1166,219 @@
   },
   "components": {
     "schemas": {
+      "ApplicationCreateRequest": {
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Last Name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 10,
+            "title": "Phone"
+          },
+          "problem_description": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Problem Description"
+          },
+          "preferred_campus": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Preferred Campus"
+          },
+          "university_status": {
+            "$ref": "#/components/schemas/UniversityStatus"
+          }
+        },
+        "type": "object",
+        "required": [
+          "first_name",
+          "last_name",
+          "email",
+          "phone",
+          "problem_description",
+          "preferred_campus",
+          "university_status"
+        ],
+        "title": "ApplicationCreateRequest"
+      },
+      "ApplicationResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
+          },
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "phone": {
+            "type": "string",
+            "title": "Phone"
+          },
+          "problem_description": {
+            "type": "string",
+            "title": "Problem Description"
+          },
+          "preferred_campus": {
+            "type": "string",
+            "title": "Preferred Campus"
+          },
+          "university_status": {
+            "$ref": "#/components/schemas/UniversityStatus"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApplicationStatus"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "appointment_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Appointment Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "first_name",
+          "last_name",
+          "email",
+          "phone",
+          "problem_description",
+          "preferred_campus",
+          "university_status",
+          "status",
+          "created_at",
+          "updated_at",
+          "appointment_id"
+        ],
+        "title": "ApplicationResponse"
+      },
+      "ApplicationStatus": {
+        "type": "string",
+        "enum": ["новая", "в обработке", "завершена", "отклонена"],
+        "title": "ApplicationStatus"
+      },
+      "ApplicationUpdateRequest": {
+        "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "ApplicationUpdateRequest"
+      },
       "AppointmentBase": {
         "properties": {
-          "id": { "type": "string", "format": "uuid", "title": "Id" },
-          "patient_id": { "type": "string", "format": "uuid", "title": "Patient Id" },
-          "psychologist_id": { "type": "string", "format": "uuid", "title": "Psychologist Id" },
-          "type": { "$ref": "#/components/schemas/AppointmentType" },
-          "reason": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Reason" },
-          "status": { "$ref": "#/components/schemas/AppointmentStatus" },
-          "scheduled_time": { "type": "string", "format": "date-time", "title": "Scheduled Time" },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "patient_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Patient Id"
+          },
+          "psychologist_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Psychologist Id"
+          },
+          "type": {
+            "$ref": "#/components/schemas/AppointmentType"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "status": {
+            "$ref": "#/components/schemas/AppointmentStatus"
+          },
+          "scheduled_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scheduled Time"
+          },
           "remind_time": {
-            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Remind Time"
           },
           "last_change_time": {
@@ -679,8 +1386,21 @@
             "format": "date-time",
             "title": "Last Change Time"
           },
-          "venue": { "type": "string", "title": "Venue" },
-          "comment": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Comment" }
+          "venue": {
+            "type": "string",
+            "title": "Venue"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          }
         },
         "type": "object",
         "required": [
@@ -697,17 +1417,69 @@
       },
       "AppointmentCreateRequest": {
         "properties": {
-          "patient_id": { "type": "string", "format": "uuid", "title": "Patient Id" },
-          "psychologist_id": { "type": "string", "format": "uuid", "title": "Psychologist Id" },
-          "type": { "$ref": "#/components/schemas/AppointmentType" },
-          "scheduled_time": { "type": "string", "format": "date-time", "title": "Scheduled Time" },
-          "reason": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Reason" },
+          "patient_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Patient Id"
+          },
+          "psychologist_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Psychologist Id"
+          },
+          "type": {
+            "$ref": "#/components/schemas/AppointmentType"
+          },
+          "scheduled_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scheduled Time"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
           "remind_time": {
-            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Remind Time"
           },
-          "venue": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Venue" },
-          "comment": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Comment" }
+          "venue": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Venue"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          }
         },
         "type": "object",
         "required": ["patient_id", "psychologist_id", "type", "scheduled_time"],
@@ -726,7 +1498,9 @@
       "HTTPValidationError": {
         "properties": {
           "detail": {
-            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
             "type": "array",
             "title": "Detail"
           }
@@ -736,24 +1510,88 @@
       },
       "LoginRequest": {
         "properties": {
-          "email": { "type": "string", "format": "email", "title": "Email" },
-          "password": { "type": "string", "maxLength": 64, "minLength": 8, "title": "Password" }
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 8,
+            "title": "Password"
+          }
         },
         "type": "object",
         "required": ["email", "password"],
         "title": "LoginRequest"
       },
+      "PasswordChangeRequest": {
+        "properties": {
+          "old_password": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 8,
+            "title": "Old Password"
+          },
+          "new_password": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 8,
+            "title": "New Password"
+          }
+        },
+        "type": "object",
+        "required": ["old_password", "new_password"],
+        "title": "PasswordChangeRequest",
+        "description": "Схема для смены пароля"
+      },
       "PsychologistCreateRequest": {
         "properties": {
-          "user_id": { "type": "string", "format": "uuid", "title": "User Id" },
-          "experience": { "type": "string", "title": "Experience" },
-          "qualification": { "type": "string", "title": "Qualification" },
-          "consult_areas": { "type": "string", "title": "Consult Areas" },
-          "description": { "type": "string", "title": "Description" },
-          "office": { "type": "string", "title": "Office" },
-          "education": { "type": "string", "title": "Education" },
-          "short_description": { "type": "string", "title": "Short Description" },
-          "photo": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Photo" }
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "User Id"
+          },
+          "experience": {
+            "type": "string",
+            "title": "Experience"
+          },
+          "qualification": {
+            "type": "string",
+            "title": "Qualification"
+          },
+          "consult_areas": {
+            "type": "string",
+            "title": "Consult Areas"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "office": {
+            "type": "string",
+            "title": "Office"
+          },
+          "education": {
+            "type": "string",
+            "title": "Education"
+          },
+          "short_description": {
+            "type": "string",
+            "title": "Short Description"
+          },
+          "photo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo"
+          }
         },
         "type": "object",
         "required": [
@@ -770,22 +1608,73 @@
       },
       "PsychologistResponse": {
         "properties": {
-          "id": { "type": "string", "format": "uuid", "title": "Id" },
-          "experience": { "type": "string", "title": "Experience" },
-          "qualification": { "type": "string", "title": "Qualification" },
-          "consult_areas": { "type": "string", "title": "Consult Areas" },
-          "description": { "type": "string", "title": "Description" },
-          "office": { "type": "string", "title": "Office" },
-          "education": { "type": "string", "title": "Education" },
-          "short_description": { "type": "string", "title": "Short Description" },
-          "photo": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Photo" },
-          "first_name": { "type": "string", "title": "First Name" },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "experience": {
+            "type": "string",
+            "title": "Experience"
+          },
+          "qualification": {
+            "type": "string",
+            "title": "Qualification"
+          },
+          "consult_areas": {
+            "type": "string",
+            "title": "Consult Areas"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "office": {
+            "type": "string",
+            "title": "Office"
+          },
+          "education": {
+            "type": "string",
+            "title": "Education"
+          },
+          "short_description": {
+            "type": "string",
+            "title": "Short Description"
+          },
+          "photo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo"
+          },
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
           "middle_name": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Middle Name"
           },
-          "last_name": { "type": "string", "title": "Last Name" },
-          "phone_number": { "type": "string", "title": "Phone Number" }
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number"
+          }
         },
         "type": "object",
         "required": [
@@ -826,7 +1715,11 @@
       },
       "ReviewsBase": { "properties": {}, "type": "object", "title": "ReviewsBase" },
       "RoleAssignRequest": {
-        "properties": { "role_code": { "$ref": "#/components/schemas/RoleCode" } },
+        "properties": {
+          "role_code": {
+            "$ref": "#/components/schemas/RoleCode"
+          }
+        },
         "type": "object",
         "required": ["role_code"],
         "title": "RoleAssignRequest"
@@ -837,10 +1730,19 @@
         "title": "RoleCode"
       },
       "RoleRemoveRequest": {
-        "properties": { "role_code": { "$ref": "#/components/schemas/RoleCode" } },
+        "properties": {
+          "role_code": {
+            "$ref": "#/components/schemas/RoleCode"
+          }
+        },
         "type": "object",
         "required": ["role_code"],
         "title": "RoleRemoveRequest"
+      },
+      "UniversityStatus": {
+        "type": "string",
+        "enum": ["студент", "аспирант", "преподаватель", "сотрудник"],
+        "title": "UniversityStatus"
       },
       "UserCreateRequest": {
         "properties": {
@@ -851,28 +1753,64 @@
             "title": "First Name"
           },
           "middle_name": {
-            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Middle Name"
           },
-          "last_name": { "type": "string", "maxLength": 50, "minLength": 1, "title": "Last Name" },
-          "phone_number": { "type": "string", "format": "phone", "title": "Phone Number" },
+          "last_name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Last Name"
+          },
+          "phone_number": {
+            "type": "string",
+            "format": "phone",
+            "title": "Phone Number"
+          },
           "email": {
-            "anyOf": [{ "type": "string", "format": "email" }, { "type": "null" }],
+            "type": "string",
+            "format": "email",
             "title": "Email"
           },
           "social_media": {
-            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Social Media"
           },
-          "password": { "type": "string", "maxLength": 256, "minLength": 8, "title": "Password" }
+          "password": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 8,
+            "title": "Password"
+          }
         },
         "type": "object",
-        "required": ["first_name", "last_name", "phone_number", "password"],
+        "required": ["first_name", "last_name", "phone_number", "email", "password"],
         "title": "UserCreateRequest"
       },
       "UserResponse": {
         "properties": {
-          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
           "first_name": {
             "type": "string",
             "maxLength": 50,
@@ -880,33 +1818,158 @@
             "title": "First Name"
           },
           "middle_name": {
-            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Middle Name"
           },
-          "last_name": { "type": "string", "maxLength": 50, "minLength": 1, "title": "Last Name" },
-          "phone_number": { "type": "string", "format": "phone", "title": "Phone Number" },
+          "last_name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Last Name"
+          },
+          "phone_number": {
+            "type": "string",
+            "format": "phone",
+            "title": "Phone Number"
+          },
           "email": {
-            "anyOf": [{ "type": "string", "format": "email" }, { "type": "null" }],
+            "type": "string",
+            "format": "email",
             "title": "Email"
           },
           "social_media": {
-            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Social Media"
           }
         },
         "type": "object",
-        "required": ["id", "first_name", "last_name", "phone_number"],
+        "required": ["id", "first_name", "last_name", "phone_number", "email"],
         "title": "UserResponse"
+      },
+      "UserUpdateRequest": {
+        "properties": {
+          "first_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Name"
+          },
+          "middle_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Middle Name"
+          },
+          "last_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Name"
+          },
+          "phone_number": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 20,
+                "minLength": 10
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone Number"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "social_media": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Social Media"
+          }
+        },
+        "type": "object",
+        "title": "UserUpdateRequest",
+        "description": "Схема для обновления профиля (все поля опциональны)"
       },
       "ValidationError": {
         "properties": {
           "loc": {
-            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
             "type": "array",
             "title": "Location"
           },
-          "msg": { "type": "string", "title": "Message" },
-          "type": { "type": "string", "title": "Error Type" }
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
         },
         "type": "object",
         "required": ["loc", "msg", "type"],

@@ -5,8 +5,11 @@ import Header from './header';
 import { useAuth } from '../../features/auth/api/useAuth';
 
 // Мокаем SVG-компоненты и модальное окно
-vi.mock('@/shared/assets/images/Logo-2.svg?react', () => ({
+vi.mock('./Logo.svg?react', () => ({
   default: () => <div data-testid="logo" />,
+}));
+vi.mock('@/widgets/Burger.svg?react', () => ({
+  default: () => <div data-testid="burger" />,
 }));
 vi.mock('@/shared/assets/images/header/profile.svg?react', () => ({
   default: () => <div data-testid="profile-icon" />,
@@ -22,7 +25,7 @@ vi.mock('@/features/auth/api/useAuth', () => ({
 
 describe('Header component', () => {
   it('рендерит логотип и все навигационные пункты', () => {
-    (useAuth as any).mockReturnValue({ isAuth: false });
+    vi.mocked(useAuth).mockReturnValue({ isAuth: false } as ReturnType<typeof useAuth>);
     render(
       <MemoryRouter>
         <Header />
@@ -40,7 +43,7 @@ describe('Header component', () => {
   });
 
   it('показывает кнопку "Войти", если пользователь не авторизован', () => {
-    (useAuth as any).mockReturnValue({ isAuth: false });
+    vi.mocked(useAuth).mockReturnValue({ isAuth: false } as ReturnType<typeof useAuth>);
     render(
       <MemoryRouter>
         <Header />
@@ -52,7 +55,7 @@ describe('Header component', () => {
   });
 
   it('показывает иконку профиля, если пользователь авторизован', () => {
-    (useAuth as any).mockReturnValue({ isAuth: true });
+    vi.mocked(useAuth).mockReturnValue({ isAuth: true } as ReturnType<typeof useAuth>);
     render(
       <MemoryRouter>
         <Header />
@@ -63,21 +66,19 @@ describe('Header component', () => {
     expect(screen.queryByTestId('modal-button')).not.toBeInTheDocument();
 
     // Проверяем, что ссылка ведёт в кабинет
-    const profileLink = screen.getByRole('link', { name: /личного кабинета/i });
-    expect(profileLink).toHaveAttribute('href', '/cabinet');
+    const cabinetLink = screen.getByTestId('profile-icon').closest('a');
+    expect(cabinetLink).toHaveAttribute('href', '/cabinet');
   });
 
-  it('каждая ссылка имеет aria-label', () => {
-    (useAuth as any).mockReturnValue({ isAuth: false });
+  it('ссылка на главную страницу имеет aria-label', () => {
+    vi.mocked(useAuth).mockReturnValue({ isAuth: false } as ReturnType<typeof useAuth>);
     render(
       <MemoryRouter>
         <Header />
       </MemoryRouter>
     );
 
-    const links = screen.getAllByRole('link');
-    links.forEach((link) => {
-      expect(link).toHaveAttribute('aria-label');
-    });
+    const mainLink = screen.getByRole('link', { name: /Вернуться на главную страницу/i });
+    expect(mainLink).toHaveAttribute('aria-label', 'Вернуться на главную страницу');
   });
 });

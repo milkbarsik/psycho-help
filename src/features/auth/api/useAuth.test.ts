@@ -2,6 +2,7 @@ import { useAuth } from "./useAuth";
 import AuthApi from "./auth-api";
 import { act } from '@testing-library/react'
 import type { User } from "@/shared/api/types";
+import type { AxiosResponse } from 'axios';
 import {vi, describe, beforeEach, it, expect} from 'vitest';
 
 vi.mock('./auth-api', () => ({
@@ -32,7 +33,7 @@ describe('useAuth Store', () => {
 
     it('По умолчанию сбросанные данные', () => {
         const state = useAuth.getState();
-        expect(state.isAuth === false);
+        expect(state.isAuth).toBe(false);
         expect(state.user).toBeNull()
     });
 
@@ -53,7 +54,7 @@ describe('useAuth Store', () => {
     })
 
     it('login() вызывает AuthApi.login и устанавливает пользователя', async () => {
-        (AuthApi.login as any).mockResolvedValueOnce({ data: mockUser })
+        vi.mocked(AuthApi.login).mockResolvedValueOnce({ data: mockUser } as AxiosResponse<User>)
     
         await act(async () => {
           await useAuth.getState().login('darklord@example.com', '666')
@@ -66,7 +67,7 @@ describe('useAuth Store', () => {
       })
 
       it('registration() вызывает AuthApi.register и устанавливает пользователя', async () => {
-        (AuthApi.registration as any).mockResolvedValueOnce({data: mockUser})
+        vi.mocked(AuthApi.registration).mockResolvedValueOnce({ data: mockUser } as AxiosResponse<User>)
         
         await act(async () => {
             await useAuth.getState().registration({
@@ -86,7 +87,7 @@ describe('useAuth Store', () => {
       })
 
       it('logout() вызывает AuthApi.logOut и очищает состояние', async () => {
-        (AuthApi.logOut as any).mockResolvedValueOnce({data: {}});
+        vi.mocked(AuthApi.logOut).mockResolvedValueOnce({ data: {} } as AxiosResponse);
 
         await act(async () => {
             await useAuth.getState().logOut();

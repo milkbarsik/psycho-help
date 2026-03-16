@@ -7,7 +7,7 @@ export default class AppointmentDto {
   type: string;
   reason: string;
   venue: string;
-  remind_time: string;
+  // remind_time: string;
 
   constructor(appointment: Appointment, userId: string | undefined) {
     this.patient_id = userId ? userId : '';
@@ -15,6 +15,6 @@ export default class AppointmentDto {
     this.type = appointment.type ?? '';
     this.reason = appointment.reason ?? '';
     this.venue = appointment.venue ?? '';
-    this.remind_time = combineDateAndTime(appointment?.date ?? '', appointment?.time ?? '');
+    // this.remind_time = combineDateAndTime(appointment?.date ?? '', appointment?.time ?? '');
   }
 }
