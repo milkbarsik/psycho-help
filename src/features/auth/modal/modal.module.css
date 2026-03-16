@@ -1,336 +1,400 @@
-
 .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    font-size: 16px;
-    font: var(--font-text-medium);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-size: 16px;
+  font: var(--font-text-medium);
 }
 
 .modalContent {
-    box-sizing: border-box;
-    background: white;
-    border-radius: 12px;
-    max-width: 718px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    padding: clamp(16px, 2.5vw, 36px);
+  box-sizing: border-box;
+  background: white;
+  border-radius: 20px;
+  max-width: 718px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: clamp(16px, 2.5vw, 36px);
 }
 
 .modalHeaderAuth {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
 .modalHeaderPassword {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .modalTitle {
-    margin: 0;
-    font-size: clamp(20px, 2.5vw, 24px);
-    font-weight: 600;
+  margin: 0;
+  font-size: clamp(20px, 2.5vw, 24px);
+  font-weight: 600;
 }
 
 .modalDesc {
-    margin-top: 12px;
-    color: #313235;
-    font-size: clamp(12px, 2.5vw, 14px);
-    font-weight: 400;
-    text-align: center;
+  margin-top: 12px;
+  color: #313235;
+  font-size: clamp(12px, 2.5vw, 14px);
+  font-weight: 400;
+  text-align: center;
 }
 
 .closeButton {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #999;
-    transition: color 0.2s;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  transition: color 0.3s;
 }
 
 .modalHeaderPassword .closeButton {
-    position: absolute;
-    right: 0;
+  position: absolute;
+  right: 0;
+}
+
+.modalHeaderPassword .closeButton {
+  position: absolute;
+  right: 0;
 }
 
 .closeButton:hover {
-    color: #333;
+  color: #333;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 0;
-    margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  margin-top: 24px;
 }
 
 .form label {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.form label.checkboxLabel {
+  flex-direction: row;
 }
 
 .input {
-    padding: 12px 16px;
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
-    transition: all 0.2s;
-    font-size: 16px;
+  padding: 12px 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  transition: all 0.3s;
+  font-size: 16px;
 }
 
 .input:hover {
-    border-color: #40a9ff;
+  border-color: #40a9ff;
 }
 
 .input:focus {
-    outline: none;
-    border-color: #1B50F5;
-    box-shadow: 0 0 0 2px rgba(27, 80, 245, 0.1);
+  outline: none;
+  border-color: #1b50f5;
+  box-shadow: 0 0 0 2px rgba(27, 80, 245, 0.1);
 }
 
 .hintText {
-    opacity: 0.5;
-    font-size: 12px;
-    color: #666;
+  opacity: 0.5;
+  font-size: 12px;
+  color: #666;
 }
 
 .errorText {
-    color: #ff4d4f;
-    font-size: 12px;
-    font-weight: 500;
+  color: #ff4d4f;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.checkboxText {
+  white-space: nowrap;
 }
 
 .rememberContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: clamp(12px, 2.5vw, 16px);
-}
-
-.rememberCheckbox {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: clamp(12px, 2.5vw, 16px);
+  min-width: 200px;
+  width: 100%;
 }
 
 .checkbox {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: #1B50F5;
+  width: 1px;
+  height: 1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  position: absolute;
+}
+.checkbox_custom {
+  flex-shrink: 0;
+  position: relative;
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #a8a8a8;
+  border-radius: 2px;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox:checked + .checkbox_custom::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 35%;
+  height: 60%;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.checkbox:checked + .checkbox_custom {
+  background-color: #1b50f5;
+  border-color: #1b50f5;
+  transition: all 0.3s;
+}
+
+.checkbox + .checkbox_custom:hover {
+  box-shadow: 0 0 0 4.5px rgba(238, 245, 255);
+  transition: all 0.3s ease;
+}
+
+.checkbox:disabled + .checkbox_custom {
+  background-color: var(--color-fill-neutral-primary);
+  border-color: var(--color-border-neutral-base);
+  box-shadow: none;
 }
 
 .forgotLink {
-    color: #1B50F5;
-    text-decoration: none;
-    transition: color 0.2s;
+  color: #1b50f5;
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
 .forgotLink:hover {
-    color: #0a3ad1;
+  color: #0a3ad1;
 }
 
 .errorMessage {
-    color: #ff4d4f;
-    background-color: #fff2f0;
-    padding: 12px 16px;
-    border-radius: 6px;
-    margin: 16px 0 0 0;
+  color: #ff4d4f;
+  background-color: #fff2f0;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin: 16px 0 0 0;
 }
 
 .footer {
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 .submitButton {
-    width: 100%;
-    height: 56px;
-    background-color: #1B50F5;
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-size: clamp(16px, 2.5vw, 20px);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
+  width: 100%;
+  height: 56px;
+  background-color: #1b50f5;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
 .submitButton:hover:not(:disabled) {
-    background-color: #0a3ad1;
+  background-color: #0a3ad1;
 }
 
 .submitButton:active:not(:disabled) {
-    background-color: #0829a3;
+  background-color: #0829a3;
 }
 
 .submitButton:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .Suggestion {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 12px;
-    gap: 6px;
-    color: #666;
-    font-size: clamp(12px, 2.5vw, 16px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  gap: 6px;
+  color: #666;
+  font-size: clamp(12px, 2.5vw, 16px);
 }
 
 .ModalSwitcher {
-    color: #1B50F5;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s;
+  color: #1b50f5;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
 .ModalSwitcher:hover {
-    color: #0a3ad1;
+  color: #0a3ad1;
 }
 
 /* Password field with show/hide button */
 .passwordWrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .passwordInput {
-    padding: 12px 40px 12px 16px;
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
-    transition: all 0.2s;
-    font-size: 16px;
-    width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  transition: all 0.3s;
+  font-size: 16px;
+  width: 100%;
 }
 
 .passwordInput:hover {
-    border-color: #40a9ff;
+  border-color: #40a9ff;
 }
 
 .passwordInput:focus {
-    outline: none;
-    border-color: #1B50F5;
-    box-shadow: 0 0 0 2px rgba(27, 80, 245, 0.1);
+  outline: none;
+  border-color: #1b50f5;
+  box-shadow: 0 0 0 2px rgba(27, 80, 245, 0.1);
 }
 
 .showPassButton {
-    position: absolute;
-    right: 12px;
-    background: none;
-    border: none;
-    padding: 6px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    cursor: pointer;
-    transition: color 0.2s;
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
 .showPassButton:hover {
-    color: #333;
+  color: #333;
 }
 
 .required::after {
-    content: " *";
-    color: #ff4d4f;
+  content: ' *';
+  color: #ff4d4f;
 }
 
 .names {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .button {
-    background: none;
-    border: 1px solid transparent;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    font-weight: 500;
-    font-size: 2rem;
-    line-height: 2.8rem;
-    padding: 1.5rem;
-    border-radius: 1.2rem;
-    text-decoration: none;
-    color: var(--color-label-neutral-primary);
-    transition: .3s all;
+  background: none;
+  border: 1px solid transparent;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  padding: 1.5rem;
+  border-radius: 1.2rem;
+  text-decoration: none;
+  color: var(--color-label-neutral-primary);
+  transition: 0.3s all;
 }
 
 .button svg {
-    stroke: currentColor;
+  stroke: currentColor;
 }
 
 .button:hover {
-    background-color: var(--color-interactive-brand-secondary);
-    border: 1px solid var(--color-interactive-brand-secondary);
-    color: var(--color-interactive-brand-primary);
+  background-color: var(--color-interactive-brand-secondary);
+  border: 1px solid var(--color-interactive-brand-secondary);
+  color: var(--color-interactive-brand-primary);
 }
 
 .button:active {
-    background-color: transparent;
-    border-color: var(--color-border-brand-strong);
-    color: var(--color-interactive-brand-primary);
+  background-color: transparent;
+  border-color: var(--color-border-brand-strong);
+  color: var(--color-interactive-brand-primary);
 }
 
 .button:focus-visible {
-    border-radius: 4px;
-    border-color: #1B50F5;
+  border-radius: 4px;
+  border-color: #1b50f5;
+}
+
+.input:has(+ .errorText) {
+  border: 1px solid #ff4d4f;
+}
+
+.passwordWrapper:has(+ .errorText) .passwordInput {
+  border: 1px solid #ff4d4f;
 }
 
 @media (max-width: 1024px) {
-    .button {
-        font-size: 1.6rem;
-        line-height: 2.4rem;
-        color: var(--color-label-neutral-inverted-primary);
-    }
+  .button {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: var(--color-label-neutral-inverted-primary);
+  }
 
-    .button:hover {
-        background-color: var(--color-interactive-brand-secondary);
-        border: 1px solid var(--color-interactive-brand-secondary);
-        color: var(--color-interactive-brand-primary);
-    }
+  .button:hover {
+    background-color: var(--color-interactive-brand-secondary);
+    border: 1px solid var(--color-interactive-brand-secondary);
+    color: var(--color-interactive-brand-primary);
+  }
 
-    .button:active {
-        background-color: transparent;
-        border: 1px solid var(--color-interactive-brand-secondary);
-        color: var(--color-label-neutral-inverted-primary);
-    }
+  .button:active {
+    background-color: transparent;
+    border: 1px solid var(--color-interactive-brand-secondary);
+    color: var(--color-label-neutral-inverted-primary);
+  }
 }
 
 @media (max-width: 425px) {
-    .button {
-        padding: 1rem;
-    }
+  .button {
+    padding: 1rem;
+  }
 }
