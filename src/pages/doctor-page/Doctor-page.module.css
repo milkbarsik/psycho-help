@@ -141,3 +141,12 @@
         margin: 0 auto;
     }
 }
+
+
+[data-theme="dark"]{
+    .card__content{
+        p{
+            color: #FFFFFF;
+        }
+    }
+}

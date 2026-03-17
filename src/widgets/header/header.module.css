@@ -114,10 +114,14 @@
 }
 
 [data-theme='dark'] {
+  .header__logo {
+    /* width: 120px; */
+    /* height: 36px; */
+  }
   .header__link {
     color: #ffffff;
   }
-  .header__link:hover{
+  .header__link:hover {
     color: #19191b;
   }
   .burger path {
@@ -126,6 +130,4 @@
   .header__list_open {
     background-color: #0c0d0d;
   }
-
-  
 }
