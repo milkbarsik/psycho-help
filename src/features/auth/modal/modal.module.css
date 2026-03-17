@@ -34,7 +34,7 @@
   }
   .modalDesc,
   .hintText {
-    color: #98989a;
+    color: #98989a !important;
   }
 }
 

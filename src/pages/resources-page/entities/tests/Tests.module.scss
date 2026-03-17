@@ -11,10 +11,12 @@
     padding-inline: 12.6rem;
     background-color: var(--color-interactive-brand-hover-secondary);
     color: var(--color-label-brand-primary);
+
     &:hover {
       color: var(--color-interactive-brand-hover-secondary);
     }
   }
+
   .testList {
     grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
 
@@ -50,4 +52,12 @@
       padding-inline: 1rem;
     }
   }
+}
+
+[data-theme="dark"] {
+  .showMore{
+    background-color: #4A4C50;
+    color: #FFFFFF;
+  }
+
 }

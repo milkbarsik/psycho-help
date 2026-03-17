@@ -150,3 +150,10 @@
     gap: 0.4rem;
   }
 }
+
+
+[data-theme="dark"]{
+  .counter{
+    color: #FFFFFF;
+  }
+}
