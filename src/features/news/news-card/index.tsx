@@ -38,7 +38,11 @@ export const NewsCard: FC<Props> = ({ newsItem, linkToDetails = true }) => {
   if (!linkToDetails) return content;
 
   return (
-    <Link to={`/news/${newsItem.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link
+      to={`/news/${newsItem.slug}`}
+      className={styles.link}
+      style={{ textDecoration: 'none', color: 'inherit' }}
+    >
       {content}
     </Link>
   );

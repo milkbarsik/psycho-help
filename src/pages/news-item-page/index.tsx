@@ -40,7 +40,7 @@ export const NewsItemPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.newsItemHeader}>
-        <Link to="/news" className={styles.backButton}>
+        <Link to="/news" onClick={() => navigate(-1)} className={styles.backButton}>
           <img src={chevronLeft} alt="Назад" />
           Новости
         </Link>
@@ -67,7 +67,7 @@ export const NewsItemPage = () => {
         className={styles.bottomBtn}
         icon={<LeftOutlined />}
         variant="secondary"
-        onClick={() => navigate('/news')}
+        onClick={() => navigate(-1)}
       >
         Другие новости
       </Button>

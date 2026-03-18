@@ -1,11 +1,8 @@
-.wrapper {
-  position: relative;
-  height: 100%;
-  padding: 1.6rem 2.5rem 8rem;
-  border-radius: 2rem;
-  background-color: var(--color-fill-brand-quaternary);
+.link {
+  display: block;
 
-  &:hover {
+  &:hover,
+  &:focus {
     .photo {
       scale: 1.03;
     }
@@ -14,6 +11,14 @@
       color: var(--color-interactive-brand-primary);
     }
   }
+}
+
+.wrapper {
+  position: relative;
+  height: 100%;
+  padding: 1.6rem 2.5rem 8rem;
+  border-radius: 2rem;
+  background-color: var(--color-fill-brand-quaternary);
 }
 
 .photoWrapper {
@@ -64,6 +69,7 @@
 .description {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-top: 1.2rem;
