@@ -65,8 +65,7 @@ export type TextBlockProps = {
 export const NewsType = {
   Announcement: 'Анонс мероприятия',
   Report: 'Отчет о мероприятии',
-};
-// } as const;
+} as const;
 
 export type NewsType = (typeof NewsType)[keyof typeof NewsType];
 export type News = {
@@ -76,12 +75,12 @@ export type News = {
   type: NewsType;
   date: string;
   title: string;
-  description: string;
-  link: string;
-  text: string;
-  ogTitle: string; //  <title> + og:title
-  ogDescription: string; // meta description + og:description
-  ogImage?: string; // og:image
+  description?: string;
+  link?: string;
+  text?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
 };
 
 // export interface User {

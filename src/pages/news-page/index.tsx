@@ -30,7 +30,7 @@ export const NewsPage = () => {
     <div className={styles.wrapper}>
       <div className={styles.blue}>
         <div className={styles.hero}>
-          <h2 className={styles.title}>Новости</h2>
+          <h1 className={styles.title}>Новости</h1>
           <img src={newsHeroImage} alt="Изображение новости" className={styles.image} />
           <p className={styles.text}>
             Здесь вы всегда будете в курсе последних событий, анонсов и изменений в работе нашей
@@ -39,11 +39,11 @@ export const NewsPage = () => {
         </div>
       </div>
 
-      <NewsList news={news} />
+      <div className={styles.listWrapper}>
+        <NewsList news={news} />
 
-      <div className={styles.telegramWrapper}>
         <div className={styles.telegramBanner}>
-          <h3 className={styles.telegramTitle}>Новости в нашем Telegram</h3>
+          <h2 className={styles.telegramTitle}>Новости в нашем Telegram</h2>
           <p className={styles.telegramText}>
             Подпишитесь, чтобы узнавать актуальную информацию самыми первыми
           </p>
@@ -56,7 +56,6 @@ export const NewsPage = () => {
           >
             Подписаться
             {/* <Button variant="primary">Подписаться</Button> */}
-            {/* Я не нашёл подходящего варианта для кнопки из макета */}
           </a>
         </div>
       </div>

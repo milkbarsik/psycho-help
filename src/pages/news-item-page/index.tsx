@@ -7,6 +7,7 @@ import { newsItemQueries } from '@/entities/news/api/queries';
 import { Result } from 'antd';
 import { Button } from '@/shared/ui';
 import { LeftOutlined } from '@ant-design/icons';
+import chevronLeft from '@/shared/assets/images/news/chevron-left.svg';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
@@ -38,19 +39,17 @@ export const NewsItemPage = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.top}>
+      <div className={styles.newsItemHeader}>
         <Link to="/news" className={styles.backButton}>
-          <LeftOutlined />
+          <img src={chevronLeft} alt="Назад" />
           Новости
         </Link>
         <div className={styles.info}>
-          <p className={styles.date}>{dayjs(newsItem.date).format('DD.MM.YYYY')}</p>
-          {newsItem.type && <p className={styles.type}>{newsItem.type}</p>}
+          <p>{dayjs(newsItem.date).format('DD.MM.YYYY')}</p>
+          <p>{newsItem.type}</p>
         </div>
       </div>
-
       <h1 className={styles.title}>{newsItem.title}</h1>
-
       {newsItem.image && (
         <div className={styles.imageWrapper}>
           <img
@@ -60,7 +59,9 @@ export const NewsItemPage = () => {
         </div>
       )}
 
-      <div className={styles.content} dangerouslySetInnerHTML={{ __html: newsItem.text }} />
+      {newsItem.text && (
+        <div className={styles.content} dangerouslySetInnerHTML={{ __html: newsItem.text }} />
+      )}
 
       <Button
         className={styles.bottomBtn}

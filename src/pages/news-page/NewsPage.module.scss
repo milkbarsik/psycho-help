@@ -1,8 +1,5 @@
-@use '@/shared/scss/abstracts/breakpoints' as *;
-@use '@/shared/scss/base/_typography.scss' as *;
-
 .wrapper {
-  margin: 6.1rem auto 12.8rem;
+  margin: 6.1rem 0 12.8rem;
 }
 
 .blue {
@@ -101,13 +98,16 @@
   }
 }
 
-.telegramWrapper {
-  max-width: 120rem;
+.listWrapper {
+  max-width: 144rem;
   margin: 0 auto;
+  padding: 4.8rem 12rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3.9rem;
 }
 
 .telegramBanner {
-  margin: 0 5.7rem;
   padding: 3.8rem 3.6rem 3rem;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
@@ -123,22 +123,21 @@
   font-size: 4rem;
   line-height: 4.4rem;
   letter-spacing: -0.04em;
-  color: var(--neutral-1000);
-  // color: var(--color-label-neutral-primary);
+  color: var(--color-interactive-neutral-primary);
 }
 
 .telegramText {
   font-size: 2rem;
   line-height: 2.8rem;
-  color: var(--neutral-1000);
-  // color: var(--color-label-neutral-secondary);
+  color: var(--color-interactive-neutral-primary);
 }
 
 .telegramIcon {
   grid-row: 1 / 4;
   grid-column: 2;
   justify-self: center;
-  max-height: 100%;
+  max-width: 25.7rem;
+  // width: 100%;
 }
 
 .telegramLink {
@@ -157,9 +156,19 @@
     background-color: var(--color-interactive-brand-hover);
     color: #fff;
   }
+
+  &:active {
+    background-color: var(--color-interactive-brand-active);
+  }
 }
 
 @media (max-width: 1200px) {
+  .listWrapper {
+    max-width: 107.4rem;
+    padding: 3.6rem 5.7rem 0;
+    gap: 1.2rem;
+  }
+
   .telegramBanner {
     gap: 2.9rem 0;
   }
@@ -172,8 +181,13 @@
 }
 
 @media (max-width: 720px) {
+  .listWrapper {
+    max-width: 62.6rem;
+    padding: 2.2rem 1rem 0;
+    gap: 1.6rem;
+  }
+
   .telegramBanner {
-    margin: 0 1rem;
     padding: 3.3rem 2.5rem 3.9rem;
     display: flex;
     flex-direction: column;
@@ -192,10 +206,34 @@
   }
 
   .telegramIcon {
-    max-height: 19.4rem;
+    max-width: 19.4rem;
   }
 
   .telegramLink {
     padding: 1rem 2.4rem;
+  }
+}
+
+// Сейчас всё сделано по макету
+// Но по хорошему в desktop-версии новости должны быть в 3 колонки, а баннер внизу
+// Иначе при большом количестве новостей баннер расползается
+// @media (min-width: 1201px) и все строчки внутри нужно удалить
+@media (min-width: 1201px) {
+  .listWrapper {
+    flex-direction: row;
+    gap: 3.9rem;
+  }
+
+  .telegramBanner {
+    width: 36.7rem;
+    padding: 3.3rem 2.5rem 5.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .telegramIcon {
+    max-width: 23.2rem;
+    margin: 0 4.2rem;
   }
 }

@@ -831,98 +831,6 @@
         }
       }
     },
-    "/news/": {
-      "get": {
-        "tags": ["news"],
-        "summary": "Get News",
-        "description": "Получить список новостей с пагинацией",
-        "operationId": "get_news_news__get",
-        "parameters": [
-          {
-            "name": "skip",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "description": "Количество записей для пропуска",
-              "default": 0,
-              "title": "Skip"
-            },
-            "description": "Количество записей для пропуска"
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "description": "Количество записей для получения",
-              "default": 12,
-              "title": "Limit"
-            },
-            "description": "Количество записей для получения"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/NewsResponse" },
-                  "title": "Response Get News News  Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/news/{slug}": {
-      "get": {
-        "tags": ["news"],
-        "summary": "Get News Item",
-        "description": "Получить конкретную новость по slug",
-        "operationId": "get_news_item_news__slug__get",
-        "parameters": [
-          {
-            "name": "slug",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string", "title": "Slug" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/NewsResponse" }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      }
-    },
     "/image/{filename}": {
       "get": {
         "tags": ["images"],
@@ -1693,25 +1601,6 @@
           "phone_number"
         ],
         "title": "PsychologistResponse"
-      },
-      "NewsResponse": {
-        "properties": {
-          "id": { "type": "string", "title": "Id" },
-          "slug": { "type": "string", "title": "Slug" },
-          "type": { "type": "string", "title": "Type" },
-          "image": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Image" },
-          "date": { "type": "string", "title": "Date" },
-          "title": { "type": "string", "title": "Title" },
-          "description": { "type": "string", "title": "Description" },
-          "link": { "type": "string", "title": "Link" },
-          "text": { "type": "string", "title": "Text" },
-          "ogTitle": { "type": "string", "title": "Og Title" },
-          "ogDescription": { "type": "string", "title": "Og Description" },
-          "ogImage": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Og Image" }
-        },
-        "type": "object",
-        "required": ["id", "slug", "type", "date", "title", "description", "link", "text", "ogTitle", "ogDescription"],
-        "title": "NewsResponse"
       },
       "ReviewsBase": { "properties": {}, "type": "object", "title": "ReviewsBase" },
       "RoleAssignRequest": {
