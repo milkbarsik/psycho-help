@@ -14,13 +14,9 @@ export const newsQueries = {
     queryOptions<NewsDto[], ResponseError>({
       queryKey: [newsQueryKey.list],
       queryFn: async () => {
-        try {
-          const { data } = await $api.get<NewsDto[]>('/news/');
-          return data;
-        } catch (error) {
-          console.warn('Backend /news/ failed, using MOCK_NEWS', error);
-          return MOCK_NEWS;
-        }
+        // const { data } = await $api.get<NewsDto[]>('/news/');
+        // return data;
+        return MOCK_NEWS; 
       },
       ...options,
     }),

@@ -22,6 +22,7 @@
   margin: 16px 0;
   line-height: 1.4;
   flex-grow: 1;
+  color: black;
 }
 
 .date {

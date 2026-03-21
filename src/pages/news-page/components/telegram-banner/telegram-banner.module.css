@@ -1,5 +1,5 @@
 .banner {
-  background: #f0f7ff;
+  background: var(--color-fill-brand-quaternary);
   border-radius: 12px;
   padding: 32px;
   display: flex;
@@ -34,7 +34,7 @@
 
 .buttonPC {
   text-align: center;
-  background: #407bfe;
+  background: var(--color-fill-brand-primary);
   color: white;
   border: none;
   padding: 12px;
@@ -49,7 +49,7 @@
 
 .buttonFN {
   text-align: center;
-  background: #407bfe;
+  background: var(--color-fill-brand-primary);
   color: white;
   border: none;
   padding: 12px;

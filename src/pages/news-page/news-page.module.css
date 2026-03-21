@@ -1,5 +1,5 @@
 .hero {
-  background: #d9e5ff;
+  background: var(--color-fill-brand-tetriary);
   padding: 1rem 0;
   margin: 4.8rem 0;
 }
@@ -25,7 +25,7 @@
 .title {
   font-weight: 500;
   font-size: 9.6rem;
-  color: #5e8bf4;
+  color: var(--color-label-brand-secondary);
 }
 
 .subtitle {
