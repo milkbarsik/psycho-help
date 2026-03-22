@@ -2,7 +2,7 @@
 @use '@/shared/scss/base/_typography.scss' as *;
 
 .wrapper {
-  margin-block: 4.8rem 9.6rem; 
+  margin-block: 4.8rem 9.6rem;
 
   .title {
     @include header(2);
@@ -12,17 +12,17 @@
   }
 
   .list_wrapper {
-      & > * {
-        flex: 0 0 100%; 
-      }
+    & > * {
+      flex: 0 0 100%;
     }
+  }
 
   @include past-tablet {
-    margin-block: 6.4rem 9.6rem; 
-    
+    margin-block: 6.4rem 9.6rem;
+
     .list_wrapper {
       & > * {
-        flex: 0 0 calc(50% - 1.5rem); 
+        flex: 0 0 calc(50% - 1.5rem);
       }
     }
 
@@ -32,8 +32,8 @@
   }
 
   @include past-desktop {
-    margin-block: 7.4rem 15.7rem; 
-  
+    margin-block: 7.4rem 15.7rem;
+
     .list_wrapper {
       & > * {
         flex: 0 0 calc(33.333% - 1.1rem);
@@ -52,7 +52,13 @@
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  gap: 1.6rem; 
+  gap: 1.6rem;
   flex-wrap: wrap;
   align-items: stretch;
+}
+
+[data-theme='dark'] {
+  .title {
+    color: white;
+  }
 }

@@ -227,3 +227,25 @@
     padding-inline: 0;
   }
 }
+
+[data-theme='dark'] {
+  .title {
+    color: white;
+  }
+
+  .text {
+    color: #98999a;
+  }
+  .tab {
+    background-color: #4a4c50;
+    color: white;
+  }
+  .tab.active {
+    background-color: rgba(27, 80, 245, 0.5);
+  }
+
+  .button {
+    background-color: white;
+    color: #19191b;
+  }
+}
