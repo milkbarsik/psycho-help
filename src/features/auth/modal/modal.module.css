@@ -409,4 +409,17 @@
   .button:active {
     color: #1b50f5;
   }
+
+  .modalContent {
+    background: #1e1e1f;
+  }
+  .hintText {
+    color: #98999a;
+  }
+  .modalDesc {
+    color: #98999a;
+  }
+  .Suggestion span {
+    color: #98999a;
+  }
 }
