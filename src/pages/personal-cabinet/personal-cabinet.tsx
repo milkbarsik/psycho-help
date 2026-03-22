@@ -86,7 +86,7 @@ const PersonalCabinet: FC = () => {
             />
 
             <section className={styles.section}>
-              <h3 className={styles.sectionTitle}>Ближайшие мои записи</h3>
+              <h3 className={styles.sectionTitle}>Ближайшие записи</h3>
               <div className={styles.cardsGrid}>
                 {upcoming.length > 0 ? (
                   upcoming.map((app) => (

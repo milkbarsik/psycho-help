@@ -12,8 +12,8 @@ const GreetingBlock = () => {
 
   const handleAppointment = () => {
     // TODO: Добавить обработку записи на прием
-    console.log('Записаться на прием')
-  }
+    console.log('Записаться на прием');
+  };
 
   const handleSelect = (type: number) => {
     if (selectedOption === type) {
@@ -21,7 +21,7 @@ const GreetingBlock = () => {
       return;
     }
     setSelectedOption(type);
-  }
+  };
 
   return (
     <div className={styles.greeting}>
@@ -35,29 +35,35 @@ const GreetingBlock = () => {
             </div>
             <div className={styles.greeting__subtitle_wrapper}>
               <span className={styles.greeting__subtitle}>
-                Иногда справляться с трудностями в одиночку тяжело. Наши психологи помогут найти
-                выход. Консультации бесплатны, конфиденциальны и доступны очно или онлайн
+                Иногда справляться с трудностями в одиночку бывает тяжело. Наши психологи помогут
+                вам найти выход. Консультации бесплатны, конфиденциальны и доступны очно или онлайн.
               </span>
             </div>
           </div>
           <div className={styles.greeting__controls}>
             <div className={styles.greeting__options}>
-              <button 
-                onClick={() => handleSelect(1)} 
-                className={clsx(styles.greeting__option, {[styles.greeting__selected]: selectedOption === 1})}
-                >
+              <button
+                onClick={() => handleSelect(1)}
+                className={clsx(styles.greeting__option, {
+                  [styles.greeting__selected]: selectedOption === 1,
+                })}
+              >
                 <Personally className={styles.greeting__option_icon} />
                 <span className={styles.greeting__option_text}>лично</span>
               </button>
-              <button 
-                onClick={() => handleSelect(2)} 
-                className={clsx(styles.greeting__option, {[styles.greeting__selected]: selectedOption === 2})}
-                >
+              <button
+                onClick={() => handleSelect(2)}
+                className={clsx(styles.greeting__option, {
+                  [styles.greeting__selected]: selectedOption === 2,
+                })}
+              >
                 <Online className={styles.greeting__option_icon} />
                 <span className={styles.greeting__option_text}>онлайн</span>
               </button>
             </div>
-            <button onClick={handleAppointment} className={styles.greeting__submit}>Записаться</button>
+            <button onClick={handleAppointment} className={styles.greeting__submit}>
+              Записаться
+            </button>
           </div>
         </div>
         <div className={styles.greeting__image_wrapper}>
