@@ -1,12 +1,18 @@
 import React from 'react';
 import type { FC } from 'react';
+import { createPortal } from 'react-dom';
 import ModalRegistration from './modal-registration';
 import styles from './modal.module.css';
 import ModalLogin from './modal-login';
 import ModalForgotPassword from './modal-forgot-password';
 import ModalChangePassword from './modal-change-password';
 import Auth from './icons/Auth.svg?react';
-const ModalWindow: FC = () => {
+
+interface ModalWindowProps {
+  onMenuClose?: () => void;
+}
+
+const ModalWindow: FC<ModalWindowProps> = ({ onMenuClose }) => {
   const [modalWindow, setModalWindow] = React.useState<string>('log');
   const [isModalOpen, setModalOpen] = React.useState<boolean>(false);
 
@@ -48,17 +54,25 @@ const ModalWindow: FC = () => {
     return null;
   };
 
+  // Закрываем бургер-меню при открытии модалки
+  const handleButtonClick = () => {
+    if (onMenuClose) {
+      onMenuClose();
+    }
+    setModalOpen(!isModalOpen);
+  };
+
   return (
     <div className={styles.buttonWrapper}>
       <button
         className={styles.button}
-        onClick={() => setModalOpen(!isModalOpen)}
+        onClick={handleButtonClick}
         aria-label="Открыть окно входа"
       >
         <Auth />
         <span>Войти</span>
       </button>
-      {isModalOpen && render(modalWindow)}
+      {isModalOpen ? createPortal(render(modalWindow), document.body) : null}
     </div>
   );
 };

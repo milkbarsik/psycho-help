@@ -5,7 +5,7 @@ import { TRANSLATES } from '@/pages/resources-page/consts';
 import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 
-const initialPolls = pollMocks.slice(0, 5);
+const initialPolls = pollMocks.slice(0, 6);
 
 export const Polls = () => {
   const [polls, setPolls] = useState(initialPolls);

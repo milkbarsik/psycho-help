@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './Title.module.css';
+import styles from './Title.module.scss';
 import doctorImg from '@/shared/assets/images/doctors/titleImg.svg';
 import ComputerIcon from '@/shared/assets/images/doctors/computer.svg?react';
 import UserIcon from '@/shared/assets/images/doctors/user.svg?react';

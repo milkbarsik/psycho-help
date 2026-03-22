@@ -6,7 +6,7 @@ import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const initialArticles = articleMocks.slice(0, 5);
+const initialArticles = articleMocks.slice(0, 6);
 
 const MOCK_ARTICLE_ID = 1;
 
@@ -29,6 +29,7 @@ export const Articles = () => {
         {articles.map((item, index) => {
           return (
             <ArticleCard
+              data-testid="article-card"
               ellipseDescription
               title={item.title}
               info={{
@@ -38,6 +39,7 @@ export const Articles = () => {
               description={item.description}
               bottomSlot={
                 <Button
+                  data-testid="read-article"
                   variant="secondary"
                   // TODO: добавить настоящий id, когда появится бэк
                   onClick={handleOpenArticle.bind(null, MOCK_ARTICLE_ID)}

@@ -149,13 +149,22 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
           </label>
           <div className={styles.rememberContainer}>
             <div className={styles.rememberCheckbox}>
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className={styles.checkbox}
-              />
-              Запомнить меня
+              <label 
+              className={styles.checkboxLabel}>
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className={styles.checkbox}
+                />
+                <span
+                  className={styles.checkbox_custom}>
+                </span>
+                <span
+                className={styles.checkboxText}>
+                  Запомнить меня
+                </span>
+              </label>
             </div>
             <a
               className={styles.forgotLink}

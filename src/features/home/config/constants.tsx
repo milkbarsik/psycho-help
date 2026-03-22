@@ -31,16 +31,16 @@ export const SERVICE_PROPS = [
 export const REASONS_TO_VISIT = [
   { title: '...в поиске себя', image: StarRed },
   { title: '...в поиске выхода\nиз депрессии', image: StormRed },
-  { title: '...в преодоление\nперепадов настроения', image: ControlEmotions },
-  { title: '...в повышение\nконцентрации', image: PuzzleRed },
-  { title: '...в повышение\nсамооценки', image: MirrorRed },
-  { title: '...в снижение\nуровня стресса', image: PhoneRed },
+  { title: '...в преодолении\nперепадов настроения', image: ControlEmotions },
+  { title: '...в повышении\nконцентрации', image: PuzzleRed },
+  { title: '...в повышении\nсамооценки', image: MirrorRed },
+  { title: '...в снижении\nуровня стресса', image: PhoneRed },
 ];
 
 // export const REASONS_TO_VISIT = [
 //   { title: 'Помощь в нахождении себя', image: FindingYourselfImage },
 //   { title: 'Поиск решения в трудный период', image: ProblemSolvingImage },
-//   { title: 'Преодоление колебаний в настроении', image: MoodSwingsImage },
+//   { title: 'Преодолении колебаний в настроении', image: MoodSwingsImage },
 //   { title: 'Повышение самооценки', image: SelfetimateImage },
 //   { title: 'Повышение концентрации', image: ConcentrationImage },
 //   { title: 'Снижение уровня стресса', image: StressReductionImage },
