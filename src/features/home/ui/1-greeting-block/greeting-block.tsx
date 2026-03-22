@@ -3,12 +3,12 @@ import GreetingDesktop from '@/features/home/ui/1-greeting-block/img/greeting-de
 import GreetingTablet from '@/features/home/ui/1-greeting-block/img/greeting-tablet.png';
 import GreetingMobile from '@/features/home/ui/1-greeting-block/img/greeting-mobile.png';
 import AppointmentModule from '@/widgets/appointment-module';
+import { useState } from 'react';
 
 const GreetingBlock = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
   const handleAppointment = () => {
-    // TODO: Добавить обработку записи на прием
     console.log('Записаться на прием');
   };
 

@@ -1,4 +1,4 @@
-import styles from './Title.module.css';
+import styles from './Title.module.scss';
 import doctorImg from '@/shared/assets/images/doctors/titleImg.svg';
 import AppointmentModule from '@/widgets/appointment-module';
 
