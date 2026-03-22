@@ -14,7 +14,6 @@
   z-index: 2;
 }
 
-/* Фоновые буквы */
 .backgroundLetters {
   position: absolute;
   bottom: 0;
@@ -29,7 +28,6 @@
   pointer-events: none;
 }
 
-/* Верхняя секция */
 .topSection {
   display: flex;
   justify-content: space-between;
@@ -115,11 +113,10 @@
   filter: brightness(0) invert(1);
 }
 
-/* Секция с адресами */
 .addressesSection {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 120px;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 40px;
   margin-bottom: 40px;
 }
 
@@ -127,7 +124,10 @@
   text-align: left;
   position: relative;
   padding: 40px 0;
-  min-height: 200px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .addressBackgroundLetters {
@@ -135,9 +135,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 230px;
+  font-size: 180px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.06);
   z-index: 1;
   pointer-events: none;
   white-space: nowrap;
@@ -163,7 +163,6 @@
   z-index: 2;
 }
 
-/* Копирайт */
 .copyright {
   text-align: center;
   padding-top: 20px;
@@ -177,7 +176,17 @@
   margin: 0;
 }
 
-/* Адаптивность */
+@media (max-width: 1100px) {
+  .addressesSection {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+  }
+  
+  .addressBackgroundLetters {
+    font-size: 150px;
+  }
+}
+
 @media (max-width: 1024px) {
   .topSection {
     flex-direction: column;
@@ -190,17 +199,18 @@
     width: 100%;
   }
 
-  .addressesSection {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 100px;
-  }
-
-  .addressBackgroundLetters {
-    font-size: 180px;
-  }
-
+  .addressBackgroundLetters,
   .backgroundLetters {
-    font-size: 180px;
+    display: none;
+  }
+
+  .addressItem {
+    min-height: 0;
+    padding: 20px 0;
+  }
+
+  .addressesSection {
+    gap: 40px;
   }
 }
 
@@ -238,46 +248,23 @@
     font-size: 14px;
   }
 
-  .socialSection {
-    gap: 12px;
-  }
-
   .socialLink {
     width: 40px;
     height: 40px;
   }
 
-  .socialIcon {
-    width: 20px;
-    height: 20px;
-  }
-
   .addressesSection {
     grid-template-columns: 1fr;
-    gap: 0px;
+    gap: 0;
   }
 
   .addressItem {
-    padding: 10px 0;
-    min-height: 0;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .addressStreet {
-    font-size: 14px;
-  }
-
-  .addressAuditorium {
-    font-size: 13px;
-  }
-
-  .addressBackgroundLetters {
-    font-size: 180px;
-    display: none;
-  }
-
-  .backgroundLetters {
-    font-size: 10px;
-    display: none;
+  .addressItem:last-child {
+    border-bottom: none;
   }
 
   .copyright p {
