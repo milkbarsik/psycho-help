@@ -398,3 +398,15 @@
     padding: 1rem;
   }
 }
+
+[data-theme='dark'] {
+  .button {
+    color: white;
+  }
+  .button:hover {
+    color: #19191b;
+  }
+  .button:active {
+    color: #1b50f5;
+  }
+}

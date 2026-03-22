@@ -1,6 +1,13 @@
 .layout {
-    overflow: hidden;
-    min-height: 100vh;
-    width: 100vw;
-    background: #ffffff;
+  overflow: hidden;
+  min-height: 100vh;
+  width: 100vw;
+  background: #ffffff;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  .layout {
+    background: #0c0d0d;
+  }
 }
