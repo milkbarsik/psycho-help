@@ -32,3 +32,9 @@
     padding: 1.6rem 6.4rem;
   }
 }
+
+[data-theme='dark'] {
+  .tab.active {
+    background-color: #192f8f;
+  }
+}

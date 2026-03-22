@@ -150,3 +150,16 @@
     gap: 0.4rem;
   }
 }
+
+[data-theme='dark'] {
+  .counter {
+    color: white;
+  }
+  .option {
+    background-color: #1e1e1f;
+    color: white;
+  }
+  .buttonActionNext {
+    background-color: #192f8f;
+  }
+}

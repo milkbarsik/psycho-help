@@ -114,3 +114,19 @@
 .bottomSlot {
   margin-top: auto;
 }
+
+[data-theme='dark'] {
+  .wrapper {
+    background-color: #0c0d0d;
+    border: 1px solid white;
+  }
+  .imageWrapper {
+    background-color: white;
+  }
+  .title {
+    color: white;
+  }
+  .description {
+    color: #98999a !important;
+  }
+}
