@@ -12,7 +12,7 @@
 }
 
 .greeting__option {
-  background: #f9f9f9;
+  background: var(--color-background-neutral-secondary);
   border: 2px solid transparent;
   user-select: none;
   display: flex;
@@ -29,27 +29,27 @@
 }
 
 .greeting__option:hover {
-  color: #1b50f5;
-  background-color: #eef5ff;
+  color: var(--color-interactive-brand-primary);
+  background-color: var(--color-interactive-brand-secondary);
 }
 
 .greeting__option:active,
 .greeting__option:active:hover {
   background: none;
-  border-color: #1b50f5;
-  color: #1b50f5;
+  border-color: var(--color-interactive-brand-primary);
+  color: var(--color-interactive-brand-primary);
 }
 
 .greeting__option:focus-visible {
   border-radius: 4px;
-  border-color: #1b50f5;
+  border-color: var(--color-interactive-brand-primary);
 }
 
 .greeting__submit {
   width: 100%;
   border: solid;
-  background-color: #1b50f5;
-  color: white;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-label-neutral-inverted-primary);
   padding: 16px;
   border-radius: 12px;
   font-size: 2rem;
@@ -57,11 +57,11 @@
 }
 
 .greeting__submit:hover {
-  background-color: #153be1;
+  background-color: var(--color-interactive-brand-hover);
 }
 
 .greeting__submit:active {
-  background-color: #192f8f;
+  background-color: var(--color-interactive-brand-active);
 }
 
 .buttonTextFull {
@@ -75,26 +75,26 @@
 }
 
 .greeting__option_active {
-  background: #e3f2fd;
-  border-color: #2196f3;
+  background: var(--color-interactive-brand-secondary); 
+  color: var(--color-interactive-brand-primary); 
 }
 
 .greeting__submit_disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  background: #ccc;
+  background: var(--color-interactive-brand-disable);
 }
 
 .greeting__submit_disabled:hover {
-  background: #ccc;
+  background: var(--color-interactive-brand-disable);
 }
 
 .page-service .greeting__option_active {
-  background: #ffe0b2;
-  border-color: #ff9800;
+  background: var(--color-fill-warning-primary);
+  border-color: var(--color-label-warning-primary);
 }
 
 .page-contact .greeting__option_active {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: white;
+  background: var(--color-fill-neutral-primary);
+  border-color: var(--color-border-neutral-inverted);
 }
