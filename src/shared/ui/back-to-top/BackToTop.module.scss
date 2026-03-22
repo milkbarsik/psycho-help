@@ -5,7 +5,7 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #19191B;
+  background: #19191b;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -18,7 +18,11 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px) scale(0.95);
-  transition: opacity 320ms ease, transform 320ms ease, box-shadow 200ms ease, visibility 320ms;
+  transition:
+    opacity 320ms ease,
+    transform 320ms ease,
+    box-shadow 200ms ease,
+    visibility 320ms;
   outline: 2px solid transparent;
 }
 
@@ -31,11 +35,11 @@
 .button:hover {
   transform: translateY(0) scale(1.06);
   box-shadow: 0 12px 28px rgba(33, 33, 33, 0.16);
-  background: #19191B;
+  background: #19191b;
 }
 
 .button:focus-visible {
-  outline: 2px solid #1B50F5;
+  outline: 2px solid #1b50f5;
   outline-offset: 2px;
 }
 
@@ -43,4 +47,11 @@
   font-size: 2.2rem;
   line-height: 1;
   transform: translateY(-1px);
+}
+
+[data-theme='dark'] {
+  .button {
+    background-color: white;
+    color: #0c0d0d;
+  }
 }
