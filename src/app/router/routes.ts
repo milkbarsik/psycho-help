@@ -6,6 +6,8 @@ import { DoctorsPage } from '@/pages/doctors-page';
 import { DoctorPage } from '@/pages/doctor-page';
 import { ResourcesPage, TestPage } from '@/pages';
 import { ArticlePage } from '@/pages/article-page';
+import { NewsPage } from '@/pages';
+import { NewsItemPage } from '@/pages';
 
 /*
  Тип маршрута:
@@ -63,10 +65,18 @@ export const authRoutes: routePath[] = [
     path: '/cabinet',
     Component: PersonalCabinet,
   },
-   {
-    path: "/article/:id",
-    Component: ArticlePage
-  }
+  {
+    path: '/article/:id',
+    Component: ArticlePage,
+  },
+  {
+    path: '/news/',
+    Component: NewsPage,
+  },
+  {
+    path: '/news/:slug',
+    Component: NewsItemPage,
+  },
 ];
 
 export const notAuthRoutes: routePath[] = [
@@ -95,8 +105,15 @@ export const notAuthRoutes: routePath[] = [
     Component: DoctorPage,
   },
   {
-    path: "/article/:id",
-    Component: ArticlePage
-  }
+    path: '/article/:id',
+    Component: ArticlePage,
+  },
+  {
+    path: '/news/',
+    Component: NewsPage,
+  },
+  {
+    path: '/news/:slug',
+    Component: NewsItemPage,
+  },
 ];
-

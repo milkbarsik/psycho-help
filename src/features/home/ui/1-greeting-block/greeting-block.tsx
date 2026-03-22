@@ -5,6 +5,21 @@ import GreetingMobile from '@/features/home/ui/1-greeting-block/img/greeting-mob
 import AppointmentModule from '@/widgets/appointment-module';
 
 const GreetingBlock = () => {
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+
+  const handleAppointment = () => {
+    // TODO: Добавить обработку записи на прием
+    console.log('Записаться на прием');
+  };
+
+  const handleSelect = (type: number) => {
+    if (selectedOption === type) {
+      setSelectedOption(null);
+      return;
+    }
+    setSelectedOption(type);
+  };
+
   return (
     <div className={styles.greeting}>
       <div className={styles.greeting__content}>
@@ -17,8 +32,8 @@ const GreetingBlock = () => {
             </div>
             <div className={styles.greeting__subtitle_wrapper}>
               <span className={styles.greeting__subtitle}>
-                Иногда справляться с трудностями в одиночку тяжело. Наши психологи помогут найти
-                выход. Консультации бесплатны, конфиденциальны и доступны очно или онлайн
+                Иногда справляться с трудностями в одиночку бывает тяжело. Наши психологи помогут
+                вам найти выход. Консультации бесплатны, конфиденциальны и доступны очно или онлайн.
               </span>
             </div>
           </div>

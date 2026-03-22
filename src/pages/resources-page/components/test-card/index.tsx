@@ -1,8 +1,8 @@
-import type { ReactNode, MouseEvent } from 'react';
+import type { ReactNode, MouseEvent, HTMLAttributes } from 'react';
 import clsx from 'clsx';
 import styles from './TestCard.module.scss';
 
-interface IProps {
+interface IProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
   description?: string;
   imageSrc?: string;
@@ -27,9 +27,11 @@ export const TestCard = ({
   imageSrc,
   bottomSlot,
   hasHorizontalDesktopVersion,
+  ...props
 }: IProps) => {
   return (
     <div
+      {...props}
       onClick={onClick}
       className={clsx(styles.wrapper, className, {
         [styles.desktop]: hasHorizontalDesktopVersion,

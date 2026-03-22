@@ -4,100 +4,34 @@
 }
 
 .wrapper {
-    max-width: 1164px;
-    width: 90%;
-    margin: 0 auto;
-}
-
-.card__wrapper {
-    margin-top: 104px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.card__content {
     width: 100%;
-    max-width: 727px;
+    max-width: 1200px;
+    margin: 74px auto 148px auto;
 }
 
-.thirsname {
-    font-size: 4.8rem;
-    font-weight: 600;
-}
-
-.IF {
-    font-size: 3.6rem;
-    font-weight: 500;
-}
-
-.educ {
-    margin-top: 16px;
-}
-
-.btn {
-    background-color: #5E8BF4;
-    color: white;
-    padding: 12px 48px;
-    border: none;
-    border-radius: 16px;
-    margin-top: 34px;
-    cursor: pointer;
-}
-
-.img {
-    width: 351px;
-    height: auto;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 25%;
-    border-radius: 30px;
-    overflow: hidden;
-}
-
-.textBold {
-    margin-top: 72px;
-    font-size: 2.8rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.text {
-    font-size: 2.4rem;
-}
-
-.subtitle {
-    margin-top: 103px;
-    font-size: 4.8rem;
-    font-weight: 600;
-}
-
-.qualif__wrapper {
+.links {
     display: flex;
-    margin: 63px auto 86px auto;
-    gap: 20px;
-    justify-content: space-between;
+    gap:5px
 }
 
-.qualif__elem {
-    box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.3);
-    width: 556px;
-    padding: 40px;
-    border-radius: 46px;
+.link {
+    color: var(--color-label-neutral-secondary);
 }
 
-.qualif__title {
-    color: #5E8BF4;
-    font-size: 2.8rem;
-    font-weight: 600;
+.contentWrapper {
+    background-color: var(--color-background-neutral-secondary);
+    padding: 24px;
+    border-radius: 32px;
+    margin-top: 60px;
 }
 
-.qualif__text {
-    margin-top: 22px;
-    font-size: 2.4rem;
-    color: #7A7A7A;
-}
+.mobileLink {
+    display: none;
+} 
 
-@media screen and (max-width: 700px) {
+
+
+@media screen and (max-width: 768px) {
     .thirsname {
         font-size: 40px;
         font-weight: 600;
@@ -128,16 +62,40 @@
     .qualif__wrapper {
         flex-wrap: wrap;
     }
+
+    .mobileLink {
+        display: none;
+    }
 }
 
-@media screen and (max-width: 600px) {
-    .card__wrapper {
-        flex-wrap: wrap;
+@media screen and (max-width: 480px) {
+    .wrapper {
+        margin-top: 21px;
+        width: 93.65%;
     }
-
     .img {
         width: 351px;
         height: 351px;
         margin: 0 auto;
+    }
+
+    .links {
+        display: none;
+    }
+
+    .mobileLink {
+        display: block;
+        margin-left: 10px;
+    }
+
+    
+    .contentWrapper {
+        background-color: inherit;
+        padding: 0;
+        margin-top: 48px;
+    }
+
+    .link {
+        margin-left: 0;
     }
 }

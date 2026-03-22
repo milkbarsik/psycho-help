@@ -1,3 +1,5 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+
 :root {
     --border-radius-card: 28px;
     --card-padding: 24px;
@@ -34,13 +36,44 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    overflow: hidden;
     padding: var(--card-padding);
+
+    & > * {
+        z-index: 1;
+    }
 }
 
 .features__1_content {
     display: flex;
     flex-direction: column;
     gap: var(--content-gap);
+}
+
+.features__1_image_wrapper {
+    width: 100%;
+    max-width: 25rem;
+    z-index: 0;
+    position: absolute;
+    bottom: 0;
+    right: -2rem;
+    
+    .features__1_image {
+        width: 100%;
+        height: auto;
+    }
+
+    @include past-tablet {
+        max-width: 27rem;
+        bottom: -.4rem;
+        right: 4.2rem;
+    }
+
+    @include past-desktop {
+        max-width: 40rem;
+        right: -.5rem;
+    }
 }
 
 .features__1_title {
@@ -166,6 +199,7 @@
         grid-column: span 2 / span 2;
         grid-column-start: 1;
         grid-row-start: 3;
+        height: 41rem;
     }
 
     .features__grid_2 {

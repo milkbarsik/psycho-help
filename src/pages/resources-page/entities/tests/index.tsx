@@ -5,7 +5,7 @@ import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const initialTests = testMocks.slice(0, 5);
+const initialTests = testMocks.slice(0, 6);
 
 export const Tests = () => {
   const [tests, setTests] = useState(initialTests);
@@ -22,10 +22,11 @@ export const Tests = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.testList}>
+      <div className={styles.testList} data-testid="tests-list">
         {tests.map((item, index) => {
           return (
             <TestCard
+              data-testid="test-card"
               ellipseDescription
               title={item.title}
               info={{
@@ -41,7 +42,7 @@ export const Tests = () => {
         })}
       </div>
       {isShowMoreVisible && (
-        <Button className={styles.showMore} onClick={handleShowMore}>
+        <Button data-testid="show-more-tests" className={styles.showMore} onClick={handleShowMore}>
           Показать ещё
         </Button>
       )}

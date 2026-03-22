@@ -22,12 +22,15 @@ export function useFetch<T>(foo: () => Promise<T>): UseFetchReturn {
     try {
       setIsLoading(true);
       await foo();
+      setError({ message: '', status: undefined });
     } catch (e) {
-      setError(
-        e instanceof (AxiosError || Error)
-          ? { message: e.message, status: e.response?.status }
-          : { message: 'unknown error', status: undefined },
-      );
+      if (e instanceof AxiosError) {
+        setError({ message: e.message, status: e.response?.status });
+      } else if (e instanceof Error) {
+        setError({ message: e.message, status: undefined });
+      } else {
+        setError({ message: 'unknown error', status: undefined });
+      }
     } finally {
       setIsLoading(false);
     }

@@ -8,8 +8,8 @@ const CallsBlock = () => {
     <div className={styles.calls}>
       <div className={styles.calls__text_wrapper}>
         <span className={styles.calls__text}>
-          В выходные и праздничные дни, ночью, за срочной психологической помощью можно обратиться
-          по следующим телефонам
+          В выходные и праздничные дни, а также ночью за срочной психологической помощью можно
+          обратиться по следующим телефонам:
         </span>
       </div>
       <div className={styles.calls__content}>
@@ -54,7 +54,7 @@ const CallsBlock = () => {
           </div>
           <div className={styles.calls__item}>
             <span className={styles.calls__title}>
-              Горячая линия центра экстренной психологической помощи МЧС России:
+              Горячая линия Центра экстренной психологической помощи МЧС России:
             </span>
             <a className={styles.calls__phone} href="tel:8 (495) 989-50-50">
               8 (495) 989-50-50

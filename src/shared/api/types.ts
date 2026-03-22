@@ -21,7 +21,17 @@ export type User = {
   phone_number: string;
   email: string;
   social_media: string;
+  status?: 'student' | 'teacher' | 'admin';
+  study_group?: string;
+  avatar_url?: string;
 };
+
+export type UserProfileUpdate = Partial<
+  Pick<
+    User,
+    'first_name' | 'middle_name' | 'last_name' | 'phone_number' | 'email' | 'status' | 'study_group'
+  >
+>;
 
 export type AuthRes = {
   status_code: number;
@@ -52,6 +62,26 @@ export type TextBlockProps = {
   info: string;
 };
 
+export const NewsType = {
+  Announcement: 'Анонс мероприятия',
+  Report: 'Отчет о мероприятии',
+} as const;
+
+export type NewsType = (typeof NewsType)[keyof typeof NewsType];
+export type News = {
+  id: string;
+  slug: string;
+  image?: string;
+  type: NewsType;
+  date: string;
+  title: string;
+  description?: string;
+  link?: string;
+  text?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+};
 
 // export interface User {
 //   userId: number;
