@@ -155,3 +155,29 @@
     font-size: 1.2rem;
   }
 }
+
+[data-theme='dark'] {
+  .name,
+  .qual {
+    color: white;
+  }
+  .exp,
+  .office,
+  .consultArea {
+    color: #98999a;
+  }
+  .consultArea {
+    border: 1px solid #98999a;
+  }
+  .infoBtn {
+    color: white;
+  }
+  .supInfo {
+    color: #98999a;
+  }
+
+  .regBtn {
+    background-color: white;
+    color: #19191b;
+  }
+}
