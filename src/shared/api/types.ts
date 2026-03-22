@@ -62,6 +62,27 @@ export type TextBlockProps = {
   info: string;
 };
 
+export const NewsType = {
+  Announcement: 'Анонс мероприятия',
+  Report: 'Отчет о мероприятии',
+} as const;
+
+export type NewsType = (typeof NewsType)[keyof typeof NewsType];
+export type News = {
+  id: string;
+  slug: string;
+  image?: string;
+  type: NewsType;
+  date: string;
+  title: string;
+  description?: string;
+  link?: string;
+  text?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+};
+
 // export interface User {
 //   userId: number;
 //   name: string;
