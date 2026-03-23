@@ -1,17 +1,26 @@
 body {
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
+
+  // Это нужно для того, чтобы на компе при открытии бургер-меню не прыгала сама кнопка бургера
+  scrollbar-gutter: stable;
+  background-color: var(--color-background-neutral-primary);
+  transition: background-color 0.3s;
+
+  &.burger-open {
+    background-color: var(--color-fill-brand-primary);
+  }
 }
 
 body {
-    font-size: 1.6rem;
+  font-size: 1.6rem;
 }
