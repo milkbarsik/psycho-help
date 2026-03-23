@@ -44,10 +44,8 @@ const Header = () => {
     if (menuOpen) {
       const initialOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-      document.documentElement.classList.add('burger-open');
       return () => {
         document.body.style.overflow = initialOverflow;
-        document.documentElement.classList.remove('burger-open');
       };
     }
   }, [menuOpen]);
