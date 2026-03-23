@@ -130,3 +130,9 @@
     line-height: 2.4rem;
   }
 }
+
+[data-theme='dark'] {
+  .title {
+    color: white;
+  }
+}

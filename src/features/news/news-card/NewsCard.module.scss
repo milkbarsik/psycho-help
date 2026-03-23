@@ -136,3 +136,18 @@
     width: 2.3rem;
   }
 }
+
+[data-theme='dark'] {
+  .wrapper {
+    background-color: #1e1e1f;
+  }
+  .type {
+    color: white;
+  }
+  .date {
+    color: white;
+  }
+  .title {
+    color: #63656b !important;
+  }
+}
