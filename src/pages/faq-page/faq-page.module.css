@@ -7,7 +7,6 @@
   flex-direction: column;
   margin-top: 6.4rem;
   margin-bottom: 14.8rem;
-
 }
 
 .container {
@@ -19,9 +18,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.6rem;
-
 }
-
 
 .headline {
   display: flex;
@@ -53,7 +50,6 @@
     align-items: center;
     text-align: center;
     flex-direction: column;
-
   }
 
   .image {
@@ -68,5 +64,15 @@
 
   .wrapper {
     margin-bottom: 9.6rem;
+  }
+}
+
+[data-theme='dark'] {
+  .faq {
+    color: #407bfe;
+  }
+
+  .description {
+    color: #98999a !important;
   }
 }
