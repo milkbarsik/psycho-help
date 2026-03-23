@@ -1602,11 +1602,7 @@
         ],
         "title": "PsychologistResponse"
       },
-      "ReviewsBase": {
-        "properties": {},
-        "type": "object",
-        "title": "ReviewsBase"
-      },
+      "ReviewsBase": { "properties": {}, "type": "object", "title": "ReviewsBase" },
       "RoleAssignRequest": {
         "properties": {
           "role_code": {

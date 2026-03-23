@@ -10,11 +10,11 @@ import { Button } from '@/shared/ui';
 import { useNavigate } from 'react-router-dom';
 
 const FeaturesBlock = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleShowAllTherapists = () => {
-    navigate('/therapists')
-  }
+    navigate('/therapists');
+  };
 
   return (
     <div className={styles.features}>
@@ -29,10 +29,10 @@ const FeaturesBlock = () => {
             <span className={styles.features__1_title}>Компетентые психологи</span>
             <span className={styles.features__1_text}>
               Наши специалисты имеют высшее психологическое образование и практический опыт. Мы
-              гарантируем бережную и профессиональную помощь
+              гарантируем бережную и профессиональную помощь.
             </span>
           </div>
-          <Button onClick={handleShowAllTherapists} color='neutral'>
+          <Button onClick={handleShowAllTherapists} color="neutral">
             Смотреть всех
           </Button>
         </div>
@@ -40,14 +40,14 @@ const FeaturesBlock = () => {
           <span className={styles.features__2_title}>График работы</span>
           <span className={styles.features__2_text}>
             Служба доступна в течение всего года. Приём ведётся в будние дни, кроме официальных
-            праздников
+            праздников.
           </span>
         </div>
         <div className={styles.features__grid_3}>
           <span className={styles.features__3_title}>Формат консультаций</span>
           <span className={styles.features__3_text}>
-            Очная встреча в вузе или дистанционно по телефону, через мессенджеры, Zoom, Skype или
-            e-mail
+            Очные встречи в вузе или дистанционно: по телефону, через мессенджеры, Zoom, Skype или
+            e-mail.
           </span>
         </div>
         <div className={styles.features__grid_4}>
@@ -56,7 +56,7 @@ const FeaturesBlock = () => {
               <span className={styles.features__4_title}>Перенос или пропуск консультации</span>
               <span className={styles.features__4_text}>
                 Если встречу нужно перенести, просьба сообщить об этом заранее. Пропуск без
-                предупреждения не допускается
+                предупреждения не допускается.
               </span>
             </div>
             <picture className={styles.features__5_image_wrapper}>
