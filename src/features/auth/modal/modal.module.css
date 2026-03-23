@@ -422,4 +422,8 @@
   .Suggestion span {
     color: #98999a;
   }
+
+  .ant-modal-title {
+    color: red !important;
+  }
 }

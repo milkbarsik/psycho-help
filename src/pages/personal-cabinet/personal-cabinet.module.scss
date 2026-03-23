@@ -69,3 +69,12 @@
     background-color: var(--color-interactive-brand-hover);
   }
 }
+
+[data-theme='dark'] {
+  .sectionTitle {
+    color: white;
+  }
+  .emptyText {
+    color: #98999a !important;
+  }
+}

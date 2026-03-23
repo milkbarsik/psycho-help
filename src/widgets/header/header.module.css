@@ -299,4 +299,8 @@
   .header__burger span {
     background-color: white;
   }
+
+  .profileIcon path {
+    fill: white;
+  }
 }

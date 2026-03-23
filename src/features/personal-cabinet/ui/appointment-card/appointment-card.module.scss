@@ -113,3 +113,22 @@
 .dotNeutral {
   background-color: var(--color-label-neutral-quaternary);
 }
+
+[data-theme='dark'] {
+  .card {
+    background-color: #19191b;
+  }
+  .date {
+    color: white;
+  }
+  .icon {
+    color: white;
+  }
+  .infoItem {
+    color: white;
+  }
+  .commentLink {
+    background-color: white;
+    color: #19191b;
+  }
+}

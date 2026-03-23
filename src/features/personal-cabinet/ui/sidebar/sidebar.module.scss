@@ -96,3 +96,29 @@
     padding: 1.2rem 0.8rem;
   }
 }
+
+[data-theme='dark'] {
+  .sidebar {
+    background-color: #1e1e1f;
+  }
+  .avatar {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .name {
+    color: white;
+  }
+
+  .navItem {
+    color: white;
+  }
+  .navItem:hover {
+    color: #1b50f5;
+  }
+  .navItem.active {
+    background-color: #4a4c50;
+  }
+
+  .askButton {
+    color: #19191b;
+  }
+}

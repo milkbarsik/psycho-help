@@ -47,9 +47,8 @@
   font-size: 16px;
   resize: none;
   background: #fff;
-  margin-top: 24px
+  margin-top: 24px;
 }
-
 
 .location__btns {
   margin-top: 24px;
@@ -73,7 +72,7 @@
   gap: 16px;
 }
 
-.photo{
+.photo {
   width: 244px;
   height: 267px;
   object-fit: cover;
@@ -109,7 +108,7 @@
 }
 
 .qual {
-  font-size: 2rem
+  font-size: 2rem;
 }
 
 .exp {
@@ -211,7 +210,8 @@
 
 .backArrow {
   display: flex;
-  gap: 7.5px
+  align-items: center;
+  gap: 7.5px;
 }
 
 .backArrow__text {
@@ -231,11 +231,11 @@
 }
 
 .results__text {
-  font-size: 2.0rem;
+  font-size: 2rem;
 }
 
 .results__textGray {
-  color: var(--color-label-neutral-secondary)
+  color: var(--color-label-neutral-secondary);
 }
 
 .results__textarea {
@@ -255,8 +255,6 @@
   font-size: 2rem;
 }
 
-
-
 /* Улучшения для чекбоксов */
 /* .location__element {
   display: flex;
@@ -275,3 +273,49 @@
   cursor: pointer;
   user-select: none;
 } */
+
+[data-theme='dark'] {
+  .label {
+    color: white;
+  }
+  .formatButton {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: #4a4c50;
+    color: white;
+  }
+  .formatButton.active {
+    background-color: #0056b3;
+  }
+  .textarea {
+    background-color: #1e1e1f;
+    color: white;
+  }
+  .textarea::placeholder {
+    color: white;
+  }
+  .location__element label {
+    color: white;
+  }
+
+  .exp {
+    color: #98999a !important;
+  }
+  .office {
+    color: #98999a !important;
+  }
+
+  .consultArea {
+    color: white;
+    border: 1px solid white;
+  }
+
+  .backArrow svg path {
+    stroke: white;
+  }
+  .results__title {
+    color: white;
+  }
+  .results__textGray {
+    color: #98999a;
+  }
+}

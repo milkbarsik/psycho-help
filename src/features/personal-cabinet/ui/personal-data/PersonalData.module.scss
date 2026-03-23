@@ -592,3 +592,83 @@
   background-size: 1.6rem;
   padding-right: 4rem;
 }
+
+[data-theme='dark'] {
+  .avatarSection {
+    background-color: transparent;
+  }
+  .avatarIcon {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .avatarUpload rect {
+    fill: transparent;
+  }
+
+  .profileSection {
+    background-color: transparent;
+  }
+  .editButton rect {
+    fill: transparent;
+  }
+  .editButton path {
+    stroke: white;
+  }
+  .editButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .nameFieldsRow input {
+    background-color: #4a4c50;
+    color: white;
+  }
+  .nameFieldsRow input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .cancelNameButton {
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .cancelNameButton:hover {
+    background-color: #f9f9f9;
+    color: #19191b;
+  }
+
+  .fieldsGrid label {
+    color: white;
+  }
+  .selectDropdown {
+    border: none;
+  }
+  .customSelect {
+    background-color: #4a4c50;
+    color: white;
+  }
+  .selectArrow {
+    color: white;
+  }
+  .selectOption {
+    background-color: #4a4c50;
+    color: white;
+  }
+  .selectOption.selected {
+    background-color: #4a4c50ec;
+    color: #407bfe;
+  }
+
+  .editableField {
+    background-color: #4a4c50;
+  }
+  .editableField input {
+    color: white;
+  }
+  .field .editableField input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .passwordField {
+    background-color: #4a4c50;
+    color: white;
+  }
+  .passwordField input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
