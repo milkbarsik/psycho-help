@@ -1,3 +1,10 @@
+:global(html):has(.header__list_open) {
+  /* Это нужно для того, чтобы на компе при открытии бургер-меню не прыгала сама кнопка бургера */
+  scrollbar-gutter: stable;
+  background-color: var(--color-fill-brand-primary);
+  transition: background-color 0.3s;
+}
+
 .header {
   position: sticky;
   top: 0;
