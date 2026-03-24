@@ -1,14 +1,18 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import Personally from '@/features/home/ui/personally.svg?react';
 import Online from '@/features/home/ui/online.svg?react';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { useAppContext } from '@/app/context';
 import styles from './styles/appointment-module.module.css';
+
 import ModalLogin from '@/features/auth/modal/modal-login';
+import ModalRegistration from '@/features/auth/modal/modal-registration';
+import ModalForgotPassword from '@/features/auth/modal/modal-forgot-password';
+import ModalChangePassword from '@/features/auth/modal/modal-change-password';
 
 type AppointmentType = 'personally' | 'online' | null;
-type ModalWindow = 'log' | 'reg' | 'forgot' | 'change';
 
 interface AppointmentModuleProps {
   pageType?: 'main' | 'service' | 'contact';
@@ -25,11 +29,33 @@ const AppointmentModule = ({
 }: AppointmentModuleProps) => {
   const [selectedType, setSelectedType] = useState<AppointmentType>(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [modalWindow, setModalWindow] = useState<ModalWindow>('log');
+  const [modalWindow, setModalWindow] = useState<string>('log');
 
   const navigate = useNavigate();
   const isAuth = useAuth((state) => state.isAuth);
   const { setAppLoading } = useAppContext();
+
+  // Логика отрисовки конкретного окна (как в ModalWindow)
+  const renderModal = (window: string) => {
+    const props = {
+      setWindow: setModalWindow,
+      isOpen: isModalOpen,
+      setModalOpen: setModalOpen,
+    };
+
+    switch (window) {
+      case 'log':
+        return <ModalLogin {...props} />;
+      case 'reg':
+        return <ModalRegistration {...props} />;
+      case 'forgot':
+        return <ModalForgotPassword {...props} />;
+      case 'change':
+        return <ModalChangePassword {...props} />;
+      default:
+        return null;
+    }
+  };
 
   const handleTypeSelect = (type: 'personally' | 'online') => {
     setSelectedType(type);
@@ -55,19 +81,6 @@ const AppointmentModule = ({
     } else {
       setModalWindow('log');
       setModalOpen(true);
-    }
-  };
-
-  const handleModalClose = (isOpen: boolean) => {
-    setModalOpen(isOpen);
-    if (!isOpen) {
-      setModalWindow('log');
-    }
-  };
-
-  const handleModalWindowChange = (window: ModalWindow | string) => {
-    if (window === 'log' || window === 'reg' || window === 'forgot' || window === 'change') {
-      setModalWindow(window);
     }
   };
 
@@ -101,13 +114,7 @@ const AppointmentModule = ({
         </button>
       </div>
 
-      {isModalOpen && (
-        <ModalLogin
-          setWindow={handleModalWindowChange}
-          isOpen={isModalOpen}
-          setModalOpen={handleModalClose}
-        />
-      )}
+      {isModalOpen ? createPortal(renderModal(modalWindow), document.body) : null}
     </>
   );
 };
