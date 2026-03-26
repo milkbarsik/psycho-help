@@ -35,7 +35,6 @@ const AppointmentModule = ({
   const isAuth = useAuth((state) => state.isAuth);
   const { setAppLoading } = useAppContext();
 
-  // Логика отрисовки конкретного окна (как в ModalWindow)
   const renderModal = (window: string) => {
     const props = {
       setWindow: setModalWindow,

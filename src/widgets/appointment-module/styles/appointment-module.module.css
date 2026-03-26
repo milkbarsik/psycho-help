@@ -75,8 +75,8 @@
 }
 
 .greeting__option_active {
-  background: var(--color-interactive-brand-secondary); 
-  color: var(--color-interactive-brand-primary); 
+  background: var(--color-interactive-brand-secondary);
+  color: var(--color-interactive-brand-primary);
 }
 
 .greeting__submit_disabled {
@@ -87,14 +87,4 @@
 
 .greeting__submit_disabled:hover {
   background: var(--color-interactive-brand-disable);
-}
-
-.page-service .greeting__option_active {
-  background: var(--color-fill-warning-primary);
-  border-color: var(--color-label-warning-primary);
-}
-
-.page-contact .greeting__option_active {
-  background: var(--color-fill-neutral-primary);
-  border-color: var(--color-border-neutral-inverted);
 }
