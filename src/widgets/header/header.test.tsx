@@ -12,7 +12,7 @@ vi.mock('@/shared/assets/images/logo.svg?react', () => ({
 vi.mock('@/shared/assets/images/header/profile.svg?react', () => ({
   default: (props: Record<string, unknown>) => <svg data-testid="profile-icon" {...props} />,
 }));
-vi.mock('@/shared/assets/images/header/Auth.svg?react', () => ({
+vi.mock('@/shared/assets/images/header/auth.svg?react', () => ({
   default: (props: Record<string, unknown>) => <svg data-testid="auth-icon" {...props} />,
 }));
 

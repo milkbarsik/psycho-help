@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from './header.module.css';
 import Logo from '@/shared/assets/images/logo.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
-import Auth from '@/shared/assets/images/header/Auth.svg?react';
+import Auth from '@/shared/assets/images/header/auth.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
 
 const PAGES = [
