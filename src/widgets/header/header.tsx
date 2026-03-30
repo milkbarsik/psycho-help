@@ -69,6 +69,7 @@ const Header = () => {
         <button
           className={`${styles.header__burger} ${menuOpen ? styles.header__burger_open : ''}`}
           onClick={toggleMenu}
+          type="button"
           aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
           aria-expanded={menuOpen}
         >
@@ -100,6 +101,7 @@ const Header = () => {
               <button
                 className={styles.header__auth}
                 onClick={handleAuthClick}
+                type="button"
                 aria-label="Открыть окно входа"
               >
                 <Auth aria-hidden="true" />

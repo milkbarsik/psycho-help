@@ -1,4 +1,3 @@
-/* Расстояние от верха viewport до низа шапки */
 :root {
   --header-height: 11.2rem;
 }
@@ -132,9 +131,8 @@
 }
 
 .header__auth {
-  background: none;
+  background-color: transparent;
   border: 1px solid transparent;
-  user-select: none;
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -153,11 +151,19 @@
     color 0.3s;
 }
 
-.header__link:hover,
-.header__auth:hover {
-  background-color: var(--color-interactive-brand-secondary);
-  border: 1px solid var(--color-interactive-brand-secondary);
-  color: var(--color-interactive-brand-primary);
+@media (hover: hover) {
+  .header__link:hover,
+  .header__auth:hover {
+    background-color: var(--color-interactive-brand-secondary);
+    border-color: var(--color-interactive-brand-secondary);
+    color: var(--color-interactive-brand-primary);
+  }
+}
+
+@media (hover: none) {
+  .header__link:hover {
+    color: var(--color-label-neutral-primary);
+  }
 }
 
 .header__link:active,
@@ -189,9 +195,9 @@
     position: relative;
     display: block;
     z-index: 250;
-    width: 48px;
-    height: 48px;
-    padding: 12px;
+    width: 4.8rem;
+    height: 4.8rem;
+    padding: 1.2rem;
     border: none;
     background-color: transparent;
   }
@@ -208,23 +214,23 @@
   .header__burger span {
     display: block;
     position: absolute;
-    left: 15px;
-    height: 2px;
-    width: 18px;
+    left: 1.5rem;
+    height: 0.2rem;
+    width: 1.8rem;
     background-color: var(--color-label-neutral-primary);
     transition: all 0.3s;
   }
 
   .header__burger span:nth-child(1) {
-    top: 17px;
+    top: 1.7rem;
   }
 
   .header__burger span:nth-child(2) {
-    top: 23px;
+    top: 2.3rem;
   }
 
   .header__burger span:nth-child(3) {
-    top: 29px;
+    top: 2.9rem;
   }
 
   .header__burger_open span {
@@ -233,9 +239,9 @@
 
   .header__burger_open span:nth-child(1) {
     transform: rotate(45deg);
-    top: 23px;
-    width: 24px;
-    left: 12px;
+    top: 2.3rem;
+    width: 2.4rem;
+    left: 1.2rem;
   }
 
   .header__burger_open span:nth-child(2) {
@@ -244,9 +250,9 @@
 
   .header__burger_open span:nth-child(3) {
     transform: rotate(-45deg);
-    top: 23px;
-    width: 24px;
-    left: 12px;
+    top: 2.3rem;
+    width: 2.4rem;
+    left: 1.2rem;
   }
 
   .header__burger_open:focus-visible {
@@ -312,11 +318,20 @@
     color: var(--color-label-neutral-inverted-primary);
   }
 
-  .header__link:hover,
-  .header__auth:hover {
-    background-color: var(--color-interactive-brand-secondary);
-    border: 1px solid var(--color-interactive-brand-secondary);
-    color: var(--color-interactive-brand-primary);
+  @media (hover: hover) {
+    .header__link:hover,
+    .header__auth:hover {
+      background-color: var(--color-interactive-brand-hover);
+      border-color: var(--color-interactive-brand-hover);
+      color: var(--color-label-neutral-inverted-primary);
+    }
+  }
+
+  @media (hover: none) {
+    .header__link:hover,
+    .header__auth:hover {
+      color: var(--color-label-neutral-inverted-primary);
+    }
   }
 
   .header__link:active,
@@ -324,8 +339,7 @@
   .header__auth:active,
   .header__auth:focus-visible {
     background-color: transparent;
-    border: 1px solid var(--color-label-neutral-inverted-primary);
-    color: var(--color-label-neutral-inverted-primary);
+    border-color: var(--color-label-neutral-inverted-primary);
   }
 }
 
