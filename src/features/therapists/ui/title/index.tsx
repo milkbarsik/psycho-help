@@ -14,7 +14,6 @@ const Title = () => {
           </p>
           <div className={styles.containerTabButton}>
             <AppointmentModule
-              pageType="service"
               redirectPath="/cabinet"
               onTypeSelect={(type) => {
                 console.log('Выбран тип записи на странице психологов:', type);

@@ -78,7 +78,7 @@ const AppointmentModule = ({
         setAppLoading(false);
       }
     } else {
-      setModalWindow('log');
+      setModalWindow('reg');
       setModalOpen(true);
     }
   };

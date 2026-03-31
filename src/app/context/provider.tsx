@@ -14,8 +14,6 @@ export const AppContextProvider = ({ children }: IProps) => {
   const [isError, setIsError] = useState(false);
 
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-  const [authModalRedirectPath, setAuthModalRedirectPath] = useState<string>();
-  const [authModalAppointmentType, setAuthModalAppointmentType] = useState<string>();
   const [modalWindow, setModalWindow] = useState<ModalWindowType>('log');
 
   const { getUser } = useAuth();
@@ -34,17 +32,13 @@ export const AppContextProvider = ({ children }: IProps) => {
     fetching();
   }, []);
 
-  const openAuthModal = (redirectPath?: string, appointmentType?: string) => {
-    setAuthModalRedirectPath(redirectPath);
-    setAuthModalAppointmentType(appointmentType);
+  const openAuthModal = () => {
     setModalWindow('log');
     setAuthModalOpen(true);
   };
 
   const closeAuthModal = () => {
     setAuthModalOpen(false);
-    setAuthModalRedirectPath(undefined);
-    setAuthModalAppointmentType(undefined);
     setModalWindow('log');
   };
 
@@ -58,20 +52,10 @@ export const AppContextProvider = ({ children }: IProps) => {
       isAuthModalOpen,
       openAuthModal,
       closeAuthModal,
-      authModalRedirectPath,
-      authModalAppointmentType,
       modalWindow,
       setModalWindow,
     }),
-    [
-      error,
-      isAppLoading,
-      isError,
-      isAuthModalOpen,
-      authModalRedirectPath,
-      authModalAppointmentType,
-      modalWindow,
-    ],
+    [error, isAppLoading, isError, isAuthModalOpen, modalWindow],
   );
 
   return <AppContext.Provider value={memoizedValues}>{children}</AppContext.Provider>;

@@ -8,17 +8,31 @@ import ModalForgotPassword from './modal-forgot-password';
 import ModalChangePassword from './modal-change-password';
 import Auth from './icons/Auth.svg?react';
 
+type ModalWindowType = 'log' | 'reg' | 'forgot' | 'change';
+
 interface ModalWindowProps {
   onMenuClose?: () => void;
+  redirectPath?: string;
+  appointmentType?: string;
 }
 
-const ModalWindow: FC<ModalWindowProps> = ({ onMenuClose }) => {
-  const [modalWindow, setModalWindow] = React.useState<string>('log');
+const ModalWindow: FC<ModalWindowProps> = ({ onMenuClose, redirectPath, appointmentType }) => {
+  const [modalWindow, setModalWindow] = React.useState<ModalWindowType>('log');
   const [isModalOpen, setModalOpen] = React.useState<boolean>(false);
+
+  const openAuthModal = () => {
+    setModalWindow('log');
+    setModalOpen(true);
+  };
+
+  const closeAuthModal = () => {
+    setModalOpen(false);
+    setModalWindow('log');
+  };
 
   /*Здесь идет чередование модальных окон регистрации и логина по клику в модалке,
    функция только в том случае, если модальное окно открыто */
-  const render = (window: string) => {
+  const render = (window: ModalWindowType) => {
     if (window === 'log') {
       return (
         <ModalLogin setWindow={setModalWindow} isOpen={isModalOpen} setModalOpen={setModalOpen} />
@@ -59,7 +73,11 @@ const ModalWindow: FC<ModalWindowProps> = ({ onMenuClose }) => {
     if (onMenuClose) {
       onMenuClose();
     }
-    setModalOpen(!isModalOpen);
+    if (isModalOpen) {
+      closeAuthModal();
+    } else {
+      openAuthModal();
+    }
   };
 
   return (

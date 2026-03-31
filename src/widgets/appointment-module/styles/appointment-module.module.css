@@ -12,6 +12,8 @@
 }
 
 .greeting__option {
+  width: 19.4rem;
+  height: 10rem;
   background: var(--color-background-neutral-secondary);
   border: 2px solid transparent;
   user-select: none;
@@ -29,6 +31,7 @@
 }
 
 .greeting__option:hover {
+  cursor: pointer;
   color: var(--color-interactive-brand-primary);
   background-color: var(--color-interactive-brand-secondary);
 }
@@ -80,7 +83,6 @@
 }
 
 .greeting__submit_disabled {
-  opacity: 0.6;
   cursor: not-allowed;
   background: var(--color-interactive-brand-disable);
 }

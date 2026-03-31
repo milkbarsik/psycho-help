@@ -38,7 +38,6 @@ const GreetingBlock = () => {
             </div>
           </div>
           <AppointmentModule 
-            pageType="main" 
             redirectPath="/cabinet"
           />
         </div>
