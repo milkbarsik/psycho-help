@@ -1,4 +1,4 @@
-import { combineDateAndTime } from '@/shared/lib/dateFunctions';
+// import { combineDateAndTime } from '@/shared/lib/dateFunctions';
 import type { Appointment } from '@/entities/appointment/types';
 
 export default class AppointmentDto {

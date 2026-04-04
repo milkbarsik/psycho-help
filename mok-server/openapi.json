@@ -1602,7 +1602,11 @@
         ],
         "title": "PsychologistResponse"
       },
-      "ReviewsBase": { "properties": {}, "type": "object", "title": "ReviewsBase" },
+      "ReviewsBase": {
+        "properties": {},
+        "type": "object",
+        "title": "ReviewsBase"
+      },
       "RoleAssignRequest": {
         "properties": {
           "role_code": {
@@ -1627,6 +1631,32 @@
         "type": "object",
         "required": ["role_code"],
         "title": "RoleRemoveRequest"
+      },
+      "RoleResponse": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": ["code", "name", "description"],
+        "title": "RoleResponse"
       },
       "UniversityStatus": {
         "type": "string",
@@ -1687,6 +1717,18 @@
             "maxLength": 256,
             "minLength": 8,
             "title": "Password"
+          },
+          "study_group": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Study Group"
           }
         },
         "type": "object",
@@ -1746,6 +1788,25 @@
               }
             ],
             "title": "Social Media"
+          },
+          "roles": {
+            "items": {
+              "$ref": "#/components/schemas/RoleResponse"
+            },
+            "type": "array",
+            "title": "Roles",
+            "default": []
+          },
+          "study_group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Study Group"
           }
         },
         "type": "object",
@@ -1829,6 +1890,18 @@
               }
             ],
             "title": "Social Media"
+          },
+          "study_group": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Study Group"
           }
         },
         "type": "object",
