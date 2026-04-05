@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import Header from './header';
+import { NAV_PAGES } from '@/app/router/routes';
 import { useAuth } from '@/features/auth/api/useAuth';
 
 // Мокаем SVG-компоненты
@@ -59,17 +60,9 @@ describe('Header component', () => {
   it('навигационные ссылки ведут на правильные страницы', () => {
     renderHeader();
 
-    const expectedLinks: Record<string, string> = {
-      'Главная': '/',
-      'Психологи': '/therapists',
-      'Новости': '/news',
-      'Полезные материалы': '/resources',
-      'FAQ': '/faq/',
-    };
-
-    Object.entries(expectedLinks).forEach(([text, href]) => {
-      const link = screen.getByRole('link', { name: new RegExp(text, 'i') });
-      expect(link).toHaveAttribute('href', href);
+    NAV_PAGES.forEach(({ path, navText }) => {
+      const linkEl = screen.getByRole('link', { name: new RegExp(navText, 'i') });
+      expect(linkEl).toHaveAttribute('href', path);
     });
   });
 

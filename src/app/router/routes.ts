@@ -13,6 +13,7 @@ import { NewsItemPage } from '@/pages';
  Тип маршрута:
  - "path" — URL-путь
  - "Component" — React-компонент, который будет отрисован по этому пути
+ - "navText?" — этот текст отображается в хедере, если маршрут не должен быть в навигации, то navText не указывается
 
  Здесь использовалось "FC<any>", но "any" убрали,
  так как все текущие страницы не принимают внешних пропсов.
@@ -32,6 +33,7 @@ import { NewsItemPage } from '@/pages';
 interface routePath {
   path: string;
   Component: FC; // Компонент без пропсов
+  navText?: string;
 }
 
 // Список всех урлов, а также компонентов, отрисовываемых при нахождении на одном из них
@@ -40,18 +42,22 @@ export const authRoutes: routePath[] = [
   {
     path: '/',
     Component: HomePage,
+    navText: 'Главная',
   },
   {
     path: '/faq',
     Component: FaqPage,
+    navText: 'FAQ',
   },
   {
     path: '/therapists/',
     Component: DoctorsPage,
+    navText: 'Психологи',
   },
   {
     path: '/resources',
     Component: ResourcesPage,
+    navText: 'Полезные материалы',
   },
   {
     path: '/test/:id',
@@ -72,6 +78,7 @@ export const authRoutes: routePath[] = [
   {
     path: '/news/',
     Component: NewsPage,
+    navText: 'Новости',
   },
   {
     path: '/news/:slug',
@@ -117,3 +124,7 @@ export const notAuthRoutes: routePath[] = [
     Component: NewsItemPage,
   },
 ];
+
+export const NAV_PAGES = authRoutes.filter(
+  (route): route is routePath & { navText: string } => !!route.navText,
+);

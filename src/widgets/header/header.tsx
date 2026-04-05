@@ -6,14 +6,7 @@ import Logo from '@/shared/assets/images/logo.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
 import Auth from '@/shared/assets/images/header/auth.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
-
-const PAGES = [
-  { link: '/', text: 'Главная' },
-  { link: '/therapists', text: 'Психологи' },
-  { link: '/news', text: 'Новости' },
-  { link: '/resources', text: 'Полезные материалы' },
-  { link: '/faq/', text: 'FAQ' },
-];
+import { NAV_PAGES } from '@/app/router/routes';
 
 const Header = () => {
   const { isAuth } = useAuth();
@@ -80,10 +73,10 @@ const Header = () => {
         <ul
           className={`${styles.header__list} ${isAnimating ? styles.header__list_animating : ''} ${menuOpen ? styles.header__list_open : ''}`}
         >
-          {PAGES.map((item, index) => (
+          {NAV_PAGES.map((item, index) => (
             <li key={index} className={styles.header__item}>
-              <Link to={item.link} className={styles.header__link} onClick={closeMenu}>
-                {item.text}
+              <Link to={item.path} className={styles.header__link} onClick={closeMenu}>
+                {item.navText}
               </Link>
             </li>
           ))}

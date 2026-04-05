@@ -340,6 +340,7 @@
   .header__auth:focus-visible {
     background-color: transparent;
     border-color: var(--color-label-neutral-inverted-primary);
+    color: var(--color-label-neutral-inverted-primary);
   }
 }
 
