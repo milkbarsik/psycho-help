@@ -69,3 +69,19 @@
     background-color: var(--color-interactive-brand-hover);
   }
 }
+
+.mainTab,
+.appointmentsTab,
+.profileTab,
+.clientsTab,
+.adminTab {
+  width: 100%;
+}
+
+.comingSoon {
+  font: var(--font-text-large);
+  color: var(--color-label-neutral-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: 4rem 0;
+}

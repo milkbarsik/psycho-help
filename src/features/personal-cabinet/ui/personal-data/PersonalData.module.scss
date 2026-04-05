@@ -82,47 +82,6 @@
   }
 }
 
-// Миксин для кастомного селекта
-@mixin custom-select {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 1.6rem;
-  border: 1px solid var(--color-border-neutral-soft);
-  border-radius: 0.8rem;
-  background-color: var(--color-background-neutral-primary);
-  cursor: pointer;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-  width: 100%;
-  font-size: 1.6rem;
-  color: var(--color-label-neutral-primary);
-  text-align: left;
-
-  &:hover {
-    border-color: var(--color-fill-neutral-primary);
-  }
-
-  &.focused {
-    border-color: var(--color-label-brand-secondary);
-    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
-  }
-
-  .selectValue {
-    flex: 1;
-  }
-
-  .selectArrow {
-    transition: transform 0.2s ease;
-    color: var(--color-label-neutral-tetriary);
-
-    &.open {
-      transform: rotate(180deg);
-    }
-  }
-}
-
 .container {
   display: grid;
   grid-template-columns: 1fr;
@@ -393,57 +352,6 @@
   }
 }
 
-// Кастомный селект
-.customSelectWrapper {
-  position: relative;
-  width: 100%;
-}
-
-.customSelect {
-  @include custom-select;
-  height: 4.8rem;
-}
-
-.selectDropdown {
-  position: absolute;
-  top: calc(100% + 0.4rem);
-  left: 0;
-  right: 0;
-  background-color: var(--color-background-neutral-primary);
-  border: 1px solid var(--color-border-neutral-soft);
-  border-radius: 0.8rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  overflow: hidden;
-}
-
-.selectOption {
-  padding: 1.2rem 1.6rem;
-  font-size: 1.6rem;
-  color: var(--color-label-neutral-primary);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: var(--color-interactive-brand-disable);
-  }
-
-  &.selected {
-    background-color: rgba(64, 123, 254, 0.1);
-    color: var(--color-label-brand-secondary);
-  }
-}
-
-.fieldRow {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.6rem;
-
-  @media (min-width: 634px) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .passwordField {
   display: flex;
   align-items: center;
@@ -582,13 +490,4 @@
     background-color: var(--color-interactive-neutral-disable);
     cursor: not-allowed;
   }
-}
-
-.statusSelect {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%237c7e85' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1.2rem center;
-  background-size: 1.6rem;
-  padding-right: 4rem;
 }

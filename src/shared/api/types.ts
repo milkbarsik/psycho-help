@@ -1,3 +1,5 @@
+import type { Role } from '@/entities/role/types';
+
 export type regData = {
   first_name: string;
   middle_name?: string;
@@ -12,7 +14,6 @@ export interface ResponseError {
   message: string;
   status: number | undefined;
 }
-
 export type User = {
   id: string;
   first_name: string;
@@ -21,16 +22,13 @@ export type User = {
   phone_number: string;
   email: string;
   social_media: string;
-  status?: 'student' | 'teacher' | 'admin';
+  roles: Role[];
   study_group?: string;
   avatar_url?: string;
 };
 
 export type UserProfileUpdate = Partial<
-  Pick<
-    User,
-    'first_name' | 'middle_name' | 'last_name' | 'phone_number' | 'email' | 'status' | 'study_group'
-  >
+  Pick<User, 'first_name' | 'middle_name' | 'last_name' | 'phone_number' | 'email' | 'study_group'>
 >;
 
 export type AuthRes = {
