@@ -3,12 +3,13 @@ import * as db from '../services/db.js';
 
 export async function createUser(userData) {
   const existingUser = db.users.find(
-    (u) => u.email === userData.email || u.phone_number === userData.phoneNumber,
+    (u) => u.email === userData.email || u.phone_number === userData.phone_number,
   );
   if (existingUser) {
     throw new Error('Пользователь с такой почтой или телефоном уже существует');
   }
-
+  // для облегчения взаимодействия с тестами
+  const roleCode = userData.role || 'user';
   const newUser = {
     id: crypto.randomUUID(),
     first_name: userData.first_name,
@@ -18,7 +19,9 @@ export async function createUser(userData) {
     email: userData.email || null,
     social_media: userData.social_media || null,
     password: `hashed_${userData.password}`,
-    role: userData.role || 'user',
+    roles: [db.ROLES[roleCode] || db.ROLES.user],
+    study_group: userData.study_group || null,
+    avatar_url: null,
   };
   db.users.push(newUser);
   return newUser;
@@ -39,9 +42,31 @@ export async function updateUser(userId, updates) {
   const userIndex = db.users.findIndex((u) => u.id === userId);
   if (userIndex === -1) return null;
 
-  const updatedUser = { ...db.users[userIndex], ...updates };
+  const allowedFields = [
+    'first_name',
+    'middle_name',
+    'last_name',
+    'phone_number',
+    'email',
+    'social_media',
+    'study_group',
+    'avatar_url',
+  ];
+  const filteredUpdates = {};
+
+  for (const key of Object.keys(updates)) {
+    if (allowedFields.includes(key)) {
+      filteredUpdates[key] = updates[key];
+    }
+  }
+
+  const updatedUser = { ...db.users[userIndex], ...filteredUpdates };
   db.users[userIndex] = updatedUser;
   return updatedUser;
+}
+
+export async function updateAvatar(userId, avatarUrl) {
+  return updateUser(userId, { avatar_url: avatarUrl });
 }
 
 export async function authenticateUser(email, password) {
@@ -69,7 +94,30 @@ export async function assignRole(userId, roleName) {
   const validRoles = ['user', 'psychologist', 'admin', 'content_manager'];
   if (!validRoles.includes(roleName)) throw new Error('Недопустимая роль');
 
-  user.role = roleName;
+  if (!user.roles) {
+    user.roles = [];
+  }
+
+  const alreadyHasRole = user.roles.some((r) => r.code === roleName);
+  if (!alreadyHasRole) {
+    user.roles.push(db.ROLES[roleName]);
+  }
+
+  return user;
+}
+
+export async function removeRole(userId, roleName) {
+  const user = db.users.find((u) => u.id === userId);
+  if (!user) throw new Error('Пользователь не найден');
+
+  if (!user.roles) {
+    user.roles = [];
+  }
+
+  const roleIndex = user.roles.findIndex((r) => r.code === roleName);
+  if (roleIndex === -1) throw new Error('Роль не найдена у пользователя');
+
+  user.roles.splice(roleIndex, 1);
   return user;
 }
 

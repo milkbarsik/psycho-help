@@ -5,25 +5,22 @@ import {
   authenticateUser,
   generateTokenForUser,
   invalidateToken,
-  assignRole,
   createPsychologist,
   deletePsychologist,
   updateUser,
+  updateAvatar,
 } from '../services/user.js';
 import { isAuthenticated } from '../lib/auth.js';
 
 const router = Router();
 
-function requireRole(requiredRole) {
-  return (req, res, next) => {
-    if (!req.user) return res.status(401).json({ detail: 'Not authenticated' });
-    if (req.user.role === 'admin') return next();
-
-    if (req.user.role !== requiredRole) {
-      return res.status(403).json({ detail: 'Недостаточно прав' });
-    }
-    next();
-  };
+function requireAdmin(req, res, next) {
+  if (!req.user) return res.status(401).json({ detail: 'Not authenticated' });
+  const userRoleCodes = (req.user.roles || []).map((r) => r.code);
+  if (!userRoleCodes.includes('admin')) {
+    return res.status(403).json({ detail: 'Недостаточно прав' });
+  }
+  next();
 }
 
 router.post('/register', async (req, res) => {
@@ -66,6 +63,13 @@ router.post('/logout', (req, res) => {
   res.status(200).send();
 });
 
+router.post('/refresh', isAuthenticated, (req, res) => {
+  const token = generateTokenForUser(req.user.id);
+  res.cookie('access_token', token, { httpOnly: true, secure: false });
+  const { password, ...userResponse } = req.user;
+  res.status(200).json(userResponse);
+});
+
 router.get('/user/:id', async (req, res) => {
   const { id } = req.params;
   const user = await findUserBy({ id });
@@ -80,9 +84,7 @@ router.get('/user/:id', async (req, res) => {
 router.put('/me', isAuthenticated, async (req, res) => {
   try {
     const userId = req.user.id;
-
     const updates = req.body;
-
     const updatedUser = await updateUser(userId, updates);
 
     if (!updatedUser) {
@@ -95,6 +97,45 @@ router.put('/me', isAuthenticated, async (req, res) => {
     res.status(400).json({ detail: e.message });
   }
 });
+
+router.put('/:user_id', isAuthenticated, requireAdmin, async (req, res) => {
+  try {
+    const updates = req.body;
+    const updatedUser = await updateUser(req.params.user_id, updates);
+
+    if (!updatedUser) {
+      return res.status(404).json({ detail: 'User not found' });
+    }
+
+    const { password, ...userResponse } = updatedUser;
+    res.status(200).json(userResponse);
+  } catch (e) {
+    res.status(400).json({ detail: e.message });
+  }
+});
+// пока что не понятно как оно будет на самом деле
+router.post('/me/avatar', isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { avatar_url } = req.body;
+
+    if (!avatar_url) {
+      return res.status(400).json({ detail: 'avatar_url is required' });
+    }
+
+    const updatedUser = await updateAvatar(userId, avatar_url);
+
+    if (!updatedUser) {
+      return res.status(404).json({ detail: 'User not found' });
+    }
+
+    const { password, ...userResponse } = updatedUser;
+    res.status(200).json(userResponse);
+  } catch (e) {
+    res.status(400).json({ detail: e.message });
+  }
+});
+
 router.post('/me/password', isAuthenticated, async (req, res) => {
   try {
     const userId = req.user.id;
@@ -106,18 +147,7 @@ router.post('/me/password', isAuthenticated, async (req, res) => {
   }
 });
 
-router.post('/roles/:user_id/assign', isAuthenticated, requireRole('admin'), async (req, res) => {
-  try {
-    const { role } = req.body;
-    const updatedUser = await assignRole(req.params.user_id, role);
-    const { password, ...userResponse } = updatedUser;
-    res.json(userResponse);
-  } catch (e) {
-    res.status(400).json({ detail: e.message });
-  }
-});
-
-router.post('/psychologists', isAuthenticated, requireRole('admin'), async (req, res) => {
+router.post('/psychologists', isAuthenticated, requireAdmin, async (req, res) => {
   try {
     const newPsychologist = await createPsychologist(req.body);
     res.status(201).json(newPsychologist);
@@ -126,7 +156,7 @@ router.post('/psychologists', isAuthenticated, requireRole('admin'), async (req,
   }
 });
 
-router.delete('/psychologists/:id', isAuthenticated, requireRole('admin'), async (req, res) => {
+router.delete('/psychologists/:id', isAuthenticated, requireAdmin, async (req, res) => {
   try {
     await deletePsychologist(req.params.id);
     res.status(200).send();
