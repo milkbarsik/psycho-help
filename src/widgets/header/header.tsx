@@ -6,7 +6,7 @@ import Logo from '@/shared/assets/images/logo.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
 import Auth from '@/shared/assets/images/header/auth.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
-import { NAV_PAGES } from '@/app/router/routes';
+import { NAV_PAGES, CABINET_PATH } from '@/app/router/routes';
 
 const Header = () => {
   const { isAuth } = useAuth();
@@ -83,7 +83,7 @@ const Header = () => {
           <li className={styles.header__item}>
             {isAuth ? (
               <Link
-                to="/cabinet"
+                to={CABINET_PATH}
                 className={styles.header__link}
                 aria-label="Личный кабинет"
                 onClick={closeMenu}

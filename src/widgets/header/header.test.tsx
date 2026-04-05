@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import Header from './header';
-import { NAV_PAGES } from '@/app/router/routes';
+import { NAV_PAGES, CABINET_PATH } from '@/app/router/routes';
 import { useAuth } from '@/features/auth/api/useAuth';
 
 // Мокаем SVG-компоненты
@@ -51,9 +51,8 @@ describe('Header component', () => {
 
     expect(screen.getByTestId('logo')).toBeInTheDocument();
 
-    const navItems = ['Главная', 'Психологи', 'Новости', 'Полезные материалы', 'FAQ'];
-    navItems.forEach((text) => {
-      expect(screen.getByRole('link', { name: new RegExp(text, 'i') })).toBeInTheDocument();
+    NAV_PAGES.forEach(({ navText }) => {
+      expect(screen.getByRole('link', { name: new RegExp(navText, 'i') })).toBeInTheDocument();
     });
   });
 
@@ -61,8 +60,8 @@ describe('Header component', () => {
     renderHeader();
 
     NAV_PAGES.forEach(({ path, navText }) => {
-      const linkEl = screen.getByRole('link', { name: new RegExp(navText, 'i') });
-      expect(linkEl).toHaveAttribute('href', path);
+      const link = screen.getByRole('link', { name: new RegExp(navText, 'i') });
+      expect(link).toHaveAttribute('href', path);
     });
   });
 
@@ -88,7 +87,7 @@ describe('Header component', () => {
       renderHeader();
 
       const cabinetLink = screen.getByTestId('profile-icon').closest('a');
-      expect(cabinetLink).toHaveAttribute('href', '/cabinet');
+      expect(cabinetLink).toHaveAttribute('href', CABINET_PATH);
     });
   });
 

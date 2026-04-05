@@ -36,6 +36,8 @@ interface routePath {
   navText?: string;
 }
 
+export const CABINET_PATH = '/cabinet';
+
 // Список всех урлов, а также компонентов, отрисовываемых при нахождении на одном из них
 
 export const authRoutes: routePath[] = [
@@ -45,35 +47,13 @@ export const authRoutes: routePath[] = [
     navText: 'Главная',
   },
   {
-    path: '/faq',
-    Component: FaqPage,
-    navText: 'FAQ',
-  },
-  {
     path: '/therapists/',
     Component: DoctorsPage,
     navText: 'Психологи',
   },
   {
-    path: '/resources',
-    Component: ResourcesPage,
-    navText: 'Полезные материалы',
-  },
-  {
-    path: '/test/:id',
-    Component: TestPage,
-  },
-  {
     path: '/therapists/:id',
     Component: DoctorPage,
-  },
-  {
-    path: '/cabinet',
-    Component: PersonalCabinet,
-  },
-  {
-    path: '/article/:id',
-    Component: ArticlePage,
   },
   {
     path: '/news/',
@@ -84,24 +64,34 @@ export const authRoutes: routePath[] = [
     path: '/news/:slug',
     Component: NewsItemPage,
   },
+  {
+    path: '/resources',
+    Component: ResourcesPage,
+    navText: 'Полезные материалы',
+  },
+  {
+    path: '/article/:id',
+    Component: ArticlePage,
+  },
+  {
+    path: '/test/:id',
+    Component: TestPage,
+  },
+  {
+    path: '/faq',
+    Component: FaqPage,
+    navText: 'FAQ',
+  },
+  {
+    path: CABINET_PATH,
+    Component: PersonalCabinet,
+  },
 ];
 
 export const notAuthRoutes: routePath[] = [
   {
     path: '/',
     Component: HomePage,
-  },
-  {
-    path: '/faq',
-    Component: FaqPage,
-  },
-  {
-    path: '/resources',
-    Component: ResourcesPage,
-  },
-  {
-    path: '/test/:id',
-    Component: TestPage,
   },
   {
     path: '/therapists/',
@@ -112,16 +102,28 @@ export const notAuthRoutes: routePath[] = [
     Component: DoctorPage,
   },
   {
-    path: '/article/:id',
-    Component: ArticlePage,
-  },
-  {
     path: '/news/',
     Component: NewsPage,
   },
   {
     path: '/news/:slug',
     Component: NewsItemPage,
+  },
+  {
+    path: '/resources',
+    Component: ResourcesPage,
+  },
+  {
+    path: '/article/:id',
+    Component: ArticlePage,
+  },
+  {
+    path: '/test/:id',
+    Component: TestPage,
+  },
+  {
+    path: '/faq',
+    Component: FaqPage,
   },
 ];
 
