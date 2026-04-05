@@ -6,9 +6,6 @@ import Loader from '@/shared/ui/loader/loader';
 import Sidebar from '@/features/personal-cabinet/ui/sidebar/Sidebar';
 import type { TabBadge } from '@/features/personal-cabinet/ui/sidebar/Sidebar';
 import { getTabsForRole, getDefaultTabForRole, type TabConfig, type TabId } from './config/tabs';
-import Dashboard from './ui/dashboard/Dashboard';
-import AppointmentsPage from './ui/AppointmentsPage';
-import PersonalData from '@/features/personal-cabinet/ui/personal-data/PersonalData';
 import styles from './personal-cabinet.module.scss';
 import clsx from 'clsx';
 
@@ -59,11 +56,12 @@ const PersonalCabinet: FC = () => {
   );
 
   const handleBookClick = useCallback(() => {
-    const appointmentsTab = tabs.find((t: TabConfig) => t.id === 'appointments');
-    if (appointmentsTab) {
-      handleTabChange('appointments');
-    }
-  }, [tabs, handleTabChange]);
+    handleTabChange('appointments');
+  }, [handleTabChange]);
+
+  const activeTabConfig = useMemo(() => {
+    return tabs.find((t: TabConfig) => t.id === activeTab);
+  }, [tabs, activeTab]);
 
   if (!authUser) {
     return <Loader />;
@@ -82,39 +80,11 @@ const PersonalCabinet: FC = () => {
       </div>
 
       <main className={styles.mainContent}>
-        {activeTab === 'main' && (
-          <div className={styles.mainTab}>
-            <Dashboard
-              userName={authUser.first_name || 'Пользователь'}
-              role={primaryRoleCode}
-              onBookClick={handleBookClick}
-            />
-          </div>
-        )}
-
-        {activeTab === 'appointments' && (
-          <div className={styles.appointmentsTab}>
-            <AppointmentsPage role={primaryRoleCode} />
-          </div>
-        )}
-
-        {activeTab === 'clients' && (
-          <div className={styles.clientsTab}>
-            <p className={styles.comingSoon}>Раздел "Клиенты" в разработке</p>
-          </div>
-        )}
-
-        {activeTab === 'admin' && (
-          <div className={styles.adminTab}>
-            <p className={styles.comingSoon}>Раздел "Администрирование" в разработке</p>
-          </div>
-        )}
-
-        {activeTab === 'profile' && (
-          <div className={styles.profileTab}>
-            <PersonalData user={authUser} />
-          </div>
-        )}
+        {activeTabConfig?.render({
+          user: authUser,
+          primaryRoleCode,
+          onBookClick: handleBookClick,
+        })}
       </main>
     </div>
   );
