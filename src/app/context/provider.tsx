@@ -9,12 +9,19 @@ interface IProps {
   children: ReactElement;
 }
 
+interface IAuthModalState {
+  type: ModalWindowType;
+  redirectPath?: string;
+  appointmentType?: string;
+}
+
 export const AppContextProvider = ({ children }: IProps) => {
   const [isAppLoading, setAppLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-  const [modalWindow, setModalWindow] = useState<ModalWindowType>('log');
+  const [authModal, setAuthModal] = useState<IAuthModalState>({
+    type: null,
+  });
 
   const { getUser } = useAuth();
 
@@ -22,6 +29,7 @@ export const AppContextProvider = ({ children }: IProps) => {
     try {
       setAppLoading(true);
       await getUser();
+    } catch (error) {
       setIsError(true);
     } finally {
       setAppLoading(false);
@@ -32,14 +40,16 @@ export const AppContextProvider = ({ children }: IProps) => {
     fetching();
   }, []);
 
-  const openAuthModal = () => {
-    setModalWindow('log');
-    setAuthModalOpen(true);
+  const openAuthModal = (
+    type: ModalWindowType,
+    redirectPath?: string,
+    appointmentType?: string
+  ) => {
+    setAuthModal({ type, redirectPath, appointmentType });
   };
 
   const closeAuthModal = () => {
-    setAuthModalOpen(false);
-    setModalWindow('log');
+    setAuthModal({ type: null });
   };
 
   const memoizedValues = useMemo(
@@ -49,13 +59,11 @@ export const AppContextProvider = ({ children }: IProps) => {
       error: error?.message,
       setAppLoading,
 
-      isAuthModalOpen,
+      authModal,
       openAuthModal,
       closeAuthModal,
-      modalWindow,
-      setModalWindow,
     }),
-    [error, isAppLoading, isError, isAuthModalOpen, modalWindow],
+    [error, isAppLoading, isError, authModal]
   );
 
   return <AppContext.Provider value={memoizedValues}>{children}</AppContext.Provider>;

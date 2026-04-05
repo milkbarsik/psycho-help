@@ -1,20 +1,23 @@
 import { createContext, useContext } from 'react';
 
-export type ModalWindowType = 'log' | 'reg' | 'forgot' | 'change';
+export type ModalWindowType = 'log' | 'reg' | 'forgot' | 'change' | null;
+
+interface IAuthModalState {
+  type: ModalWindowType;
+  redirectPath?: string;
+  appointmentType?: string;
+}
 
 export interface IAppContext {
   isAppLoading: boolean;
   isError?: boolean;
   error?: string;
   setAppLoading: (val: boolean) => void;
-  
-  isAuthModalOpen: boolean;
-  openAuthModal: (redirectPath?: string, appointmentType?: string) => void;
+
+  authModal: IAuthModalState;
+
+  openAuthModal: (type: ModalWindowType, redirect?: string, appointment?: string) => void;
   closeAuthModal: () => void;
-  authModalRedirectPath?: string;
-  authModalAppointmentType?: string;
-  modalWindow: ModalWindowType;
-  setModalWindow: (window: ModalWindowType) => void;
 }
 
 export const AppContext = createContext<IAppContext | undefined>(undefined);
