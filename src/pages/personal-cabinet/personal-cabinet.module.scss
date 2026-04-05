@@ -85,3 +85,22 @@
   text-align: center;
   padding: 4rem 0;
 }
+
+.countBage {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.6rem;
+  background-color: var(--color-fill-neutral-primary);
+  color: var(--color-label-neutral-primary);
+  font: var(--font-text-medium);
+  min-width: 2.6rem;
+}
+.countBageActive {
+  background-color: var(--color-fill-brand-primary);
+  color: var(--color-label-neutral-inverted-primary);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}

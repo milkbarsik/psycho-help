@@ -1,12 +1,18 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 import clsx from 'clsx';
 import { UserOutlined } from '@ant-design/icons';
 import type { User } from '@/entities/auth/types';
 import styles from './sidebar.module.scss';
+import React from 'react';
 
 export interface TabConfig {
   id: string;
   label: string;
+}
+
+export interface TabBadge {
+  tabId: string;
+  content: (isActive: boolean) => ReactNode;
 }
 
 interface SidebarProps {
@@ -14,9 +20,14 @@ interface SidebarProps {
   activeTab: string;
   onChangeTab: (tab: string) => void;
   tabs: TabConfig[];
+  tabBadges?: TabBadge[];
 }
 
-const Sidebar: FC<SidebarProps> = ({ user, activeTab, onChangeTab, tabs }) => {
+const Sidebar: FC<SidebarProps> = ({ user, activeTab, onChangeTab, tabs, tabBadges }) => {
+  const getBadgeForTab = (tabId: string) => {
+    return tabBadges?.find((b) => b.tabId === tabId)?.content;
+  };
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.profileInfo}>
@@ -31,15 +42,20 @@ const Sidebar: FC<SidebarProps> = ({ user, activeTab, onChangeTab, tabs }) => {
       </div>
 
       <nav className={styles.nav}>
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            className={clsx(styles.navItem, activeTab === tab.id && styles.active)}
-            onClick={() => onChangeTab(tab.id)}
-          >
-            {tab.label}
-          </button>
-        ))}
+        {tabs.map((tab) => {
+          const badgeContent = getBadgeForTab(tab.id);
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              className={clsx(styles.navItem, isActive && styles.active)}
+              onClick={() => onChangeTab(tab.id)}
+            >
+              <span className={styles.navLabel}>{tab.label}</span>
+              {badgeContent && <>{badgeContent(isActive)}</>}
+            </button>
+          );
+        })}
       </nav>
 
       <div className={styles.footer}>
