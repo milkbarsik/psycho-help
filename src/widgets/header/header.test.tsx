@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import Header from './header';
-import { NAV_PAGES, CABINET_PATH } from '@/app/router/routes';
+import { navPages, CABINET_PATH } from '@/app/router/routes';
 import { useAuth } from '@/features/auth/api/useAuth';
 
 // Мокаем SVG-компоненты
@@ -51,7 +51,7 @@ describe('Header component', () => {
 
     expect(screen.getByTestId('logo')).toBeInTheDocument();
 
-    NAV_PAGES.forEach(({ navText }) => {
+    navPages.forEach(({ navText }) => {
       expect(screen.getByRole('link', { name: new RegExp(navText, 'i') })).toBeInTheDocument();
     });
   });
@@ -59,7 +59,7 @@ describe('Header component', () => {
   it('навигационные ссылки ведут на правильные страницы', () => {
     renderHeader();
 
-    NAV_PAGES.forEach(({ path, navText }) => {
+    navPages.forEach(({ path, navText }) => {
       const link = screen.getByRole('link', { name: new RegExp(navText, 'i') });
       expect(link).toHaveAttribute('href', path);
     });

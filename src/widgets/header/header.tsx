@@ -6,7 +6,7 @@ import Logo from '@/shared/assets/images/logo.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
 import Auth from '@/shared/assets/images/header/auth.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
-import { NAV_PAGES, CABINET_PATH } from '@/app/router/routes';
+import { navPages, CABINET_PATH } from '@/app/router/routes';
 
 const Header = () => {
   const { isAuth } = useAuth();
@@ -73,7 +73,7 @@ const Header = () => {
         <ul
           className={`${styles.header__list} ${isAnimating ? styles.header__list_animating : ''} ${menuOpen ? styles.header__list_open : ''}`}
         >
-          {NAV_PAGES.map((item, index) => (
+          {navPages.map((item, index) => (
             <li key={index} className={styles.header__item}>
               <Link to={item.path} className={styles.header__link} onClick={closeMenu}>
                 {item.navText}
