@@ -23,11 +23,13 @@
 
 .header {
   position: sticky;
-  top: 2rem;
-  margin-top: 2rem;
+  top: 0rem;
+  /* top: 2rem;
+  margin-top: 2rem; */
   z-index: 200;
   display: flex;
   justify-content: center;
+  background-color: var(--color-background-neutral-primary);
 }
 
 .header__nav {
@@ -37,18 +39,19 @@
   max-width: 125.4rem;
   width: 100%;
   margin: 0 9.3rem;
-  padding: 0 3.6rem;
+  padding: 2rem 3.6rem 0;
+  /* padding: 0 3.6rem; */
   border-radius: 2.8rem;
   /* Надо будет поменять, когда дизайнеры нарисуют */
-  background-color: #f6f6f6dd;
+  /* background-color: #f6f6f6dd;
   backdrop-filter: blur(1rem);
-  /* background-color: var(--color-fill-neutral-quaternary); */
+  background-color: var(--color-fill-neutral-quaternary); */
 }
 
-.header__nav:has(.header__list_open),
+/* .header__nav:has(.header__list_open),
 .header__nav:has(.header__list_animating) {
   backdrop-filter: none;
-}
+} */
 
 .header__logo {
   display: flex;
@@ -346,14 +349,16 @@
 
 @media (max-width: 720px) {
   .header {
-    top: 0.8rem;
-    margin-top: 0.8rem;
+    top: 0rem;
+    /* top: 0.8rem;
+    margin-top: 0.8rem; */
   }
 
   .header__nav {
     width: 100%;
     margin: 0 1rem;
-    padding: 0 0.4rem;
+    padding: 0.8rem 0.4rem 0;
+    /* padding: 0 0.4rem; */
     border-radius: 2rem;
   }
 

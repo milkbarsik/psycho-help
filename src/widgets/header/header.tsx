@@ -85,8 +85,8 @@ const Header = () => {
               <Link
                 to={CABINET_PATH}
                 className={styles.header__link}
-                aria-label="Личный кабинет"
                 onClick={closeMenu}
+                aria-label="Личный кабинет"
               >
                 <Profile className={styles.header__profile} aria-hidden="true" />
               </Link>
@@ -96,6 +96,7 @@ const Header = () => {
                 onClick={handleAuthClick}
                 type="button"
                 aria-label="Открыть окно входа"
+                data-testid="auth-button"
               >
                 <Auth aria-hidden="true" />
                 <span>Войти</span>

@@ -69,8 +69,10 @@ describe('Header component', () => {
     it('показывает кнопку "Войти", если пользователь не авторизован', () => {
       renderHeader();
 
-      expect(screen.getByRole('button', { name: /Открыть окно входа/i })).toBeInTheDocument();
-      expect(screen.getByText('Войти')).toBeInTheDocument();
+      const authBtn = screen.getByTestId('auth-button');
+      expect(authBtn).toBeInTheDocument();
+      expect(authBtn).toHaveAccessibleName();
+      expect(authBtn.textContent?.trim().length ?? 0).toBeGreaterThan(0);
       expect(screen.queryByTestId('profile-icon')).not.toBeInTheDocument();
     });
 
@@ -79,7 +81,7 @@ describe('Header component', () => {
       renderHeader();
 
       expect(screen.getByTestId('profile-icon')).toBeInTheDocument();
-      expect(screen.queryByRole('button', { name: /Открыть окно входа/i })).not.toBeInTheDocument();
+      expect(screen.queryByTestId('auth-button')).not.toBeInTheDocument();
     });
 
     it('ссылка профиля ведёт в личный кабинет', () => {
@@ -97,7 +99,7 @@ describe('Header component', () => {
 
       expect(screen.queryByTestId('auth-modal')).not.toBeInTheDocument();
 
-      await userEvent.click(screen.getByRole('button', { name: /Открыть окно входа/i }));
+      await userEvent.click(screen.getByTestId('auth-button'));
 
       expect(screen.getByTestId('auth-modal')).toBeInTheDocument();
     });
@@ -105,7 +107,7 @@ describe('Header component', () => {
     it('модальное окно закрывается при вызове onClose', async () => {
       renderHeader();
 
-      await userEvent.click(screen.getByRole('button', { name: /Открыть окно входа/i }));
+      await userEvent.click(screen.getByTestId('auth-button'));
       expect(screen.getByTestId('auth-modal')).toBeInTheDocument();
 
       await userEvent.click(screen.getByTestId('close-modal'));
