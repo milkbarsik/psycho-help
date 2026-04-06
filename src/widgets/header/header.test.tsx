@@ -6,6 +6,10 @@ import Header from './header';
 import { navPages, CABINET_PATH } from '@/app/router/routes';
 import { useAuth } from '@/features/auth/api/useAuth';
 
+vi.stubGlobal(
+  'ResizeObserver',
+  vi.fn(() => ({ observe: vi.fn(), unobserve: vi.fn(), disconnect: vi.fn() })),
+);
 // Мокаем SVG-компоненты
 vi.mock('@/shared/assets/images/logo.svg?react', () => ({
   default: (props: Record<string, unknown>) => <svg data-testid="logo" {...props} />,

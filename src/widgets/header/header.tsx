@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
@@ -10,6 +10,7 @@ import { navPages, CABINET_PATH } from '@/app/router/routes';
 
 const Header = () => {
   const { isAuth } = useAuth();
+  const headerRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -34,6 +35,16 @@ const Header = () => {
   };
 
   useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    });
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (menuOpen) {
       const initialOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
@@ -54,7 +65,7 @@ const Header = () => {
   }, [menuOpen, closeMenu]);
 
   return (
-    <header className={styles.header}>
+    <header ref={headerRef} className={styles.header}>
       <nav className={styles.header__nav} aria-label="Основная навигация">
         <Link to="/" className={styles.header__logo} aria-label="Вернуться на главную страницу">
           <Logo aria-hidden="true" />
