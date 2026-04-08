@@ -8,6 +8,7 @@ import { ResourcesPage, TestPage } from '@/pages';
 import { ArticlePage } from '@/pages/article-page';
 import { NewsPage } from '@/pages';
 import { NewsItemPage } from '@/pages';
+import PsychologistAppointmentPage from '@/pages/personal-cabinet/psychologist-appointment-page/PsychologistAppointmentPage';
 
 /*
  Тип маршрута:
@@ -64,6 +65,10 @@ export const authRoutes: routePath[] = [
   {
     path: '/cabinet',
     Component: PersonalCabinet,
+  },
+  {
+    path: '/cabinet/appointment/:id',
+    Component: PsychologistAppointmentPage,
   },
   {
     path: '/article/:id',

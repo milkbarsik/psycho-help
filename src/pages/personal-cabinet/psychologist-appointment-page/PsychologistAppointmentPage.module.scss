@@ -1,0 +1,52 @@
+.wrapper {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.back {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 24px;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+}
+
+.field {
+  display: flex;
+  gap: 8px;
+  font-size: 15px;
+  margin: 0;
+}
+
+.fieldLabel {
+  font-weight: 600;
+  min-width: 100px;
+  color: #555;
+}
+
+.field dd {
+  margin: 0;
+}

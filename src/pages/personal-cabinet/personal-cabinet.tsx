@@ -1,7 +1,10 @@
-import { useState, useMemo, useCallback, type FC } from 'react';
+import { useState, useMemo, useCallback, useEffect, type FC } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { Role } from '@/entities/role/helpers';
 import type { RoleCode } from '@/entities/role/types';
+import { appointmentQueries } from '@/entities/appointment/api';
+import { useCabinetTab } from '@/features/personal-cabinet/model/personal-cabinet-tab';
 import Loader from '@/shared/ui/loader/loader';
 import Sidebar from '@/features/personal-cabinet/ui/sidebar/Sidebar';
 import type { TabBadge } from '@/features/personal-cabinet/ui/sidebar/Sidebar';
@@ -23,27 +26,45 @@ const PersonalCabinet: FC = () => {
     return 'user';
   }, [authUser?.roles]);
 
-  const announcementsCount = 3; // TODO: fetch from API
+  const isPsychologist = primaryRoleCode === 'psychologist';
+
+  const { data: appointments = [] } = useQuery({
+    ...appointmentQueries.list(),
+    enabled: isPsychologist,
+  });
+
+  const newAppointmentsCount = useMemo(
+    () => appointments.filter((a) => a.status === 'Accepted').length,
+    [appointments],
+  );
 
   const tabBadges = useMemo<TabBadge[]>(() => {
     const badges: TabBadge[] = [];
 
-    if (primaryRoleCode === 'psychologist' && announcementsCount > 0) {
+    if (isPsychologist && newAppointmentsCount > 0) {
       badges.push({
         tabId: 'appointments',
         content: (isActive) => (
           <span className={clsx(styles.countBage, isActive && styles.countBageActive)}>
-            {announcementsCount}
+            {newAppointmentsCount}
           </span>
         ),
       });
     }
 
     return badges;
-  }, [primaryRoleCode, announcementsCount]);
+  }, [isPsychologist, newAppointmentsCount]);
 
   const tabs = useMemo(() => getTabsForRole(primaryRoleCode), [primaryRoleCode]);
-  const [activeTab, setActiveTab] = useState<string>(() => getDefaultTabForRole(primaryRoleCode));
+
+  const savedTab = useCabinetTab((s) => s.activeTab);
+  const setSavedTab = useCabinetTab((s) => s.setActiveTab);
+  const defaultTab = getDefaultTabForRole(primaryRoleCode);
+  const [activeTab, setActiveTab] = useState<string>(() => savedTab ?? defaultTab);
+
+  useEffect(() => {
+    setSavedTab(activeTab as TabId);
+  }, [activeTab, setSavedTab]);
 
   const handleTabChange = useCallback(
     (tabId: string) => {

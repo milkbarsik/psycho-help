@@ -5,6 +5,7 @@ import { therapistQueries } from '@/entities/therapist/api';
 import Loader from '@/shared/ui/loader/loader';
 import AppointmentForm from '@/features/personal-cabinet/ui/input-block/AppointmentForm';
 import styles from './AppointmentsPage.module.scss';
+import PsychologistAppointments from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointments';
 
 interface AppointmentsPageProps {
   role: RoleCode;
@@ -30,13 +31,7 @@ const AppointmentsPage: FC<AppointmentsPageProps> = ({ role }) => {
 
   // --- Psychologist: placeholder ---
   if (role === 'psychologist') {
-    return (
-      <div className={styles.container}>
-        <div className={styles.placeholder}>
-          <p>Расписание психолога — в разработке</p>
-        </div>
-      </div>
-    );
+    return <PsychologistAppointments />;
   }
 
   // --- Admin / Content Manager: placeholder ---

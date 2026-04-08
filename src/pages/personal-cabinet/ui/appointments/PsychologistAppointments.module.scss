@@ -1,0 +1,271 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.label {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.tab {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+
+.tab:hover {
+  background: #f0f0f0;
+}
+
+.tabActive {
+  background: #222;
+  color: #fff;
+}
+
+.tabActive:hover {
+  background: #333;
+}
+
+/* Filters row */
+.filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  max-width: 280px;
+}
+
+.filterSelect {
+  min-width: 150px;
+}
+
+.resetFiltersBtn {
+  white-space: nowrap;
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+  color: #1677ff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.resetFiltersBtn:hover {
+  color: #4096ff;
+  text-decoration: underline;
+}
+
+/* Sort controls */
+.sortControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sortSelect {
+  min-width: 130px;
+}
+
+.sortDirectionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 15px;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.sortDirectionBtn:hover {
+  border-color: #4096ff;
+  color: #1677ff;
+}
+
+.sortIcon {
+  font-size: 14px;
+}
+
+/* Appointments list */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 79rem; /* Это одна из немногих строчек, которую я сам написал, а не сгенерил)
+                        Она нужна, чтобы ничего не прыгало при пагинации.
+                        Можешь удалить, но следи, чтобы ничего не скакало */
+}
+
+.empty {
+  color: #888;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.dateGroup {
+  margin-bottom: 8px;
+}
+
+.dateHeader {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  padding-bottom: 4px;
+}
+
+.appointmentRow {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 24px;
+}
+
+.timeCol {
+  min-width: 110px;
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.infoCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.patientName {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+}
+
+.venue {
+  font-size: 13px;
+  color: #777;
+}
+
+.actionsCol {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.btnConfirm {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1.5px solid #22c55e;
+  background: #fff;
+  color: #22c55e;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.btnConfirm:hover {
+  background: #f0fdf4;
+}
+
+.btnConfirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnOpenGreen {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1.5px solid #22c55e;
+  background: #fff;
+  color: #22c55e;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.btnOpenGreen:hover {
+  background: #f0fdf4;
+}
+
+.btnOpenBlue {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.btnOpenBlue:hover {
+  background: #1d4ed8;
+}
+
+/* Status badges */
+.statusBadge {
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.statusApproved {
+  border: 1.5px solid #22c55e;
+  color: #22c55e;
+  background: #fff;
+}
+
+.statusCancelled {
+  border: 1.5px solid #ef4444;
+  color: #ef4444;
+  background: #fff;
+}
+
+.statusDone {
+  border: 1.5px solid #9ca3af;
+  color: #6b7280;
+  background: #fff;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}

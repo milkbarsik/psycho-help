@@ -16,3 +16,8 @@ export const appointmentQueries = {
       ...options,
     }),
 };
+
+export const confirmAppointment = async (id: string): Promise<Appointment> => {
+  const { data } = await $api.put(`/appointments/${id}/confirm`);
+  return data;
+};
