@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Descriptions, Tag, DatePicker, Select, Modal, Input, message } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Calendar, Select, Modal, Input, message } from 'antd';
 import dayjs from 'dayjs';
 import {
   applicationQueries,
@@ -16,19 +15,14 @@ import { useAuth } from '@/features/auth/api/useAuth';
 import Loader from '@/shared/ui/loader/loader';
 import styles from './PsychologistApplicationPage.module.scss';
 
-const STATUS_TAG: Record<ApplicationStatus, { label: string; color: string }> = {
-  new: { label: 'Новая', color: 'blue' },
-  in_progress: { label: 'В работе', color: 'orange' },
-  awaiting_user_confirmation: { label: 'Ожидает подтверждения', color: 'cyan' },
-  completed: { label: 'Завершено', color: 'green' },
-  rejected: { label: 'Отклонено', color: 'red' },
-  cancelled: { label: 'Отменено', color: 'default' },
-  expired: { label: 'Истекло', color: 'default' },
-};
-
-const MEETING_TYPE_LABELS: Record<MeetingType, string> = {
-  online: 'Онлайн',
-  offline: 'Очно',
+const STATUS_LABELS: Record<ApplicationStatus, string> = {
+  new: 'Новая',
+  in_progress: 'В работе',
+  awaiting_user_confirmation: 'Ожидает подтверждения',
+  completed: 'Завершено',
+  rejected: 'Отклонено',
+  cancelled: 'Отменено',
+  expired: 'Истекло',
 };
 
 const MEETING_TYPE_OPTIONS = [
@@ -36,10 +30,18 @@ const MEETING_TYPE_OPTIONS = [
   { value: 'offline' as const, label: 'Очно' },
 ];
 
-const formatDateTime = (iso?: string | null) => {
-  if (!iso) return '—';
-  return dayjs(iso).format('D MMMM YYYY, HH:mm');
-};
+const TIME_SLOTS = [
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+];
 
 const PsychologistApplicationPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -54,28 +56,31 @@ const PsychologistApplicationPage = () => {
     enabled: isPsychologist && !!id,
   });
 
-  // Editable state for in_progress status
-  const [meetingType, setMeetingType] = useState<MeetingType | null>(null);
-  const [scheduledAt, setScheduledAt] = useState<dayjs.Dayjs | null>(null);
-  const [initializedForId, setInitializedForId] = useState<string | null>(null);
-
-  // Reject modal state
+  // Local state tracks only user edits; display values derive from application + edits
+  const [userMeetingType, setUserMeetingType] = useState<MeetingType | null>(null);
+  const [userDate, setUserDate] = useState<dayjs.Dayjs | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string>('');
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
+  const [conclusion, setConclusion] = useState('');
 
-  // Initialize editable fields when application loads (state-during-render)
-  if (application && application.status === 'in_progress' && application.id !== initializedForId) {
-    setInitializedForId(application.id);
-    if (application.meeting_type) setMeetingType(application.meeting_type);
-    if (application.scheduled_at) setScheduledAt(dayjs(application.scheduled_at));
-  }
+  // Resolved values: user edits take precedence over server data
+  const meetingType = userMeetingType ?? application?.meeting_type ?? null;
+  const selectedDate =
+    userDate ?? (application?.scheduled_at ? dayjs(application.scheduled_at) : null);
+
+  const selectedDateTime = useMemo(() => {
+    if (!selectedDate || !selectedTime) return null;
+    const [hours, minutes] = selectedTime.split(':').map(Number);
+    return selectedDate.hour(hours).minute(minutes).second(0);
+  }, [selectedDate, selectedTime]);
 
   const offerMutation = useMutation({
     mutationFn: () =>
       offerConsultation(id!, {
         psychologist_id: user!.id,
         meeting_type: meetingType!,
-        scheduled_at: scheduledAt!.toISOString(),
+        scheduled_at: selectedDateTime!.toISOString(),
       }),
     onSuccess: () => {
       message.success('Консультация предложена, ожидаем подтверждения пользователя');
@@ -106,105 +111,171 @@ const PsychologistApplicationPage = () => {
   if (isLoading) return <Loader />;
   if (!application) return <p>Заявка не найдена</p>;
 
-  const statusTag = STATUS_TAG[application.status];
   const isInProgress = application.status === 'in_progress';
-  const canSave = isInProgress && meetingType && scheduledAt;
+  const canSave = isInProgress && meetingType && selectedDateTime;
+
+  const disabledDates = (current: dayjs.Dayjs) => {
+    return current && current < dayjs().startOf('day');
+  };
 
   return (
-    <article className={styles.wrapper}>
-      <Button
-        type="text"
-        icon={<ArrowLeftOutlined />}
-        onClick={() => navigate(-1)}
-        className={styles.back}
-      >
-        Назад
-      </Button>
+    <div className={styles.page}>
+      {/* Хлебные крошки */}
+      <nav className={styles.breadcrumbs}>
+        <span className={styles.crumb} onClick={() => navigate('/')}>
+          Главная
+        </span>
+        <span className={styles.crumbSeparator}>/</span>
+        <span className={styles.crumb}>Психологи</span>
+        <span className={styles.crumbSeparator}>/</span>
+        <span className={styles.crumbActive}>
+          {user?.last_name} {user?.first_name}
+        </span>
+      </nav>
 
-      <h2 className={styles.title}>Заявка на консультацию</h2>
+      <div className={styles.layout}>
+        {/* Левая колонка — основной контент */}
+        <div className={styles.mainContent}>
+          <h1 className={styles.pageTitle}>Первичная консультация</h1>
 
-      <Descriptions column={1} bordered size="middle">
-        <Descriptions.Item label="ФИО">
-          {application.last_name} {application.first_name}
-        </Descriptions.Item>
-        <Descriptions.Item label="Email">{application.email || '—'}</Descriptions.Item>
-        <Descriptions.Item label="Телефон">{application.phone || '—'}</Descriptions.Item>
-        <Descriptions.Item label="Статус в университете">
-          {application.university_status}
-        </Descriptions.Item>
-        <Descriptions.Item label="Предпочтительный кампус">
-          {application.preferred_campus || '—'}
-        </Descriptions.Item>
-        <Descriptions.Item label="Описание проблемы">
-          {application.problem_description}
-        </Descriptions.Item>
-        <Descriptions.Item label="Статус">
-          <Tag color={statusTag.color}>{statusTag.label}</Tag>
-        </Descriptions.Item>
-        <Descriptions.Item label="Дата создания">
-          {formatDateTime(application.created_at)}
-        </Descriptions.Item>
+          <h2 className={styles.userName}>
+            {application.last_name} {application.first_name}
+          </h2>
+          <p className={styles.userStatus}>{application.university_status}</p>
 
-        {isInProgress ? (
-          <>
-            <Descriptions.Item label="Формат">
-              <Select
-                value={meetingType}
-                onChange={setMeetingType}
-                options={MEETING_TYPE_OPTIONS}
-                placeholder="Выберите формат"
-                style={{ minWidth: 200 }}
-              />
-            </Descriptions.Item>
-            <Descriptions.Item label="Дата и время">
-              <DatePicker
-                showTime={{ format: 'HH:mm' }}
-                format="DD.MM.YYYY HH:mm"
-                value={scheduledAt}
-                onChange={setScheduledAt}
-                placeholder="Выберите дату и время"
-                style={{ minWidth: 250 }}
-              />
-            </Descriptions.Item>
-          </>
-        ) : (
-          <>
-            <Descriptions.Item label="Формат">
-              {application.meeting_type ? MEETING_TYPE_LABELS[application.meeting_type] : '—'}
-            </Descriptions.Item>
-            <Descriptions.Item label="Дата и время">
-              {formatDateTime(application.scheduled_at)}
-            </Descriptions.Item>
-          </>
-        )}
+          {/* Статус заявки */}
+          <div className={styles.statusRow}>
+            <span className={styles.statusDot} />
+            <span className={styles.statusText}>{STATUS_LABELS[application.status]}</span>
+          </div>
 
-        {application.reject_reason && (
-          <Descriptions.Item label="Причина отклонения">
-            {application.reject_reason}
-          </Descriptions.Item>
-        )}
-        {application.cancel_reason && (
-          <Descriptions.Item label="Причина отмены">{application.cancel_reason}</Descriptions.Item>
-        )}
-      </Descriptions>
+          <hr className={styles.divider} />
 
-      {isInProgress && (
-        <div className={styles.actions}>
-          <Button
-            type="primary"
-            size="large"
-            onClick={() => offerMutation.mutate()}
-            loading={offerMutation.isPending}
-            disabled={!canSave}
-          >
-            Сохранить
-          </Button>
-          <Button danger size="large" onClick={() => setRejectModalOpen(true)}>
-            Отклонить
-          </Button>
+          {/* Данные, указанные при записи */}
+          <section className={styles.dataSection}>
+            <h3 className={styles.sectionTitle}>
+              <span className={styles.requiredStar}>*</span> Данные, указанные при записи
+            </h3>
+            <div className={styles.dataGrid}>
+              <div className={styles.dataItem}>
+                <span className={styles.dataLabel}>Email:</span>
+                <span className={styles.dataValue}>{application.email || '—'}</span>
+              </div>
+              <div className={styles.dataItem}>
+                <span className={styles.dataLabel}>Телефон:</span>
+                <span className={styles.dataValue}>{application.phone || '—'}</span>
+              </div>
+              <div className={styles.dataItem}>
+                <span className={styles.dataLabel}>Кампус:</span>
+                <span className={styles.dataValue}>{application.preferred_campus || '—'}</span>
+              </div>
+              <div className={styles.dataItemFull}>
+                <span className={styles.dataLabel}>Описание проблемы:</span>
+                <span className={styles.dataValue}>{application.problem_description}</span>
+              </div>
+            </div>
+          </section>
+
+          <hr className={styles.divider} />
+
+          {/* Формат и дата (только для in_progress) */}
+          {isInProgress && (
+            <section className={styles.dataSection}>
+              <h3 className={styles.sectionTitle}>Назначить консультацию</h3>
+              <div className={styles.formRow}>
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Формат</label>
+                  <Select
+                    value={meetingType}
+                    onChange={setUserMeetingType}
+                    options={MEETING_TYPE_OPTIONS}
+                    placeholder="Выберите формат"
+                    className={styles.fieldSelect}
+                  />
+                </div>
+              </div>
+            </section>
+          )}
+
+          <hr className={styles.divider} />
+
+          {/* Заключение */}
+          <section className={styles.dataSection}>
+            <h3 className={styles.sectionTitle}>Заключение</h3>
+            <textarea
+              className={styles.textarea}
+              placeholder="Введите заключение по заявке..."
+              value={conclusion}
+              onChange={(e) => setConclusion(e.target.value)}
+            />
+          </section>
+
+          {/* Кнопки действий */}
+          {isInProgress && (
+            <div className={styles.actions}>
+              <button
+                className={styles.btnSecondary}
+                type="button"
+                onClick={() => setRejectModalOpen(true)}
+              >
+                Отменить запись
+              </button>
+              <button
+                className={styles.btnPrimary}
+                type="button"
+                onClick={() => offerMutation.mutate()}
+                disabled={!canSave}
+              >
+                {offerMutation.isPending ? 'Сохранение...' : 'Сохранить данные'}
+              </button>
+            </div>
+          )}
         </div>
-      )}
 
+        {/* Правая колонка — запись на сессию */}
+        {isInProgress && (
+          <aside className={styles.sidebar}>
+            <div className={styles.sidebarCard}>
+              <h3 className={styles.sidebarTitle}>Запись на сессию</h3>
+
+              {/* Календарь */}
+              <Calendar
+                fullscreen={false}
+                value={selectedDate || undefined}
+                onChange={(date) => {
+                  setUserDate(date);
+                  setSelectedTime('');
+                }}
+                disabledDate={disabledDates}
+              />
+
+              {/* Выбор времени */}
+              <div className={styles.timeSection}>
+                <label className={styles.fieldLabel}>Выбрать время</label>
+                <Select
+                  value={selectedTime || undefined}
+                  onChange={setSelectedTime}
+                  placeholder="Выберите время"
+                  className={styles.fieldSelect}
+                  options={TIME_SLOTS.map((slot) => ({ value: slot, label: slot }))}
+                />
+              </div>
+
+              {/* Кнопка записи */}
+              <button
+                className={styles.btnPrimaryFull}
+                type="button"
+                onClick={() => offerMutation.mutate()}
+                disabled={!canSave}
+              >
+                {offerMutation.isPending ? 'Запись...' : 'Записать'}
+              </button>
+            </div>
+          </aside>
+        )}
+      </div>
+
+      {/* Модалка отклонения */}
       <Modal
         title="Отклонить заявку"
         open={rejectModalOpen}
@@ -228,7 +299,7 @@ const PsychologistApplicationPage = () => {
           showCount
         />
       </Modal>
-    </article>
+    </div>
   );
 };
 

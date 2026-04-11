@@ -13,7 +13,7 @@ interface DashboardProps {
 const Dashboard: FC<DashboardProps> = ({ userName, role, onBookClick }) => {
   switch (role) {
     case 'psychologist':
-      return <PsychologistDashboard />;
+      return <PsychologistDashboard onBookClick={onBookClick} />;
     case 'admin':
     case 'content_manager':
       return <AdminDashboard />;

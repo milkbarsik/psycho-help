@@ -43,3 +43,13 @@ export interface Application {
   appointment_id: string | null;
   version: number;
 }
+
+export interface ApplicationCreateRequest {
+  first_name: string,
+  last_name: string,
+  email?: string,
+  phone?: string,
+  problem_description: string,
+  preferred_campus?: string,
+  university_status: "студент" | "аспирант" | "преподаватель" | "сотрудник"
+}

@@ -1,0 +1,217 @@
+/* Общий контейнер, который ограничивает ширину всего дашборда */
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px; /* Можно изменить под ширину вашей сетки, если она больше/меньше */
+}
+
+/* Строка 1: Заголовок и кнопка */
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.pageTitle {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.btnAdd {
+  background: transparent;
+  border: none;
+  color: #3b82f6;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+/* Строка 2: Дни недели и DatePicker */
+.navigationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.weekSelector {
+  display: flex;
+  gap: 20px;
+}
+
+.dayItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.dayName {
+  text-transform: capitalize;
+  font-size: 14px;
+  color: #4a4a4a;
+}
+
+.dayNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #1a1a1a;
+  transition: all 0.2s;
+}
+
+.dayActive .dayNumber {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.dayItem:hover:not(.dayActive) .dayNumber {
+  background-color: #f0f0f0;
+}
+
+.datePicker {
+  border-radius: 8px;
+  height: 40px;
+  width: 160px;
+}
+
+/* Расписание: Сетка слева + Панель справа */
+.wrapper {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Боковая панель */
+.detailsPanel {
+  width: 340px;
+  flex-shrink: 0;
+  padding-top: 4px; /* Совсем легкий отступ, чтобы блок ровно стоял с текстом "09:00" */
+}
+
+.detailsCard {
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.detailsTime {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+}
+
+.detailsInfoList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #4a4a4a;
+  font-size: 14px;
+
+  .infoIcon {
+    color: #bfbfbf;
+    font-size: 16px;
+  }
+}
+
+.commentBlock {
+  margin-bottom: 24px;
+}
+
+.commentLabel {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #1a1a1a;
+}
+
+.commentText {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+  
+  /* Обрезка строк */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.btnReadMore {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #888;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  
+  &:hover {
+    color: #4a4a4a;
+  }
+}
+
+.btnNavigate {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  background-color: #2563eb;
+  font-size: 15px;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #1d4ed8 !important;
+  }
+}
+
+.emptyDetails {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bfbfbf;
+  text-align: center;
+  padding: 40px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}

@@ -3,9 +3,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 20%;
-    left: 50%;
     transform: translate(-50%);
 }
 
@@ -35,3 +32,8 @@
     font-size: 1.4rem;
 }
 
+.loaderCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

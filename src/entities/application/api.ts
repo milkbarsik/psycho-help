@@ -1,6 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 import { $api } from '@/shared/api/http';
-import type { Application, ApplicationStatus, MeetingType } from './types';
+import type { Application, ApplicationStatus, MeetingType, ApplicationCreateRequest } from './types';
+
 
 export const applicationQueryKey = {
   list: 'application.list',
@@ -51,6 +52,18 @@ export const offerConsultation = async (
 export const rejectApplication = async (applicationId: string, rejectReason: string) => {
   const { data } = await $api.post<Application>(`/applications/${applicationId}/reject`, {
     reject_reason: rejectReason,
+  });
+  return data;
+};
+
+export const createApplication = async (body: ApplicationCreateRequest) => {
+  const { data } = await $api.post<Application>('/applications/', body);
+  return data;
+};
+
+export const confirmApplication = async (applicationId: string, appointmentId?: string) => {
+  const { data } = await $api.post<Application>(`/applications/${applicationId}/confirm`, null, {
+    params: appointmentId ? { appointment_id: appointmentId } : undefined,
   });
   return data;
 };

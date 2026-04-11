@@ -1,14 +1,16 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import type { FC } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import { message, Modal } from 'antd';
 import { therapistQueries } from '@/entities/therapist/api';
 import { appointmentQueries } from '@/entities/appointment/api';
+import { applicationQueries, applicationQueryKey, confirmApplication } from '@/entities/application/api';
 import type { Appointment } from '@/entities/appointment/types';
 import type { Therapist } from '@/entities/therapist/types';
 import GreetingCard from '@/features/personal-cabinet/ui/greeting-card/GreetingCard';
 import AppointmentCard from '@/features/personal-cabinet/ui/appointment-card/AppointmentCard';
-import { appointmentsConsts } from '../../constants';
+import PageLoader from '@/shared/ui/PageLoader';
 import styles from './Dashboard.module.scss';
 
 interface UserDashboardProps {
@@ -16,20 +18,41 @@ interface UserDashboardProps {
   onBookClick: () => void;
 }
 
+const MEETING_TYPE_LABELS: Record<string, string> = {
+  online: 'Онлайн',
+  offline: 'Очно',
+};
+
 const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
+  const queryClient = useQueryClient();
+  const [commentModalId, setCommentModalId] = useState<string | null>(null);
+
   const { data: doctors, isLoading: isLoadingDoctors } = useQuery(therapistQueries.list());
   const { data: serverAppointments, isLoading: isLoadingAppointments } = useQuery(
     appointmentQueries.list(),
   );
+  const { data: applications, isLoading: isLoadingApplications } = useQuery(
+    applicationQueries.list(),
+  );
 
-  const appointmentsData = serverAppointments?.length ? serverAppointments : appointmentsConsts;
+  const getTherapistName = useCallback(
+    (therapistId?: string) => {
+      if (!therapistId) return 'Специалист не назначен';
+      if (!doctors) return 'Загрузка данных...';
+      const doctor = doctors.find((d: Therapist) => d.id === therapistId);
+      if (!doctor) return 'Неизвестный специалист';
+      return `${doctor.last_name} ${doctor.first_name} ${doctor.middle_name || ''}`.trim();
+    },
+    [doctors],
+  );
 
+  // Разделение записей на ближайшие и прошедшие
   const { upcoming, past } = useMemo(() => {
     const now = dayjs();
     const upc: Appointment[] = [];
     const pst: Appointment[] = [];
 
-    appointmentsData.forEach((item) => {
+    (serverAppointments || []).forEach((item) => {
       const appointmentDate = dayjs(item.scheduled_time);
       if (appointmentDate.isValid()) {
         if (appointmentDate.isAfter(now)) {
@@ -44,29 +67,52 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     pst.sort((a, b) => dayjs(b.scheduled_time).diff(dayjs(a.scheduled_time)));
 
     return { upcoming: upc, past: pst };
-  }, [appointmentsData]);
+  }, [serverAppointments]);
 
-  const getTherapistName = useMemo(
-    () => (therapistId?: string) => {
-      if (!therapistId) return 'Специалист не назначен';
-      if (!doctors) return 'Загрузка данных...';
-      const doctor = doctors.find((d: Therapist) => d.id === therapistId);
-      if (!doctor) return 'Неизвестный специалист';
-      return `${doctor.last_name || ''} ${doctor.first_name || ''} ${doctor.middle_name || ''}`.trim();
-    },
-    [doctors],
+  // Заявки, требующие подтверждения пользователя
+  const awaitingConfirmation = useMemo(
+    () =>
+      (applications || []).filter((app) => app.status === 'awaiting_user_confirmation'),
+    [applications],
   );
 
-  const isLoading = isLoadingDoctors || isLoadingAppointments;
+  // Мутация подтверждения
+  const confirmMutation = useMutation({
+    mutationFn: (applicationId: string) => confirmApplication(applicationId),
+    onSuccess: () => {
+      message.success('Заявка подтверждена');
+      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
+    },
+    onError: () => {
+      message.error('Не удалось подтвердить заявку');
+    },
+  });
+
+  const handleConfirm = (applicationId: string) => {
+    Modal.confirm({
+      title: 'Подтверждение заявки',
+      content: 'Вы уверены, что хотите подтвердить эту заявку?',
+      okText: 'Подтвердить',
+      cancelText: 'Отмена',
+      onOk: () => confirmMutation.mutate(applicationId),
+    });
+  };
+
+  const isLoading = isLoadingDoctors || isLoadingAppointments || isLoadingApplications;
 
   if (isLoading) {
-    return null;
+    return (
+      <div className={styles.pageLoaderWrapper}>
+        <PageLoader />
+      </div>
+    );
   }
 
   return (
     <>
       <GreetingCard userName={userName} onBookClick={onBookClick} />
 
+      {/* Ближайшие записи */}
       <section className={styles.section}>
         <h3 className={styles.sectionTitle}>Ближайшие записи</h3>
         <div className={styles.cardsGrid}>
@@ -87,6 +133,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
         </div>
       </section>
 
+      {/* Последние сессии */}
       <section className={styles.section}>
         <h3 className={styles.sectionTitle}>Последние сессии</h3>
         <div className={styles.cardsGrid}>
@@ -104,6 +151,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                   address={app.venue || (app.type === 'Online' ? 'Онлайн сессия' : 'Офлайн')}
                   type="past"
                   rating={mockRating}
+                  onComment={() => setCommentModalId(app.id)}
                 />
               );
             })
@@ -112,6 +160,55 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
           )}
         </div>
       </section>
+
+      {/* Требуют подтверждения */}
+      <section className={styles.section}>
+        <h3 className={styles.sectionTitle}>Требуют подтверждения</h3>
+        <div className={styles.cardsGrid}>
+          {awaitingConfirmation.length > 0 ? (
+            awaitingConfirmation.map((app) => {
+              const meetingTypeStr = app.meeting_type
+                ? MEETING_TYPE_LABELS[app.meeting_type] || app.meeting_type
+                : 'Не указан';
+              const locationStr =
+                app.meeting_type === 'offline'
+                  ? app.location_address || app.preferred_campus || 'Адрес не указан'
+                  : app.meeting_url || 'Ссылка будет отправлена';
+              const scheduledStr = app.scheduled_at
+                ? dayjs(app.scheduled_at).format('D MMMM, HH:mm')
+                : 'Время не назначено';
+
+              return (
+                <AppointmentCard
+                  key={app.id}
+                  date={scheduledStr}
+                  doctorName={getTherapistName(app.psychologist_id || undefined)}
+                  address={`${meetingTypeStr} — ${locationStr}`}
+                  type="confirmation"
+                  status={app.status}
+                  onConfirm={() => handleConfirm(app.id)}
+                />
+              );
+            })
+          ) : (
+            <p className={styles.emptyText}>Нет заявок, требующих подтверждения</p>
+          )}
+        </div>
+      </section>
+
+      {/* Модалка комментария (заглушка) */}
+      <Modal
+        title="Комментарий психолога"
+        open={!!commentModalId}
+        onCancel={() => setCommentModalId(null)}
+        footer={null}
+      >
+        <p>
+          {commentModalId
+            ? 'Комментарий к сессии будет доступен после обновления системы комментариев.'
+            : 'Комментарий отсутствует.'}
+        </p>
+      </Modal>
     </>
   );
 };

@@ -26,7 +26,7 @@ export type UserUpdate = {
   last_name: string;
   phone_number: string;
   email: string;
-  social_media: string;
+  social_media?: string;
   study_group: string;
 };
 
