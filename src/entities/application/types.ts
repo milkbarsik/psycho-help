@@ -1,0 +1,45 @@
+export type ApplicationStatus =
+  | 'new'
+  | 'in_progress'
+  | 'awaiting_user_confirmation'
+  | 'completed'
+  | 'rejected'
+  | 'cancelled'
+  | 'expired';
+
+export type MeetingType = 'offline' | 'online';
+
+export type UniversityStatus = 'студент' | 'аспирант' | 'преподаватель' | 'сотрудник';
+
+export interface Application {
+  id: string;
+  user_id: string | null;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  problem_description: string;
+  preferred_campus: string | null;
+  university_status: UniversityStatus;
+  status: ApplicationStatus;
+  assigned_to: string | null;
+  psychologist_id: string | null;
+  meeting_type: MeetingType | null;
+  scheduled_at: string | null;
+  location_address: string | null;
+  meeting_url: string | null;
+  created_at: string;
+  updated_at: string;
+  processing_started_at: string | null;
+  confirmation_requested_at: string | null;
+  completed_at: string | null;
+  rejected_at: string | null;
+  cancelled_at: string | null;
+  expired_at: string | null;
+  reject_reason: string | null;
+  cancel_reason: string | null;
+  cancel_initiator: 'user' | 'psychologist' | 'manager' | 'system' | null;
+  internal_comment: string | null;
+  appointment_id: string | null;
+  version: number;
+}

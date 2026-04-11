@@ -22,7 +22,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "concurrently --kill-others \"vite\" \"node mok-server/server.js --skip-connect\"",
+    "start": "concurrently --kill-others \"vite\" \"node mok-server/server.js\"",
+    "start:mock": "concurrently --kill-others \"vite\" \"node mok-server/server.js --skip-connect\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",

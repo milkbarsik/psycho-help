@@ -30,7 +30,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     const pst: Appointment[] = [];
 
     appointmentsData.forEach((item) => {
-      const appointmentDate = dayjs(item.remind_time);
+      const appointmentDate = dayjs(item.scheduled_time);
       if (appointmentDate.isValid()) {
         if (appointmentDate.isAfter(now)) {
           upc.push(item);
@@ -40,8 +40,8 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
       }
     });
 
-    upc.sort((a, b) => dayjs(a.remind_time).diff(dayjs(b.remind_time)));
-    pst.sort((a, b) => dayjs(b.remind_time).diff(dayjs(a.remind_time)));
+    upc.sort((a, b) => dayjs(a.scheduled_time).diff(dayjs(b.scheduled_time)));
+    pst.sort((a, b) => dayjs(b.scheduled_time).diff(dayjs(a.scheduled_time)));
 
     return { upcoming: upc, past: pst };
   }, [appointmentsData]);
@@ -74,8 +74,8 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
             upcoming.map((app) => (
               <AppointmentCard
                 key={app.id}
-                date={dayjs(app.remind_time).format('D MMMM, HH:mm')}
-                doctorName={getTherapistName(app.therapist_id)}
+                date={dayjs(app.scheduled_time).format('D MMMM, HH:mm')}
+                doctorName={getTherapistName(app.psychologist_id)}
                 address={app.venue || (app.type === 'Online' ? 'Онлайн сессия' : 'Офлайн')}
                 type="upcoming"
                 status={app.status}
@@ -99,8 +99,8 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
               return (
                 <AppointmentCard
                   key={app.id}
-                  date={dayjs(app.remind_time).format('D MMMM, HH:mm')}
-                  doctorName={getTherapistName(app.therapist_id)}
+                  date={dayjs(app.scheduled_time).format('D MMMM, HH:mm')}
+                  doctorName={getTherapistName(app.psychologist_id)}
                   address={app.venue || (app.type === 'Online' ? 'Онлайн сессия' : 'Офлайн')}
                   type="past"
                   rating={mockRating}

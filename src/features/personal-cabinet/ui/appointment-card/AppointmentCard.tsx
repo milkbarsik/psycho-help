@@ -6,7 +6,7 @@ import {
   DislikeOutlined,
 } from '@ant-design/icons';
 import clsx from 'clsx';
-import type { AppointmentStatusType } from '@/entities/appointment/types';
+import type { AppointmentStatus } from '@/entities/appointment/types';
 import styles from './appointment-card.module.scss';
 
 interface AppointmentCardProps {
@@ -14,7 +14,7 @@ interface AppointmentCardProps {
   doctorName: string;
   address: string;
   type: 'upcoming' | 'past';
-  status?: AppointmentStatusType | string;
+  status?: AppointmentStatus | string;
   rating?: 'good' | 'bad' | null;
 }
 

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { Role } from '@/entities/role/helpers';
 import type { RoleCode } from '@/entities/role/types';
-import { appointmentQueries } from '@/entities/appointment/api';
+import { applicationQueries } from '@/entities/application/api';
 import { useCabinetTab } from '@/features/personal-cabinet/model/personal-cabinet-tab';
 import Loader from '@/shared/ui/loader/loader';
 import Sidebar from '@/features/personal-cabinet/ui/sidebar/Sidebar';
@@ -28,32 +28,32 @@ const PersonalCabinet: FC = () => {
 
   const isPsychologist = primaryRoleCode === 'psychologist';
 
-  const { data: appointments = [] } = useQuery({
-    ...appointmentQueries.list(),
+  const { data: applications = [] } = useQuery({
+    ...applicationQueries.list(),
     enabled: isPsychologist,
   });
 
-  const newAppointmentsCount = useMemo(
-    () => appointments.filter((a) => a.status === 'Accepted').length,
-    [appointments],
+  const activeApplicationsCount = useMemo(
+    () => applications.filter((a) => a.status === 'new' || a.status === 'in_progress').length,
+    [applications],
   );
 
   const tabBadges = useMemo<TabBadge[]>(() => {
     const badges: TabBadge[] = [];
 
-    if (isPsychologist && newAppointmentsCount > 0) {
+    if (isPsychologist && activeApplicationsCount > 0) {
       badges.push({
         tabId: 'appointments',
         content: (isActive) => (
           <span className={clsx(styles.countBage, isActive && styles.countBageActive)}>
-            {newAppointmentsCount}
+            {activeApplicationsCount}
           </span>
         ),
       });
     }
 
     return badges;
-  }, [isPsychologist, newAppointmentsCount]);
+  }, [isPsychologist, activeApplicationsCount]);
 
   const tabs = useMemo(() => getTabsForRole(primaryRoleCode), [primaryRoleCode]);
 

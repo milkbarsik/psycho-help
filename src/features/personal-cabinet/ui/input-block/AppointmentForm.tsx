@@ -17,7 +17,7 @@ interface Props {
 const AppointmentForm: FC<Props> = ({ doctors }) => {
   const appointment = useAppointment((state) => state.appointment);
   const setAppointment = useAppointment((state) => state.setAppointment);
-  
+
   // 🎯 State для навигации по галерее
   const [currentTherapistIndex, setCurrentTherapistIndex] = useState(0);
   // 🎯 State для выбранных офисов (чекбоксы)
@@ -27,7 +27,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
   // 🔍 Фильтрация врачей по выбранным офисам
   const filteredDoctors = useMemo(() => {
     if (selectedOffices.size === 0) return doctors;
-    return doctors.filter(doctor => selectedOffices.has(doctor.office));
+    return doctors.filter((doctor) => selectedOffices.has(doctor.office));
   }, [doctors, selectedOffices]);
 
   // 🔄 Сброс индекса галереи при изменении отфильтрованного списка
@@ -76,15 +76,16 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
   const currentTherapist = filteredDoctors[currentTherapistIndex];
 
   // 🎯 Уникальные офисы для чекбоксов
-  const uniqueOffices = useMemo(() => 
-    Array.from(new Set(doctors.map(d => d.office))), 
-    [doctors]
-  );
+  const uniqueOffices = useMemo(() => Array.from(new Set(doctors.map((d) => d.office))), [doctors]);
 
   const handleNextButton = () => {
     setWindow('results');
-    setAppointment({...appointment, therapist_id: currentTherapist.id, venue: currentTherapist.office})
-  }
+    setAppointment({
+      ...appointment,
+      psychologist_id: currentTherapist.id,
+      venue: currentTherapist.office,
+    });
+  };
 
   return (
     <>
@@ -112,7 +113,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
                 })}
                 onClick={() => {
                   setAppointment({ type: 'Offline', venue: '' });
-                  handleLocation(appointment?.therapist_id);
+                  handleLocation(appointment?.psychologist_id);
                 }}
                 aria-label="Кнопка выбора очно"
               >
@@ -120,7 +121,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               </button>
             </div>
           </div>
-  
+
           {/* Запрос */}
           <div className={styles.field}>
             <label className={styles.label}>Ваш запрос</label>
@@ -131,24 +132,21 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               placeholder="Ваш запрос"
             />
           </div>
-          
+
           {/* Фильтр по офисам (только для Offline) */}
           {appointment.type === 'Offline' && (
             <div className={styles.location}>
               <p className={styles.label}>Выберите место консультации</p>
               <div className={styles.location__btns}>
-                {uniqueOffices.map(office => (
+                {uniqueOffices.map((office) => (
                   <div key={office} className={styles.location__element}>
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       id={`office-${office}`}
                       checked={selectedOffices.has(office)}
                       onChange={() => handleOfficeToggle(office)}
                     />
-                    <label 
-                      htmlFor={`office-${office}`} 
-                      className={styles.location__text}
-                    >
+                    <label htmlFor={`office-${office}`} className={styles.location__text}>
                       {office}
                     </label>
                   </div>
@@ -156,53 +154,59 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               </div>
             </div>
           )}
-  
+
           {/* Галерея специалистов */}
           <div className={styles.therapist}>
             <p className={styles.label}>Выберите специалиста</p>
-            
+
             {filteredDoctors.length > 0 && currentTherapist ? (
               <div className={styles.galleryWrapper}>
                 <div className={styles.mainInfo}>
                   <div className={styles.imgWrapper}>
                     <Img
                       key={currentTherapist?.id || currentTherapist?.photo}
-                      className={styles.photo} 
-                      photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}${currentTherapist.photo}`} 
+                      className={styles.photo}
+                      photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}${currentTherapist.photo}`}
                       altPhoto={altPhoto}
                     />
                   </div>
                   <div className={styles.info}>
                     <div className={styles.infoBlock}>
                       <p className={styles.name}>
-                        {[currentTherapist.last_name, currentTherapist.first_name, currentTherapist.middle_name]
+                        {[
+                          currentTherapist.last_name,
+                          currentTherapist.first_name,
+                          currentTherapist.middle_name,
+                        ]
                           .filter(Boolean)
                           .join(' ')}
                       </p>
                       <p className={styles.qual}>{currentTherapist.qualification}</p>
                       <p className={styles.exp}>Опыт {currentTherapist.experience}</p>
                     </div>
-                    
+
                     <div className={styles.infoBlock}>
                       <p className={styles.qual}>Принимает лично и онлайн</p>
                       <p className={styles.office}>{currentTherapist.office}</p>
                     </div>
-                    
+
                     <div>
                       <p className={styles.qual}>С чем поможет</p>
                       <div className={styles.consultAreas}>
-                        {currentTherapist.consult_areas?.split(', ').map(item => (
-                          <span key={item} className={styles.consultArea}>{item}</span>
+                        {currentTherapist.consult_areas?.split(', ').map((item) => (
+                          <span key={item} className={styles.consultArea}>
+                            {item}
+                          </span>
                         ))}
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Кнопка навигации */}
                 {filteredDoctors.length > 1 && (
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     className={styles.galleryNextBtn}
                     onClick={handleNextTherapist}
                     aria-label="Следующий специалист"
@@ -214,26 +218,22 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               </div>
             ) : (
               <p className={styles.empty}>
-                {appointment.type === 'Offline' 
-                  ? 'По выбранным фильтрам специалисты не найдены' 
+                {appointment.type === 'Offline'
+                  ? 'По выбранным фильтрам специалисты не найдены'
                   : 'Список специалистов загружается...'}
               </p>
             )}
           </div>
-  
+
           {/* Кнопка "Далее" переключает на results */}
-          <button 
-            className={styles.subButton} 
-            type="button"
-            onClick={handleNextButton}
-          >
+          <button className={styles.subButton} type="button" onClick={handleNextButton}>
             Далее
           </button>
         </div>
       ) : (
         // 🔹 Ветка "результаты" — тоже в скобках ()
         <div className={styles.results}>
-          <button 
+          <button
             className={styles.backButton}
             type="button"
             onClick={() => {
@@ -247,18 +247,33 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
           </button>
           <div className={styles.results__info}>
             <h3 className={styles.results__title}>Запись</h3>
-            <p className={styles.results__text}><span className={[styles.results__text, styles.results__textGray].join(" ")}>Психолог: </span>{[currentTherapist.last_name, currentTherapist.first_name, currentTherapist.middle_name].join(' ')}</p>
-            <p className={styles.results__text}><span className={[styles.results__text, styles.results__textGray].join(" ")}>Место: </span>{appointment.venue}</p>
-            <p className={[styles.results__text, styles.results__textGray].join(" ")}>Тема встречи:</p>
+            <p className={styles.results__text}>
+              <span className={[styles.results__text, styles.results__textGray].join(' ')}>
+                Психолог:{' '}
+              </span>
+              {[
+                currentTherapist.last_name,
+                currentTherapist.first_name,
+                currentTherapist.middle_name,
+              ].join(' ')}
+            </p>
+            <p className={styles.results__text}>
+              <span className={[styles.results__text, styles.results__textGray].join(' ')}>
+                Место:{' '}
+              </span>
+              {appointment.venue}
+            </p>
+            <p className={[styles.results__text, styles.results__textGray].join(' ')}>
+              Тема встречи:
+            </p>
             <textarea
               value={appointment.reason}
-              onChange={(e) => setAppointment({...appointment, reason: e.target.value })}
+              onChange={(e) => setAppointment({ ...appointment, reason: e.target.value })}
               className={[styles.textarea, styles.results__textarea].join(' ')}
               placeholder="Ваш запрос"
             />
             <button className={styles.submitBtn}>Записаться</button>
           </div>
-          
         </div>
       )}
     </>
