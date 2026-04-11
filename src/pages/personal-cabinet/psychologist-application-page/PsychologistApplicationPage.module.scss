@@ -291,8 +291,48 @@
   background: transparent;
 }
 
+/* Custom calendar header */
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 12px 0;
+}
+
+.calendarMonthLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-label-neutral-primary, #111827);
+}
+
+.calendarArrowBtn {
+  background: none;
+  border: none;
+  color: var(--color-label-neutral-secondary, #6b7280);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--color-interactive-brand-primary, #2563eb);
+  }
+}
+
+.calendarYearSelect,
+.calendarMonthSelect,
+.calendarViewToggle,
+.calendarViewBtn,
+.calendarViewBtnActive {
+  display: none;
+}
+
 .sidebarCard :global(.ant-picker-calendar .ant-picker-calendar-header) {
-  padding: 0 0 8px 0;
+  padding: 0;
+  display: none;
 }
 
 .sidebarCard :global(.ant-picker-calendar .ant-picker-content th) {

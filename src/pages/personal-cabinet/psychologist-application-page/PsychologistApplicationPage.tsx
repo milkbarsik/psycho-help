@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Calendar, Select, Modal, Input, message } from 'antd';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import {
   applicationQueries,
@@ -244,9 +245,42 @@ const PsychologistApplicationPage = () => {
                 value={selectedDate || undefined}
                 onChange={(date) => {
                   setUserDate(date);
-                  setSelectedTime('');
                 }}
                 disabledDate={disabledDates}
+                headerRender={({ value, type, onChange }) => {
+                  const currentMonth = value.format('MMMM');
+                  const capitalizedMonth = currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
+
+                  const handlePrev = () => {
+                    onChange(value.clone().subtract(1, 'month'));
+                  };
+
+                  const handleNext = () => {
+                    onChange(value.clone().add(1, 'month'));
+                  };
+
+                  return (
+                    <div className={styles.calendarHeader}>
+                      <button
+                        type="button"
+                        className={styles.calendarArrowBtn}
+                        onClick={handlePrev}
+                        aria-label="Предыдущий месяц"
+                      >
+                        <LeftOutlined />
+                      </button>
+                      <span className={styles.calendarMonthLabel}>{capitalizedMonth}</span>
+                      <button
+                        type="button"
+                        className={styles.calendarArrowBtn}
+                        onClick={handleNext}
+                        aria-label="Следующий месяц"
+                      >
+                        <RightOutlined />
+                      </button>
+                    </div>
+                  );
+                }}
               />
 
               {/* Выбор времени */}
