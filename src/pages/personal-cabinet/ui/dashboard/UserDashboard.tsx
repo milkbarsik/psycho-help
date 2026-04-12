@@ -4,13 +4,15 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { message, Modal } from 'antd';
 import { therapistQueries } from '@/entities/therapist/api';
-import { appointmentQueries } from '@/entities/appointment/api';
+import { appointmentQueries, appointmentQueryKey, createAppointment } from '@/entities/appointment/api';
 import { applicationQueries, applicationQueryKey, confirmApplication } from '@/entities/application/api';
 import type { Appointment } from '@/entities/appointment/types';
 import type { Therapist } from '@/entities/therapist/types';
+import type { Application } from '@/entities/application/types';
 import GreetingCard from '@/features/personal-cabinet/ui/greeting-card/GreetingCard';
 import AppointmentCard from '@/features/personal-cabinet/ui/appointment-card/AppointmentCard';
 import PageLoader from '@/shared/ui/PageLoader';
+import { useAuth } from '@/features/auth/api/useAuth';
 import styles from './Dashboard.module.scss';
 
 interface UserDashboardProps {
@@ -69,6 +71,8 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     return { upcoming: upc, past: pst };
   }, [serverAppointments]);
 
+  const user = useAuth((s) => s.user);
+
   // Заявки, требующие подтверждения пользователя
   const awaitingConfirmation = useMemo(
     () =>
@@ -76,25 +80,44 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     [applications],
   );
 
-  // Мутация подтверждения
+  // Мутация подтверждения: сначала создаём appointment, затем подтверждаем заявку
   const confirmMutation = useMutation({
-    mutationFn: (applicationId: string) => confirmApplication(applicationId),
+    mutationFn: async (app: Application) => {
+      // Определяем тип встречи
+      const apptType: 'Offline' | 'Online' = app.meeting_type === 'online' ? 'Online' : 'Offline';
+      const scheduledTime = app.scheduled_at || new Date().toISOString();
+
+      // 1. Создаём appointment
+      const createdAppointment = await createAppointment({
+        application_id: app.id,
+        patient_id: user!.id,
+        psychologist_id: app.psychologist_id!,
+        type: apptType,
+        scheduled_time: scheduledTime,
+        reason: app.problem_description,
+        venue: app.location_address || app.preferred_campus || undefined,
+      });
+
+      // 2. Подтверждаем заявку с appointment_id
+      return confirmApplication(app.id, createdAppointment.id);
+    },
     onSuccess: () => {
       message.success('Заявка подтверждена');
       queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.list] });
     },
     onError: () => {
       message.error('Не удалось подтвердить заявку');
     },
   });
 
-  const handleConfirm = (applicationId: string) => {
+  const handleConfirm = (app: Application) => {
     Modal.confirm({
       title: 'Подтверждение заявки',
       content: 'Вы уверены, что хотите подтвердить эту заявку?',
       okText: 'Подтвердить',
       cancelText: 'Отмена',
-      onOk: () => confirmMutation.mutate(applicationId),
+      onOk: () => confirmMutation.mutate(app),
     });
   };
 
@@ -186,7 +209,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                   address={`${meetingTypeStr} — ${locationStr}`}
                   type="confirmation"
                   status={app.status}
-                  onConfirm={() => handleConfirm(app.id)}
+                  onConfirm={() => handleConfirm(app)}
                 />
               );
             })

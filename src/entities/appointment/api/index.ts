@@ -30,3 +30,18 @@ export const completeAppointment = async (id: string, comment: string): Promise<
   const { data } = await $api.put(`/appointments/${id}/complete`, { comment });
   return data;
 };
+
+export const createAppointment = async (body: {
+  application_id?: string;
+  patient_id: string;
+  psychologist_id: string;
+  type: 'Offline' | 'Online';
+  scheduled_time: string;
+  reason?: string;
+  remind_time?: string;
+  venue?: string;
+  comment?: string;
+}): Promise<Appointment> => {
+  const { data } = await $api.post<Appointment>('/appointments/create', body);
+  return data;
+};
