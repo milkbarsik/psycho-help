@@ -12,11 +12,14 @@
     padding: 2.4rem 1.6rem;
   }
 }
+// Из-за новой шапки всё сломалось, это моя попытка починить (в комментариях указано, что было до изменений):
 .sidebarWrapper {
   position: sticky;
-  top: 4rem;
+  // top: 4rem;
+  top: calc(var(--header-height) + 4rem);
   height: fit-content;
-  @media (max-width: 1023px) {
+  // @media (max-width: 1023px) {
+  @media (max-height: 900px), (max-width: 1023px) {
     position: static;
   }
 }
