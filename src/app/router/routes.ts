@@ -67,21 +67,6 @@ export const routes: RoutePath[] = [
     Component: DoctorPage,
   },
   {
-    path: '/cabinet',
-    Component: PersonalCabinet,
-    authOnly: true,
-  },
-  {
-    path: '/cabinet/appointment/:id',
-    Component: PsychologistAppointmentPage,
-    authOnly: true,
-  },
-  {
-    path: '/cabinet/application/:id',
-    Component: PsychologistApplicationPage,
-    authOnly: true,
-  },
-  {
     path: '/article/:id',
     Component: ArticlePage,
   },
@@ -100,10 +85,6 @@ export const routes: RoutePath[] = [
     navText: 'Полезные материалы',
   },
   {
-    path: '/article/:id',
-    Component: ArticlePage,
-  },
-  {
     path: '/test/:id',
     Component: TestPage,
   },
@@ -115,6 +96,16 @@ export const routes: RoutePath[] = [
   {
     path: CABINET_PATH,
     Component: PersonalCabinet,
+    authOnly: true,
+  },
+  {
+    path: `${CABINET_PATH}/appointment/:id`,
+    Component: PsychologistAppointmentPage,
+    authOnly: true,
+  },
+  {
+    path: `${CABINET_PATH}/application/:id`,
+    Component: PsychologistApplicationPage,
     authOnly: true,
   },
 ];
