@@ -11,6 +11,8 @@ import {
   ResourcesPage,
   TestPage,
 } from '@/pages';
+import PsychologistAppointmentPage from '@/pages/personal-cabinet/psychologist-appointment-page/PsychologistAppointmentPage';
+import PsychologistApplicationPage from '@/pages/personal-cabinet/psychologist-application-page/PsychologistApplicationPage';
 
 /*
  Тип маршрута:
@@ -65,6 +67,10 @@ export const routes: RoutePath[] = [
     Component: DoctorPage,
   },
   {
+    path: '/article/:id',
+    Component: ArticlePage,
+  },
+  {
     path: '/news/',
     Component: NewsPage,
     navText: 'Новости',
@@ -79,10 +85,6 @@ export const routes: RoutePath[] = [
     navText: 'Полезные материалы',
   },
   {
-    path: '/article/:id',
-    Component: ArticlePage,
-  },
-  {
     path: '/test/:id',
     Component: TestPage,
   },
@@ -94,6 +96,16 @@ export const routes: RoutePath[] = [
   {
     path: CABINET_PATH,
     Component: PersonalCabinet,
+    authOnly: true,
+  },
+  {
+    path: `${CABINET_PATH}/appointment/:id`,
+    Component: PsychologistAppointmentPage,
+    authOnly: true,
+  },
+  {
+    path: `${CABINET_PATH}/application/:id`,
+    Component: PsychologistApplicationPage,
     authOnly: true,
   },
 ];

@@ -19,11 +19,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
             }
           }
         }
@@ -39,31 +35,21 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Id" }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -77,11 +63,7 @@
         "operationId": "register_users_users_register_post",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserCreateRequest"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/UserCreateRequest" } }
           },
           "required": true
         },
@@ -89,20 +71,14 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -116,11 +92,7 @@
         "operationId": "login_users_login_post",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/LoginRequest" } }
           },
           "required": true
         },
@@ -128,20 +100,14 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -156,11 +122,7 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
+            "content": { "application/json": { "schema": {} } }
           }
         }
       }
@@ -174,11 +136,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
             }
           }
         }
@@ -192,11 +150,7 @@
         "operationId": "update_my_profile_users_me_put",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdateRequest"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/UserUpdateRequest" } }
           },
           "required": true
         },
@@ -204,20 +158,14 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -235,41 +183,27 @@
             "name": "user_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "User Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "User Id" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdateRequest"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/UserUpdateRequest" } }
           }
         },
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -285,9 +219,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PasswordChangeRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PasswordChangeRequest" }
             }
           },
           "required": true
@@ -309,9 +241,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -330,15 +260,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
               "title": "User Id"
             }
           }
@@ -350,9 +272,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AppointmentBase"
-                  },
+                  "items": { "$ref": "#/components/schemas/AppointmentBase" },
                   "title": "Response Get Appointments Appointments  Get"
                 }
               }
@@ -362,9 +282,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -380,9 +298,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppointmentCreateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AppointmentCreateRequest" }
             }
           },
           "required": true
@@ -391,20 +307,14 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppointmentBase"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/AppointmentBase" } }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -422,31 +332,21 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Id" }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppointmentBase"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/AppointmentBase" } }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -464,29 +364,19 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Id" }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
+            "content": { "application/json": { "schema": {} } }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -503,31 +393,21 @@
             "name": "review_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Review Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Review Id" }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReviewsBase"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/ReviewsBase" } }
             }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -545,21 +425,13 @@
             "name": "user_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "User Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "User Id" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RoleAssignRequest"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/RoleAssignRequest" } }
           }
         },
         "responses": {
@@ -569,9 +441,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  },
+                  "additionalProperties": { "type": "string" },
                   "title": "Response Assign Role Roles  User Id  Assign Post"
                 }
               }
@@ -581,9 +451,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -601,21 +469,13 @@
             "name": "user_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "User Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "User Id" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RoleRemoveRequest"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/RoleRemoveRequest" } }
           }
         },
         "responses": {
@@ -625,9 +485,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  },
+                  "additionalProperties": { "type": "string" },
                   "title": "Response Remove Role Roles  User Id  Remove Post"
                 }
               }
@@ -637,9 +495,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -657,11 +513,7 @@
             "name": "psychologist_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Psychologist Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Psychologist Id" }
           }
         ],
         "responses": {
@@ -669,9 +521,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PsychologistResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/PsychologistResponse" }
               }
             }
           },
@@ -679,9 +529,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -696,11 +544,7 @@
             "name": "psychologist_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Psychologist Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Psychologist Id" }
           }
         ],
         "responses": {
@@ -710,9 +554,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  },
+                  "additionalProperties": { "type": "string" },
                   "title": "Response Delete Psychologist Endpoint Therapists  Psychologist Id  Delete"
                 }
               }
@@ -722,9 +564,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -773,9 +613,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PsychologistResponse"
-                  },
+                  "items": { "$ref": "#/components/schemas/PsychologistResponse" },
                   "title": "Response Get Psychologists Therapists  Get"
                 }
               }
@@ -785,9 +623,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -801,9 +637,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PsychologistCreateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PsychologistCreateRequest" }
             }
           }
         },
@@ -812,9 +646,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PsychologistResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/PsychologistResponse" }
               }
             }
           },
@@ -822,9 +654,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -842,28 +672,19 @@
             "name": "filename",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Filename"
-            }
+            "schema": { "type": "string", "title": "Filename" }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
+            "content": { "application/json": { "schema": {} } }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -879,9 +700,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApplicationCreateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/ApplicationCreateRequest" }
             }
           }
         },
@@ -890,9 +709,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApplicationResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/ApplicationResponse" }
               }
             }
           },
@@ -900,9 +717,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -917,12 +732,7 @@
             "name": "skip",
             "in": "query",
             "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "default": 0,
-              "title": "Skip"
-            }
+            "schema": { "type": "integer", "minimum": 0, "default": 0, "title": "Skip" }
           },
           {
             "name": "limit",
@@ -941,16 +751,30 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/ApplicationStatus"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "anyOf": [{ "$ref": "#/components/schemas/ApplicationStatus" }, { "type": "null" }],
               "title": "Status"
             }
+          },
+          {
+            "name": "assigned_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
+              "title": "Assigned To"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "created_at", "title": "Sort By" }
+          },
+          {
+            "name": "sort_desc",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "boolean", "default": true, "title": "Sort Desc" }
           }
         ],
         "responses": {
@@ -960,9 +784,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ApplicationResponse"
-                  },
+                  "items": { "$ref": "#/components/schemas/ApplicationResponse" },
                   "title": "Response Get Applications Applications  Get"
                 }
               }
@@ -972,9 +794,7 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -991,11 +811,7 @@
             "name": "application_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Application Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Application Id" }
           }
         ],
         "responses": {
@@ -1003,9 +819,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApplicationResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/ApplicationResponse" }
               }
             }
           },
@@ -1013,37 +827,31 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
         }
-      },
-      "patch": {
+      }
+    },
+    "/applications/{application_id}/accept": {
+      "post": {
         "tags": ["applications"],
-        "summary": "Update Application",
-        "operationId": "update_application_applications__application_id__patch",
+        "summary": "Accept Application",
+        "operationId": "accept_application_applications__application_id__accept_post",
         "parameters": [
           {
             "name": "application_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Application Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Application Id" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApplicationUpdateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AcceptToProcessingRequest" }
             }
           }
         },
@@ -1052,9 +860,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApplicationResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/ApplicationResponse" }
               }
             }
           },
@@ -1062,9 +868,168 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}/offer": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Offer Consultation Endpoint",
+        "operationId": "offer_consultation_endpoint_applications__application_id__offer_post",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Application Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/OfferConsultationRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplicationResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}/confirm": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Confirm Application Endpoint",
+        "operationId": "confirm_application_endpoint_applications__application_id__confirm_post",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Application Id" }
+          },
+          {
+            "name": "appointment_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
+              "title": "Appointment Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplicationResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}/reject": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Reject Application Endpoint",
+        "operationId": "reject_application_endpoint_applications__application_id__reject_post",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Application Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/RejectRequest" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplicationResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}/cancel": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Cancel Application Endpoint",
+        "operationId": "cancel_application_endpoint_applications__application_id__cancel_post",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Application Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CancelRequest" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplicationResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
               }
             }
           }
@@ -1074,6 +1039,14 @@
   },
   "components": {
     "schemas": {
+      "AcceptToProcessingRequest": {
+        "properties": {
+          "assigned_to": { "type": "string", "format": "uuid", "title": "Assigned To" }
+        },
+        "type": "object",
+        "required": ["assigned_to"],
+        "title": "AcceptToProcessingRequest"
+      },
       "ApplicationCreateRequest": {
         "properties": {
           "first_name": {
@@ -1082,21 +1055,13 @@
             "minLength": 1,
             "title": "First Name"
           },
-          "last_name": {
-            "type": "string",
-            "maxLength": 50,
-            "minLength": 1,
-            "title": "Last Name"
-          },
+          "last_name": { "type": "string", "maxLength": 50, "minLength": 1, "title": "Last Name" },
           "email": {
-            "type": "string",
-            "format": "email",
+            "anyOf": [{ "type": "string", "format": "email" }, { "type": "null" }],
             "title": "Email"
           },
           "phone": {
-            "type": "string",
-            "maxLength": 20,
-            "minLength": 10,
+            "anyOf": [{ "type": "string", "maxLength": 20, "minLength": 10 }, { "type": "null" }],
             "title": "Phone"
           },
           "problem_description": {
@@ -1106,98 +1071,102 @@
             "title": "Problem Description"
           },
           "preferred_campus": {
-            "type": "string",
-            "maxLength": 128,
-            "minLength": 1,
+            "anyOf": [{ "type": "string", "maxLength": 128 }, { "type": "null" }],
             "title": "Preferred Campus"
           },
-          "university_status": {
-            "$ref": "#/components/schemas/UniversityStatus"
-          }
+          "university_status": { "$ref": "#/components/schemas/UniversityStatus" }
         },
         "type": "object",
-        "required": [
-          "first_name",
-          "last_name",
-          "email",
-          "phone",
-          "problem_description",
-          "preferred_campus",
-          "university_status"
-        ],
+        "required": ["first_name", "last_name", "problem_description", "university_status"],
         "title": "ApplicationCreateRequest"
       },
       "ApplicationResponse": {
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Id"
-          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
           "user_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
             "title": "User Id"
           },
-          "first_name": {
-            "type": "string",
-            "title": "First Name"
-          },
-          "last_name": {
-            "type": "string",
-            "title": "Last Name"
-          },
-          "email": {
-            "type": "string",
-            "title": "Email"
-          },
-          "phone": {
-            "type": "string",
-            "title": "Phone"
-          },
-          "problem_description": {
-            "type": "string",
-            "title": "Problem Description"
-          },
+          "first_name": { "type": "string", "title": "First Name" },
+          "last_name": { "type": "string", "title": "Last Name" },
+          "email": { "type": "string", "title": "Email" },
+          "phone": { "type": "string", "title": "Phone" },
+          "problem_description": { "type": "string", "title": "Problem Description" },
           "preferred_campus": {
-            "type": "string",
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
             "title": "Preferred Campus"
           },
-          "university_status": {
-            "$ref": "#/components/schemas/UniversityStatus"
+          "university_status": { "$ref": "#/components/schemas/UniversityStatus" },
+          "status": { "$ref": "#/components/schemas/ApplicationStatus" },
+          "assigned_to": {
+            "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
+            "title": "Assigned To"
           },
-          "status": {
-            "$ref": "#/components/schemas/ApplicationStatus"
+          "psychologist_id": {
+            "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
+            "title": "Psychologist Id"
           },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
+          "meeting_type": {
+            "anyOf": [{ "$ref": "#/components/schemas/MeetingType" }, { "type": "null" }]
           },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Updated At"
+          "scheduled_at": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Scheduled At"
+          },
+          "location_address": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Address"
+          },
+          "meeting_url": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Meeting Url"
+          },
+          "created_at": { "type": "string", "format": "date-time", "title": "Created At" },
+          "updated_at": { "type": "string", "format": "date-time", "title": "Updated At" },
+          "processing_started_at": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Processing Started At"
+          },
+          "confirmation_requested_at": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Confirmation Requested At"
+          },
+          "completed_at": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Completed At"
+          },
+          "rejected_at": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Rejected At"
+          },
+          "cancelled_at": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Cancelled At"
+          },
+          "expired_at": {
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+            "title": "Expired At"
+          },
+          "reject_reason": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Reject Reason"
+          },
+          "cancel_reason": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Cancel Reason"
+          },
+          "cancel_initiator": {
+            "anyOf": [{ "$ref": "#/components/schemas/CancelInitiator" }, { "type": "null" }]
+          },
+          "internal_comment": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Internal Comment"
           },
           "appointment_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
             "title": "Appointment Id"
-          }
+          },
+          "version": { "type": "integer", "title": "Version" }
         },
         "type": "object",
         "required": [
@@ -1211,82 +1180,53 @@
           "preferred_campus",
           "university_status",
           "status",
+          "assigned_to",
+          "psychologist_id",
+          "meeting_type",
+          "scheduled_at",
+          "location_address",
+          "meeting_url",
           "created_at",
           "updated_at",
-          "appointment_id"
+          "processing_started_at",
+          "confirmation_requested_at",
+          "completed_at",
+          "rejected_at",
+          "cancelled_at",
+          "expired_at",
+          "reject_reason",
+          "cancel_reason",
+          "cancel_initiator",
+          "internal_comment",
+          "appointment_id",
+          "version"
         ],
         "title": "ApplicationResponse"
       },
       "ApplicationStatus": {
         "type": "string",
-        "enum": ["новая", "в обработке", "завершена", "отклонена"],
+        "enum": [
+          "new",
+          "in_progress",
+          "awaiting_user_confirmation",
+          "completed",
+          "rejected",
+          "cancelled",
+          "expired"
+        ],
         "title": "ApplicationStatus"
-      },
-      "ApplicationUpdateRequest": {
-        "properties": {
-          "status": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ApplicationStatus"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        },
-        "type": "object",
-        "title": "ApplicationUpdateRequest"
       },
       "AppointmentBase": {
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Id"
-          },
-          "patient_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Patient Id"
-          },
-          "psychologist_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Psychologist Id"
-          },
-          "type": {
-            "$ref": "#/components/schemas/AppointmentType"
-          },
-          "reason": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Reason"
-          },
-          "status": {
-            "$ref": "#/components/schemas/AppointmentStatus"
-          },
-          "scheduled_time": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Scheduled Time"
-          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "patient_id": { "type": "string", "format": "uuid", "title": "Patient Id" },
+          "psychologist_id": { "type": "string", "format": "uuid", "title": "Psychologist Id" },
+          "type": { "$ref": "#/components/schemas/AppointmentType" },
+          "reason": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Reason" },
+          "status": { "$ref": "#/components/schemas/AppointmentStatus" },
+          "scheduled_time": { "type": "string", "format": "date-time", "title": "Scheduled Time" },
           "remind_time": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
             "title": "Remind Time"
           },
           "last_change_time": {
@@ -1294,21 +1234,8 @@
             "format": "date-time",
             "title": "Last Change Time"
           },
-          "venue": {
-            "type": "string",
-            "title": "Venue"
-          },
-          "comment": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Comment"
-          }
+          "venue": { "type": "string", "title": "Venue" },
+          "comment": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Comment" }
         },
         "type": "object",
         "required": [
@@ -1325,69 +1252,21 @@
       },
       "AppointmentCreateRequest": {
         "properties": {
-          "patient_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Patient Id"
+          "application_id": {
+            "anyOf": [{ "type": "string", "format": "uuid" }, { "type": "null" }],
+            "title": "Application Id"
           },
-          "psychologist_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Psychologist Id"
-          },
-          "type": {
-            "$ref": "#/components/schemas/AppointmentType"
-          },
-          "scheduled_time": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Scheduled Time"
-          },
-          "reason": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Reason"
-          },
+          "patient_id": { "type": "string", "format": "uuid", "title": "Patient Id" },
+          "psychologist_id": { "type": "string", "format": "uuid", "title": "Psychologist Id" },
+          "type": { "$ref": "#/components/schemas/AppointmentType" },
+          "scheduled_time": { "type": "string", "format": "date-time", "title": "Scheduled Time" },
+          "reason": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Reason" },
           "remind_time": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
             "title": "Remind Time"
           },
-          "venue": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Venue"
-          },
-          "comment": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Comment"
-          }
+          "venue": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Venue" },
+          "comment": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Comment" }
         },
         "type": "object",
         "required": ["patient_id", "psychologist_id", "type", "scheduled_time"],
@@ -1403,12 +1282,29 @@
         "enum": ["Offline", "Online"],
         "title": "AppointmentType"
       },
+      "CancelInitiator": {
+        "type": "string",
+        "enum": ["user", "psychologist", "manager", "system"],
+        "title": "CancelInitiator"
+      },
+      "CancelRequest": {
+        "properties": {
+          "cancel_reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Cancel Reason"
+          },
+          "cancel_initiator": { "$ref": "#/components/schemas/CancelInitiator" }
+        },
+        "type": "object",
+        "required": ["cancel_reason", "cancel_initiator"],
+        "title": "CancelRequest"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
+            "items": { "$ref": "#/components/schemas/ValidationError" },
             "type": "array",
             "title": "Detail"
           }
@@ -1418,21 +1314,31 @@
       },
       "LoginRequest": {
         "properties": {
-          "email": {
-            "type": "string",
-            "format": "email",
-            "title": "Email"
-          },
-          "password": {
-            "type": "string",
-            "maxLength": 64,
-            "minLength": 8,
-            "title": "Password"
-          }
+          "email": { "type": "string", "format": "email", "title": "Email" },
+          "password": { "type": "string", "maxLength": 64, "minLength": 8, "title": "Password" }
         },
         "type": "object",
         "required": ["email", "password"],
         "title": "LoginRequest"
+      },
+      "MeetingType": { "type": "string", "enum": ["offline", "online"], "title": "MeetingType" },
+      "OfferConsultationRequest": {
+        "properties": {
+          "psychologist_id": { "type": "string", "format": "uuid", "title": "Psychologist Id" },
+          "meeting_type": { "$ref": "#/components/schemas/MeetingType" },
+          "scheduled_at": { "type": "string", "format": "date-time", "title": "Scheduled At" },
+          "location_address": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Address"
+          },
+          "meeting_url": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Meeting Url"
+          }
+        },
+        "type": "object",
+        "required": ["psychologist_id", "meeting_type", "scheduled_at"],
+        "title": "OfferConsultationRequest"
       },
       "PasswordChangeRequest": {
         "properties": {
@@ -1456,50 +1362,15 @@
       },
       "PsychologistCreateRequest": {
         "properties": {
-          "user_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "User Id"
-          },
-          "experience": {
-            "type": "string",
-            "title": "Experience"
-          },
-          "qualification": {
-            "type": "string",
-            "title": "Qualification"
-          },
-          "consult_areas": {
-            "type": "string",
-            "title": "Consult Areas"
-          },
-          "description": {
-            "type": "string",
-            "title": "Description"
-          },
-          "office": {
-            "type": "string",
-            "title": "Office"
-          },
-          "education": {
-            "type": "string",
-            "title": "Education"
-          },
-          "short_description": {
-            "type": "string",
-            "title": "Short Description"
-          },
-          "photo": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Photo"
-          }
+          "user_id": { "type": "string", "format": "uuid", "title": "User Id" },
+          "experience": { "type": "string", "title": "Experience" },
+          "qualification": { "type": "string", "title": "Qualification" },
+          "consult_areas": { "type": "string", "title": "Consult Areas" },
+          "description": { "type": "string", "title": "Description" },
+          "office": { "type": "string", "title": "Office" },
+          "education": { "type": "string", "title": "Education" },
+          "short_description": { "type": "string", "title": "Short Description" },
+          "photo": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Photo" }
         },
         "type": "object",
         "required": [
@@ -1516,73 +1387,22 @@
       },
       "PsychologistResponse": {
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Id"
-          },
-          "experience": {
-            "type": "string",
-            "title": "Experience"
-          },
-          "qualification": {
-            "type": "string",
-            "title": "Qualification"
-          },
-          "consult_areas": {
-            "type": "string",
-            "title": "Consult Areas"
-          },
-          "description": {
-            "type": "string",
-            "title": "Description"
-          },
-          "office": {
-            "type": "string",
-            "title": "Office"
-          },
-          "education": {
-            "type": "string",
-            "title": "Education"
-          },
-          "short_description": {
-            "type": "string",
-            "title": "Short Description"
-          },
-          "photo": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Photo"
-          },
-          "first_name": {
-            "type": "string",
-            "title": "First Name"
-          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "experience": { "type": "string", "title": "Experience" },
+          "qualification": { "type": "string", "title": "Qualification" },
+          "consult_areas": { "type": "string", "title": "Consult Areas" },
+          "description": { "type": "string", "title": "Description" },
+          "office": { "type": "string", "title": "Office" },
+          "education": { "type": "string", "title": "Education" },
+          "short_description": { "type": "string", "title": "Short Description" },
+          "photo": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Photo" },
+          "first_name": { "type": "string", "title": "First Name" },
           "middle_name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
             "title": "Middle Name"
           },
-          "last_name": {
-            "type": "string",
-            "title": "Last Name"
-          },
-          "phone_number": {
-            "type": "string",
-            "title": "Phone Number"
-          }
+          "last_name": { "type": "string", "title": "Last Name" },
+          "phone_number": { "type": "string", "title": "Phone Number" }
         },
         "type": "object",
         "required": [
@@ -1602,13 +1422,22 @@
         ],
         "title": "PsychologistResponse"
       },
-      "ReviewsBase": { "properties": {}, "type": "object", "title": "ReviewsBase" },
-      "RoleAssignRequest": {
+      "RejectRequest": {
         "properties": {
-          "role_code": {
-            "$ref": "#/components/schemas/RoleCode"
+          "reject_reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reject Reason"
           }
         },
+        "type": "object",
+        "required": ["reject_reason"],
+        "title": "RejectRequest"
+      },
+      "ReviewsBase": { "properties": {}, "type": "object", "title": "ReviewsBase" },
+      "RoleAssignRequest": {
+        "properties": { "role_code": { "$ref": "#/components/schemas/RoleCode" } },
         "type": "object",
         "required": ["role_code"],
         "title": "RoleAssignRequest"
@@ -1619,14 +1448,23 @@
         "title": "RoleCode"
       },
       "RoleRemoveRequest": {
-        "properties": {
-          "role_code": {
-            "$ref": "#/components/schemas/RoleCode"
-          }
-        },
+        "properties": { "role_code": { "$ref": "#/components/schemas/RoleCode" } },
         "type": "object",
         "required": ["role_code"],
         "title": "RoleRemoveRequest"
+      },
+      "RoleResponse": {
+        "properties": {
+          "code": { "type": "string", "title": "Code" },
+          "name": { "type": "string", "title": "Name" },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": ["code", "name", "description"],
+        "title": "RoleResponse"
       },
       "UniversityStatus": {
         "type": "string",
@@ -1642,51 +1480,20 @@
             "title": "First Name"
           },
           "middle_name": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 50,
-                "minLength": 1
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
             "title": "Middle Name"
           },
-          "last_name": {
-            "type": "string",
-            "maxLength": 50,
-            "minLength": 1,
-            "title": "Last Name"
-          },
-          "phone_number": {
-            "type": "string",
-            "format": "phone",
-            "title": "Phone Number"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "title": "Email"
-          },
+          "last_name": { "type": "string", "maxLength": 50, "minLength": 1, "title": "Last Name" },
+          "phone_number": { "type": "string", "format": "phone", "title": "Phone Number" },
+          "email": { "type": "string", "format": "email", "title": "Email" },
           "social_media": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 50
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
             "title": "Social Media"
           },
-          "password": {
-            "type": "string",
-            "maxLength": 256,
-            "minLength": 8,
-            "title": "Password"
+          "password": { "type": "string", "maxLength": 256, "minLength": 8, "title": "Password" },
+          "study_group": {
+            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
+            "title": "Study Group"
           }
         },
         "type": "object",
@@ -1695,11 +1502,7 @@
       },
       "UserResponse": {
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Id"
-          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
           "first_name": {
             "type": "string",
             "maxLength": 50,
@@ -1707,45 +1510,25 @@
             "title": "First Name"
           },
           "middle_name": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 50,
-                "minLength": 1
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
             "title": "Middle Name"
           },
-          "last_name": {
-            "type": "string",
-            "maxLength": 50,
-            "minLength": 1,
-            "title": "Last Name"
-          },
-          "phone_number": {
-            "type": "string",
-            "format": "phone",
-            "title": "Phone Number"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "title": "Email"
-          },
+          "last_name": { "type": "string", "maxLength": 50, "minLength": 1, "title": "Last Name" },
+          "phone_number": { "type": "string", "format": "phone", "title": "Phone Number" },
+          "email": { "type": "string", "format": "email", "title": "Email" },
           "social_media": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 50
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
             "title": "Social Media"
+          },
+          "roles": {
+            "items": { "$ref": "#/components/schemas/RoleResponse" },
+            "type": "array",
+            "title": "Roles",
+            "default": []
+          },
+          "study_group": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Study Group"
           }
         },
         "type": "object",
@@ -1755,80 +1538,32 @@
       "UserUpdateRequest": {
         "properties": {
           "first_name": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 50,
-                "minLength": 1
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
             "title": "First Name"
           },
           "middle_name": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 50,
-                "minLength": 1
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
             "title": "Middle Name"
           },
           "last_name": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 50,
-                "minLength": 1
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 50, "minLength": 1 }, { "type": "null" }],
             "title": "Last Name"
           },
           "phone_number": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 20,
-                "minLength": 10
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 20, "minLength": 10 }, { "type": "null" }],
             "title": "Phone Number"
           },
           "email": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "email"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "format": "email" }, { "type": "null" }],
             "title": "Email"
           },
           "social_media": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 50
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
             "title": "Social Media"
+          },
+          "study_group": {
+            "anyOf": [{ "type": "string", "maxLength": 50 }, { "type": "null" }],
+            "title": "Study Group"
           }
         },
         "type": "object",
@@ -1838,27 +1573,12 @@
       "ValidationError": {
         "properties": {
           "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
             "type": "array",
             "title": "Location"
           },
-          "msg": {
-            "type": "string",
-            "title": "Message"
-          },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
-          }
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
         },
         "type": "object",
         "required": ["loc", "msg", "type"],

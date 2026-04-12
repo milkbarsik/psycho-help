@@ -4,18 +4,21 @@ import {
   EnvironmentOutlined,
   LikeOutlined,
   DislikeOutlined,
+  ClockCircleOutlined,
 } from '@ant-design/icons';
 import clsx from 'clsx';
-import type { AppointmentStatusType } from '@/entities/appointment/types';
+import type { AppointmentStatus } from '@/entities/appointment/types';
 import styles from './appointment-card.module.scss';
 
 interface AppointmentCardProps {
   date: string;
   doctorName: string;
   address: string;
-  type: 'upcoming' | 'past';
-  status?: AppointmentStatusType | string;
+  type: 'upcoming' | 'past' | 'confirmation';
+  status?: AppointmentStatus | string;
   rating?: 'good' | 'bad' | null;
+  onConfirm?: () => void;
+  onComment?: () => void;
 }
 
 const getStatusConfig = (status?: string) => {
@@ -39,6 +42,8 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
   type,
   status,
   rating,
+  onConfirm,
+  onComment,
 }) => {
   const statusConfig = getStatusConfig(status);
 
@@ -47,6 +52,7 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
       <div className={styles.header}>
         <div className={styles.date}>{date}</div>
 
+        {type === 'confirmation' && <ClockCircleOutlined className={styles.iconWarning} />}
         {type === 'past' && rating === 'good' && <LikeOutlined className={styles.iconSuccess} />}
         {type === 'past' && rating === 'bad' && <DislikeOutlined className={styles.iconDanger} />}
       </div>
@@ -70,10 +76,18 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
           </div>
         )}
 
+        {type === 'confirmation' && (
+          <button className={styles.confirmButton} onClick={onConfirm}>
+            Подтвердить
+          </button>
+        )}
+
         {type === 'past' && !rating && <button className={styles.rateButton}>Оценить</button>}
 
         {type === 'past' && rating && (
-          <button className={styles.commentLink}>Посмотреть комментарий</button>
+          <button className={styles.commentLink} onClick={onComment}>
+            Посмотреть комментарий
+          </button>
         )}
       </div>
     </div>

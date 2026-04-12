@@ -1,0 +1,31 @@
+.wrapper {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.back {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}

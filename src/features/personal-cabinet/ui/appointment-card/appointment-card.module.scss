@@ -52,6 +52,11 @@
   font-size: 2rem;
   flex-shrink: 0;
 }
+.iconWarning {
+  color: var(--color-label-warning-primary);
+  font-size: 2rem;
+  flex-shrink: 0;
+}
 .footer {
   display: flex;
 }
@@ -74,6 +79,9 @@
     width: 100%;
   }
   .commentLink {
+    width: 100%;
+  }
+  .confirmButton {
     width: 100%;
   }
 }
@@ -99,6 +107,19 @@
   cursor: pointer;
   &:hover {
     background-color: var(--color-interactive-brand-hover-secondary);
+  }
+}
+
+.confirmButton {
+  padding: 1rem 7.5rem;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-label-neutral-inverted-primary);
+  border: none;
+  border-radius: 1.6rem;
+  font: var(--font-text-medium);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-interactive-brand-hover);
   }
 }
 .dotSuccess {
