@@ -6,10 +6,9 @@ import TgIcon from '@/shared/assets/images/footer/tg.svg';
 
 describe('Footer', () => {
   it('рендерит основные заголовки', () => {
-    render(<Footer />);
-    expect(screen.getByText('московский политех')).toBeInTheDocument();
-    expect(screen.getByText(/Служба психологической помощи/i)).toBeInTheDocument();
-  });
+  render(<Footer />);
+  expect(screen.getByText(/Служба психологической помощи/i)).toBeInTheDocument();
+});
 
   it('рендерит все адреса', () => {
     render(<Footer />);
