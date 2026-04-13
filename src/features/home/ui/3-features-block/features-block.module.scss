@@ -79,7 +79,7 @@
 .features__1_title {
     font-size: 3.2rem;
     line-height: 3.6rem;
-    color: #FFF;
+    color: var(--color-label-neutral-inverted-primary);
     font-family: var(--title-font-family);
     font-weight: var(--title-font-weight);
 }
@@ -87,12 +87,12 @@
 .features__1_text {
     font-size: 1.6rem;
     line-height: 2.4rem;
-    color: #FFF;
+    color: var(--color-label-neutral-inverted-primary);
 }
 
 .features__1_button {
-    background-color: #000;
-    color: #FFF;
+    background-color: var(--color-interactive-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
     border: 2px solid transparent;
     user-select: none;
     display: inline-flex;
@@ -106,12 +106,12 @@
 }
 
 .features__1_button:hover {
-    background-color: #252628;
+    background-color: var(--color-interactive-neutral-hover);
 }
 
 .features__1_button:active,
 .features__1_button:active:hover {
-    background-color: #4A4C50;
+    background-color: var(--color-interactive-neutral-active);
 }
 
 .features__1_button:focus-visible {

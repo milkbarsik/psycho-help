@@ -27,7 +27,7 @@
 .greeting__title {
     font-size: 4.4rem;
     line-height: 52px;
-    color: #19191B;
+    color: var(--color-label-neutral-primary);
     font-weight: 500;
     font-family: 'Geist', sans-serif;
 }
@@ -57,7 +57,7 @@
 }
 
 .greeting__option {
-    background: #F9F9F9;
+    background: var(--color-interactive-neutral-secondary);
     border: 2px solid transparent;
     user-select: none;
     display: flex;
@@ -74,27 +74,25 @@
 }
 
 .greeting__option:hover {
-    color: #1B50F5;
-    background-color: #EEF5FF;
+    background-color: var(--color-interactive-neutral-hover-secondary);
 }
 
 .greeting__option:active,
 .greeting__selected,
 .greeting__option:active:hover {
-    background: none;
-    border-color: #1B50F5;
-    color: #1B50F5;
+    background: var(--color-interactive-brand-secondary);
+    color: var(--color-border-brand-strong);
 }
 
 .greeting__option:focus-visible {
     border-radius: 4px;
-    border-color: #1B50F5;
+    border-color: var(--color-border-brand-strong);
 }
 
 .greeting__submit {
     width: 100%;
     border: solid;
-    background-color: #1B50F5;
+    background-color: var(--color-interactive-brand-primary);
     color: white;
     padding: 16px;
     border-radius: 12px;
@@ -103,11 +101,11 @@
 }
 
 .greeting__submit:hover {
-    background-color: #153BE1
+    background-color: var(--color-interactive-brand-hover)
 }
 
 .greeting__submit:active {
-    background-color: #192F8F
+    background-color: var(--color-interactive-brand-active)
 }
 
 @media (max-width: 1206px) {
