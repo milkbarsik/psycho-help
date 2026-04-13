@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-label-neutral-tetriary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,7 @@
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px var(--color-fill-neutral-primary);
   padding: clamp(16px, 2.5vw, 36px);
 }
 
@@ -116,7 +116,7 @@
 .input:focus {
   outline: none;
   border-color: #1b50f5;
-  box-shadow: 0 0 0 2px rgba(27, 80, 245, 0.1);
+  box-shadow: 0 0 0 2px var(--color-fill-neutral-primary);
 }
 
 .hintText {
@@ -192,7 +192,7 @@
 }
 
 .checkbox + .checkbox_custom:hover {
-  box-shadow: 0 0 0 4.5px rgba(238, 245, 255);
+  box-shadow: 0 0 0 4.5px var(--color-fill-brand-tetriary);
   transition: all 0.3s ease;
 }
 
@@ -294,7 +294,7 @@
 .passwordInput:focus {
   outline: none;
   border-color: var(--color-interactive-brand-hover);
-  box-shadow: 0 0 0 2px rgba(27, 80, 245, 0.1);
+  box-shadow: 0 0 0 2px var(--color-fill-neutral-primary);
 }
 
 .showPassButton {

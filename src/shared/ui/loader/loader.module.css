@@ -12,8 +12,8 @@
 .loader__item {
     width: 64px;
     height: 64px;
-    border: 8px solid #FFF;
-    border-bottom-color: #5e8bf4;
+    border: 8px solid var(--color-border-neutral-inverted);
+    border-bottom-color: var(--color-fill-brand-primary);
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;

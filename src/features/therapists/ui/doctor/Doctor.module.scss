@@ -86,15 +86,15 @@
 }
 
 .speciality {
-  font-size: 2rem;
-  color: #19191b;
+  font-size: 2rem; 
+  color: var(--color-label-neutral-primary); 
   font: var(--font-text-large);
 }
 
 .experience {
   font-size: 2rem;
   font-weight: 400;
-  color: #313235;
+  color: var(--color-label-neutral-secondary);
   font: var(--font-text-large);
   opacity: 0.72;
 }
@@ -109,7 +109,7 @@
 
 .consult_areas {
   font-size: 2rem;
-  color: #313235;
+  color: var(--color-label-neutral-secondary);
   opacity: 0.72;
   margin-top: 0.2rem;
   line-height: 1.5;

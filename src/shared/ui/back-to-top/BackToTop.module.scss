@@ -5,8 +5,8 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #19191b;
-  color: #fff;
+  background: var(--color-interactive-neutral-primary);
+  color: var(--color-label-neutral-inverted-primary);
   border: none;
   cursor: pointer;
   display: flex;
@@ -35,11 +35,11 @@
 .button:hover {
   transform: translateY(0) scale(1.06);
   box-shadow: 0 12px 28px rgba(33, 33, 33, 0.16);
-  background: #19191b;
+  background: var(--color-interactive-neutral-primary);
 }
 
 .button:focus-visible {
-  outline: 2px solid #1b50f5;
+  outline: 2px solid var(--color-interactive-neutral-primary);
   outline-offset: 2px;
 }
 
