@@ -162,7 +162,7 @@
   top: 50%;
   transform: translateY(-50%);
   background: none;
-  color: white;
+  color: var(--color-label-neutral-inverted-primary);
   border: none;
   border-radius: 50%;
   width: 40px;
