@@ -15,7 +15,7 @@
 
 .modalContent {
   box-sizing: border-box;
-  background: white;
+  background: var(--color-background-neutral-primary);
   border-radius: 20px;
   max-width: 718px;
   width: 90%;
@@ -180,7 +180,7 @@
   top: 40%;
   width: 35%;
   height: 60%;
-  border: solid white;
+  border: solid var(--color-border-neutral-inverted);
   border-width: 0 2px 2px 0;
   transform: translate(-50%, -50%) rotate(45deg);
 }
@@ -228,7 +228,7 @@
   width: 100%;
   height: 56px;
   background-color: var(--color-interactive-brand-primary);
-  color: white;
+  color: var(--color-label-neutral-inverted-primary);
   border: none;
   border-radius: 16px;
   font-size: clamp(16px, 2.5vw, 20px);

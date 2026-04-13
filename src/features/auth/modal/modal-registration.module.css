@@ -5,7 +5,7 @@
 }
 
 .errorText {
-    color: red;
+    color: var(--color-label-danger-primary);
 }
 
 .registerButton {

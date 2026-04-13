@@ -71,7 +71,7 @@
 
 .signupButton__text {
     padding: 1.4rem;
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
     font-size: 1.6rem;
     font-weight: bold;
     user-select: none;
