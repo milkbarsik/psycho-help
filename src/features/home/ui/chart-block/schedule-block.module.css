@@ -7,7 +7,7 @@
     font-weight: 700;
     text-align: center;
     margin: 0 0 60px 0;
-    color: #000000;
+    color: var(--color-label-neutral-primary);
 }
 
 
@@ -34,7 +34,7 @@
     flex-direction: column;
     gap: 8px;
     padding: 24px;
-    background: #F9F9F9;
+    background: var(--color-background-neutral-secondary);
     width: 100%;
     border-radius: 24px;
 }
@@ -43,14 +43,14 @@
 .fridayLabel {
     font-size: 20px;
     font-weight: 600;
-    color: #000000;
+    color: var(--color-label-neutral-tetriary);
 }
 
 .lunchTime,
 .fridayTime {
     font-size: 22px;
     font-weight: 600;
-    color: #000000;
+    color: var(--color-label-neutral-primary);
 }
 
 .scheduleIllustration {

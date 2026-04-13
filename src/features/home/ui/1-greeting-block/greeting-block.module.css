@@ -35,7 +35,7 @@
 .greeting__subtitle {
     font-size: 2rem;
     font-family: 'Roboto', sans-serif;
-    color: rgba(49, 50, 53, 0.72);
+    color: var(--color-label-neutral-secondary);
 }
 
 .greeting__image {

@@ -29,7 +29,7 @@
   height: 100%;
   font-size: 2.4rem;
   line-height: 2.8rem;
-  color: #393939;
+  color: var(--color-label-neutral-primary);
 }
 
 .image {
@@ -149,12 +149,12 @@
   font-weight: 500;
   font-size: 2rem;
   line-height: 2.8rem;
-  color: #fff;
+  color: var(--color-label-neutral-inverted-primary);
   transition: background-color 0.3s;
 
   &:hover {
     background-color: var(--color-interactive-brand-hover);
-    color: #fff;
+    color: var(--color-label-neutral-inverted-primary);
   }
 
   &:active {
