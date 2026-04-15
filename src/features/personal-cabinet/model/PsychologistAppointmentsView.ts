@@ -3,59 +3,59 @@ import type { ApplicationStatus } from '@/entities/application/types';
 import type { AppointmentStatus } from '@/entities/appointment/types';
 
 export type SortDirection = 'asc' | 'desc';
-export type SortField = 'name' | 'date';
-export type AppStatusFilter = 'all' | ApplicationStatus | 'closed';
-export type AptStatusFilter = 'all' | AppointmentStatus;
+export type ApplicationStatusFilter = 'all' | ApplicationStatus | 'closed';
+export type AppointmentStatusFilter = 'all' | AppointmentStatus;
+export type FormatFilter = 'all' | 'offline' | 'online' | 'unknown';
 export type ActiveTab = 'applications' | 'appointments';
 
 interface TabFilters<TStatus> {
   currentPage: number;
   sortDirection: SortDirection;
-  sortField: SortField;
   statusFilter: TStatus;
+  formatFilter: FormatFilter;
   searchQuery: string;
   dateRange: [string, string] | null;
 }
 
 interface ApplicationsViewState {
   activeTab: ActiveTab;
-  appFilters: TabFilters<AppStatusFilter>;
-  aptFilters: TabFilters<AptStatusFilter>;
+  applicationFilters: TabFilters<ApplicationStatusFilter>;
+  appointmentFilters: TabFilters<AppointmentStatusFilter>;
   setActiveTab: (tab: ActiveTab) => void;
   setCurrentPage: (page: number) => void;
   setSortDirection: (dir: SortDirection) => void;
-  setSortField: (field: SortField) => void;
   setStatusFilter: (filter: string) => void;
+  setFormatFilter: (filter: FormatFilter) => void;
   setSearchQuery: (query: string) => void;
   setDateRange: (range: [string, string] | null) => void;
   resetFilters: () => void;
 }
 
-const defaultAppFilters: TabFilters<AppStatusFilter> = {
+const defaultapplicationFilters: TabFilters<ApplicationStatusFilter> = {
   currentPage: 1,
   sortDirection: 'desc',
-  sortField: 'date',
   statusFilter: 'all',
+  formatFilter: 'all',
   searchQuery: '',
   dateRange: null,
 };
 
-const defaultAptFilters: TabFilters<AptStatusFilter> = {
+const defaultappointmentFilters: TabFilters<AppointmentStatusFilter> = {
   currentPage: 1,
   sortDirection: 'desc',
-  sortField: 'date',
   statusFilter: 'all',
+  formatFilter: 'all',
   searchQuery: '',
   dateRange: null,
 };
 
-const filtersKey = (tab: ActiveTab): 'appFilters' | 'aptFilters' =>
-  tab === 'applications' ? 'appFilters' : 'aptFilters';
+const filtersKey = (tab: ActiveTab): 'applicationFilters' | 'appointmentFilters' =>
+  tab === 'applications' ? 'applicationFilters' : 'appointmentFilters';
 
 export const useApplicationsView = create<ApplicationsViewState>((set, get) => ({
   activeTab: 'applications',
-  appFilters: { ...defaultAppFilters },
-  aptFilters: { ...defaultAptFilters },
+  applicationFilters: { ...defaultapplicationFilters },
+  appointmentFilters: { ...defaultappointmentFilters },
 
   setActiveTab: (tab) => set({ activeTab: tab }),
 
@@ -69,14 +69,14 @@ export const useApplicationsView = create<ApplicationsViewState>((set, get) => (
     set({ [key]: { ...get()[key], sortDirection: dir, currentPage: 1 } });
   },
 
-  setSortField: (field) => {
-    const key = filtersKey(get().activeTab);
-    set({ [key]: { ...get()[key], sortField: field, currentPage: 1 } });
-  },
-
   setStatusFilter: (filter) => {
     const key = filtersKey(get().activeTab);
     set({ [key]: { ...get()[key], statusFilter: filter, currentPage: 1 } });
+  },
+
+  setFormatFilter: (filter) => {
+    const key = filtersKey(get().activeTab);
+    set({ [key]: { ...get()[key], formatFilter: filter, currentPage: 1 } });
   },
 
   setSearchQuery: (query) => {
@@ -92,9 +92,9 @@ export const useApplicationsView = create<ApplicationsViewState>((set, get) => (
   resetFilters: () => {
     const tab = get().activeTab;
     if (tab === 'applications') {
-      set({ appFilters: { ...defaultAppFilters } });
+      set({ applicationFilters: { ...defaultapplicationFilters } });
     } else {
-      set({ aptFilters: { ...defaultAptFilters } });
+      set({ appointmentFilters: { ...defaultappointmentFilters } });
     }
   },
 }));

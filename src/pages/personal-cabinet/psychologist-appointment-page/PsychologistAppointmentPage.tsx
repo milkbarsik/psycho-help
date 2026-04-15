@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Descriptions, Tag, Input, Modal, message } from 'antd';
+import { Button, Descriptions, Tag, Input, Modal, message, Empty } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import {
@@ -85,7 +85,7 @@ const PsychologistAppointmentPage = () => {
 
   if (!isPsychologist) return <Navigate to="/" replace />;
   if (isLoading) return <Loader />;
-  if (!appointment) return <p>Запись не найдена</p>;
+  if (!appointment) return <Empty description="Запись не найдена" />;
 
   const statusTag = STATUS_TAG[appointment.status];
   const isActive = appointment.status === 'Approved' || appointment.status === 'Accepted';

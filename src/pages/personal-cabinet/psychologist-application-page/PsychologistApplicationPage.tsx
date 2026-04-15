@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Calendar, Select, Modal, Input, message } from 'antd';
+import { Calendar, Select, Modal, Input, message, Empty } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import {
@@ -110,7 +110,7 @@ const PsychologistApplicationPage = () => {
 
   if (!isPsychologist) return <Navigate to="/" replace />;
   if (isLoading) return <Loader />;
-  if (!application) return <p>Заявка не найдена</p>;
+  if (!application) return <Empty description="Заявка не найдена" />;
 
   const isInProgress = application.status === 'in_progress';
   const canSave = isInProgress && meetingType && selectedDateTime;
@@ -249,7 +249,8 @@ const PsychologistApplicationPage = () => {
                 disabledDate={disabledDates}
                 headerRender={({ value, type, onChange }) => {
                   const currentMonth = value.format('MMMM');
-                  const capitalizedMonth = currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
+                  const capitalizedMonth =
+                    currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
 
                   const handlePrev = () => {
                     onChange(value.clone().subtract(1, 'month'));
@@ -265,7 +266,6 @@ const PsychologistApplicationPage = () => {
                         type="button"
                         className={styles.calendarArrowBtn}
                         onClick={handlePrev}
-                        aria-label="Предыдущий месяц"
                       >
                         <LeftOutlined />
                       </button>
@@ -274,7 +274,6 @@ const PsychologistApplicationPage = () => {
                         type="button"
                         className={styles.calendarArrowBtn}
                         onClick={handleNext}
-                        aria-label="Следующий месяц"
                       >
                         <RightOutlined />
                       </button>

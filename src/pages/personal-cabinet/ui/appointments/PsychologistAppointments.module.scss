@@ -3,14 +3,7 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
-  max-width: 1000px; 
-}
-
-.pageTitle {
-  font-size: 28px;
-  font-weight: 500;
-  margin: 0;
-  color: #1a1a1a;
+  max-width: 1000px;
 }
 
 /* Tabs */
@@ -71,13 +64,12 @@
 .inputField {
   border-radius: 6px;
   height: 40px;
-
 }
 
 .filterSelect {
   min-width: 160px;
   height: 40px;
-  
+
   :global(.ant-select-selector) {
     border-radius: 6px !important;
     height: 100% !important;
@@ -115,6 +107,27 @@
   }
 }
 
+.sortRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.resetFiltersBtn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+    color: #1a1a1a;
+  }
+}
+
 /* List & Groups */
 .list {
   display: flex;
@@ -148,7 +161,7 @@
 }
 
 .appointmentRow:last-child {
-  border-bottom: 1px solid #e5e7eb; 
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .timeCol {
@@ -178,6 +191,7 @@
 
 .actionsCol {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 16px;
   flex-shrink: 0;
@@ -198,17 +212,32 @@
 
 .tagBlue {
   background-color: #eff6ff; /* Светло-синий фон */
-  color: #3b82f6;            /* Синий текст */
+  color: #3b82f6; /* Синий текст */
 }
 
 .tagRed {
   background-color: #fef2f2; /* Светло-красный фон */
-  color: #ef4444;            /* Красный текст */
+  color: #ef4444; /* Красный текст */
 }
 
 .tagGray {
   background-color: #f3f4f6; /* Светло-серый фон */
-  color: #6b7280;            /* Серый текст */
+  color: #6b7280; /* Серый текст */
+}
+
+.tagOrange {
+  background-color: #fff7ed;
+  color: #f97316;
+}
+
+.tagGreen {
+  background-color: #f0fdf4;
+  color: #22c55e;
+}
+
+.tagDefault {
+  background-color: #ffcccc;
+  color: red;
 }
 
 /* Синяя кнопка (для Appointments: "Открыть запись") */
@@ -234,8 +263,8 @@
   padding: 8px 16px;
   border-radius: 8px;
   border: none;
-  background-color: #e8f5ed; 
-  color: #45b36b; 
+  background-color: #e8f5ed;
+  color: #45b36b;
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;
@@ -277,11 +306,11 @@
   justify-content: center;
   margin-top: 32px;
   margin-bottom: 24px;
-  
+
   :global(.ant-pagination-item-active) {
     background-color: #3b82f6;
     border-color: #3b82f6;
-    
+
     a {
       color: white !important;
     }

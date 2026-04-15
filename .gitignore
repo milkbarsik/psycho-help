@@ -7,6 +7,7 @@
 
 /.idea
 /.vscode
+
 # testing
 /coverage
 
@@ -29,3 +30,6 @@ test-results
 # ai tools
 .claude/
 CLAUDE.md
+
+# scripts
+git-pull-all.sh

@@ -29,7 +29,7 @@ export default defineConfig({
     port: 3000, // Бек принимает кросс запросы только на порту 3000. Кто не согласен, ругайтесь с ними :)
 
     // TODO: убрать этот прокси
-    // Это очень плохое решение, но никак по другому не работает, так как бек не поддерживает COR
+    // Это очень плохое решение, но никак по-другому не работает, так как бек не поддерживает CORS
     proxy: {
       '/users': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
       '/appointments': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
