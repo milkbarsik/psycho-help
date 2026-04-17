@@ -31,7 +31,7 @@ interface ApplicationsViewState {
   resetFilters: () => void;
 }
 
-const defaultapplicationFilters: TabFilters<ApplicationStatusFilter> = {
+const defaultApplicationFilters: TabFilters<ApplicationStatusFilter> = {
   currentPage: 1,
   sortDirection: 'desc',
   statusFilter: 'all',
@@ -40,7 +40,7 @@ const defaultapplicationFilters: TabFilters<ApplicationStatusFilter> = {
   dateRange: null,
 };
 
-const defaultappointmentFilters: TabFilters<AppointmentStatusFilter> = {
+const defaultAppointmentFilters: TabFilters<AppointmentStatusFilter> = {
   currentPage: 1,
   sortDirection: 'desc',
   statusFilter: 'all',
@@ -54,8 +54,8 @@ const filtersKey = (tab: ActiveTab): 'applicationFilters' | 'appointmentFilters'
 
 export const useApplicationsView = create<ApplicationsViewState>((set, get) => ({
   activeTab: 'applications',
-  applicationFilters: { ...defaultapplicationFilters },
-  appointmentFilters: { ...defaultappointmentFilters },
+  applicationFilters: { ...defaultApplicationFilters },
+  appointmentFilters: { ...defaultAppointmentFilters },
 
   setActiveTab: (tab) => set({ activeTab: tab }),
 
@@ -92,9 +92,9 @@ export const useApplicationsView = create<ApplicationsViewState>((set, get) => (
   resetFilters: () => {
     const tab = get().activeTab;
     if (tab === 'applications') {
-      set({ applicationFilters: { ...defaultapplicationFilters } });
+      set({ applicationFilters: { ...defaultApplicationFilters } });
     } else {
-      set({ appointmentFilters: { ...defaultappointmentFilters } });
+      set({ appointmentFilters: { ...defaultAppointmentFilters } });
     }
   },
 }));

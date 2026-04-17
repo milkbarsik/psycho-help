@@ -1,19 +1,21 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Calendar, Select, Modal, Input, message, Empty } from 'antd';
+import { Calendar, Select, message, Empty } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import clsx from 'clsx';
 import {
   applicationQueries,
   applicationQueryKey,
   offerConsultation,
-  rejectApplication,
 } from '@/entities/application/api';
 import type { ApplicationStatus, MeetingType } from '@/entities/application/types';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import Loader from '@/shared/ui/loader/loader';
+import { APPLICATION_STATUS_TAG } from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointmentsConstants';
+import PsychologistApplicationsModal from '@/pages/personal-cabinet/ui/appointments/PsychologistApplicationsModal';
 import styles from './PsychologistApplicationPage.module.scss';
 
 const STATUS_LABELS: Record<ApplicationStatus, string> = {
@@ -57,15 +59,12 @@ const PsychologistApplicationPage = () => {
     enabled: isPsychologist && !!id,
   });
 
-  // Local state tracks only user edits; display values derive from application + edits
   const [userMeetingType, setUserMeetingType] = useState<MeetingType | null>(null);
   const [userDate, setUserDate] = useState<dayjs.Dayjs | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
-  const [rejectReason, setRejectReason] = useState('');
   const [conclusion, setConclusion] = useState('');
 
-  // Resolved values: user edits take precedence over server data
   const meetingType = userMeetingType ?? application?.meeting_type ?? null;
   const selectedDate =
     userDate ?? (application?.scheduled_at ? dayjs(application.scheduled_at) : null);
@@ -94,20 +93,6 @@ const PsychologistApplicationPage = () => {
     },
   });
 
-  const rejectMutation = useMutation({
-    mutationFn: () => rejectApplication(id!, rejectReason),
-    onSuccess: () => {
-      message.success('Заявка отклонена');
-      setRejectModalOpen(false);
-      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
-      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.byId, id] });
-      navigate(-1);
-    },
-    onError: () => {
-      message.error('Не удалось отклонить заявку');
-    },
-  });
-
   if (!isPsychologist) return <Navigate to="/" replace />;
   if (isLoading) return <Loader />;
   if (!application) return <Empty description="Заявка не найдена" />;
@@ -118,6 +103,8 @@ const PsychologistApplicationPage = () => {
   const disabledDates = (current: dayjs.Dayjs) => {
     return current && current < dayjs().startOf('day');
   };
+
+  const statusUI = APPLICATION_STATUS_TAG[application.status];
 
   return (
     <div className={styles.page}>
@@ -148,6 +135,7 @@ const PsychologistApplicationPage = () => {
           <div className={styles.statusRow}>
             <span className={styles.statusDot} />
             <span className={styles.statusText}>{STATUS_LABELS[application.status]}</span>
+            <span className={clsx(styles.statusTag, statusUI.className)}>{statusUI.text}</span>
           </div>
 
           <hr className={styles.divider} />
@@ -308,30 +296,15 @@ const PsychologistApplicationPage = () => {
         )}
       </div>
 
-      {/* Модалка отклонения */}
-      <Modal
-        title="Отклонить заявку"
-        open={rejectModalOpen}
-        onCancel={() => setRejectModalOpen(false)}
-        onOk={() => rejectMutation.mutate()}
-        okText="Отклонить"
-        cancelText="Отмена"
-        okButtonProps={{
-          danger: true,
-          disabled: rejectReason.trim().length === 0,
-          loading: rejectMutation.isPending,
+      <PsychologistApplicationsModal
+        applicationId={rejectModalOpen ? id! : null}
+        onClose={() => setRejectModalOpen(false)}
+        onSuccess={() => {
+          message.success('Заявка отклонена');
+          queryClient.invalidateQueries({ queryKey: [applicationQueryKey.byId, id] });
+          navigate(-1);
         }}
-      >
-        <p>Укажите причину отклонения:</p>
-        <Input.TextArea
-          rows={4}
-          value={rejectReason}
-          onChange={(e) => setRejectReason(e.target.value)}
-          placeholder="Причина отклонения"
-          maxLength={500}
-          showCount
-        />
-      </Modal>
+      />
     </div>
   );
 };

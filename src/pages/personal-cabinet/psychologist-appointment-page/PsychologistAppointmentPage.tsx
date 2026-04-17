@@ -1,26 +1,27 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Descriptions, Tag, Input, Modal, message, Empty } from 'antd';
+import { Button, Descriptions, Tag, Input, message, Empty } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import {
   appointmentQueries,
   appointmentQueryKey,
-  cancelAppointment,
   completeAppointment,
 } from '@/entities/appointment/api';
 import type { AppointmentStatus } from '@/entities/appointment/types';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import Loader from '@/shared/ui/loader/loader';
+import { APPOINTMENT_STATUS_TAG } from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointmentsConstants';
+import PsychologistAppointmentsModal from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointmentsModal';
 import styles from './PsychologistAppointmentPage.module.scss';
 
-const STATUS_TAG: Record<AppointmentStatus, { label: string; color: string }> = {
-  Approved: { label: 'Ожидается', color: 'green' },
-  Accepted: { label: 'Подтверждено', color: 'blue' },
-  Cancelled: { label: 'Отменено', color: 'red' },
-  Done: { label: 'Завершено', color: 'default' },
+const STATUS_TAG: Record<AppointmentStatus, { text: string; className: string }> = {
+  Approved: { text: 'Ожидается (не должно показываться)', className: styles.tagRed },
+  Accepted: { text: 'Ожидается', className: styles.tagGreen },
+  Done: { text: 'Завершено', className: styles.tagGray },
+  Cancelled: { text: 'Отменено', className: styles.tagRed },
 };
 
 const TYPE_LABELS: Record<string, string> = {
@@ -69,20 +70,6 @@ const PsychologistAppointmentPage = () => {
     },
   });
 
-  const cancelMutation = useMutation({
-    mutationFn: () => cancelAppointment(id!),
-    onSuccess: () => {
-      message.success('Запись отменена');
-      setCancelModalOpen(false);
-      queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.list] });
-      queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.byId, id] });
-      navigate(-1);
-    },
-    onError: () => {
-      message.error('Не удалось отменить запись');
-    },
-  });
-
   if (!isPsychologist) return <Navigate to="/" replace />;
   if (isLoading) return <Loader />;
   if (!appointment) return <Empty description="Запись не найдена" />;
@@ -113,7 +100,7 @@ const PsychologistAppointmentPage = () => {
         <Descriptions.Item label="Место">{appointment.venue || '—'}</Descriptions.Item>
         <Descriptions.Item label="Причина">{appointment.reason || '—'}</Descriptions.Item>
         <Descriptions.Item label="Статус">
-          <Tag color={statusTag.color}>{statusTag.label}</Tag>
+          <Tag className={statusTag.className}>{statusTag.text}</Tag>
         </Descriptions.Item>
 
         <Descriptions.Item label="Заключение">
@@ -143,25 +130,20 @@ const PsychologistAppointmentPage = () => {
             Сохранить
           </Button>
           <Button danger size="large" onClick={() => setCancelModalOpen(true)}>
-            Отклонить
+            Отменить
           </Button>
         </div>
       )}
 
-      <Modal
-        title="Отменить запись"
-        open={cancelModalOpen}
-        onCancel={() => setCancelModalOpen(false)}
-        onOk={() => cancelMutation.mutate()}
-        okText="Отменить запись"
-        cancelText="Назад"
-        okButtonProps={{
-          danger: true,
-          loading: cancelMutation.isPending,
+      <PsychologistAppointmentsModal
+        appointmentId={cancelModalOpen ? id! : null}
+        onClose={() => setCancelModalOpen(false)}
+        onSuccess={() => {
+          message.success('Запись отменена');
+          queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.byId, id] });
+          navigate(-1);
         }}
-      >
-        <p>Вы уверены, что хотите отменить эту запись?</p>
-      </Modal>
+      />
     </article>
   );
 };

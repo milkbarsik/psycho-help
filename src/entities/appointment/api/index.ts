@@ -22,8 +22,11 @@ export const appointmentQueries = {
     }),
 };
 
-export const cancelAppointment = async (id: string): Promise<void> => {
-  await $api.put(`/appointments/${id}/cancel`);
+export const cancelAppointment = async (id: string, cancelReason: string): Promise<void> => {
+  const { data } = await $api.put(`/appointments/${id}/cancel`, {
+    cancel_reason: cancelReason,
+  });
+  return data;
 };
 
 export const completeAppointment = async (id: string, comment: string): Promise<Appointment> => {

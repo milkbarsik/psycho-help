@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { AutoComplete, DatePicker, Empty, Input, Modal, Pagination, Select } from 'antd';
+import { AutoComplete, DatePicker, Empty, Input, Pagination, Select } from 'antd';
 import { SortAscendingOutlined, SortDescendingOutlined, SearchOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
@@ -13,14 +13,18 @@ import {
   applicationQueries,
   applicationQueryKey,
   acceptApplication,
-  rejectApplication,
 } from '@/entities/application/api';
 import type { Application, ApplicationStatus } from '@/entities/application/types';
 import { appointmentQueries } from '@/entities/appointment/api';
-import type { Appointment, AppointmentStatus } from '@/entities/appointment/types';
+import type { Appointment } from '@/entities/appointment/types';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { useApplicationsView } from '@/features/personal-cabinet/model/PsychologistAppointmentsView';
 import Loader from '@/shared/ui/loader/loader';
+import {
+  APPLICATION_STATUS_TAG,
+  APPOINTMENT_STATUS_TAG,
+} from './PsychologistAppointmentsConstants';
+import PsychologistApplicationsModal from './PsychologistApplicationsModal';
 import styles from './PsychologistAppointments.module.scss';
 
 dayjs.extend(utc);
@@ -32,7 +36,6 @@ const toMoscow = (date: string) => dayjs(date).tz(MOSCOW_TZ);
 
 const ITEMS_PER_PAGE = 6;
 
-/* ── Application constants ── */
 const CLOSED_STATUSES: ApplicationStatus[] = ['rejected', 'cancelled', 'expired'];
 
 const APPLICATION_STATUS_OPTIONS = [
@@ -43,16 +46,6 @@ const APPLICATION_STATUS_OPTIONS = [
   { value: 'completed', label: 'Завершено' },
   { value: 'closed', label: 'Отменено' },
 ];
-
-const APPLICATION_STATUS_TAG: Record<ApplicationStatus, { text: string; className: string }> = {
-  new: { text: 'Новая', className: styles.tagBlue },
-  in_progress: { text: 'В работе', className: styles.tagOrange },
-  awaiting_user_confirmation: { text: 'Ожидает подтверждения', className: styles.tagGreen },
-  completed: { text: 'Завершено', className: styles.tagGray },
-  rejected: { text: 'Отменено', className: styles.tagRed },
-  cancelled: { text: 'Отменено', className: styles.tagRed },
-  expired: { text: 'Отменено', className: styles.tagRed },
-};
 
 const APPLICATION_FORMAT_OPTIONS = [
   { value: 'all', label: 'Все форматы' },
@@ -67,7 +60,6 @@ const APPOINTMENT_FORMAT_OPTIONS = [
   { value: 'online', label: 'Онлайн' },
 ];
 
-/* ── Appointment constants ── */
 const APPOINTMENT_STATUS_OPTIONS = [
   { value: 'all', label: 'Все статусы' },
   { value: 'Approved', label: 'Ожидается (не должно показываться)' }, // TODO: удалить после правки бэка
@@ -75,13 +67,6 @@ const APPOINTMENT_STATUS_OPTIONS = [
   { value: 'Done', label: 'Завершено' },
   { value: 'Cancelled', label: 'Отменено' },
 ];
-
-const APPOINTMENT_STATUS_TAG: Record<AppointmentStatus, { text: string; className: string }> = {
-  Approved: { text: 'Ожидается (не должно показываться)', className: styles.tagRed },
-  Accepted: { text: 'Ожидается', className: styles.tagGreen },
-  Done: { text: 'Завершено', className: styles.tagGray },
-  Cancelled: { text: 'Отменено', className: styles.tagRed },
-};
 
 /* ── Helpers ── */
 const getApplicantName = (application: Application) =>
@@ -159,21 +144,11 @@ const PsychologistAppointments = () => {
     applicationQueries.list(),
   );
 
-  const [rejectModalAppId, setRejectModalAppId] = useState<string | null>(null);
-  const [rejectReason, setRejectReason] = useState('');
+  const [rejectingApplicationId, setRejectingApplicationId] = useState<string | null>(null);
 
   const acceptMutation = useMutation({
     mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] }),
-  });
-
-  const rejectMutation = useMutation({
-    mutationFn: ({ id, reason }: { id: string; reason: string }) => rejectApplication(id, reason),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
-      setRejectModalAppId(null);
-      setRejectReason('');
-    },
   });
 
   const relevantApplications = useMemo(() => {
@@ -354,7 +329,7 @@ const PsychologistAppointments = () => {
           {application.status === 'in_progress' && (
             <button
               className={styles.btnCancel}
-              onClick={() => setRejectModalAppId(application.id)}
+              onClick={() => setRejectingApplicationId(application.id)}
             >
               Отклонить
             </button>
@@ -468,7 +443,6 @@ const PsychologistAppointments = () => {
           />
         </div>
         <div className={styles.sortRow}>
-          {/* Сортировка */}
           <button
             className={styles.sortToggleBtn}
             onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
@@ -489,7 +463,7 @@ const PsychologistAppointments = () => {
       <div className={styles.list} role="list">
         {paginated.length === 0 && (
           <Empty description={activeTab === 'applications' ? 'Заявок нет' : 'Записей нет'} />
-          // TODO: Может ракрасить получше? Но это нужно дизайнеров просить...
+          // Может ракрасить получше? Но это нужно дизайнеров просить...
         )}
 
         {activeTab === 'applications' &&
@@ -525,34 +499,10 @@ const PsychologistAppointments = () => {
         />
       )}
 
-      <Modal
-        title="Отклонение заявки"
-        open={rejectModalAppId !== null}
-        onCancel={() => {
-          setRejectModalAppId(null);
-          setRejectReason('');
-        }}
-        okText="Отклонить"
-        cancelText="Отмена"
-        okButtonProps={{
-          danger: true,
-          disabled: rejectReason.trim() === '' || rejectMutation.isPending,
-          loading: rejectMutation.isPending,
-        }}
-        onOk={() => {
-          if (rejectModalAppId && rejectReason.trim()) {
-            rejectMutation.mutate({ id: rejectModalAppId, reason: rejectReason.trim() });
-          }
-        }}
-      >
-        <p>Укажите причину отклонения заявки:</p>
-        <Input.TextArea
-          value={rejectReason}
-          onChange={(e) => setRejectReason(e.target.value)}
-          rows={4}
-          placeholder="Причина отклонения"
-        />
-      </Modal>
+      <PsychologistApplicationsModal
+        applicationId={rejectingApplicationId}
+        onClose={() => setRejectingApplicationId(null)}
+      />
     </section>
   );
 };
