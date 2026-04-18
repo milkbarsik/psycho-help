@@ -249,6 +249,11 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                   address={`${meetingTypeStr} — ${locationStr}`}
                   type="upcoming"
                   status={app.status}
+                  onCancel={
+                    app.status === 'new'
+                      ? () => setCancelModal({ visible: true, type: 'application', id: app.id })
+                      : undefined
+                  }
                 />
               );
             })}
