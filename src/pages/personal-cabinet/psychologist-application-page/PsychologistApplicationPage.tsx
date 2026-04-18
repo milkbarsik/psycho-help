@@ -26,12 +26,12 @@ const STATUS_LABELS: Record<ApplicationStatus, string> = {
   expired: 'Истекло',
 };
 
-const MEETING_TYPE_OPTIONS =[
+const MEETING_TYPE_OPTIONS = [
   { value: 'online' as const, label: 'Онлайн' },
   { value: 'offline' as const, label: 'Очно' },
 ];
 
-const TIME_SLOTS =[
+const TIME_SLOTS = [
   '09:00',
   '10:00',
   '11:00',
@@ -73,16 +73,16 @@ const PsychologistApplicationPage = () => {
   });
 
   // Локальные стейты для формы назначения времени
-  const[userMeetingType, setUserMeetingType] = useState<MeetingType | null>(null);
-  const[userDate, setUserDate] = useState<dayjs.Dayjs | null>(null);
-  const[selectedTime, setSelectedTime] = useState<string>('');
-  
+  const [userMeetingType, setUserMeetingType] = useState<MeetingType | null>(null);
+  const [userDate, setUserDate] = useState<dayjs.Dayjs | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string>('');
+
   // Дополнительные поля для формата встречи
-  const[locationAddress, setLocationAddress] = useState<string>('');
+  const [locationAddress, setLocationAddress] = useState<string>('');
   const [meetingUrl, setMeetingUrl] = useState<string>('');
 
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
-  const[rejectReason, setRejectReason] = useState('');
+  const [rejectReason, setRejectReason] = useState('');
   const [conclusion, setConclusion] = useState('');
 
   // Вычисляемые значения: отдан приоритет пользовательскому вводу
@@ -108,7 +108,7 @@ const PsychologistApplicationPage = () => {
     onSuccess: () => {
       message.success('Консультация предложена, ожидаем подтверждения пользователя');
       queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
-      queryClient.invalidateQueries({ queryKey:[applicationQueryKey.byId, id] });
+      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.byId, id] });
       navigate(-1);
     },
     onError: () => {
@@ -137,9 +137,9 @@ const PsychologistApplicationPage = () => {
   const isInProgress = application.status === 'in_progress';
 
   // Проверка обязательных полей для записи
-  const canSave = 
-    isInProgress && 
-    meetingType && 
+  const canSave =
+    isInProgress &&
+    meetingType &&
     selectedDateTime &&
     (meetingType === 'offline' ? locationAddress.trim().length > 0 : meetingUrl.trim().length > 0);
 
@@ -246,8 +246,8 @@ const PsychologistApplicationPage = () => {
                 {meetingType === 'offline' && (
                   <div className={`${styles.formField} ${styles.formFieldGrow}`}>
                     <label className={styles.fieldLabel}>Адрес проведения</label>
-                    <Input 
-                      placeholder="Укажите кабинет / здание" 
+                    <Input
+                      placeholder="Укажите кабинет / здание"
                       value={locationAddress}
                       onChange={(e) => setLocationAddress(e.target.value)}
                     />
@@ -257,8 +257,8 @@ const PsychologistApplicationPage = () => {
                 {meetingType === 'online' && (
                   <div className={`${styles.formField} ${styles.formFieldGrow}`}>
                     <label className={styles.fieldLabel}>Ссылка на встречу</label>
-                    <Input 
-                      placeholder="Zoom, Google Meet или другая платформа" 
+                    <Input
+                      placeholder="Zoom, Google Meet или другая платформа"
                       value={meetingUrl}
                       onChange={(e) => setMeetingUrl(e.target.value)}
                     />
@@ -319,7 +319,8 @@ const PsychologistApplicationPage = () => {
                 disabledDate={disabledDates}
                 headerRender={({ value, type, onChange }) => {
                   const currentMonth = value.format('MMMM');
-                  const capitalizedMonth = currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
+                  const capitalizedMonth =
+                    currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
 
                   const handlePrev = () => {
                     onChange(value.clone().subtract(1, 'month'));

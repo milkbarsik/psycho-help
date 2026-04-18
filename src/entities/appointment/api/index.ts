@@ -16,7 +16,7 @@ export const appointmentQueries = {
 
   byId: (id: string) =>
     queryOptions<Appointment>({
-      queryKey:[appointmentQueryKey.byId, id],
+      queryKey: [appointmentQueryKey.byId, id],
       queryFn: async () => (await $api.get(`/appointments/${id}`)).data,
       enabled: !!id,
     }),

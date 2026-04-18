@@ -228,21 +228,13 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
             />
           </div>
 
-          <button
-            className={styles.subButton}
-            type="button"
-            onClick={() => setWindow('results')}
-          >
+          <button className={styles.subButton} type="button" onClick={() => setWindow('results')}>
             Далее
           </button>
         </div>
       ) : (
         <div className={styles.results}>
-          <button
-            className={styles.backButton}
-            type="button"
-            onClick={() => setWindow('form')}
-          >
+          <button className={styles.backButton} type="button" onClick={() => setWindow('form')}>
             <div className={styles.backArrow}>
               <img src={backArrow} alt="backArrow" />
               <p className={styles.backArrow__text}>Назад</p>
@@ -266,9 +258,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               {userEmail}
             </p>
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>
-                Формат:{' '}
-              </span>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Формат: </span>
               {meetingType === 'online' ? 'Онлайн' : 'Очно'}
             </p>
             {meetingType === 'offline' && application.preferred_campus && (
@@ -280,9 +270,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               </p>
             )}
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>
-                Статус:{' '}
-              </span>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Статус: </span>
               {application.university_status || 'студент'}
             </p>
             <p className={clsx(styles.results__text, styles.results__textGray)}>Описание:</p>

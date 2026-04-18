@@ -1,6 +1,12 @@
 import { queryOptions } from '@tanstack/react-query';
 import { $api } from '@/shared/api/http';
-import type { Application, ApplicationStatus, MeetingType, ApplicationCreateRequest, CancelRequest } from './types';
+import type {
+  Application,
+  ApplicationStatus,
+  MeetingType,
+  ApplicationCreateRequest,
+  CancelRequest,
+} from './types';
 
 export const applicationQueryKey = {
   list: 'application.list',

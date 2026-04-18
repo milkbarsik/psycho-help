@@ -4,8 +4,18 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { message, Modal, Input } from 'antd';
 import { therapistQueries } from '@/entities/therapist/api';
-import { appointmentQueries, appointmentQueryKey, createAppointment, cancelAppointment } from '@/entities/appointment/api';
-import { applicationQueries, applicationQueryKey, confirmApplication, cancelApplication } from '@/entities/application/api';
+import {
+  appointmentQueries,
+  appointmentQueryKey,
+  createAppointment,
+  cancelAppointment,
+} from '@/entities/appointment/api';
+import {
+  applicationQueries,
+  applicationQueryKey,
+  confirmApplication,
+  cancelApplication,
+} from '@/entities/application/api';
 import type { Appointment } from '@/entities/appointment/types';
 import type { Therapist } from '@/entities/therapist/types';
 import type { Application } from '@/entities/application/types';
@@ -41,10 +51,10 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
 
   const { data: doctors, isLoading: isLoadingDoctors } = useQuery(therapistQueries.list());
   const { data: serverAppointments, isLoading: isLoadingAppointments } = useQuery(
-    appointmentQueries.list()
+    appointmentQueries.list(),
   );
   const { data: applications, isLoading: isLoadingApplications } = useQuery(
-    applicationQueries.list()
+    applicationQueries.list(),
   );
 
   const getTherapistName = useCallback(
@@ -62,9 +72,9 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
   const { upcoming, past } = useMemo(() => {
     const now = dayjs();
     const upc: Appointment[] = [];
-    const pst: Appointment[] =[];
+    const pst: Appointment[] = [];
 
-    (serverAppointments ||[]).forEach((item) => {
+    (serverAppointments || []).forEach((item) => {
       const appointmentDate = dayjs(item.scheduled_time);
       if (appointmentDate.isValid()) {
         if (appointmentDate.isAfter(now) && item.status !== 'Cancelled') {
@@ -84,9 +94,9 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
   // Заявки: Требующие подтверждения и В обработке
   const { awaitingConfirmation, inProcessing } = useMemo(() => {
     const awaiting: Application[] = [];
-    const processing: Application[] =[];
+    const processing: Application[] = [];
 
-    (applications ||[]).forEach((app) => {
+    (applications || []).forEach((app) => {
       if (app.status === 'awaiting_user_confirmation') {
         awaiting.push(app);
       } else if (app.status === 'new' || app.status === 'in_progress') {
@@ -120,7 +130,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     onSuccess: () => {
       message.success('Заявка успешно подтверждена');
       queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
-      queryClient.invalidateQueries({ queryKey:[appointmentQueryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.list] });
     },
     onError: () => {
       message.error('Не удалось подтвердить заявку');
@@ -139,7 +149,15 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
 
   // Отмена записи или заявки
   const cancelMutation = useMutation({
-    mutationFn: async ({ id, type, reason }: { id: string; type: 'appointment' | 'application'; reason: string }) => {
+    mutationFn: async ({
+      id,
+      type,
+      reason,
+    }: {
+      id: string;
+      type: 'appointment' | 'application';
+      reason: string;
+    }) => {
       if (type === 'application') {
         return cancelApplication(id, { cancel_reason: reason, cancel_initiator: 'user' });
       } else {
@@ -169,7 +187,6 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
       reason: cancelReason.trim(),
     });
   };
-
 
   const isLoading = isLoadingDoctors || isLoadingAppointments || isLoadingApplications;
 
@@ -265,7 +282,9 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                   type="confirmation"
                   status={app.status}
                   onConfirm={() => handleConfirm(app)}
-                  onCancel={() => setCancelModal({ visible: true, type: 'application', id: app.id })}
+                  onCancel={() =>
+                    setCancelModal({ visible: true, type: 'application', id: app.id })
+                  }
                 />
               );
             })}

@@ -38,10 +38,18 @@
   flex-shrink: 0;
 }
 
-.statusDotWarning { background-color: var(--color-label-warning-primary, #f59e0b); }
-.statusDotSuccess { background-color: var(--color-label-success-primary, #10b981); }
-.statusDotDanger { background-color: var(--color-label-danger-primary, #ef4444); }
-.statusDotNeutral { background-color: var(--color-label-neutral-secondary, #6b7280); }
+.statusDotWarning {
+  background-color: var(--color-label-warning-primary, #f59e0b);
+}
+.statusDotSuccess {
+  background-color: var(--color-label-success-primary, #10b981);
+}
+.statusDotDanger {
+  background-color: var(--color-label-danger-primary, #ef4444);
+}
+.statusDotNeutral {
+  background-color: var(--color-label-neutral-secondary, #6b7280);
+}
 
 .statusText {
   font-size: 14px;
