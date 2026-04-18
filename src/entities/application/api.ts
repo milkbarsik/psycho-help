@@ -1,7 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { $api } from '@/shared/api/http';
-import type { Application, ApplicationStatus, MeetingType, ApplicationCreateRequest } from './types';
-
+import type { Application, ApplicationStatus, MeetingType, ApplicationCreateRequest, CancelRequest } from './types';
 
 export const applicationQueryKey = {
   list: 'application.list',
@@ -56,6 +55,11 @@ export const rejectApplication = async (applicationId: string, rejectReason: str
   return data;
 };
 
+export const cancelApplication = async (applicationId: string, payload: CancelRequest) => {
+  const { data } = await $api.post<Application>(`/applications/${applicationId}/cancel`, payload);
+  return data;
+};
+
 export const createApplication = async (body: ApplicationCreateRequest) => {
   const { data } = await $api.post<Application>('/applications/', body);
   return data;
@@ -65,5 +69,10 @@ export const confirmApplication = async (applicationId: string, appointmentId?: 
   const { data } = await $api.post<Application>(`/applications/${applicationId}/confirm`, null, {
     params: appointmentId ? { appointment_id: appointmentId } : undefined,
   });
+  return data;
+};
+
+export const getUniversityStatuses = async () => {
+  const { data } = await $api.get<string[]>('/applications/university-statuses');
   return data;
 };

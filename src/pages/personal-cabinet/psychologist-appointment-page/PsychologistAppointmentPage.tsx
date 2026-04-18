@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Descriptions, Tag, Input, Modal, message } from 'antd';
+import { Button, Descriptions, Input, Modal, message } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import {
@@ -16,11 +16,25 @@ import { useAuth } from '@/features/auth/api/useAuth';
 import Loader from '@/shared/ui/loader/loader';
 import styles from './PsychologistAppointmentPage.module.scss';
 
-const STATUS_TAG: Record<AppointmentStatus, { label: string; color: string }> = {
-  Approved: { label: 'Ожидается', color: 'green' },
-  Accepted: { label: 'Подтверждено', color: 'blue' },
-  Cancelled: { label: 'Отменено', color: 'red' },
-  Done: { label: 'Завершено', color: 'default' },
+const STATUS_LABELS: Record<AppointmentStatus, string> = {
+  Approved: 'Ожидается',
+  Accepted: 'Подтверждено',
+  Cancelled: 'Отменено',
+  Done: 'Завершено',
+};
+
+const getStatusColorClass = (status: AppointmentStatus) => {
+  switch (status) {
+    case 'Done':
+      return styles.statusDotNeutral;
+    case 'Cancelled':
+      return styles.statusDotDanger;
+    case 'Accepted':
+      return styles.statusDotSuccess;
+    case 'Approved':
+    default:
+      return styles.statusDotWarning;
+  }
 };
 
 const TYPE_LABELS: Record<string, string> = {
@@ -47,7 +61,10 @@ const PsychologistAppointmentPage = () => {
   });
 
   const [comment, setComment] = useState('');
+
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  const [cancelReasonInput, setCancelReasonInput] = useState('');
+
   const [commentInitializedForId, setCommentInitializedForId] = useState<string | null>(null);
 
   // Sync comment from loaded appointment (state-during-render)
@@ -70,10 +87,11 @@ const PsychologistAppointmentPage = () => {
   });
 
   const cancelMutation = useMutation({
-    mutationFn: () => cancelAppointment(id!),
+    mutationFn: () => cancelAppointment(id!, cancelReasonInput),
     onSuccess: () => {
       message.success('Запись отменена');
       setCancelModalOpen(false);
+      setCancelReasonInput('');
       queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.list] });
       queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.byId, id] });
       navigate(-1);
@@ -87,8 +105,11 @@ const PsychologistAppointmentPage = () => {
   if (isLoading) return <Loader />;
   if (!appointment) return <p>Запись не найдена</p>;
 
-  const statusTag = STATUS_TAG[appointment.status];
   const isActive = appointment.status === 'Approved' || appointment.status === 'Accepted';
+
+  // TODO: Оно наверное пока что упадёт, надо будет поправить
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const serverCancelReason = (appointment as any).cancel_reason;
 
   return (
     <article className={styles.wrapper}>
@@ -103,6 +124,14 @@ const PsychologistAppointmentPage = () => {
 
       <h2 className={styles.title}>Запись на консультацию</h2>
 
+      {/* Причина отмены (если запись уже отменена) */}
+      {appointment.status === 'Cancelled' && serverCancelReason && (
+        <div className={styles.reasonBlockCancelled}>
+          <span className={styles.reasonLabel}>Причина отмены:</span>
+          <span className={styles.reasonText}>{serverCancelReason}</span>
+        </div>
+      )}
+
       <Descriptions column={1} bordered size="middle">
         <Descriptions.Item label="Дата и время">
           {formatDateTime(appointment.scheduled_time)}
@@ -111,9 +140,13 @@ const PsychologistAppointmentPage = () => {
           {TYPE_LABELS[appointment.type] ?? appointment.type}
         </Descriptions.Item>
         <Descriptions.Item label="Место">{appointment.venue || '—'}</Descriptions.Item>
-        <Descriptions.Item label="Причина">{appointment.reason || '—'}</Descriptions.Item>
+        <Descriptions.Item label="Причина записи">{appointment.reason || '—'}</Descriptions.Item>
+
         <Descriptions.Item label="Статус">
-          <Tag color={statusTag.color}>{statusTag.label}</Tag>
+          <div className={styles.statusRow}>
+            <span className={`${styles.statusDot} ${getStatusColorClass(appointment.status)}`} />
+            <span className={styles.statusText}>{STATUS_LABELS[appointment.status]}</span>
+          </div>
         </Descriptions.Item>
 
         <Descriptions.Item label="Заключение">
@@ -139,11 +172,12 @@ const PsychologistAppointmentPage = () => {
             size="large"
             onClick={() => completeMutation.mutate()}
             loading={completeMutation.isPending}
+            disabled={comment.trim().length === 0} // Желательно иметь заполненное заключение для завершения
           >
-            Сохранить
+            Завершить сессию
           </Button>
           <Button danger size="large" onClick={() => setCancelModalOpen(true)}>
-            Отклонить
+            Отменить запись
           </Button>
         </div>
       )}
@@ -151,16 +185,28 @@ const PsychologistAppointmentPage = () => {
       <Modal
         title="Отменить запись"
         open={cancelModalOpen}
-        onCancel={() => setCancelModalOpen(false)}
+        onCancel={() => {
+          setCancelModalOpen(false);
+          setCancelReasonInput('');
+        }}
         onOk={() => cancelMutation.mutate()}
         okText="Отменить запись"
         cancelText="Назад"
         okButtonProps={{
           danger: true,
+          disabled: cancelReasonInput.trim().length === 0,
           loading: cancelMutation.isPending,
         }}
       >
-        <p>Вы уверены, что хотите отменить эту запись?</p>
+        <p style={{ marginBottom: '12px' }}>Укажите причину отмены:</p>
+        <Input.TextArea
+          rows={4}
+          value={cancelReasonInput}
+          onChange={(e) => setCancelReasonInput(e.target.value)}
+          placeholder="Например: По личным обстоятельствам"
+          maxLength={500}
+          showCount
+        />
       </Modal>
     </article>
   );

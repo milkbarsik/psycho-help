@@ -9,7 +9,12 @@ export type ApplicationStatus =
 
 export type MeetingType = 'offline' | 'online';
 
-export type UniversityStatus = 'студент' | 'аспирант' | 'преподаватель' | 'сотрудник';
+export type UniversityStatus = string;
+
+export interface CancelRequest {
+  cancel_reason: string;
+  cancel_initiator: 'user' | 'psychologist' | 'manager' | 'system';
+}
 
 export interface Application {
   id: string;
@@ -45,11 +50,11 @@ export interface Application {
 }
 
 export interface ApplicationCreateRequest {
-  first_name: string,
-  last_name: string,
-  email?: string,
-  phone?: string,
-  problem_description: string,
-  preferred_campus?: string,
-  university_status: "студент" | "аспирант" | "преподаватель" | "сотрудник"
+  first_name: string;
+  last_name: string;
+  email?: string;
+  phone?: string;
+  problem_description: string;
+  preferred_campus?: string;
+  university_status: string;
 }
