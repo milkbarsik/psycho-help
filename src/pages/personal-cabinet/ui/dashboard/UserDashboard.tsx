@@ -2,10 +2,20 @@ import { useMemo, useState, useCallback } from 'react';
 import type { FC } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { message, Modal } from 'antd';
+import { message, Modal, Input } from 'antd';
 import { therapistQueries } from '@/entities/therapist/api';
-import { appointmentQueries, appointmentQueryKey, createAppointment } from '@/entities/appointment/api';
-import { applicationQueries, applicationQueryKey, confirmApplication } from '@/entities/application/api';
+import {
+  appointmentQueries,
+  appointmentQueryKey,
+  createAppointment,
+  cancelAppointment,
+} from '@/entities/appointment/api';
+import {
+  applicationQueries,
+  applicationQueryKey,
+  confirmApplication,
+  cancelApplication,
+} from '@/entities/application/api';
 import type { Appointment } from '@/entities/appointment/types';
 import type { Therapist } from '@/entities/therapist/types';
 import type { Application } from '@/entities/application/types';
@@ -27,7 +37,17 @@ const MEETING_TYPE_LABELS: Record<string, string> = {
 
 const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
   const queryClient = useQueryClient();
+  const user = useAuth((s) => s.user);
+
   const [commentModalId, setCommentModalId] = useState<string | null>(null);
+
+  // Стейт для модального окна отмены
+  const [cancelModal, setCancelModal] = useState<{
+    visible: boolean;
+    type: 'appointment' | 'application';
+    id: string;
+  }>({ visible: false, type: 'appointment', id: '' });
+  const [cancelReason, setCancelReason] = useState('');
 
   const { data: doctors, isLoading: isLoadingDoctors } = useQuery(therapistQueries.list());
   const { data: serverAppointments, isLoading: isLoadingAppointments } = useQuery(
@@ -48,7 +68,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     [doctors],
   );
 
-  // Разделение записей на ближайшие и прошедшие
+  // Ближайшие и прошедшие записи
   const { upcoming, past } = useMemo(() => {
     const now = dayjs();
     const upc: Appointment[] = [];
@@ -57,7 +77,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     (serverAppointments || []).forEach((item) => {
       const appointmentDate = dayjs(item.scheduled_time);
       if (appointmentDate.isValid()) {
-        if (appointmentDate.isAfter(now)) {
+        if (appointmentDate.isAfter(now) && item.status !== 'Cancelled') {
           upc.push(item);
         } else {
           pst.push(item);
@@ -71,23 +91,30 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     return { upcoming: upc, past: pst };
   }, [serverAppointments]);
 
-  const user = useAuth((s) => s.user);
+  // Заявки: Требующие подтверждения и В обработке
+  const { awaitingConfirmation, inProcessing } = useMemo(() => {
+    const awaiting: Application[] = [];
+    const processing: Application[] = [];
 
-  // Заявки, требующие подтверждения пользователя
-  const awaitingConfirmation = useMemo(
-    () =>
-      (applications || []).filter((app) => app.status === 'awaiting_user_confirmation'),
-    [applications],
-  );
+    (applications || []).forEach((app) => {
+      if (app.status === 'awaiting_user_confirmation') {
+        awaiting.push(app);
+      } else if (app.status === 'new' || app.status === 'in_progress') {
+        processing.push(app);
+      }
+    });
 
-  // Мутация подтверждения: сначала создаём appointment, затем подтверждаем заявку
+    return { awaitingConfirmation: awaiting, inProcessing: processing };
+  }, [applications]);
+
+  // --- Мутации ---
+
+  // Подтверждение заявки
   const confirmMutation = useMutation({
     mutationFn: async (app: Application) => {
-      // Определяем тип встречи
-      const apptType: 'Offline' | 'Online' = app.meeting_type === 'online' ? 'Online' : 'Offline';
+      const apptType = app.meeting_type === 'online' ? 'Online' : 'Offline';
       const scheduledTime = app.scheduled_at || new Date().toISOString();
 
-      // 1. Создаём appointment
       const createdAppointment = await createAppointment({
         application_id: app.id,
         patient_id: user!.id,
@@ -98,11 +125,10 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
         venue: app.location_address || app.preferred_campus || undefined,
       });
 
-      // 2. Подтверждаем заявку с appointment_id
       return confirmApplication(app.id, createdAppointment.id);
     },
     onSuccess: () => {
-      message.success('Заявка подтверждена');
+      message.success('Заявка успешно подтверждена');
       queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
       queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.list] });
     },
@@ -113,11 +139,52 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
 
   const handleConfirm = (app: Application) => {
     Modal.confirm({
-      title: 'Подтверждение заявки',
-      content: 'Вы уверены, что хотите подтвердить эту заявку?',
+      title: 'Подтверждение записи',
+      content: 'Вы уверены, что хотите подтвердить предложенное время и дату?',
       okText: 'Подтвердить',
-      cancelText: 'Отмена',
+      cancelText: 'Назад',
       onOk: () => confirmMutation.mutate(app),
+    });
+  };
+
+  // Отмена записи или заявки
+  const cancelMutation = useMutation({
+    mutationFn: async ({
+      id,
+      type,
+      reason,
+    }: {
+      id: string;
+      type: 'appointment' | 'application';
+      reason: string;
+    }) => {
+      if (type === 'application') {
+        return cancelApplication(id, { cancel_reason: reason, cancel_initiator: 'user' });
+      } else {
+        return cancelAppointment(id, reason);
+      }
+    },
+    onSuccess: () => {
+      message.success('Успешно отменено');
+      setCancelModal({ visible: false, type: 'appointment', id: '' });
+      setCancelReason('');
+      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.list] });
+    },
+    onError: () => {
+      message.error('Ошибка при отмене');
+    },
+  });
+
+  const handleCancelSubmit = () => {
+    if (!cancelReason.trim()) {
+      message.error('Пожалуйста, укажите причину отмены');
+      return;
+    }
+    cancelMutation.mutate({
+      id: cancelModal.id,
+      type: cancelModal.type,
+      reason: cancelReason.trim(),
     });
   };
 
@@ -135,9 +202,9 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     <>
       <GreetingCard userName={userName} onBookClick={onBookClick} />
 
-      {/* Ближайшие записи */}
+      {/* --- ВАШИ ЗАПИСИ (Показывается всегда, есть заглушка) --- */}
       <section className={styles.section}>
-        <h3 className={styles.sectionTitle}>Ближайшие записи</h3>
+        <h3 className={styles.sectionTitle}>Ваши записи</h3>
         <div className={styles.cardsGrid}>
           {upcoming.length > 0 ? (
             upcoming.map((app) => (
@@ -148,48 +215,53 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                 address={app.venue || (app.type === 'Online' ? 'Онлайн сессия' : 'Офлайн')}
                 type="upcoming"
                 status={app.status}
+                onCancel={() => setCancelModal({ visible: true, type: 'appointment', id: app.id })}
               />
             ))
           ) : (
-            <p className={styles.emptyText}>Вы ещё не записаны на сессию</p>
+            <p className={styles.emptyText}>У вас пока что нет активных записей</p>
           )}
         </div>
       </section>
 
-      {/* Последние сессии */}
-      <section className={styles.section}>
-        <h3 className={styles.sectionTitle}>Последние сессии</h3>
-        <div className={styles.cardsGrid}>
-          {past.length > 0 ? (
-            past.map((app, index) => {
-              let mockRating: 'good' | 'bad' | null = null;
-              if (index % 3 === 1) mockRating = 'good';
-              if (index % 3 === 2) mockRating = 'bad';
+      {/* --- В ОБРАБОТКЕ (Скрывается, если пусто) --- */}
+      {inProcessing.length > 0 && (
+        <section className={styles.section}>
+          <h3 className={styles.sectionTitle}>В обработке у специалиста</h3>
+          <div className={styles.cardsGrid}>
+            {inProcessing.map((app) => {
+              const meetingTypeStr = app.meeting_type
+                ? MEETING_TYPE_LABELS[app.meeting_type] || app.meeting_type
+                : 'Тип встречи не указан';
+              const locationStr =
+                app.meeting_type === 'offline'
+                  ? app.location_address || app.preferred_campus || 'Адрес уточняется'
+                  : app.meeting_url || 'Ссылка будет отправлена позже';
+              const scheduledStr = app.scheduled_at
+                ? dayjs(app.scheduled_at).format('D MMMM, HH:mm')
+                : 'Время подбирается специалистом';
 
               return (
                 <AppointmentCard
                   key={app.id}
-                  date={dayjs(app.scheduled_time).format('D MMMM, HH:mm')}
-                  doctorName={getTherapistName(app.psychologist_id)}
-                  address={app.venue || (app.type === 'Online' ? 'Онлайн сессия' : 'Офлайн')}
-                  type="past"
-                  rating={mockRating}
-                  onComment={() => setCommentModalId(app.id)}
+                  date={scheduledStr}
+                  doctorName={getTherapistName(app.psychologist_id || undefined)}
+                  address={`${meetingTypeStr} — ${locationStr}`}
+                  type="upcoming"
+                  status={app.status}
                 />
               );
-            })
-          ) : (
-            <p className={styles.emptyText}>Вы ещё не были на сессии у психолога</p>
-          )}
-        </div>
-      </section>
+            })}
+          </div>
+        </section>
+      )}
 
-      {/* Требуют подтверждения */}
-      <section className={styles.section}>
-        <h3 className={styles.sectionTitle}>Требуют подтверждения</h3>
-        <div className={styles.cardsGrid}>
-          {awaitingConfirmation.length > 0 ? (
-            awaitingConfirmation.map((app) => {
+      {/* --- ТРЕБУЮТ ПОДТВЕРЖДЕНИЯ (Скрывается, если пусто) --- */}
+      {awaitingConfirmation.length > 0 && (
+        <section className={styles.section}>
+          <h3 className={styles.sectionTitle}>Требуют подтверждения</h3>
+          <div className={styles.cardsGrid}>
+            {awaitingConfirmation.map((app) => {
               const meetingTypeStr = app.meeting_type
                 ? MEETING_TYPE_LABELS[app.meeting_type] || app.meeting_type
                 : 'Не указан';
@@ -210,16 +282,44 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                   type="confirmation"
                   status={app.status}
                   onConfirm={() => handleConfirm(app)}
+                  onCancel={() =>
+                    setCancelModal({ visible: true, type: 'application', id: app.id })
+                  }
                 />
               );
-            })
-          ) : (
-            <p className={styles.emptyText}>Нет заявок, требующих подтверждения</p>
-          )}
-        </div>
-      </section>
+            })}
+          </div>
+        </section>
+      )}
 
-      {/* Модалка комментария (заглушка) */}
+      {/* --- ПОСЛЕДНИЕ СЕССИИ (Скрывается, если пусто) --- */}
+      {past.length > 0 && (
+        <section className={styles.section}>
+          <h3 className={styles.sectionTitle}>Последние сессии</h3>
+          <div className={styles.cardsGrid}>
+            {past.map((app, index) => {
+              let mockRating: 'good' | 'bad' | null = null;
+              if (index % 3 === 1) mockRating = 'good';
+              if (index % 3 === 2) mockRating = 'bad';
+
+              return (
+                <AppointmentCard
+                  key={app.id}
+                  date={dayjs(app.scheduled_time).format('D MMMM, HH:mm')}
+                  doctorName={getTherapistName(app.psychologist_id)}
+                  address={app.venue || (app.type === 'Online' ? 'Онлайн сессия' : 'Офлайн')}
+                  type="past"
+                  rating={mockRating}
+                  status={app.status}
+                  onComment={() => setCommentModalId(app.id)}
+                />
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* --- МОДАЛЬНОЕ ОКНО КОММЕНТАРИЯ (Заглушка) --- */}
       <Modal
         title="Комментарий психолога"
         open={!!commentModalId}
@@ -228,9 +328,32 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
       >
         <p>
           {commentModalId
-            ? 'Комментарий к сессии будет доступен после обновления системы комментариев.'
+            ? 'Комментарий к сессии будет доступен после обновления системы.'
             : 'Комментарий отсутствует.'}
         </p>
+      </Modal>
+
+      {/* --- МОДАЛЬНОЕ ОКНО ОТМЕНЫ ЗАПИСИ --- */}
+      <Modal
+        title="Отмена"
+        open={cancelModal.visible}
+        onCancel={() => {
+          setCancelModal({ visible: false, type: 'appointment', id: '' });
+          setCancelReason('');
+        }}
+        onOk={handleCancelSubmit}
+        confirmLoading={cancelMutation.isPending}
+        okText="Подтвердить отмену"
+        cancelText="Назад"
+        okButtonProps={{ danger: true }}
+      >
+        <p style={{ marginBottom: 12 }}>Пожалуйста, укажите причину отмены:</p>
+        <Input.TextArea
+          rows={4}
+          value={cancelReason}
+          onChange={(e) => setCancelReason(e.target.value)}
+          placeholder="Например: Изменились планы, заболел(а)"
+        />
       </Modal>
     </>
   );
