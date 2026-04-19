@@ -79,7 +79,7 @@
 }
 
 .closeButton:hover {
-  color: #333;
+  color: var(--color-border-neutral-strong);
 }
 
 .form {
@@ -110,19 +110,19 @@
 }
 
 .input:hover {
-  border-color: #40a9ff;
+  border-color: var(--color-border-brand-strong);
 }
 
 .input:focus {
   outline: none;
-  border-color: #1b50f5;
+  border-color: var(--color-border-brand-strong);
   box-shadow: 0 0 0 2px var(--color-fill-neutral-primary);
 }
 
 .hintText {
   opacity: 0.5;
   font-size: 12px;
-  color: #666;
+  color: var(--color-label-neutral-secondary);
 }
 
 .errorText {
@@ -306,13 +306,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #666;
+  color: var(--color-label-neutral-secondary);
   cursor: pointer;
   transition: color 0.3s;
 }
 
 .showPassButton:hover {
-  color: #333;
+  color: var(--color-label-neutral-primary);
 }
 
 .required::after {

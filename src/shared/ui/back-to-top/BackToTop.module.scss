@@ -13,7 +13,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  box-shadow: 0 6px 18px rgba(33, 33, 33, 0.08);
+  box-shadow: 0 6px 18px var(--color-fill-neutral-primary);
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
@@ -34,7 +34,7 @@
 
 .button:hover {
   transform: translateY(0) scale(1.06);
-  box-shadow: 0 12px 28px rgba(33, 33, 33, 0.16);
+  box-shadow: 0 12px 28px var(--color-fill-neutral-primary);
   background: var(--color-interactive-neutral-primary);
 }
 
