@@ -15,6 +15,63 @@
   font-weight: 500;
 }
 
+/* --- Блок данных пользователя --- */
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.userInfo__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userInfo__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--color-label-neutral-secondary);
+  margin-bottom: 4px;
+}
+
+.readonlyInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-border-neutral-base);
+  border-radius: 8px;
+  font-size: 16px;
+  background: #f5f5f5;
+  color: var(--color-label-neutral-secondary);
+  cursor: not-allowed;
+}
+
+.selectInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #fff;
+  color: var(--color-label-neutral-primary);
+  cursor: pointer;
+  appearance: auto;
+}
+
+/* --- Поле с textarea --- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- Формат встречи --- */
 .format__btns {
   display: flex;
   justify-content: space-between;
@@ -38,6 +95,33 @@
   color: var(--color-label-neutral-inverted-primary);
 }
 
+/* --- Место консультации --- */
+.location {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.locationSelect {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #fff;
+  color: var(--color-label-neutral-primary);
+  cursor: pointer;
+  appearance: auto;
+  margin-top: 24px;
+}
+
+.locationSelect:focus {
+  outline: none;
+  border-color: var(--color-interactive-brand-primary);
+  box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.15);
+}
+
+/* --- Textarea --- */
 .textarea {
   width: 100%;
   height: 100px;
@@ -47,97 +131,10 @@
   font-size: 16px;
   resize: none;
   background: #fff;
-  margin-top: 24px
-}
-
-
-.location__btns {
   margin-top: 24px;
 }
 
-.location__element {
-  display: flex;
-  gap: 8px;
-}
-
-.mainInfo {
-  display: flex;
-  color: var(--color-label-neutral-primary);
-  gap: 36px;
-  margin-top: 24px;
-}
-
-.imgWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.photo{
-  width: 244px;
-  height: 267px;
-  object-fit: cover;
-  background-repeat: no-repeat;
-  border-radius: 16px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-}
-
-.name {
-  font-size: 2.4rem;
-  font-weight: 500;
-}
-
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.infoBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.line {
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-border-neutral-base);
-  margin: 24px 0;
-}
-
-.qual {
-  font-size: 2rem
-}
-
-.exp {
-  font-size: 2rem;
-  color: var(--color-label-neutral-secondary);
-}
-
-.office {
-  font-size: 1.6rem;
-  color: var(--color-label-neutral-secondary);
-}
-
-.consultAreas {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-  width: 100%;
-  max-width: 467px;
-  flex-wrap: wrap;
-}
-
-.consultArea {
-  color: var(--color-label-neutral-secondary);
-  border: var(--color-border-neutral-base) 1px solid;
-  padding: 4px 16px;
-  border-radius: 16px;
-}
-
+/* --- Кнопка "Далее" --- */
 .subButton {
   background-color: var(--color-interactive-brand-primary);
   color: var(--color-label-neutral-inverted-primary);
@@ -150,58 +147,16 @@
   cursor: pointer;
 }
 
-/* Обёртка галереи для позиционирования кнопки */
-.therapist .galleryWrapper {
-  position: relative;
+.subButton:hover {
+  opacity: 0.9;
 }
 
-/* Кнопка навигации галереи */
-.therapist .galleryNextBtn {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  color: var(--color-label-neutral-inverted-primary);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  z-index: 2;
+.subButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.therapist .galleryNextBtn:hover {
-  background: var(--primary-hover, #0056b3);
-}
-
-.therapist .galleryNextBtn:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
-/* Адаптив: на мобильных кнопка снизу */
-@media (max-width: 768px) {
-  .therapist .galleryNextBtn {
-    position: static;
-    transform: none;
-    margin: 16px auto 0;
-    display: flex;
-  }
-}
-
-/* Пустое состояние */
-.therapist .empty {
-  text-align: center;
-  color: var(--text-secondary, #666);
-  padding: 24px;
-  font-style: italic;
-}
-
+/* --- Результаты --- */
 .backButton {
   background: none;
   border: none;
@@ -211,7 +166,7 @@
 
 .backArrow {
   display: flex;
-  gap: 7.5px
+  gap: 7.5px;
 }
 
 .backArrow__text {
@@ -235,7 +190,7 @@
 }
 
 .results__textGray {
-  color: var(--color-label-neutral-secondary)
+  color: var(--color-label-neutral-secondary);
 }
 
 .results__textarea {
@@ -255,23 +210,11 @@
   font-size: 2rem;
 }
 
-
-
-/* Улучшения для чекбоксов */
-/* .location__element {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 8px 0;
+.submitBtn:hover {
+  opacity: 0.9;
 }
 
-.location__element input[type="checkbox"] {
-  cursor: pointer;
-  width: 18px;
-  height: 18px;
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
-
-.location__element label {
-  cursor: pointer;
-  user-select: none;
-} */

@@ -1,0 +1,85 @@
+.wrapper {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.back {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  margin-bottom: 16px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 24px;
+}
+
+/* Статусы */
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statusDotWarning {
+  background-color: var(--color-label-warning-primary, #f59e0b);
+}
+.statusDotSuccess {
+  background-color: var(--color-label-success-primary, #10b981);
+}
+.statusDotDanger {
+  background-color: var(--color-label-danger-primary, #ef4444);
+}
+.statusDotNeutral {
+  background-color: var(--color-label-neutral-secondary, #6b7280);
+}
+
+.statusText {
+  font-size: 14px;
+  color: var(--color-label-neutral-secondary, #6b7280);
+  font-weight: 500;
+}
+
+/* Блок причины отмены */
+.reasonBlockCancelled {
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background-color: var(--color-bg-warning-light, #fffbeb);
+  border-left: 4px solid var(--color-label-warning-primary, #f59e0b);
+  border-radius: 4px;
+
+  .reasonLabel {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-label-warning-primary, #f59e0b);
+    margin-right: 8px;
+  }
+
+  .reasonText {
+    font-size: 14px;
+    color: var(--color-label-neutral-primary, #111827);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}

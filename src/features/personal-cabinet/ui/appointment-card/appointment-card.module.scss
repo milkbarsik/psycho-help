@@ -52,8 +52,17 @@
   font-size: 2rem;
   flex-shrink: 0;
 }
+.iconWarning {
+  color: var(--color-label-warning-primary);
+  font-size: 2rem;
+  flex-shrink: 0;
+}
 .footer {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 .status {
   display: flex;
@@ -69,14 +78,31 @@
   flex-shrink: 0;
   margin-bottom: 0.2rem;
 }
+
+/* Новая обертка для кнопок, чтобы они стояли рядом */
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 1023px) {
-  .rateButton {
+  .actions {
     width: 100%;
+    flex-direction: column;
+    margin-left: 0;
   }
-  .commentLink {
+  .rateButton,
+  .commentLink,
+  .confirmButton,
+  .cancelButton {
     width: 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
+
 .rateButton {
   padding: 1rem 7.5rem;
   background-color: var(--color-interactive-brand-primary);
@@ -101,6 +127,33 @@
     background-color: var(--color-interactive-brand-hover-secondary);
   }
 }
+
+.confirmButton {
+  padding: 1rem 3rem;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-label-neutral-inverted-primary);
+  border: none;
+  border-radius: 1.6rem;
+  font: var(--font-text-medium);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-interactive-brand-hover);
+  }
+}
+
+.cancelButton {
+  padding: 1rem 3rem;
+  background-color: transparent;
+  color: var(--color-label-danger-primary);
+  border: 1px solid var(--color-label-danger-primary);
+  border-radius: 1.6rem;
+  font: var(--font-text-medium);
+  cursor: pointer;
+  &:hover {
+    background-color: #ffeef0;
+  }
+}
+
 .dotSuccess {
   background-color: var(--color-label-success-primary);
 }
