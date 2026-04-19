@@ -3,14 +3,11 @@
 :root {
     --border-radius-card: 28px;
     --card-padding: 24px;
-    --card-bg-gray: rgba(99, 101, 107, 0.04);
     --title-font-size: 3.2rem;
     --title-line-height: 3.6rem;
-    --title-color: #19191B;
     --title-font-family: 'Geist', sans-serif;
     --text-font-family: 'Roboto', sans-serif;
     --title-font-weight: 500;
-    --text-color-gray: rgba(49, 50, 50, 0.52);
     --content-gap: 12px;
 }
 
@@ -32,7 +29,7 @@
 .features__grid_1 {
     border-radius: var(--border-radius-card);
     grid-row: span 2 / span 2;
-    background-color: #407BFE;
+    background-color: var(--color-background-brand-primary);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -120,7 +117,7 @@
 
 .features__grid_2 {
     border-radius: var(--border-radius-card);
-    background-color: var(--card-bg-gray);
+    background-color: var(--color-fill-neutral-quaternary);
     display: flex;
     flex-direction: column;
     gap: var(--content-gap);
@@ -132,7 +129,7 @@
 .features__4_title {
     font-size: 3.2rem;
     line-height: 3.6rem;
-    color: var(--title-color);
+    color: var(--color-label-neutral-primary);
     font-family: var(--title-font-family);
     font-weight: var(--title-font-weight);
 }
@@ -148,7 +145,7 @@
 
 .features__grid_3 {
     border-radius: var(--border-radius-card);
-    background-color: var(--card-bg-gray);
+    background-color: var(--color-fill-neutral-quaternary);
     display: flex;
     flex-direction: column;
     gap: var(--content-gap);
@@ -157,7 +154,7 @@
 
 .features__grid_4 {
     border-radius: var(--border-radius-card);
-    background-color: var(--card-bg-gray);
+    background-color: var(--color-fill-neutral-quaternary);
     grid-column: span 2 / span 2;
     grid-column-start: 2;
     grid-row-start: 2;

@@ -34,7 +34,7 @@
 .calls__item {
     padding: 24px;
     border-radius: 24px;
-    border: 2px solid #CACBCE;
+    border: 2px solid var(--color-border-neutral-base);
     display: flex;
     flex-direction: column;
     gap: 12px;
