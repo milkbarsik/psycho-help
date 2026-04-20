@@ -1,16 +1,3 @@
-export type ApplicationStatus =
-  | 'new'
-  | 'in_progress'
-  | 'awaiting_user_confirmation'
-  | 'completed'
-  | 'rejected'
-  | 'cancelled'
-  | 'expired';
-
-export type MeetingType = 'offline' | 'online';
-
-export type UniversityStatus = 'студент' | 'аспирант' | 'преподаватель' | 'сотрудник';
-
 export interface Application {
   id: string;
   user_id: string | null;
@@ -38,18 +25,36 @@ export interface Application {
   expired_at: string | null;
   reject_reason: string | null;
   cancel_reason: string | null;
-  cancel_initiator: 'user' | 'psychologist' | 'manager' | 'system' | null;
+  cancel_initiator: CancelInitiator | null;
   internal_comment: string | null;
   appointment_id: string | null;
   version: number;
 }
 
+export type ApplicationStatus =
+  | 'new'
+  | 'in_progress'
+  | 'awaiting_user_confirmation'
+  | 'completed'
+  | 'rejected'
+  | 'cancelled'
+  | 'expired';
+
+export type MeetingType = 'offline' | 'online';
+export type UniversityStatus = string; // А почему убрали?
+export type CancelInitiator = 'user' | 'psychologist' | 'manager' | 'system';
+
+export interface CancelRequest {
+  cancel_reason: string;
+  cancel_initiator: CancelInitiator;
+}
+
 export interface ApplicationCreateRequest {
-  first_name: string,
-  last_name: string,
-  email?: string,
-  phone?: string,
-  problem_description: string,
-  preferred_campus?: string,
-  university_status: "студент" | "аспирант" | "преподаватель" | "сотрудник"
+  first_name: string;
+  last_name: string;
+  email?: string;
+  phone?: string;
+  problem_description: string;
+  preferred_campus?: string;
+  university_status: UniversityStatus;
 }

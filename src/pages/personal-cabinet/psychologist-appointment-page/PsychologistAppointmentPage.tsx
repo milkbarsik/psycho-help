@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Descriptions, Tag, Input, message, Empty } from 'antd';
+import { Button, Descriptions, Input, message, Empty } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import {
@@ -9,20 +9,12 @@ import {
   appointmentQueryKey,
   completeAppointment,
 } from '@/entities/appointment/api';
-import type { AppointmentStatus } from '@/entities/appointment/types';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import Loader from '@/shared/ui/loader/loader';
 import { APPOINTMENT_STATUS_TAG } from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointmentsConstants';
-import PsychologistAppointmentsModal from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointmentsModal';
+import PsychologistAppointmentsModal from '@/features/personal-cabinet/ui/PsychologistAppointmentsModal';
 import styles from './PsychologistAppointmentPage.module.scss';
-
-const STATUS_TAG: Record<AppointmentStatus, { text: string; className: string }> = {
-  Approved: { text: 'Ожидается (не должно показываться)', className: styles.tagRed },
-  Accepted: { text: 'Ожидается', className: styles.tagGreen },
-  Done: { text: 'Завершено', className: styles.tagGray },
-  Cancelled: { text: 'Отменено', className: styles.tagRed },
-};
 
 const TYPE_LABELS: Record<string, string> = {
   Online: 'Онлайн',
@@ -51,7 +43,6 @@ const PsychologistAppointmentPage = () => {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [commentInitializedForId, setCommentInitializedForId] = useState<string | null>(null);
 
-  // Sync comment from loaded appointment (state-during-render)
   if (appointment?.comment && appointment.id !== commentInitializedForId) {
     setCommentInitializedForId(appointment.id);
     setComment(appointment.comment);
@@ -61,6 +52,7 @@ const PsychologistAppointmentPage = () => {
     mutationFn: () => completeAppointment(id!, comment),
     onSuccess: () => {
       message.success('Запись завершена');
+      setComment('');
       queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.list] });
       queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.byId, id] });
       navigate(-1);
@@ -74,8 +66,12 @@ const PsychologistAppointmentPage = () => {
   if (isLoading) return <Loader />;
   if (!appointment) return <Empty description="Запись не найдена" />;
 
-  const statusTag = STATUS_TAG[appointment.status];
-  const isActive = appointment.status === 'Approved' || appointment.status === 'Accepted';
+  // const statusTag = STATUS_TAG[appointment.status];
+  const isActive = appointment.status === 'awaiting';
+
+  // TODO: Оно наверное пока что упадёт, надо будет поправить
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const serverCancelReason = (appointment as any).cancel_reason;
 
   return (
     <article className={styles.wrapper}>
@@ -90,6 +86,14 @@ const PsychologistAppointmentPage = () => {
 
       <h2 className={styles.title}>Запись на консультацию</h2>
 
+      {/* Причина отмены (если запись уже отменена) */}
+      {appointment.status === 'cancelled' && serverCancelReason && (
+        <div className={styles.reasonBlockCancelled}>
+          <span className={styles.reasonLabel}>Причина отмены:</span>
+          <span className={styles.reasonText}>{serverCancelReason}</span>
+        </div>
+      )}
+
       <Descriptions column={1} bordered size="middle">
         <Descriptions.Item label="Дата и время">
           {formatDateTime(appointment.scheduled_time)}
@@ -99,8 +103,12 @@ const PsychologistAppointmentPage = () => {
         </Descriptions.Item>
         <Descriptions.Item label="Место">{appointment.venue || '—'}</Descriptions.Item>
         <Descriptions.Item label="Причина">{appointment.reason || '—'}</Descriptions.Item>
+        <Descriptions.Item label="Причина записи">{appointment.reason || '—'}</Descriptions.Item>
         <Descriptions.Item label="Статус">
-          <Tag className={statusTag.className}>{statusTag.text}</Tag>
+          <div className={styles.statusRow}>
+            {/* <span className={`${styles.statusDot} ${getStatusColorClass(appointment.status)}`} />
+            <span className={styles.statusText}>{STATUS_LABELS[appointment.status]}</span> */}
+          </div>
         </Descriptions.Item>
 
         <Descriptions.Item label="Заключение">
@@ -126,17 +134,19 @@ const PsychologistAppointmentPage = () => {
             size="large"
             onClick={() => completeMutation.mutate()}
             loading={completeMutation.isPending}
+            disabled={comment.trim().length === 0} // Желательно иметь заполненное заключение для завершения
           >
-            Сохранить
+            Завершить сессию
           </Button>
           <Button danger size="large" onClick={() => setCancelModalOpen(true)}>
-            Отменить
+            Отменить запись
           </Button>
         </div>
       )}
 
       <PsychologistAppointmentsModal
-        appointmentId={cancelModalOpen ? id! : null}
+        type="appointment"
+        entityId={cancelModalOpen ? id! : null}
         onClose={() => setCancelModalOpen(false)}
         onSuccess={() => {
           message.success('Запись отменена');

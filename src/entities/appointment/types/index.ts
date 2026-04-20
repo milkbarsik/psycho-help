@@ -12,5 +12,5 @@ export interface Appointment {
   comment: string | null;
 }
 
-export type AppointmentStatus = 'Approved' | 'Accepted' | 'Cancelled' | 'Done';
+export type AppointmentStatus = 'awaiting' | 'cancelled' | 'done';
 export type AppointmentType = 'Offline' | 'Online';

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Calendar, Select, message, Empty } from 'antd';
+import { Calendar, Select, message, Empty, Input } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import clsx from 'clsx';
@@ -10,23 +10,13 @@ import {
   applicationQueryKey,
   offerConsultation,
 } from '@/entities/application/api';
-import type { ApplicationStatus, MeetingType } from '@/entities/application/types';
+import type { MeetingType } from '@/entities/application/types';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import Loader from '@/shared/ui/loader/loader';
 import { APPLICATION_STATUS_TAG } from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointmentsConstants';
-import PsychologistApplicationsModal from '@/pages/personal-cabinet/ui/appointments/PsychologistApplicationsModal';
+import PsychologistAppointmentsModal from '@/features/personal-cabinet/ui/PsychologistAppointmentsModal';
 import styles from './PsychologistApplicationPage.module.scss';
-
-const STATUS_LABELS: Record<ApplicationStatus, string> = {
-  new: 'Новая',
-  in_progress: 'В работе',
-  awaiting_user_confirmation: 'Ожидает подтверждения',
-  completed: 'Завершено',
-  rejected: 'Отклонено',
-  cancelled: 'Отменено',
-  expired: 'Истекло',
-};
 
 const MEETING_TYPE_OPTIONS = [
   { value: 'online' as const, label: 'Онлайн' },
@@ -59,12 +49,19 @@ const PsychologistApplicationPage = () => {
     enabled: isPsychologist && !!id,
   });
 
+  // Локальные стейты для формы назначения времени
   const [userMeetingType, setUserMeetingType] = useState<MeetingType | null>(null);
   const [userDate, setUserDate] = useState<dayjs.Dayjs | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>('');
+
+  // Дополнительные поля для формата встречи
+  const [locationAddress, setLocationAddress] = useState<string>('');
+  const [meetingUrl, setMeetingUrl] = useState<string>('');
+
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
   const [conclusion, setConclusion] = useState('');
 
+  // Вычисляемые значения: отдан приоритет пользовательскому вводу
   const meetingType = userMeetingType ?? application?.meeting_type ?? null;
   const selectedDate =
     userDate ?? (application?.scheduled_at ? dayjs(application.scheduled_at) : null);
@@ -81,6 +78,8 @@ const PsychologistApplicationPage = () => {
         psychologist_id: user!.id,
         meeting_type: meetingType!,
         scheduled_at: selectedDateTime!.toISOString(),
+        location_address: meetingType === 'offline' ? locationAddress.trim() : undefined,
+        meeting_url: meetingType === 'online' ? meetingUrl.trim() : undefined,
       }),
     onSuccess: () => {
       message.success('Консультация предложена, ожидаем подтверждения пользователя');
@@ -98,7 +97,13 @@ const PsychologistApplicationPage = () => {
   if (!application) return <Empty description="Заявка не найдена" />;
 
   const isInProgress = application.status === 'in_progress';
-  const canSave = isInProgress && meetingType && selectedDateTime;
+
+  // Проверка обязательных полей для записи
+  const canSave =
+    isInProgress &&
+    meetingType &&
+    selectedDateTime &&
+    (meetingType === 'offline' ? locationAddress.trim().length > 0 : meetingUrl.trim().length > 0);
 
   const disabledDates = (current: dayjs.Dayjs) => {
     return current && current < dayjs().startOf('day');
@@ -114,10 +119,10 @@ const PsychologistApplicationPage = () => {
           Главная
         </span>
         <span className={styles.crumbSeparator}>/</span>
-        <span className={styles.crumb}>Психологи</span>
+        <span className={styles.crumb}>Заявки</span>
         <span className={styles.crumbSeparator}>/</span>
         <span className={styles.crumbActive}>
-          {user?.last_name} {user?.first_name}
+          {application.last_name} {application.first_name}
         </span>
       </nav>
 
@@ -133,10 +138,30 @@ const PsychologistApplicationPage = () => {
 
           {/* Статус заявки */}
           <div className={styles.statusRow}>
-            <span className={styles.statusDot} />
-            <span className={styles.statusText}>{STATUS_LABELS[application.status]}</span>
-            <span className={clsx(styles.statusTag, statusUI.className)}>{statusUI.text}</span>
+            {/* <span className={`${styles.statusDot} ${getStatusColorClass(application.status)}`} /> */}
+            <span className={styles.statusText}>
+              {APPLICATION_STATUS_TAG[application.status].text}
+            </span>
+            <span className={clsx(styles.statusTag, styles[statusUI.className])}>
+              {statusUI.text}
+            </span>
           </div>
+
+          {/* Причина отклонения */}
+          {application.status === 'rejected' && application.reject_reason && (
+            <div className={styles.reasonBlock}>
+              <span className={styles.reasonLabel}>Причина отказа:</span>
+              <span className={styles.reasonText}>{application.reject_reason}</span>
+            </div>
+          )}
+
+          {/* Причина отмены пользователем */}
+          {application.status === 'cancelled' && application.cancel_reason && (
+            <div className={styles.reasonBlockCancelled}>
+              <span className={styles.reasonLabel}>Причина отмены:</span>
+              <span className={styles.reasonText}>{application.cancel_reason}</span>
+            </div>
+          )}
 
           <hr className={styles.divider} />
 
@@ -176,12 +201,38 @@ const PsychologistApplicationPage = () => {
                   <label className={styles.fieldLabel}>Формат</label>
                   <Select
                     value={meetingType}
-                    onChange={setUserMeetingType}
+                    onChange={(val) => {
+                      setUserMeetingType(val);
+                      setLocationAddress('');
+                      setMeetingUrl('');
+                    }}
                     options={MEETING_TYPE_OPTIONS}
                     placeholder="Выберите формат"
                     className={styles.fieldSelect}
                   />
                 </div>
+
+                {meetingType === 'offline' && (
+                  <div className={`${styles.formField} ${styles.formFieldGrow}`}>
+                    <label className={styles.fieldLabel}>Адрес проведения</label>
+                    <Input
+                      placeholder="Укажите кабинет / здание"
+                      value={locationAddress}
+                      onChange={(e) => setLocationAddress(e.target.value)}
+                    />
+                  </div>
+                )}
+
+                {meetingType === 'online' && (
+                  <div className={`${styles.formField} ${styles.formFieldGrow}`}>
+                    <label className={styles.fieldLabel}>Ссылка на встречу</label>
+                    <Input
+                      placeholder="Zoom, Google Meet или другая платформа"
+                      value={meetingUrl}
+                      onChange={(e) => setMeetingUrl(e.target.value)}
+                    />
+                  </div>
+                )}
               </div>
             </section>
           )}
@@ -207,7 +258,7 @@ const PsychologistApplicationPage = () => {
                 type="button"
                 onClick={() => setRejectModalOpen(true)}
               >
-                Отменить запись
+                Отклонить заявку
               </button>
               <button
                 className={styles.btnPrimary}
@@ -215,7 +266,7 @@ const PsychologistApplicationPage = () => {
                 onClick={() => offerMutation.mutate()}
                 disabled={!canSave}
               >
-                {offerMutation.isPending ? 'Сохранение...' : 'Сохранить данные'}
+                {offerMutation.isPending ? 'Сохранение...' : 'Предложить время'}
               </button>
             </div>
           )}
@@ -289,15 +340,16 @@ const PsychologistApplicationPage = () => {
                 onClick={() => offerMutation.mutate()}
                 disabled={!canSave}
               >
-                {offerMutation.isPending ? 'Запись...' : 'Записать'}
+                {offerMutation.isPending ? 'Запись...' : 'Предложить запись'}
               </button>
             </div>
           </aside>
         )}
       </div>
 
-      <PsychologistApplicationsModal
-        applicationId={rejectModalOpen ? id! : null}
+      <PsychologistAppointmentsModal
+        type="application"
+        entityId={rejectModalOpen ? id! : null}
         onClose={() => setRejectModalOpen(false)}
         onSuccess={() => {
           message.success('Заявка отклонена');

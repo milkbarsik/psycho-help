@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { $api } from '@/shared/api/http.ts';
+import { $api } from '@/shared/api/http';
 import type { Appointment } from '@/entities/appointment/types';
 
 export const appointmentQueryKey = {
@@ -23,10 +23,7 @@ export const appointmentQueries = {
 };
 
 export const cancelAppointment = async (id: string, cancelReason: string): Promise<void> => {
-  const { data } = await $api.put(`/appointments/${id}/cancel`, {
-    cancel_reason: cancelReason,
-  });
-  return data;
+  await $api.put(`/appointments/${id}/cancel`, { cancel_reason: cancelReason });
 };
 
 export const completeAppointment = async (id: string, comment: string): Promise<Appointment> => {

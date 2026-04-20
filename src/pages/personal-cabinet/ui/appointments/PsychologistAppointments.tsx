@@ -24,7 +24,7 @@ import {
   APPLICATION_STATUS_TAG,
   APPOINTMENT_STATUS_TAG,
 } from './PsychologistAppointmentsConstants';
-import PsychologistApplicationsModal from './PsychologistApplicationsModal';
+import PsychologistAppointmentsModal from '../../../../features/personal-cabinet/ui/PsychologistAppointmentsModal';
 import styles from './PsychologistAppointments.module.scss';
 
 dayjs.extend(utc);
@@ -62,10 +62,9 @@ const APPOINTMENT_FORMAT_OPTIONS = [
 
 const APPOINTMENT_STATUS_OPTIONS = [
   { value: 'all', label: 'Все статусы' },
-  { value: 'Approved', label: 'Ожидается (не должно показываться)' }, // TODO: удалить после правки бэка
-  { value: 'Accepted', label: 'Ожидается' },
-  { value: 'Done', label: 'Завершено' },
-  { value: 'Cancelled', label: 'Отменено' },
+  { value: 'awaiting', label: 'Ожидается' },
+  { value: 'done', label: 'Завершено' },
+  { value: 'cancelled', label: 'Отменено' },
 ];
 
 /* ── Helpers ── */
@@ -139,7 +138,7 @@ const PsychologistAppointments = () => {
     sortDirection !== 'desc' ||
     dateRange !== null;
 
-  /* ── Applications data (Заявки) ── */
+  /* Applications (Заявки) */
   const { data: allApplications = [], isLoading: isLoadingApplications } = useQuery(
     applicationQueries.list(),
   );
@@ -209,7 +208,7 @@ const PsychologistAppointments = () => {
     sortDirection,
   ]);
 
-  /* ── Appointments data (Записи) ── */
+  /* Appointments (Записи) */
   const { data: allAppointments = [], isLoading: isLoadingAppointments } = useQuery(
     appointmentQueries.list(),
   );
@@ -316,7 +315,9 @@ const PsychologistAppointments = () => {
           </span>
         </div>
         <div className={styles.actionsCol}>
-          <span className={clsx(styles.statusTag, statusUI.className)}>{statusUI.text}</span>
+          <span className={clsx(styles.statusTag, styles[statusUI.className])}>
+            {statusUI.text}
+          </span>
           {application.status === 'new' && (
             <button
               className={styles.btnConfirm}
@@ -358,7 +359,9 @@ const PsychologistAppointments = () => {
           <span className={styles.venue}>{getVenueDisplay(appointment)}</span>
         </div>
         <div className={styles.actionsCol}>
-          <span className={clsx(styles.statusTag, statusUI.className)}>{statusUI.text}</span>
+          <span className={clsx(styles.statusTag, styles[statusUI.className])}>
+            {statusUI.text}
+          </span>
           <button
             className={styles.btnPrimary}
             onClick={() => navigate(`/cabinet/appointment/${appointment.id}`)}
@@ -388,7 +391,7 @@ const PsychologistAppointments = () => {
         </button>
       </div>
 
-      {/* ── Filters Container ── */}
+      {/* Фильтры */}
       <div className={styles.filtersContainer}>
         <div className={styles.filtersRow} role="search">
           <AutoComplete
@@ -443,6 +446,7 @@ const PsychologistAppointments = () => {
           />
         </div>
         <div className={styles.sortRow}>
+          {/* Сортировка */}
           <button
             className={styles.sortToggleBtn}
             onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
@@ -459,11 +463,10 @@ const PsychologistAppointments = () => {
         </div>
       </div>
 
-      {/* ── List ── */}
+      {/* Список */}
       <div className={styles.list} role="list">
         {paginated.length === 0 && (
           <Empty description={activeTab === 'applications' ? 'Заявок нет' : 'Записей нет'} />
-          // Может ракрасить получше? Но это нужно дизайнеров просить...
         )}
 
         {activeTab === 'applications' &&
@@ -499,8 +502,9 @@ const PsychologistAppointments = () => {
         />
       )}
 
-      <PsychologistApplicationsModal
-        applicationId={rejectingApplicationId}
+      <PsychologistAppointmentsModal
+        type="application"
+        entityId={rejectingApplicationId}
         onClose={() => setRejectingApplicationId(null)}
       />
     </section>

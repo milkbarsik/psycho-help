@@ -12,7 +12,7 @@
   font-size: 12px;
 }
 
-.tagBlue {
+.tagNew {
   background-color: var(--color-label-info-light, #dbeafe);
   color: var(--color-label-info-primary, #3b82f6);
   padding: 4px 8px;
@@ -20,7 +20,7 @@
   font-size: 12px;
 }
 
-.tagOrange {
+.tagInProgress {
   background-color: var(--color-label-warning-light, #fef3c7);
   color: var(--color-label-warning-primary, #f59e0b);
   padding: 4px 8px;
@@ -36,7 +36,7 @@
   font-size: 12px;
 }
 
-.tagRed {
+.tagCancelled {
   background-color: var(--color-label-danger-light, #fee2e2);
   color: var(--color-label-danger-primary, #ef4444);
   padding: 4px 8px;
@@ -109,20 +109,66 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .statusDot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--color-label-warning-primary, #f59e0b);
   flex-shrink: 0;
+}
+
+/* Цвета статусов */
+.statusDotNew {
+  background-color: var(--color-label-info-primary, #3b82f6);
+}
+.statusDotWarning {
+  background-color: var(--color-label-warning-primary, #f59e0b);
+}
+.statusDotSuccess {
+  background-color: var(--color-label-success-primary, #10b981);
+}
+.statusDotDanger {
+  background-color: var(--color-label-danger-primary, #ef4444);
 }
 
 .statusText {
   font-size: 14px;
   color: var(--color-label-neutral-secondary, #6b7280);
+  font-weight: 500;
+}
+
+.reasonBlock {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background-color: var(--color-bg-danger-light, #fef2f2);
+  border-left: 4px solid var(--color-label-danger-primary, #ef4444);
+  border-radius: 4px;
+}
+
+.reasonBlockCancelled {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background-color: var(--color-bg-warning-light, #fffbeb);
+  border-left: 4px solid var(--color-label-warning-primary, #f59e0b);
+  border-radius: 4px;
+
+  .reasonLabel {
+    color: var(--color-label-warning-primary, #f59e0b);
+  }
+}
+
+.reasonLabel {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-label-danger-primary, #ef4444);
+  margin-right: 8px;
+}
+
+.reasonText {
+  font-size: 14px;
+  color: var(--color-label-neutral-primary, #111827);
 }
 
 .divider {
@@ -183,6 +229,7 @@
   display: flex;
   gap: 16px;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .formField {
@@ -190,6 +237,10 @@
   flex-direction: column;
   gap: 6px;
   min-width: 220px;
+}
+
+.formFieldGrow {
+  flex: 1;
 }
 
 .fieldLabel {

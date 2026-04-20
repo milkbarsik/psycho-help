@@ -31,20 +31,11 @@ interface ApplicationsViewState {
   resetFilters: () => void;
 }
 
-const defaultApplicationFilters: TabFilters<ApplicationStatusFilter> = {
+const defaultFilters = {
   currentPage: 1,
-  sortDirection: 'desc',
-  statusFilter: 'all',
-  formatFilter: 'all',
-  searchQuery: '',
-  dateRange: null,
-};
-
-const defaultAppointmentFilters: TabFilters<AppointmentStatusFilter> = {
-  currentPage: 1,
-  sortDirection: 'desc',
-  statusFilter: 'all',
-  formatFilter: 'all',
+  sortDirection: 'desc' as const,
+  statusFilter: 'all' as const,
+  formatFilter: 'all' as const,
   searchQuery: '',
   dateRange: null,
 };
@@ -52,49 +43,27 @@ const defaultAppointmentFilters: TabFilters<AppointmentStatusFilter> = {
 const filtersKey = (tab: ActiveTab): 'applicationFilters' | 'appointmentFilters' =>
   tab === 'applications' ? 'applicationFilters' : 'appointmentFilters';
 
-export const useApplicationsView = create<ApplicationsViewState>((set, get) => ({
-  activeTab: 'applications',
-  applicationFilters: { ...defaultApplicationFilters },
-  appointmentFilters: { ...defaultAppointmentFilters },
-
-  setActiveTab: (tab) => set({ activeTab: tab }),
-
-  setCurrentPage: (page) => {
+export const useApplicationsView = create<ApplicationsViewState>((set, get) => {
+  const updateFilter = (patch: Record<string, unknown>) => {
     const key = filtersKey(get().activeTab);
-    set({ [key]: { ...get()[key], currentPage: page } });
-  },
+    set({ [key]: { ...get()[key], ...patch } });
+  };
 
-  setSortDirection: (dir) => {
-    const key = filtersKey(get().activeTab);
-    set({ [key]: { ...get()[key], sortDirection: dir, currentPage: 1 } });
-  },
+  return {
+    activeTab: 'applications',
+    applicationFilters: { ...defaultFilters },
+    appointmentFilters: { ...defaultFilters },
 
-  setStatusFilter: (filter) => {
-    const key = filtersKey(get().activeTab);
-    set({ [key]: { ...get()[key], statusFilter: filter, currentPage: 1 } });
-  },
+    setActiveTab: (tab) => set({ activeTab: tab }),
+    setCurrentPage: (page) => updateFilter({ currentPage: page }),
+    setSortDirection: (dir) => updateFilter({ sortDirection: dir, currentPage: 1 }),
+    setStatusFilter: (filter) => updateFilter({ statusFilter: filter, currentPage: 1 }),
+    setFormatFilter: (filter) => updateFilter({ formatFilter: filter, currentPage: 1 }),
+    setSearchQuery: (query) => updateFilter({ searchQuery: query, currentPage: 1 }),
+    setDateRange: (range) => updateFilter({ dateRange: range, currentPage: 1 }),
 
-  setFormatFilter: (filter) => {
-    const key = filtersKey(get().activeTab);
-    set({ [key]: { ...get()[key], formatFilter: filter, currentPage: 1 } });
-  },
-
-  setSearchQuery: (query) => {
-    const key = filtersKey(get().activeTab);
-    set({ [key]: { ...get()[key], searchQuery: query, currentPage: 1 } });
-  },
-
-  setDateRange: (range) => {
-    const key = filtersKey(get().activeTab);
-    set({ [key]: { ...get()[key], dateRange: range, currentPage: 1 } });
-  },
-
-  resetFilters: () => {
-    const tab = get().activeTab;
-    if (tab === 'applications') {
-      set({ applicationFilters: { ...defaultApplicationFilters } });
-    } else {
-      set({ appointmentFilters: { ...defaultAppointmentFilters } });
-    }
-  },
-}));
+    resetFilters: () => {
+      set({ [filtersKey(get().activeTab)]: { ...defaultFilters } });
+    },
+  };
+});
