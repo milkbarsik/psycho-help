@@ -4,14 +4,6 @@
   padding: 32px 40px;
 }
 
-.tagGreen {
-  background-color: var(--color-label-success-light, #d1fae5);
-  color: var(--color-label-success-primary, #10b981);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
 .tagNew {
   background-color: var(--color-label-info-light, #dbeafe);
   color: var(--color-label-info-primary, #3b82f6);
@@ -28,7 +20,15 @@
   font-size: 12px;
 }
 
-.tagGray {
+.tagAwaitingUserConfirmation {
+  background-color: var(--color-label-success-light, #d1fae5);
+  color: var(--color-label-success-primary, #10b981);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.tagCompleted {
   background-color: var(--color-label-neutral-light, #f3f4f6);
   color: var(--color-label-neutral-primary, #6b7280);
   padding: 4px 8px;
@@ -44,7 +44,6 @@
   font-size: 12px;
 }
 
-/* Хлебные крошки */
 .breadcrumbs {
   display: flex;
   align-items: center;
@@ -63,7 +62,7 @@
 }
 
 .crumbSeparator {
-  color: var(--color-label-neutral-tetriary, #9ca3af);
+  color: var(--color-label-neutral-tertiary, #9ca3af);
 }
 
 .crumbActive {
@@ -71,7 +70,6 @@
   font-weight: 500;
 }
 
-/* Двухколоночный layout */
 .layout {
   display: flex;
   gap: 32px;
@@ -83,7 +81,6 @@
   min-width: 0;
 }
 
-/* Заголовок страницы */
 .pageTitle {
   font-size: 24px;
   font-weight: 600;
@@ -104,7 +101,6 @@
   margin: 0 0 12px 0;
 }
 
-/* Статус */
 .statusRow {
   display: flex;
   align-items: center;
@@ -119,7 +115,6 @@
   flex-shrink: 0;
 }
 
-/* Цвета статусов */
 .statusDotNew {
   background-color: var(--color-label-info-primary, #3b82f6);
 }
@@ -177,7 +172,6 @@
   margin: 24px 0;
 }
 
-/* Секции данных */
 .dataSection {
   margin-bottom: 8px;
 }
@@ -224,7 +218,6 @@
   line-height: 1.5;
 }
 
-/* Формы */
 .formRow {
   display: flex;
   gap: 16px;
@@ -254,7 +247,6 @@
   min-width: 200px;
 }
 
-/* Textarea */
 .textarea {
   width: 100%;
   min-height: 120px;
@@ -269,7 +261,7 @@
   transition: border-color 0.2s;
 
   &::placeholder {
-    color: var(--color-label-neutral-tetriary, #9ca3af);
+    color: var(--color-label-neutral-tertiary, #9ca3af);
   }
 
   &:focus {
@@ -279,7 +271,6 @@
   }
 }
 
-/* Кнопки */
 .actions {
   display: flex;
   gap: 12px;
@@ -324,7 +315,6 @@
   }
 }
 
-/* Боковая панель */
 .sidebar {
   width: 340px;
   flex-shrink: 0;
@@ -373,7 +363,6 @@
   }
 }
 
-/* Antd Calendar overrides */
 .sidebarCard :global(.ant-picker-calendar) {
   background: transparent;
 }
@@ -382,7 +371,6 @@
   background: transparent;
 }
 
-/* Custom calendar header */
 .calendarHeader {
   display: flex;
   align-items: center;
@@ -436,7 +424,6 @@
   font-size: 14px;
 }
 
-/* Адаптив */
 @media (max-width: 900px) {
   .layout {
     flex-direction: column;

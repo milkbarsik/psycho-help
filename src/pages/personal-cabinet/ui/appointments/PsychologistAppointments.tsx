@@ -24,7 +24,7 @@ import {
   APPLICATION_STATUS_TAG,
   APPOINTMENT_STATUS_TAG,
 } from './PsychologistAppointmentsConstants';
-import PsychologistAppointmentsModal from '../../../../features/personal-cabinet/ui/PsychologistAppointmentsModal';
+import PsychologistAppointmentsModal from '@/features/personal-cabinet/ui/PsychologistAppointmentsModal';
 import styles from './PsychologistAppointments.module.scss';
 
 dayjs.extend(utc);
@@ -144,6 +144,7 @@ const PsychologistAppointments = () => {
   );
 
   const [rejectingApplicationId, setRejectingApplicationId] = useState<string | null>(null);
+  const [cancellingAppointmentId, setCancellingAppointmentId] = useState<string | null>(null);
 
   const acceptMutation = useMutation({
     mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
@@ -327,7 +328,9 @@ const PsychologistAppointments = () => {
               В работу
             </button>
           )}
-          {application.status === 'in_progress' && (
+          {(application.status === 'new' ||
+            application.status === 'in_progress' ||
+            application.status === 'awaiting_user_confirmation') && (
             <button
               className={styles.btnCancel}
               onClick={() => setRejectingApplicationId(application.id)}
@@ -362,6 +365,14 @@ const PsychologistAppointments = () => {
           <span className={clsx(styles.statusTag, styles[statusUI.className])}>
             {statusUI.text}
           </span>
+          {appointment.status === 'awaiting' && (
+            <button
+              className={styles.btnCancel}
+              onClick={() => setCancellingAppointmentId(appointment.id)}
+            >
+              Отменить запись
+            </button>
+          )}
           <button
             className={styles.btnPrimary}
             onClick={() => navigate(`/cabinet/appointment/${appointment.id}`)}
@@ -506,6 +517,12 @@ const PsychologistAppointments = () => {
         type="application"
         entityId={rejectingApplicationId}
         onClose={() => setRejectingApplicationId(null)}
+      />
+
+      <PsychologistAppointmentsModal
+        type="appointment"
+        entityId={cancellingAppointmentId}
+        onClose={() => setCancellingAppointmentId(null)}
       />
     </section>
   );

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Input, Modal } from 'antd';
+import { Input, message, Modal } from 'antd';
+import { AxiosError } from 'axios';
 import { applicationQueryKey, rejectApplication } from '@/entities/application/api';
 import { appointmentQueryKey, cancelAppointment } from '@/entities/appointment/api';
 
@@ -59,6 +60,10 @@ const PsychologistAppointmentsModal = ({
       setReason('');
       onClose();
       onSuccess?.();
+    },
+    onError: (error: AxiosError<{ detail?: string }>) => {
+      const detail = error.response?.data?.detail;
+      message.error(detail || 'Не удалось выполнить операцию');
     },
   });
 

@@ -6,7 +6,6 @@
   max-width: 1000px;
 }
 
-/* Tabs */
 .tabs {
   display: flex;
   gap: 8px;
@@ -40,7 +39,6 @@
   color: #ffffff;
 }
 
-/* Filters */
 .filtersContainer {
   display: flex;
   flex-direction: column;
@@ -83,7 +81,6 @@
   border-radius: 6px;
 }
 
-/* Сортировка */
 .sortToggleBtn {
   align-self: flex-start;
   background: none;
@@ -128,7 +125,6 @@
   }
 }
 
-/* List & Groups */
 .list {
   display: flex;
   flex-direction: column;
@@ -151,7 +147,6 @@
   margin-top: 4px;
 }
 
-/* Rows */
 .appointmentRow {
   display: flex;
   align-items: center;
@@ -197,11 +192,6 @@
   flex-shrink: 0;
 }
 
-/* =========================================
-   UI элементы (Теги и Кнопки из разных макетов)
-   ========================================= */
-
-/* Теги статусов для "Подтвержденных" (Appointments) */
 .statusTag {
   padding: 6px 12px;
   border-radius: 6px;
@@ -211,36 +201,61 @@
 }
 
 .tagNew {
-  background-color: #eff6ff; /* Светло-синий фон */
-  color: #3b82f6; /* Синий текст */
-}
-
-.tagCancelled {
-  background-color: #fef2f2; /* Светло-красный фон */
-  color: #ef4444; /* Красный текст */
-}
-
-.tagGray {
-  background-color: #f3f4f6; /* Светло-серый фон */
-  color: #6b7280; /* Серый текст */
+  background-color: #eff6ff;
+  color: #3b82f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 .tagInProgress {
   background-color: #fff7ed;
   color: #f97316;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
-.tagGreen {
+.tagAwaitingUserConfirmation {
   background-color: #f0fdf4;
   color: #22c55e;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
-.tagDefault {
-  background-color: #ffcccc;
-  color: red;
+.tagAwaiting {
+  background-color: #f0fdf4;
+  color: #22c55e;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
-/* Синяя кнопка (для Appointments: "Открыть запись") */
+.tagCompleted {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.tagDone {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.tagCancelled {
+  background-color: #fef2f2;
+  color: #ef4444;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
 .btnPrimary {
   padding: 8px 16px;
   border-radius: 8px;
@@ -258,7 +273,6 @@
   }
 }
 
-/* Светло-зеленая заливка (для Applications: "Подтвердить") */
 .btnConfirm {
   padding: 8px 16px;
   border-radius: 8px;
@@ -282,7 +296,6 @@
   }
 }
 
-/* Кнопка с зеленой обводкой (для Applications: "Открыть запись") */
 .btnOpenOutline {
   padding: 8px 16px;
   border-radius: 8px;
@@ -300,7 +313,6 @@
   }
 }
 
-/* Pagination */
 .pagination {
   display: flex;
   justify-content: center;

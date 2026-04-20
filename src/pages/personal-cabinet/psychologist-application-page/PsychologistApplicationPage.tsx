@@ -59,7 +59,6 @@ const PsychologistApplicationPage = () => {
   const [meetingUrl, setMeetingUrl] = useState<string>('');
 
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
-  const [conclusion, setConclusion] = useState('');
 
   // Вычисляемые значения: отдан приоритет пользовательскому вводу
   const meetingType = userMeetingType ?? application?.meeting_type ?? null;
@@ -97,6 +96,10 @@ const PsychologistApplicationPage = () => {
   if (!application) return <Empty description="Заявка не найдена" />;
 
   const isInProgress = application.status === 'in_progress';
+  const canReject =
+    application.status === 'new' ||
+    application.status === 'in_progress' ||
+    application.status === 'awaiting_user_confirmation';
 
   // Проверка обязательных полей для записи
   const canSave =
@@ -119,7 +122,9 @@ const PsychologistApplicationPage = () => {
           Главная
         </span>
         <span className={styles.crumbSeparator}>/</span>
-        <span className={styles.crumb}>Заявки</span>
+        <span className={styles.crumb} onClick={() => navigate(-1)}>
+          Заявки
+        </span>
         <span className={styles.crumbSeparator}>/</span>
         <span className={styles.crumbActive}>
           {application.last_name} {application.first_name}
@@ -138,10 +143,6 @@ const PsychologistApplicationPage = () => {
 
           {/* Статус заявки */}
           <div className={styles.statusRow}>
-            {/* <span className={`${styles.statusDot} ${getStatusColorClass(application.status)}`} /> */}
-            <span className={styles.statusText}>
-              {APPLICATION_STATUS_TAG[application.status].text}
-            </span>
             <span className={clsx(styles.statusTag, styles[statusUI.className])}>
               {statusUI.text}
             </span>
@@ -237,37 +238,28 @@ const PsychologistApplicationPage = () => {
             </section>
           )}
 
-          <hr className={styles.divider} />
-
-          {/* Заключение */}
-          <section className={styles.dataSection}>
-            <h3 className={styles.sectionTitle}>Заключение</h3>
-            <textarea
-              className={styles.textarea}
-              placeholder="Введите заключение по заявке..."
-              value={conclusion}
-              onChange={(e) => setConclusion(e.target.value)}
-            />
-          </section>
-
           {/* Кнопки действий */}
-          {isInProgress && (
+          {(isInProgress || canReject) && (
             <div className={styles.actions}>
-              <button
-                className={styles.btnSecondary}
-                type="button"
-                onClick={() => setRejectModalOpen(true)}
-              >
-                Отклонить заявку
-              </button>
-              <button
-                className={styles.btnPrimary}
-                type="button"
-                onClick={() => offerMutation.mutate()}
-                disabled={!canSave}
-              >
-                {offerMutation.isPending ? 'Сохранение...' : 'Предложить время'}
-              </button>
+              {canReject && (
+                <button
+                  className={styles.btnSecondary}
+                  type="button"
+                  onClick={() => setRejectModalOpen(true)}
+                >
+                  Отклонить заявку
+                </button>
+              )}
+              {isInProgress && (
+                <button
+                  className={styles.btnPrimary}
+                  type="button"
+                  onClick={() => offerMutation.mutate()}
+                  disabled={!canSave}
+                >
+                  {offerMutation.isPending ? 'Сохранение...' : 'Предложить время'}
+                </button>
+              )}
             </div>
           )}
         </div>
