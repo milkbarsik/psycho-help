@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Empty, Pagination } from 'antd';
+import { Empty, Pagination, message } from 'antd';
+import { AxiosError } from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import utc from 'dayjs/plugin/utc';
@@ -14,7 +15,10 @@ import {
 } from '@/entities/application/api';
 import type { Application, ApplicationStatus } from '@/entities/application/types';
 import { useAuth } from '@/features/auth/api/useAuth';
-import { usePsychologistView, getDefaultDateRange } from '@/features/personal-cabinet/model/PsychologistView';
+import {
+  usePsychologistView,
+  getDefaultDateRange,
+} from '@/features/personal-cabinet/model/PsychologistView';
 import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-list-filters/PsychologistListFilters';
 import Loader from '@/shared/ui/loader/loader';
 import { ApplicationStatusTag } from '@/pages/personal-cabinet/constants';
@@ -127,6 +131,10 @@ const PsychologistApplications = () => {
   const acceptMutation = useMutation({
     mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] }),
+    onError: (error: AxiosError<{ detail?: string }>) => {
+      const detail = error.response?.data?.detail;
+      message.error(detail || 'Не удалось выполнить операцию');
+    },
   });
 
   const relevantApplications = useMemo(() => {

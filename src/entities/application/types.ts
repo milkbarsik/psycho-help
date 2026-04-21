@@ -40,14 +40,9 @@ export type ApplicationStatus =
   | 'cancelled'
   | 'expired';
 
-export type MeetingType = 'offline' | 'online';
 export type UniversityStatus = string; // А почему убрали?
+export type MeetingType = 'offline' | 'online';
 export type CancelInitiator = 'user' | 'psychologist' | 'manager' | 'system';
-
-export interface CancelRequest {
-  cancel_reason: string;
-  cancel_initiator: CancelInitiator;
-}
 
 export interface ApplicationCreateRequest {
   first_name: string;
@@ -57,4 +52,9 @@ export interface ApplicationCreateRequest {
   problem_description: string;
   preferred_campus?: string;
   university_status: UniversityStatus;
+}
+
+export interface CancelRequest {
+  cancel_reason: string;
+  cancel_initiator: CancelInitiator;
 }

@@ -13,24 +13,29 @@ const CONFIG: Record<
     title: string;
     okText: string;
     label: string;
+    sublabel: string;
     placeholder: string;
     mutationFn: (id: string, reason: string) => Promise<unknown>;
     queryKey: string;
   }
 > = {
   application: {
-    title: 'Отклонить заявку',
+    title: 'Заявка',
     okText: 'Отклонить',
-    label: 'Укажите причину отклонения:',
-    placeholder: 'Причина отклонения, например: Не соответствует требованиям',
+    label: 'Вы уверены, что хотите отклонить заявку? Укажите причину ниже.',
+    sublabel: 'Причина отклонения заявки*',
+    placeholder:
+      'Клиент увидит это сообщение. Укажите причину отклонения и рекомендации (например, новое время, другой формат)',
     mutationFn: rejectApplication,
     queryKey: applicationQueryKey.list,
   },
   appointment: {
-    title: 'Отменить запись',
+    title: 'Запись',
     okText: 'Отменить',
-    label: 'Укажите причину отмены:',
-    placeholder: 'Причина отмены, например: По личным обстоятельствам',
+    label: 'Вы уверены, что хотите отменить запись? Укажите причину ниже.',
+    sublabel: 'Причина отмены записи*',
+    placeholder:
+      'Клиент увидит это сообщение. Укажите причину отмены и рекомендации (например, новое время, другой формат)',
     mutationFn: cancelAppointment,
     queryKey: appointmentQueryKey.list,
   },
@@ -74,11 +79,14 @@ const PsychologistRejectModal = ({
 
   return (
     <Modal
+      styles={{
+        body: { marginBottom: 25 },
+      }}
       title={config.title}
       open={entityId !== null}
       onCancel={handleClose}
       okText={config.okText}
-      cancelText="Назад"
+      cancelText="Закрыть"
       okButtonProps={{
         danger: true,
         disabled: reason.trim().length === 0,
@@ -90,9 +98,10 @@ const PsychologistRejectModal = ({
         }
       }}
     >
-      <p style={{ marginBottom: '12px' }}>{config.label}</p>
+      <p style={{ marginBottom: 5 }}>{config.label}</p>
+      <p style={{ color: 'var(--color-label-neutral-secondary)' }}>{config.sublabel}</p>
       <Input.TextArea
-        rows={4}
+        rows={6}
         value={reason}
         onChange={(e) => setReason(e.target.value)}
         placeholder={config.placeholder}

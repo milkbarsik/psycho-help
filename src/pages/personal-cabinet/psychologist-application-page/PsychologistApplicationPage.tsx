@@ -2,8 +2,12 @@ import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Calendar, Select, message, Empty, Input } from 'antd';
+import { AxiosError } from 'axios';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import clsx from 'clsx';
 import {
   applicationQueries,
@@ -17,6 +21,12 @@ import Loader from '@/shared/ui/loader/loader';
 import { ApplicationStatusTag } from '@/pages/personal-cabinet/constants';
 import PsychologistRejectModal from '@/features/personal-cabinet/ui/PsychologistRejectModal';
 import styles from './PsychologistApplicationPage.module.scss';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale('ru');
+
+const MOSCOW_TZ = 'Europe/Moscow';
 
 const MEETING_TYPE_OPTIONS = [
   { value: 'online' as const, label: 'Онлайн' },
@@ -63,12 +73,15 @@ const PsychologistApplicationPage = () => {
   // Вычисляемые значения: отдан приоритет пользовательскому вводу
   const meetingType = userMeetingType ?? application?.meeting_type ?? null;
   const selectedDate =
-    userDate ?? (application?.scheduled_at ? dayjs(application.scheduled_at) : null);
+    userDate ??
+    (application?.scheduled_at
+      ? dayjs(application.scheduled_at).tz(MOSCOW_TZ).startOf('day')
+      : null);
 
   const selectedDateTime = useMemo(() => {
     if (!selectedDate || !selectedTime) return null;
     const [hours, minutes] = selectedTime.split(':').map(Number);
-    return selectedDate.hour(hours).minute(minutes).second(0);
+    return selectedDate.tz(MOSCOW_TZ, true).hour(hours).minute(minutes).second(0);
   }, [selectedDate, selectedTime]);
 
   const offerMutation = useMutation({
@@ -86,8 +99,9 @@ const PsychologistApplicationPage = () => {
       queryClient.invalidateQueries({ queryKey: [applicationQueryKey.byId, id] });
       navigate(-1);
     },
-    onError: () => {
-      message.error('Не удалось сохранить изменения');
+    onError: (error: AxiosError<{ detail?: string }>) => {
+      const detail = error.response?.data?.detail;
+      message.error(detail || 'Не удалось сохранить изменения');
     },
   });
 

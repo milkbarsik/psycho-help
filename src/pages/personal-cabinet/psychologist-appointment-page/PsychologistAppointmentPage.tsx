@@ -3,8 +3,17 @@ import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Input, message, Empty } from 'antd';
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import { AxiosError } from 'axios';
 import clsx from 'clsx';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale('ru');
+
+const MOSCOW_TZ = 'Europe/Moscow';
 import {
   appointmentQueries,
   appointmentQueryKey,
@@ -25,7 +34,7 @@ const TYPE_LABELS: Record<string, string> = {
 
 const formatDateTime = (iso?: string | null) => {
   if (!iso) return null;
-  return dayjs(iso).format('D MMMM YYYY, HH:mm');
+  return dayjs(iso).tz(MOSCOW_TZ).format('D MMMM YYYY, HH:mm');
 };
 
 const PsychologistAppointmentPage = () => {
@@ -194,12 +203,13 @@ const PsychologistAppointmentPage = () => {
           <button
             type="button"
             onClick={() => completeMutation.mutate()}
-            // loading={completeMutation.isPending}
-            disabled={comment.trim().length === 0}
+            disabled={comment.trim().length === 0 || completeMutation.isPending}
           >
-            Завершить
+            {completeMutation.isPending ? 'Завершение...' : 'Завершить'}
           </button>
-          <button onClick={() => setCancelModalOpen(true)}>Отменить</button>
+          <button onClick={() => setCancelModalOpen(true)} disabled={completeMutation.isPending}>
+            Отменить
+          </button>
         </div>
       )}
 
