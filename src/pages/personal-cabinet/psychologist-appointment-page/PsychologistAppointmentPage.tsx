@@ -175,10 +175,10 @@ const PsychologistAppointmentPage = () => {
         )}
         {statusUI && (
           <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Статус</span>
-            <span className={clsx(styles.statusTag, styles[statusUI.className])}>
-              {statusUI.text}
-            </span>
+            <div className={styles['status']}>
+              <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
+              <span className={styles['status-text']}>{statusUI.text}</span>
+            </div>
           </div>
         )}
         {isActive && (

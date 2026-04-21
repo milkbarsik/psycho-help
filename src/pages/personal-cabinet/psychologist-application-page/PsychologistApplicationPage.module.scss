@@ -4,44 +4,42 @@
   padding: 32px 40px;
 }
 
-.tagNew {
-  background-color: var(--color-label-info-light, #dbeafe);
-  color: var(--color-label-info-primary, #3b82f6);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.tagInProgress {
-  background-color: var(--color-label-warning-light, #fef3c7);
-  color: var(--color-label-warning-primary, #f59e0b);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+
+  &--new {
+    background-color: var(--color-label-success-primary);
+  }
+
+  &--in-progress {
+    background-color: var(--color-label-brand-primary);
+  }
+
+  &--awaiting-user-confirmation {
+    background-color: var(--color-label-neutral-secondary);
+  }
+
+  &--completed {
+    background-color: black;
+  }
+
+  &--cancelled {
+    background-color: var(--color-label-danger-primary);
+  }
 }
 
-.tagAwaitingUserConfirmation {
-  background-color: var(--color-label-success-light, #d1fae5);
-  color: var(--color-label-success-primary, #10b981);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.tagCompleted {
-  background-color: var(--color-label-neutral-light, #f3f4f6);
-  color: var(--color-label-neutral-primary, #6b7280);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.tagCancelled {
-  background-color: var(--color-label-danger-light, #fee2e2);
-  color: var(--color-label-danger-primary, #ef4444);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+.status-text {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-label-neutral-secondary);
 }
 
 .breadcrumbs {

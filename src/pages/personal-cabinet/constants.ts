@@ -3,21 +3,21 @@ import type { AppointmentStatus } from '@/entities/appointment/types';
 
 export const AppointmentStatusTag: Record<AppointmentStatus, { text: string; className: string }> =
   {
-    awaiting: { text: 'Ожидается', className: 'tagAwaiting' },
-    done: { text: 'Завершено', className: 'tagDone' },
-    cancelled: { text: 'Отменено', className: 'tagCancelled' },
+    awaiting: { text: 'Ожидается', className: 'status-dot--awaiting' },
+    done: { text: 'Завершено', className: 'status-dot--done' },
+    cancelled: { text: 'Отменено', className: 'status-dot--cancelled' },
   };
 
 export const ApplicationStatusTag: Record<ApplicationStatus, { text: string; className: string }> =
   {
-    new: { text: 'Новая', className: 'tagNew' },
-    in_progress: { text: 'В работе', className: 'tagInProgress' },
+    new: { text: 'Новая', className: 'status-dot--new' },
+    in_progress: { text: 'В работе', className: 'status-dot--in-progress' },
     awaiting_user_confirmation: {
-      text: 'Ожидает подтверждения',
-      className: 'tagAwaitingUserConfirmation',
+      text: 'На подтверждении',
+      className: 'status-dot--awaiting-user-confirmation',
     },
-    completed: { text: 'Завершено', className: 'tagCompleted' },
-    rejected: { text: 'Отменено', className: 'tagCancelled' },
-    cancelled: { text: 'Отменено', className: 'tagCancelled' },
-    expired: { text: 'Отменено', className: 'tagCancelled' },
+    completed: { text: 'Завершено', className: 'status-dot--completed' },
+    rejected: { text: 'Отменено', className: 'status-dot--cancelled' },
+    cancelled: { text: 'Отменено', className: 'status-dot--cancelled' },
+    expired: { text: 'Отменено', className: 'status-dot--cancelled' },
   };

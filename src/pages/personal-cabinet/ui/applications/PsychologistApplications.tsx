@@ -170,9 +170,9 @@ const PsychologistApplications = () => {
     }
 
     const dir = sortDirection === 'asc' ? 1 : -1;
-    return [...result].sort((a, b) => {
-      return dir * (getApplicationSortTime(a) - getApplicationSortTime(b));
-    });
+    return [...result].sort(
+      (a, b) => dir * (getApplicationSortTime(a) - getApplicationSortTime(b)),
+    );
   }, [relevantApplications, statusFilter, formatFilter, searchQuery, dateRange, sortDirection]);
 
   /* ── Pagination & Suggestions ── */
@@ -207,10 +207,11 @@ const PsychologistApplications = () => {
           <span className={styles.patientName}>{getApplicantName(application)}</span>
           <span className={styles.venue}>{getVenueDisplay(application)}</span>
         </div>
+        <div className={styles['status']}>
+          <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
+          <span className={styles['status-text']}>{statusUI.text}</span>
+        </div>
         <div className={styles.actionsCol}>
-          <span className={clsx(styles.statusTag, styles[statusUI.className])}>
-            {statusUI.text}
-          </span>
           {application.status === 'new' && (
             <button
               className={styles.btnConfirm}

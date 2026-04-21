@@ -193,10 +193,11 @@ const PsychologistAppointments = () => {
           {patientName && <span className={styles.patientName}>{patientName}</span>}
           <span className={styles.venue}>{getVenueDisplay(appointment)}</span>
         </div>
+        <div className={styles['status']}>
+          <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
+          <span className={styles['status-text']}>{statusUI.text}</span>
+        </div>
         <div className={styles.actionsCol}>
-          <span className={clsx(styles.statusTag, styles[statusUI.className])}>
-            {statusUI.text}
-          </span>
           <button
             className={styles.btnPrimary}
             onClick={() => navigate(`/cabinet/appointment/${appointment.id}`)}

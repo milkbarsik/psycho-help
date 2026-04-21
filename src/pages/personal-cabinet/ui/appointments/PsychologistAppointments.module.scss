@@ -106,68 +106,34 @@
   flex-shrink: 0;
 }
 
-.statusTag {
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.tagNew {
-  background-color: #eff6ff;
-  color: #3b82f6;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+
+  &--awaiting {
+    background-color: var(--color-label-neutral-secondary);
+  }
+
+  &--done {
+    background-color: var(--color-label-success-primary);
+  }
+
+  &--cancelled {
+    background-color: var(--color-label-danger-primary);
+  }
 }
 
-.tagInProgress {
-  background-color: #fff7ed;
-  color: #f97316;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.tagAwaitingUserConfirmation {
-  background-color: #f0fdf4;
-  color: #22c55e;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.tagAwaiting {
-  background-color: #f0fdf4;
-  color: #22c55e;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.tagCompleted {
-  background-color: #f3f4f6;
-  color: #6b7280;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.tagDone {
-  background-color: #f3f4f6;
-  color: #6b7280;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.tagCancelled {
-  background-color: #fef2f2;
-  color: #ef4444;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+.status-text {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-label-neutral-secondary);
 }
 
 .btnPrimary {

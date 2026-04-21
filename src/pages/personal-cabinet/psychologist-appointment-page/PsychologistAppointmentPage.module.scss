@@ -24,40 +24,34 @@
   margin: 0 0 24px;
 }
 
-.statusRow {
+.status {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.tagAwaiting {
-  background-color: #f0fdf4;
-  color: #22c55e;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+
+  &--awaiting {
+    background-color: var(--color-label-neutral-secondary);
+  }
+
+  &--done {
+    background-color: var(--color-label-success-primary);
+  }
+
+  &--cancelled {
+    background-color: var(--color-label-danger-primary);
+  }
 }
 
-.tagDone {
-  background-color: #f3f4f6;
-  color: #6b7280;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.tagCancelled {
-  background-color: #fef2f2;
-  color: #ef4444;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.statusText {
-  font-size: 14px;
-  color: var(--color-label-neutral-secondary, #6b7280);
-  font-weight: 500;
+.status-text {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-label-neutral-secondary);
 }
 
 .reasonBlockCancelled {
