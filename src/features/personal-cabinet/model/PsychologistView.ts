@@ -33,7 +33,7 @@ interface ViewState {
   resetFilters: (tab: ActiveTab) => void;
 }
 
-export const getDefaultDateRange = (): [string, string] => [
+export const getDefaultAppointmentDateRange = (): [string, string] => [
   dayjs().startOf('day').toISOString(),
   dayjs().add(1, 'month').startOf('day').toISOString(),
 ];
@@ -43,7 +43,15 @@ const getDefaultFilters = (): BaseFilters => ({
   sortDirection: 'asc' as const,
   formatFilter: 'all' as const,
   searchQuery: '',
-  dateRange: getDefaultDateRange(),
+  dateRange: null,
+});
+
+const getDefaultAppointmentFilters = (): BaseFilters => ({
+  currentPage: 1,
+  sortDirection: 'asc' as const,
+  formatFilter: 'all' as const,
+  searchQuery: '',
+  dateRange: getDefaultAppointmentDateRange(),
 });
 
 const filtersKey = (tab: ActiveTab): 'applicationFilters' | 'appointmentFilters' =>
@@ -61,7 +69,7 @@ export const usePsychologistView = create<ViewState>((set, get) => {
       statusFilter: 'all' as ApplicationStatusFilter,
     },
     appointmentFilters: {
-      ...getDefaultFilters(),
+      ...getDefaultAppointmentFilters(),
       statusFilter: 'all' as AppointmentStatusFilter,
     },
 

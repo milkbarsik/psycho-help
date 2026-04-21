@@ -11,11 +11,8 @@ import { applicationQueries } from '@/entities/application/api';
 import type { Application } from '@/entities/application/types';
 import { appointmentQueries } from '@/entities/appointment/api';
 import type { Appointment } from '@/entities/appointment/types';
-import {
-  usePsychologistView,
-  getDefaultDateRange,
-} from '@/features/personal-cabinet/model/PsychologistView';
-import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-list-filters/PsychologistListFilters';
+import { usePsychologistView } from '@/features/personal-cabinet/model/PsychologistView';
+import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-filters/PsychologistFilters';
 import Loader from '@/shared/ui/loader/loader';
 import { AppointmentStatusTag } from '@/pages/personal-cabinet/constants';
 import styles from './PsychologistAppointments.module.scss';
@@ -29,17 +26,17 @@ const toMoscow = (date: string) => dayjs(date).tz(MOSCOW_TZ);
 
 const ITEMS_PER_PAGE = 6;
 
-const APPOINTMENT_FORMAT_OPTIONS = [
-  { value: 'all', label: 'Все форматы' },
-  { value: 'offline', label: 'Очно' },
-  { value: 'online', label: 'Онлайн' },
-];
-
 const APPOINTMENT_STATUS_OPTIONS = [
   { value: 'all', label: 'Все статусы' },
   { value: 'awaiting', label: 'Ожидается' },
   { value: 'done', label: 'Завершено' },
   { value: 'cancelled', label: 'Отменено' },
+];
+
+const APPOINTMENT_FORMAT_OPTIONS = [
+  { value: 'all', label: 'Все форматы' },
+  { value: 'offline', label: 'Очно' },
+  { value: 'online', label: 'Онлайн' },
 ];
 
 /* ── Helpers ── */
@@ -93,15 +90,12 @@ const PsychologistAppointments = () => {
   const { currentPage, sortDirection, statusFilter, formatFilter, searchQuery, dateRange } =
     filters;
 
-  const defaultRange = getDefaultDateRange();
   const hasActiveFilters =
     searchQuery !== '' ||
     statusFilter !== 'all' ||
     formatFilter !== 'all' ||
     sortDirection !== 'asc' ||
-    dateRange === null ||
-    dateRange[0] !== defaultRange[0] ||
-    dateRange[1] !== defaultRange[1];
+    dateRange !== null;
 
   /* Applications (Заявки) */
   const { data: allApplications = [] } = useQuery(applicationQueries.list());

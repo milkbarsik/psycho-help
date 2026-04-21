@@ -3,7 +3,7 @@ import { SortAscendingOutlined, SortDescendingOutlined, SearchOutlined } from '@
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import type { SortDirection } from '@/features/personal-cabinet/model/PsychologistView';
-import styles from './PsychologistListFilters.module.scss';
+import styles from './PsychologistFilters.module.scss';
 
 interface SelectOption {
   value: string;
@@ -56,8 +56,8 @@ const PsychologistListFilters = ({
   statusPlaceholder = 'Все статусы',
 }: PsychologistListFiltersProps) => {
   return (
-    <div className={styles.filters}>
-      <div className={styles.filters__bar} role="search">
+    <div className={styles['filters']}>
+      <div className={styles['filters__bar']} role="search">
         <AutoComplete
           value={searchQuery}
           options={searchSuggestions}
@@ -106,7 +106,7 @@ const PsychologistListFilters = ({
         />
       </div>
 
-      <div className={styles.filters__bar}>
+      <div className={styles['filters__bar']}>
         <button
           className={styles['filters__sort-button']}
           onClick={() => onSortDirectionChange(sortDirection === 'asc' ? 'desc' : 'asc')}

@@ -15,11 +15,8 @@ import {
 } from '@/entities/application/api';
 import type { Application, ApplicationStatus } from '@/entities/application/types';
 import { useAuth } from '@/features/auth/api/useAuth';
-import {
-  usePsychologistView,
-  getDefaultDateRange,
-} from '@/features/personal-cabinet/model/PsychologistView';
-import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-list-filters/PsychologistListFilters';
+import { usePsychologistView } from '@/features/personal-cabinet/model/PsychologistView';
+import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-filters/PsychologistFilters';
 import Loader from '@/shared/ui/loader/loader';
 import { ApplicationStatusTag } from '@/pages/personal-cabinet/constants';
 import styles from './PsychologistApplications.module.scss';
@@ -114,17 +111,13 @@ const PsychologistApplications = () => {
   const { currentPage, sortDirection, statusFilter, formatFilter, searchQuery, dateRange } =
     filters;
 
-  const defaultRange = getDefaultDateRange();
   const hasActiveFilters =
     searchQuery !== '' ||
     statusFilter !== 'all' ||
     formatFilter !== 'all' ||
     sortDirection !== 'asc' ||
-    dateRange === null ||
-    dateRange[0] !== defaultRange[0] ||
-    dateRange[1] !== defaultRange[1];
+    dateRange !== null;
 
-  /* Applications (Заявки) */
   const { data: allApplications = [], isLoading: isLoadingApplications } = useQuery(
     applicationQueries.list(),
   );
@@ -178,12 +171,7 @@ const PsychologistApplications = () => {
 
     const dir = sortDirection === 'asc' ? 1 : -1;
     return [...result].sort((a, b) => {
-      const tA = getApplicationSortTime(a);
-      const tB = getApplicationSortTime(b);
-      if (tA === 0 && tB === 0) return 0;
-      if (tA === 0) return 1;
-      if (tB === 0) return -1;
-      return dir * (tA - tB);
+      return dir * (getApplicationSortTime(a) - getApplicationSortTime(b));
     });
   }, [relevantApplications, statusFilter, formatFilter, searchQuery, dateRange, sortDirection]);
 
