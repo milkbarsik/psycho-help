@@ -9,13 +9,16 @@ export type AppointmentStatusFilter = 'all' | AppointmentStatus;
 export type FormatFilter = 'all' | 'offline' | 'online' | 'unknown';
 export type ActiveTab = 'applications' | 'appointments';
 
-interface TabFilters<TStatus> {
+interface BaseFilters {
   currentPage: number;
   sortDirection: SortDirection;
-  statusFilter: TStatus;
   formatFilter: FormatFilter;
   searchQuery: string;
   dateRange: [string, string] | null;
+}
+
+interface TabFilters<TStatus> extends BaseFilters {
+  statusFilter: TStatus;
 }
 
 interface ViewState {
@@ -35,7 +38,7 @@ export const getDefaultDateRange = (): [string, string] => [
   dayjs().add(1, 'month').startOf('day').toISOString(),
 ];
 
-const getDefaultFilters = (): Omit<TabFilters<any>, 'statusFilter'> => ({
+const getDefaultFilters = (): BaseFilters => ({
   currentPage: 1,
   sortDirection: 'asc' as const,
   formatFilter: 'all' as const,
