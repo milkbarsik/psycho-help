@@ -99,26 +99,31 @@
 
 [data-theme='dark'] {
   .sidebar {
-    background-color: #1e1e1f;
+    background-color: var(--color-fill-neutral-primary);
   }
   .avatar {
-    color: rgba(255, 255, 255, 0.7);
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
   .name {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
 
   .navItem {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
+    &:hover{
+      color: var(--color-interactive-brand-primary);
+    }
+    &.active{
+      background-color: var(--color-interactive-neutral-active);
+    }
   }
-  .navItem:hover {
-    color: #1b50f5;
-  }
-  .navItem.active {
-    background-color: #4a4c50;
-  }
-
   .askButton {
-    color: #19191b;
+    color: var(--color-interactive-neutral-primary);
+    &:hover{
+      background-color: var(--color-interactive-neutral-hover-secondary);
+    }
+    &:active{
+      background-color: var(--color-interactive-neutral-active-secondary);
+    }
   }
 }

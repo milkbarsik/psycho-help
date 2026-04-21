@@ -71,10 +71,13 @@
 }
 
 [data-theme='dark'] {
+  .title{
+    color: var(--color-label-neutral-inverted-primary) !important;
+  }
   .sectionTitle {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .emptyText {
-    color: #98999a !important;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) !important;
   }
 }

@@ -153,13 +153,38 @@
 
 [data-theme='dark'] {
   .counter {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .title{
+    color: var(--color-label-neutral-inverted-primary);
   }
   .option {
-    background-color: #1e1e1f;
-    color: white;
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
   }
-  .buttonActionNext {
-    background-color: #192f8f;
+  .buttonAction{
+    
+    &Back{
+      background-color: var(--color-background-neutral-primary);
+      color: var(--color-label-brand-primary);
+      &:hover{
+        background-color: var(--color-interactive-neutral-hover-secondary);
+      }
+      &:active{
+        background-color: var(--color-interactive-neutral-active-secondary);
+      }
+    }
+    &Next,
+    &Complete{
+      border: var(--color-interactive-brand-primary);
+      background-color: var(--color-interactive-brand-primary);
+      color: var(--color-label-neutral-inverted-primary);
+      &:hover{
+        background-color: var(--color-interactive-brand-hover);
+      }
+      &:active{
+        background-color: var(--color-interactive-brand-active);
+      }
+    }
   }
 }

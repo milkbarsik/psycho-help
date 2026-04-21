@@ -297,21 +297,21 @@
 
 [data-theme='dark'] {
   .features__grid_1 {
-    background-color: rgba(64, 123, 254, 0.5);
+    background-color: var(--color-fill-brand-primary);
   }
   .features__grid_2,
   .features__grid_3,
   .features__grid_4 {
-    background-color: #1e1e1f;
+    background-color: var(--color-fill-neutral-primary);
   }
   .features__2_title,
   .features__3_title,
   .features__4_title {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .features__2_text,
   .features__3_text,
   .features__4_text {
-    color: #98999a;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
 }

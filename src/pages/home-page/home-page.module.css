@@ -38,6 +38,6 @@
 
 [data-theme='dark'] {
   .title {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
 }

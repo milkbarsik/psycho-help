@@ -400,30 +400,25 @@
 }
 
 [data-theme='dark'] {
-  .button {
-    color: white;
-  }
-  .button:hover {
-    color: #19191b;
-  }
-  .button:active {
-    color: #1b50f5;
-  }
-
   .modalContent {
-    background: #1e1e1f;
+    background: var(--color-background-neutral-inverted);
   }
-  .hintText {
-    color: #98999a;
+  .closeButton{
+    color: var(--color-label-neutral-inverted-primary);
   }
-  .modalDesc {
-    color: #98999a;
+  .button {
+    color: var(--color-label-neutral-inverted-primary);
+    &:hover{
+      background-color: var(--color-interactive-neutral-hover-secondary);
+      color: var(--color-interactive-brand-hover);
+    }
+    &:active{
+      color: var(--color-interactive-brand-active);
+    }
   }
+  .hintText,
+  .modalDesc,
   .Suggestion span {
-    color: #98999a;
-  }
-
-  .ant-modal-title {
-    color: red !important;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
 }

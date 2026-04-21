@@ -35,6 +35,6 @@
 
 [data-theme='dark'] {
   .tab.active {
-    background-color: #192f8f;
+    background-color: var(--color-interactive-brand-active) !important; 
   }
 }

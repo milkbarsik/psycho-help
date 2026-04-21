@@ -598,7 +598,7 @@
     background-color: transparent;
   }
   .avatarIcon {
-    color: rgba(255, 255, 255, 0.7);
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
   .avatarUpload rect {
     fill: transparent;
@@ -611,64 +611,64 @@
     fill: transparent;
   }
   .editButton path {
-    stroke: white;
+    stroke: var(--color-border-neutral-inverted);
   }
   .editButton:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--color-interactive-neutral-hover);
   }
 
   .nameFieldsRow input {
-    background-color: #4a4c50;
-    color: white;
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
   }
   .nameFieldsRow input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
   }
   .cancelNameButton {
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--color-label-neutral-inverted-primary);
+    border: 1px solid color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
   .cancelNameButton:hover {
-    background-color: #f9f9f9;
-    color: #19191b;
+    background-color: var(--color-interactive-neutral-hover-secondary);
+    color: var(--color-interactive-neutral-active);
   }
 
   .fieldsGrid label {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .selectDropdown {
     border: none;
   }
   .customSelect {
-    background-color: #4a4c50;
-    color: white;
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
   }
   .selectArrow {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .selectOption {
-    background-color: #4a4c50;
-    color: white;
+    background-color: var(--color-interactive-neutral-hover);
+    color: var(--color-label-neutral-inverted-primary);
   }
   .selectOption.selected {
-    background-color: #4a4c50ec;
-    color: #407bfe;
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-interactive-brand-primary);
   }
 
   .editableField {
-    background-color: #4a4c50;
+    background-color: var(--color-fill-neutral-primary);
   }
   .editableField input {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .field .editableField input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
   }
   .passwordField {
-    background-color: #4a4c50;
-    color: white;
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
   }
   .passwordField input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
   }
 }

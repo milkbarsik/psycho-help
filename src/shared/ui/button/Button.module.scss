@@ -92,3 +92,17 @@
     }
   }
 }
+
+[data-theme="dark"]{
+  .button{
+     &.color-brand{
+        color: var(--color-label-neutral-primary);
+        &:hover{
+          background-color: var(--color-interactive-neutral-hover-secondary);
+        }
+        &:active{
+          background-color: var(--color-interactive-neutral-active-secondary);
+        }
+     }
+  }
+}

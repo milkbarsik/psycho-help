@@ -159,25 +159,25 @@
 [data-theme='dark'] {
   .name,
   .qual {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .exp,
-  .office,
-  .consultArea {
-    color: #98999a;
+  .office {
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
   .consultArea {
-    border: 1px solid #98999a;
+    color: var(--color-label-neutral-inverted-primary);
+    border: 1px solid var(--color-border-neutral-inverted);
   }
   .infoBtn {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .supInfo {
-    color: #98999a;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
 
   .regBtn {
-    background-color: white;
-    color: #19191b;
+    background-color: var(--color-background-neutral-primary);
+    color: var(--color-label-neutral-primary);
   }
 }

@@ -230,22 +230,28 @@
 
 [data-theme='dark'] {
   .title {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
 
   .text {
-    color: #98999a;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
   .tab {
-    background-color: #4a4c50;
-    color: white;
+    background-color: var(--color-interactive-neutral-active);
+    color: var(--color-label-neutral-inverted-primary);
   }
   .tab.active {
-    background-color: rgba(27, 80, 245, 0.5);
+    background-color: var(--color-interactive-brand-primary);
   }
 
   .button {
-    background-color: white;
-    color: #19191b;
+    background-color: var(--color-fill-neutral-none);
+    color: var(--color-interactive-neutral-primary);
+    &:hover{
+      background-color: var(--color-interactive-neutral-hover-secondary);
+    }
+    &:hover{
+      background-color: var(--color-interactive-neutral-active-secondary);
+    }
   }
 }

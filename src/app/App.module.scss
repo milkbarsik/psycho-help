@@ -7,6 +7,6 @@
 [data-theme='dark'] {
   color-scheme: dark;
   .layout {
-    background: #0c0d0d;
+    background: var(--color-background-neutral-inverted);
   }
 }

@@ -240,27 +240,32 @@
 
 [data-theme='dark'] {
   .blue {
-    background-color: #1e1e1f;
+    background-color: var(--color-fill-neutral-primary);
   }
   .title {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
-
+  .text{
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .telegramTitle{
+    color: var(--color-label-neutral-inverted-primary);
+  }
   .telegramBanner {
     background-color: transparent;
-    border: 1px solid white;
+    border: 1px solid var(--color-border-neutral-inverted);
   }
   .telegramText {
-    color: #63656b !important;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
   .telegramLink {
-    background-color: white;
-    color: #19191b;
+    background-color: var(--color-background-neutral-primary);
+    color: var(--color-label-neutral-primary);
   }
   .telegramLink:hover {
-    background-color: rgb(214, 214, 214);
+    background-color: var(--color-interactive-neutral-hover-secondary);
   }
   .telegramLink:active {
-    background-color: rgb(171, 171, 171);
+    background-color: var(--color-interactive-neutral-active-secondary);
   }
 }

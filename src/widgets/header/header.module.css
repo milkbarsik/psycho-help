@@ -271,36 +271,36 @@
 
 [data-theme='dark'] {
   .header__nav {
-    background-color: #1e1e1f;
+    background-color: var(--color-fill-neutral-primary);
   }
 
   .header__logo {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .header__logo:hover {
-    color: #1b50f5;
+    color: var(--color-interactive-brand-hover);
   }
 
   .header__logo:active {
-    border-color: #1b50f5;
-    color: #1b50f5;
+    border-color: var(--color-border-brand-strong);
+    color: var(--color-interactive-brand-active);
   }
 
   .header__link {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .header__link:hover {
-    color: #19191b;
+    color: var(--color-interactive-brand-primary);
   }
   .header__link:active {
-    color: #1b50f5;
+    color: var(--color-interactive-brand-active);
   }
 
   .header__burger span {
-    background-color: white;
+    background-color: var(--color-background-neutral-primary);
   }
 
   .profileIcon path {
-    fill: white;
+    fill: var(--color-border-neutral-inverted);
   }
 }

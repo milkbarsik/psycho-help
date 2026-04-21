@@ -82,10 +82,13 @@
 
 [data-theme='dark'] {
   .wrapper.active {
-    background-color: rgba(188, 214, 255, 0.2);
+    background-color: var(--color-fill-neutral-secondary);
   }
-
+  .p,
+  .answer{
+    color: var(--color-label-neutral-inverted-primary);
+  }
   .button path {
-    stroke: white;
+    stroke: var(--color-border-neutral-inverted);
   }
 }

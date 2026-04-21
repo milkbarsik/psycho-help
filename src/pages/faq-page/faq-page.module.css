@@ -69,10 +69,10 @@
 
 [data-theme='dark'] {
   .faq {
-    color: #407bfe;
+    color: var(--color-label-brand-secondary);
   }
 
   .description {
-    color: #98999a !important;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) !important;
   }
 }

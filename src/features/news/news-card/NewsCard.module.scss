@@ -139,15 +139,15 @@
 
 [data-theme='dark'] {
   .wrapper {
-    background-color: #1e1e1f;
+    background-color: var(--color-fill-neutral-primary);
   }
   .type {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .date {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .title {
-    color: #63656b !important;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
 }

@@ -212,39 +212,38 @@
 
 [data-theme='dark'] {
   .greeting__title {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
 
   .greeting__subtitle {
-    color: #98999a;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
 
   .greeting__option {
-    background: #4a4c50;
-  }
-  .greeting__option:hover {
-    color: #1b50f5;
-    background: #eef5ff;
-  }
-
-  .greeting__option:active {
-    background: none;
-    border-color: #1b50f5;
-    color: #1b50f5;
+    background: var(--color-interactive-neutral-active);
+    &:hover{
+      color: var(--color-interactive-neutral-primary);
+      background: var(--color-background-neutral-primary);
+    }
+    &:active{
+      background: none;
+      border-color: var(--color-border-brand-strong);
+      color: var(--color-interactive-brand-active);
+    }
   }
   .greeting__selected {
-    background: #1b50f5;
-    color: white;
+    background: var(--color-interactive-brand-primary);
+    color: var(--color-label-neutral-inverted-primary);
   }
 
   .greeting__submit {
-    background-color: white;
-    color: #19191b;
-  }
-  .greeting__submit:hover {
-    background-color: rgb(210, 204, 204);
-  }
-  .greeting__submit:active {
-    background-color: rgb(180, 180, 180);
+    background-color: var(--color-fill-neutral-none);
+    color: var(--color-interactive-neutral-primary);
+    &:hover{
+      background-color: var(--color-interactive-neutral-hover-secondary);
+    }
+    &:active{
+      background-color: var(--color-interactive-neutral-active-secondary);
+    }
   }
 }

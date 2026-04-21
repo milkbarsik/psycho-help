@@ -100,13 +100,13 @@
 [data-theme='dark'] {
   .links .link,
   .links span {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .links a:hover {
-    color: #69b1ff;
+    color: var(--color-label-brand-secondary);
   }
 
   .contentWrapper {
-    background-color: #1e1e1f;
+    background-color: var(--color-fill-neutral-primary);
   }
 }

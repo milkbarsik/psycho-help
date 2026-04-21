@@ -125,13 +125,13 @@
 
 [data-theme='dark'] {
   .lunchInfo {
-    background-color: #1e1e1f;
+    background-color: var(--color-fill-neutral-primary);
   }
   .fridayInfo {
-    background-color: #1e1e1f;
+    background-color: var(--color-fill-neutral-primary);
   }
   .fridayInfo span,
   .lunchInfo span {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
 }

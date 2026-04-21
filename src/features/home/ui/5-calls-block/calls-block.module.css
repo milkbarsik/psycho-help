@@ -175,13 +175,11 @@
 }
 
 [data-theme='dark'] {
-  .calls__text {
-    color: #98999a;
+  .calls__text,
+  .calls__phone_text {
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
   .calls__title {
-    color: white;
-  }
-  .calls__phone_text {
-    color: #98999a;
+    color: var(--color-label-neutral-inverted-primary);
   }
 }

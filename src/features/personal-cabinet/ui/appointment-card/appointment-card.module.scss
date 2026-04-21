@@ -116,19 +116,19 @@
 
 [data-theme='dark'] {
   .card {
-    background-color: #19191b;
+    background-color: var(--color-fill-neutral-primary);
   }
   .date {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .icon {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .infoItem {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .commentLink {
-    background-color: white;
-    color: #19191b;
+    background-color: var(--color-background-neutral-primary);
+    color: var(--color-label-neutral-primary);
   }
 }

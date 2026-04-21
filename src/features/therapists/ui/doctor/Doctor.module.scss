@@ -133,16 +133,16 @@
 
 [data-theme='dark'] {
   .wrapper {
-    background-color: #0c0d0d;
+    background-color: var(--color-background-neutral-inverted);
   }
 
   .fio,
   .speciality,
   .consult_label {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
   .experience,
   .consult_areas {
-    color: #98999a;
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
 }

@@ -110,10 +110,10 @@
 
 [data-theme='dark'] {
   .card {
-    background-color: #0c0d0d;
-    border: 1px solid white;
+    background-color: var(--color-background-neutral-inverted);
+    border: 1px solid var(--color-border-neutral-inverted);
   }
   .text {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
   }
 }

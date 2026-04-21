@@ -132,7 +132,13 @@
 }
 
 [data-theme='dark'] {
+  .info{
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+  }
   .title {
-    color: white;
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .content{
+    color: var(--color-label-neutral-inverted-primary);
   }
 }
