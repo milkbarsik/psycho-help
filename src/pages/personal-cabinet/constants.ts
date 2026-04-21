@@ -1,43 +1,23 @@
-import type { Appointment } from '@/entities/appointment/types';
+import type { ApplicationStatus } from '@/entities/application/types';
+import type { AppointmentStatus } from '@/entities/appointment/types';
 
-export const appointmentsConsts: Appointment[] = [
+export const AppointmentStatusTag: Record<AppointmentStatus, { text: string; className: string }> =
   {
-    id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    patient_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    psychologist_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    type: 'Offline',
-    reason: 'String',
-    status: 'Accepted',
-    scheduled_time: '2025-05-09T07:59:17.799Z',
-    remind_time: '2025-05-09T07:59:17.799Z',
-    last_change_time: '2025-04-29T07:59:17.800Z',
-    venue: 'Место проведения',
-    comment: null,
-  },
+    awaiting: { text: 'Ожидается', className: 'tagAwaiting' },
+    done: { text: 'Завершено', className: 'tagDone' },
+    cancelled: { text: 'Отменено', className: 'tagCancelled' },
+  };
+
+export const ApplicationStatusTag: Record<ApplicationStatus, { text: string; className: string }> =
   {
-    id: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
-    patient_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    psychologist_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    type: 'Offline',
-    reason: 'String',
-    status: 'Approved',
-    scheduled_time: '2025-05-05T07:59:17.799Z',
-    remind_time: '2025-05-05T07:59:17.799Z',
-    last_change_time: '2025-05-01T07:59:17.800Z',
-    venue: 'Место проведения',
-    comment: null,
-  },
-  {
-    id: '3fa85f64-5717-4562-b3fc-2c963f66afa8',
-    patient_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    psychologist_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    type: 'Online',
-    reason: 'string',
-    status: 'Approved',
-    scheduled_time: '2025-04-30T07:59:17.799Z',
-    remind_time: '2025-04-30T07:59:17.799Z',
-    last_change_time: '2025-04-30T07:59:17.800Z',
-    venue: 'Место проведения',
-    comment: null,
-  },
-];
+    new: { text: 'Новая', className: 'tagNew' },
+    in_progress: { text: 'В работе', className: 'tagInProgress' },
+    awaiting_user_confirmation: {
+      text: 'Ожидает подтверждения',
+      className: 'tagAwaitingUserConfirmation',
+    },
+    completed: { text: 'Завершено', className: 'tagCompleted' },
+    rejected: { text: 'Отменено', className: 'tagCancelled' },
+    cancelled: { text: 'Отменено', className: 'tagCancelled' },
+    expired: { text: 'Отменено', className: 'tagCancelled' },
+  };

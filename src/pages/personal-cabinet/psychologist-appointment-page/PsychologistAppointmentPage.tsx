@@ -14,8 +14,8 @@ import { authQueries } from '@/entities/auth/api/queries';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import Loader from '@/shared/ui/loader/loader';
-import { APPOINTMENT_STATUS_TAG } from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointmentsConstants';
-import PsychologistAppointmentsModal from '@/features/personal-cabinet/ui/PsychologistAppointmentsModal';
+import { AppointmentStatusTag } from '@/pages/personal-cabinet/constants';
+import PsychologistRejectModal from '@/features/personal-cabinet/ui/PsychologistRejectModal';
 import styles from './PsychologistAppointmentPage.module.scss';
 
 const TYPE_LABELS: Record<string, string> = {
@@ -80,7 +80,7 @@ const PsychologistAppointmentPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const serverCancelReason = (appointment as any).cancel_reason;
 
-  const statusUI = APPOINTMENT_STATUS_TAG[appointment.status];
+  const statusUI = AppointmentStatusTag[appointment.status];
 
   const patientName = [patient?.last_name, patient?.first_name, patient?.middle_name]
     .filter(Boolean)
@@ -203,7 +203,7 @@ const PsychologistAppointmentPage = () => {
         </div>
       )}
 
-      <PsychologistAppointmentsModal
+      <PsychologistRejectModal
         type="appointment"
         entityId={cancelModalOpen ? id! : null}
         onClose={() => setCancelModalOpen(false)}

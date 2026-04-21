@@ -36,19 +36,19 @@ const CONFIG: Record<
   },
 };
 
-interface PsychologistAppointmentsModalProps {
+interface PsychologistRejectModalProps {
   type: ModalType;
   entityId: string | null;
   onClose: () => void;
   onSuccess?: () => void;
 }
 
-const PsychologistAppointmentsModal = ({
+const PsychologistRejectModal = ({
   type,
   entityId,
   onClose,
   onSuccess,
-}: PsychologistAppointmentsModalProps) => {
+}: PsychologistRejectModalProps) => {
   const queryClient = useQueryClient();
   const [reason, setReason] = useState('');
   const config = CONFIG[type];
@@ -103,4 +103,4 @@ const PsychologistAppointmentsModal = ({
   );
 };
 
-export default PsychologistAppointmentsModal;
+export default PsychologistRejectModal;

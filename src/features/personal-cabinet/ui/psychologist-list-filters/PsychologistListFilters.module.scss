@@ -1,0 +1,85 @@
+.filtersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filtersRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.searchInputWrapper {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  height: unset;
+}
+
+.inputField {
+  border-radius: 6px;
+  height: 40px;
+}
+
+.filterSelect {
+  min-width: 160px;
+  height: 40px;
+
+  :global(.ant-select-selector) {
+    border-radius: 6px !important;
+    height: 100% !important;
+    align-items: center;
+  }
+}
+
+.dateRangePicker {
+  min-width: 240px;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.sortToggleBtn {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #4a4a4a;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #1a1a1a;
+  }
+
+  .anticon {
+    font-size: 14px;
+  }
+}
+
+.sortRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.resetFiltersBtn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+    color: #1a1a1a;
+  }
+}

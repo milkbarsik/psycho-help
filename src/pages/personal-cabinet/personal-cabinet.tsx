@@ -43,7 +43,7 @@ const PersonalCabinet: FC = () => {
 
     if (isPsychologist && activeApplicationsCount > 0) {
       badges.push({
-        tabId: 'appointments',
+        tabId: 'applications',
         content: (isActive) => (
           <span className={clsx(styles.countBage, isActive && styles.countBageActive)}>
             {activeApplicationsCount}

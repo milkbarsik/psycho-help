@@ -17,18 +17,16 @@ interface TabFilters<TStatus> {
   dateRange: [string, string] | null;
 }
 
-interface ApplicationsViewState {
-  activeTab: ActiveTab;
+interface ViewState {
   applicationFilters: TabFilters<ApplicationStatusFilter>;
   appointmentFilters: TabFilters<AppointmentStatusFilter>;
-  setActiveTab: (tab: ActiveTab) => void;
-  setCurrentPage: (page: number) => void;
-  setSortDirection: (dir: SortDirection) => void;
-  setStatusFilter: (filter: string) => void;
-  setFormatFilter: (filter: FormatFilter) => void;
-  setSearchQuery: (query: string) => void;
-  setDateRange: (range: [string, string] | null) => void;
-  resetFilters: () => void;
+  setCurrentPage: (tab: ActiveTab, page: number) => void;
+  setSortDirection: (tab: ActiveTab, dir: SortDirection) => void;
+  setStatusFilter: (tab: ActiveTab, filter: string) => void;
+  setFormatFilter: (tab: ActiveTab, filter: FormatFilter) => void;
+  setSearchQuery: (tab: ActiveTab, query: string) => void;
+  setDateRange: (tab: ActiveTab, range: [string, string] | null) => void;
+  resetFilters: (tab: ActiveTab) => void;
 }
 
 const defaultFilters = {
@@ -43,27 +41,23 @@ const defaultFilters = {
 const filtersKey = (tab: ActiveTab): 'applicationFilters' | 'appointmentFilters' =>
   tab === 'applications' ? 'applicationFilters' : 'appointmentFilters';
 
-export const useApplicationsView = create<ApplicationsViewState>((set, get) => {
-  const updateFilter = (patch: Record<string, unknown>) => {
-    const key = filtersKey(get().activeTab);
+export const usePsychologistView = create<ViewState>((set, get) => {
+  const updateFilter = (tab: ActiveTab, patch: Record<string, unknown>) => {
+    const key = filtersKey(tab);
     set({ [key]: { ...get()[key], ...patch } });
   };
 
   return {
-    activeTab: 'applications',
     applicationFilters: { ...defaultFilters },
     appointmentFilters: { ...defaultFilters },
 
-    setActiveTab: (tab) => set({ activeTab: tab }),
-    setCurrentPage: (page) => updateFilter({ currentPage: page }),
-    setSortDirection: (dir) => updateFilter({ sortDirection: dir, currentPage: 1 }),
-    setStatusFilter: (filter) => updateFilter({ statusFilter: filter, currentPage: 1 }),
-    setFormatFilter: (filter) => updateFilter({ formatFilter: filter, currentPage: 1 }),
-    setSearchQuery: (query) => updateFilter({ searchQuery: query, currentPage: 1 }),
-    setDateRange: (range) => updateFilter({ dateRange: range, currentPage: 1 }),
+    setCurrentPage: (tab, page) => updateFilter(tab, { currentPage: page }),
+    setSortDirection: (tab, dir) => updateFilter(tab, { sortDirection: dir, currentPage: 1 }),
+    setStatusFilter: (tab, filter) => updateFilter(tab, { statusFilter: filter, currentPage: 1 }),
+    setFormatFilter: (tab, filter) => updateFilter(tab, { formatFilter: filter, currentPage: 1 }),
+    setSearchQuery: (tab, query) => updateFilter(tab, { searchQuery: query, currentPage: 1 }),
+    setDateRange: (tab, range) => updateFilter(tab, { dateRange: range, currentPage: 1 }),
 
-    resetFilters: () => {
-      set({ [filtersKey(get().activeTab)]: { ...defaultFilters } });
-    },
+    resetFilters: (tab) => set({ [filtersKey(tab)]: { ...defaultFilters } }),
   };
 });

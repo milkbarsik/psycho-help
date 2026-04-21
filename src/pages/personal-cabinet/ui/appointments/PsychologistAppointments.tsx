@@ -1,30 +1,20 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { AutoComplete, DatePicker, Empty, Input, Pagination, Select } from 'antd';
-import { SortAscendingOutlined, SortDescendingOutlined, SearchOutlined } from '@ant-design/icons';
+import { useQuery } from '@tanstack/react-query';
+import { Empty, Pagination } from 'antd';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import type { Dayjs } from 'dayjs';
 import clsx from 'clsx';
-import {
-  applicationQueries,
-  applicationQueryKey,
-  acceptApplication,
-} from '@/entities/application/api';
-import type { Application, ApplicationStatus } from '@/entities/application/types';
+import { applicationQueries } from '@/entities/application/api';
+import type { Application } from '@/entities/application/types';
 import { appointmentQueries } from '@/entities/appointment/api';
 import type { Appointment } from '@/entities/appointment/types';
-import { useAuth } from '@/features/auth/api/useAuth';
-import { useApplicationsView } from '@/features/personal-cabinet/model/PsychologistAppointmentsView';
+import { usePsychologistView } from '@/features/personal-cabinet/model/PsychologistView';
+import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-list-filters/PsychologistListFilters';
 import Loader from '@/shared/ui/loader/loader';
-import {
-  APPLICATION_STATUS_TAG,
-  APPOINTMENT_STATUS_TAG,
-} from './PsychologistAppointmentsConstants';
-import PsychologistAppointmentsModal from '@/features/personal-cabinet/ui/PsychologistAppointmentsModal';
+import { AppointmentStatusTag } from '@/pages/personal-cabinet/constants';
 import styles from './PsychologistAppointments.module.scss';
 
 dayjs.extend(utc);
@@ -35,24 +25,6 @@ const MOSCOW_TZ = 'Europe/Moscow';
 const toMoscow = (date: string) => dayjs(date).tz(MOSCOW_TZ);
 
 const ITEMS_PER_PAGE = 6;
-
-const CLOSED_STATUSES: ApplicationStatus[] = ['rejected', 'cancelled', 'expired'];
-
-const APPLICATION_STATUS_OPTIONS = [
-  { value: 'all', label: 'Все статусы' },
-  { value: 'new', label: 'Новая' },
-  { value: 'in_progress', label: 'В работе' },
-  { value: 'awaiting_user_confirmation', label: 'Ожидает подтверждения' },
-  { value: 'completed', label: 'Завершено' },
-  { value: 'closed', label: 'Отменено' },
-];
-
-const APPLICATION_FORMAT_OPTIONS = [
-  { value: 'all', label: 'Все форматы' },
-  { value: 'offline', label: 'Очно' },
-  { value: 'online', label: 'Онлайн' },
-  { value: 'unknown', label: 'Не указано' },
-];
 
 const APPOINTMENT_FORMAT_OPTIONS = [
   { value: 'all', label: 'Все форматы' },
@@ -70,14 +42,6 @@ const APPOINTMENT_STATUS_OPTIONS = [
 /* ── Helpers ── */
 const getApplicantName = (application: Application) =>
   [application.last_name, application.first_name].filter(Boolean).join(' ');
-
-const getApplicationDate = (application: Application): string | null =>
-  application.scheduled_at || application.created_at;
-
-const getApplicationSortTime = (application: Application): number => {
-  const date = getApplicationDate(application);
-  return date ? new Date(date).getTime() : 0;
-};
 
 const getTimeRange = (time: string) => {
   const start = toMoscow(time);
@@ -108,16 +72,11 @@ const groupByDate = <T,>(
 };
 
 const PsychologistAppointments = () => {
+  const FILTERS_TAB = 'appointments' as const;
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const user = useAuth((s) => s.user);
-  const userId = user?.id;
 
   const {
-    activeTab,
-    applicationFilters,
     appointmentFilters,
-    setActiveTab,
     setCurrentPage,
     setSortDirection,
     setStatusFilter,
@@ -125,9 +84,9 @@ const PsychologistAppointments = () => {
     setSearchQuery,
     setDateRange,
     resetFilters,
-  } = useApplicationsView();
+  } = usePsychologistView();
 
-  const filters = activeTab === 'applications' ? applicationFilters : appointmentFilters;
+  const filters = appointmentFilters;
   const { currentPage, sortDirection, statusFilter, formatFilter, searchQuery, dateRange } =
     filters;
 
@@ -139,75 +98,7 @@ const PsychologistAppointments = () => {
     dateRange !== null;
 
   /* Applications (Заявки) */
-  const { data: allApplications = [], isLoading: isLoadingApplications } = useQuery(
-    applicationQueries.list(),
-  );
-
-  const [rejectingApplicationId, setRejectingApplicationId] = useState<string | null>(null);
-  const [cancellingAppointmentId, setCancellingAppointmentId] = useState<string | null>(null);
-
-  const acceptMutation = useMutation({
-    mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] }),
-  });
-
-  const relevantApplications = useMemo(() => {
-    return allApplications.filter(
-      (application) => application.status === 'new' || application.assigned_to === userId,
-    );
-  }, [allApplications, userId]);
-
-  const filteredApplications = useMemo(() => {
-    if (activeTab !== 'applications') return [];
-    let result = relevantApplications;
-
-    if (statusFilter === 'closed') {
-      result = result.filter((a) => CLOSED_STATUSES.includes(a.status));
-    } else if (statusFilter !== 'all') {
-      result = result.filter((a) => a.status === statusFilter);
-    }
-
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter((a) => getApplicantName(a).toLowerCase().includes(q));
-    }
-
-    if (formatFilter === 'unknown') {
-      result = result.filter((a) => a.meeting_type === null);
-    } else if (formatFilter !== 'all') {
-      result = result.filter((a) => a.meeting_type === formatFilter);
-    }
-
-    if (dateRange) {
-      const [from, to] = dateRange;
-      const fromMs = dayjs(from).startOf('day').valueOf();
-      const toMs = dayjs(to).endOf('day').valueOf();
-      result = result.filter((a) => {
-        const date = getApplicationDate(a);
-        if (!date) return false;
-        const t = dayjs(date).valueOf();
-        return t >= fromMs && t <= toMs;
-      });
-    }
-
-    const dir = sortDirection === 'asc' ? 1 : -1;
-    return [...result].sort((a, b) => {
-      const tA = getApplicationSortTime(a);
-      const tB = getApplicationSortTime(b);
-      if (tA === 0 && tB === 0) return 0;
-      if (tA === 0) return 1;
-      if (tB === 0) return -1;
-      return dir * (tA - tB);
-    });
-  }, [
-    activeTab,
-    relevantApplications,
-    statusFilter,
-    formatFilter,
-    searchQuery,
-    dateRange,
-    sortDirection,
-  ]);
+  const { data: allApplications = [] } = useQuery(applicationQueries.list());
 
   /* Appointments (Записи) */
   const { data: allAppointments = [], isLoading: isLoadingAppointments } = useQuery(
@@ -225,7 +116,6 @@ const PsychologistAppointments = () => {
   }, [allApplications]);
 
   const filteredAppointments = useMemo(() => {
-    if (activeTab !== 'appointments') return [];
     let result = allAppointments;
 
     if (statusFilter !== 'all') {
@@ -260,7 +150,6 @@ const PsychologistAppointments = () => {
       (a, b) => dir * (new Date(a.scheduled_time).getTime() - new Date(b.scheduled_time).getTime()),
     );
   }, [
-    activeTab,
     allAppointments,
     appointmentPatientMap,
     statusFilter,
@@ -271,7 +160,7 @@ const PsychologistAppointments = () => {
   ]);
 
   /* ── Pagination & Suggestions ── */
-  const currentItems = activeTab === 'applications' ? filteredApplications : filteredAppointments;
+  const currentItems = filteredAppointments;
   const paginated = currentItems.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
@@ -280,79 +169,22 @@ const PsychologistAppointments = () => {
   const searchSuggestions = useMemo(() => {
     if (!searchQuery) return [];
     const q = searchQuery.toLowerCase();
-    if (activeTab === 'applications') {
-      const names = new Set(relevantApplications.map(getApplicantName));
-      return [...names]
-        .filter((name) => name.toLowerCase().includes(q))
-        .map((name) => ({ value: name }));
-    }
     const appointmentNames = new Set(
       allAppointments.map((a) => appointmentPatientMap.get(a.id)).filter(Boolean),
     );
     return [...appointmentNames]
       .filter((name) => name!.toLowerCase().includes(q))
       .map((name) => ({ value: name! }));
-  }, [activeTab, relevantApplications, allAppointments, appointmentPatientMap, searchQuery]);
+  }, [allAppointments, appointmentPatientMap, searchQuery]);
 
-  const isLoading = activeTab === 'applications' ? isLoadingApplications : isLoadingAppointments;
+  const isLoading = isLoadingAppointments;
 
   if (isLoading) return <Loader />;
-
-  /* ── Render Logic ── */
-
-  // Рендер строки Заявки
-  const renderApplicationRow = (application: Application) => {
-    const statusUI = APPLICATION_STATUS_TAG[application.status];
-    const date = getApplicationDate(application);
-    return (
-      <article key={application.id} className={styles.appointmentRow} role="listitem">
-        <div className={styles.timeCol}>{date ? toMoscow(date).format('HH:mm') : ''}</div>
-        <div className={styles.infoCol}>
-          <span className={styles.patientName}>{getApplicantName(application)}</span>
-          <span className={styles.venue}>
-            {application.problem_description.length > 80
-              ? application.problem_description.slice(0, 80) + '…'
-              : application.problem_description}
-          </span>
-        </div>
-        <div className={styles.actionsCol}>
-          <span className={clsx(styles.statusTag, styles[statusUI.className])}>
-            {statusUI.text}
-          </span>
-          {application.status === 'new' && (
-            <button
-              className={styles.btnConfirm}
-              onClick={() => acceptMutation.mutate(application.id)}
-              disabled={acceptMutation.isPending}
-            >
-              В работу
-            </button>
-          )}
-          {(application.status === 'new' ||
-            application.status === 'in_progress' ||
-            application.status === 'awaiting_user_confirmation') && (
-            <button
-              className={styles.btnCancel}
-              onClick={() => setRejectingApplicationId(application.id)}
-            >
-              Отклонить
-            </button>
-          )}
-          <button
-            className={styles.btnOpenOutline}
-            onClick={() => navigate(`/cabinet/application/${application.id}`)}
-          >
-            Открыть
-          </button>
-        </div>
-      </article>
-    );
-  };
 
   // Рендер строки Записи
   const renderAppointmentRow = (appointment: Appointment) => {
     const patientName = appointmentPatientMap.get(appointment.id);
-    const statusUI = APPOINTMENT_STATUS_TAG[appointment.status];
+    const statusUI = AppointmentStatusTag[appointment.status];
 
     return (
       <article key={appointment.id} className={styles.appointmentRow} role="listitem">
@@ -365,14 +197,6 @@ const PsychologistAppointments = () => {
           <span className={clsx(styles.statusTag, styles[statusUI.className])}>
             {statusUI.text}
           </span>
-          {appointment.status === 'awaiting' && (
-            <button
-              className={styles.btnCancel}
-              onClick={() => setCancellingAppointmentId(appointment.id)}
-            >
-              Отменить запись
-            </button>
-          )}
           <button
             className={styles.btnPrimary}
             onClick={() => navigate(`/cabinet/appointment/${appointment.id}`)}
@@ -386,120 +210,38 @@ const PsychologistAppointments = () => {
 
   return (
     <section className={styles.wrapper}>
-      {/* ── Tabs ── */}
-      <div className={styles.tabs}>
-        <button
-          className={clsx(styles.tab, activeTab === 'applications' && styles.tabActive)}
-          onClick={() => setActiveTab('applications')}
-        >
-          Заявки
-        </button>
-        <button
-          className={clsx(styles.tab, activeTab === 'appointments' && styles.tabActive)}
-          onClick={() => setActiveTab('appointments')}
-        >
-          Записи
-        </button>
-      </div>
+      <h2 className={styles.title}>Записи</h2>
 
-      {/* Фильтры */}
-      <div className={styles.filtersContainer}>
-        <div className={styles.filtersRow} role="search">
-          <AutoComplete
-            value={searchQuery}
-            options={searchSuggestions}
-            onChange={(value) => setSearchQuery(value)}
-            className={styles.searchInputWrapper}
-          >
-            <Input
-              placeholder="Поиск по ФИО"
-              suffix={<SearchOutlined style={{ color: '#bfbfbf' }} />}
-              allowClear
-              className={styles.inputField}
-            />
-          </AutoComplete>
-
-          <Select
-            value={formatFilter === 'all' ? null : formatFilter}
-            onChange={(v) => setFormatFilter(v || 'all')}
-            className={styles.filterSelect}
-            options={
-              activeTab === 'applications' ? APPLICATION_FORMAT_OPTIONS : APPOINTMENT_FORMAT_OPTIONS
-            }
-            placeholder="Все форматы"
-            allowClear
-          />
-
-          <DatePicker.RangePicker
-            value={dateRange ? [dayjs(dateRange[0]), dayjs(dateRange[1])] : null}
-            onChange={(dates: [Dayjs | null, Dayjs | null] | null) => {
-              if (dates && dates[0] && dates[1]) {
-                setDateRange([dates[0].toISOString(), dates[1].toISOString()]);
-              } else {
-                setDateRange(null);
-              }
-            }}
-            format="DD.MM.YYYY"
-            placeholder={['От', 'До']}
-            allowClear
-            className={styles.dateRangePicker}
-          />
-
-          <Select
-            value={statusFilter === 'all' ? null : statusFilter}
-            onChange={(v) => setStatusFilter(v || 'all')}
-            className={styles.filterSelect}
-            options={
-              activeTab === 'applications' ? APPLICATION_STATUS_OPTIONS : APPOINTMENT_STATUS_OPTIONS
-            }
-            placeholder="Все статусы"
-            allowClear
-          />
-        </div>
-        <div className={styles.sortRow}>
-          {/* Сортировка */}
-          <button
-            className={styles.sortToggleBtn}
-            onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-          >
-            Сортировка по дате
-            {sortDirection === 'desc' ? <SortDescendingOutlined /> : <SortAscendingOutlined />}
-          </button>
-
-          {hasActiveFilters && (
-            <button className={styles.resetFiltersBtn} onClick={resetFilters}>
-              Сбросить фильтры
-            </button>
-          )}
-        </div>
-      </div>
+      <PsychologistListFilters
+        searchQuery={searchQuery}
+        searchSuggestions={searchSuggestions}
+        onSearchQueryChange={(value) => setSearchQuery(FILTERS_TAB, value)}
+        formatFilter={formatFilter}
+        formatOptions={APPOINTMENT_FORMAT_OPTIONS}
+        onFormatFilterChange={(value) => setFormatFilter(FILTERS_TAB, value as typeof formatFilter)}
+        statusFilter={statusFilter}
+        statusOptions={APPOINTMENT_STATUS_OPTIONS}
+        onStatusFilterChange={(value) => setStatusFilter(FILTERS_TAB, value)}
+        dateRange={dateRange}
+        onDateRangeChange={(range) => setDateRange(FILTERS_TAB, range)}
+        sortDirection={sortDirection}
+        onSortDirectionChange={(direction) => setSortDirection(FILTERS_TAB, direction)}
+        hasActiveFilters={hasActiveFilters}
+        onResetFilters={() => resetFilters(FILTERS_TAB)}
+      />
 
       {/* Список */}
       <div className={styles.list} role="list">
-        {paginated.length === 0 && (
-          <Empty description={activeTab === 'applications' ? 'Заявок нет' : 'Записей нет'} />
-        )}
+        {paginated.length === 0 && <Empty description="Записей нет" />}
 
-        {activeTab === 'applications' &&
-          groupByDate(paginated as Application[], (application) => {
-            const date = getApplicationDate(application);
-            return date ? toMoscow(date).format('D MMMM') : 'Время не указано';
-          }).map((group) => (
-            <div key={group.date} className={styles.dateGroup}>
-              <h3 className={styles.dateHeader}>{group.date}</h3>
-              {group.items.map(renderApplicationRow)}
-            </div>
-          ))}
-
-        {activeTab === 'appointments' &&
-          groupByDate(paginated as Appointment[], (appointment) =>
-            toMoscow(appointment.scheduled_time).format('D MMMM'),
-          ).map((group) => (
-            <div key={group.date} className={styles.dateGroup}>
-              <h3 className={styles.dateHeader}>{group.date}</h3>
-              {group.items.map(renderAppointmentRow)}
-            </div>
-          ))}
+        {groupByDate(paginated as Appointment[], (appointment) =>
+          toMoscow(appointment.scheduled_time).format('D MMMM'),
+        ).map((group) => (
+          <div key={group.date} className={styles.dateGroup}>
+            <h3 className={styles.dateHeader}>{group.date}</h3>
+            {group.items.map(renderAppointmentRow)}
+          </div>
+        ))}
       </div>
 
       {currentItems.length > ITEMS_PER_PAGE && (
@@ -507,23 +249,11 @@ const PsychologistAppointments = () => {
           current={currentPage}
           total={currentItems.length}
           pageSize={ITEMS_PER_PAGE}
-          onChange={setCurrentPage}
+          onChange={(page) => setCurrentPage(FILTERS_TAB, page)}
           showSizeChanger={false}
           className={styles.pagination}
         />
       )}
-
-      <PsychologistAppointmentsModal
-        type="application"
-        entityId={rejectingApplicationId}
-        onClose={() => setRejectingApplicationId(null)}
-      />
-
-      <PsychologistAppointmentsModal
-        type="appointment"
-        entityId={cancellingAppointmentId}
-        onClose={() => setCancellingAppointmentId(null)}
-      />
     </section>
   );
 };

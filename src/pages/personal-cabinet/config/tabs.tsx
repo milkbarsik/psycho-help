@@ -2,11 +2,19 @@ import type { FC } from 'react';
 import type { User } from '@/entities/auth/types';
 import type { RoleCode } from '@/entities/role/types';
 import Dashboard from '../ui/dashboard/Dashboard';
-import AppointmentsPage from '../ui/AppointmentsPage';
+import Applications from '@/pages/personal-cabinet/ui/applications/Applications';
+import Appointments from '@/pages/personal-cabinet/ui/appointments/Appointments';
 import ComingSoon from '../ui/PlaceholderComponent';
 import PersonalData from '@/features/personal-cabinet/ui/personal-data/PersonalData';
 
-export type TabId = 'main' | 'book' | 'profile' | 'appointments' | 'clients' | 'admin';
+export type TabId =
+  | 'main'
+  | 'book'
+  | 'profile'
+  | 'applications'
+  | 'appointments'
+  | 'clients'
+  | 'admin';
 
 export interface TabRenderProps {
   user: User;
@@ -36,7 +44,7 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
     {
       id: 'appointments',
       label: 'Запись на сессию',
-      render: ({ primaryRoleCode }) => <AppointmentsPage role={primaryRoleCode} />,
+      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
     },
     {
       id: 'profile',
@@ -57,9 +65,14 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
       ),
     },
     {
+      id: 'applications',
+      label: 'Заявки',
+      render: ({ primaryRoleCode }) => <Applications role={primaryRoleCode} />,
+    },
+    {
       id: 'appointments',
       label: 'Записи',
-      render: ({ primaryRoleCode }) => <AppointmentsPage role={primaryRoleCode} />,
+      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
     },
     {
       id: 'profile',
@@ -82,7 +95,7 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
     {
       id: 'appointments',
       label: 'Записи',
-      render: ({ primaryRoleCode }) => <AppointmentsPage role={primaryRoleCode} />,
+      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
     },
     {
       id: 'admin',

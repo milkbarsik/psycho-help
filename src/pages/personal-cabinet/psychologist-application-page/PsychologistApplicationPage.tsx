@@ -14,8 +14,8 @@ import type { MeetingType } from '@/entities/application/types';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import Loader from '@/shared/ui/loader/loader';
-import { APPLICATION_STATUS_TAG } from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointmentsConstants';
-import PsychologistAppointmentsModal from '@/features/personal-cabinet/ui/PsychologistAppointmentsModal';
+import { ApplicationStatusTag } from '@/pages/personal-cabinet/constants';
+import PsychologistRejectModal from '@/features/personal-cabinet/ui/PsychologistRejectModal';
 import styles from './PsychologistApplicationPage.module.scss';
 
 const MEETING_TYPE_OPTIONS = [
@@ -112,7 +112,7 @@ const PsychologistApplicationPage = () => {
     return current && current < dayjs().startOf('day');
   };
 
-  const statusUI = APPLICATION_STATUS_TAG[application.status];
+  const statusUI = ApplicationStatusTag[application.status];
 
   return (
     <div className={styles.page}>
@@ -278,7 +278,7 @@ const PsychologistApplicationPage = () => {
                   setUserDate(date);
                 }}
                 disabledDate={disabledDates}
-                headerRender={({ value, type, onChange }) => {
+                headerRender={({ value, onChange }) => {
                   const currentMonth = value.format('MMMM');
                   const capitalizedMonth =
                     currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
@@ -339,7 +339,7 @@ const PsychologistApplicationPage = () => {
         )}
       </div>
 
-      <PsychologistAppointmentsModal
+      <PsychologistRejectModal
         type="application"
         entityId={rejectModalOpen ? id! : null}
         onClose={() => setRejectModalOpen(false)}
