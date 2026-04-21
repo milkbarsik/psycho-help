@@ -15,15 +15,20 @@ export const applicationQueryKey = {
 
 export const applicationQueries = {
   list: (params?: {
+    skip?: number;
+    limit?: number;
     status?: ApplicationStatus;
     assigned_to?: string;
     sort_by?: string;
     sort_desc?: boolean;
-  }) =>
-    queryOptions<Application[]>({
-      queryKey: [applicationQueryKey.list, params],
-      queryFn: async () => (await $api.get('/applications/', { params })).data,
-    }),
+  }) => {
+    const requestParams = { limit: 100, ...params };
+
+    return queryOptions<Application[]>({
+      queryKey: [applicationQueryKey.list, requestParams],
+      queryFn: async () => (await $api.get('/applications/', { params: requestParams })).data,
+    });
+  },
 
   byId: (id: string) =>
     queryOptions<Application>({

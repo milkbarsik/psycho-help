@@ -30,6 +30,7 @@ test-results
 # ai tools
 .claude/
 CLAUDE.md
+.codex
 
 # scripts
 git-pull-all.sh

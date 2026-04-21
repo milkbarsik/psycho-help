@@ -55,22 +55,23 @@ const APPLICATION_FORMAT_OPTIONS = [
 const getApplicantName = (application: Application) =>
   [application.last_name, application.first_name].filter(Boolean).join(' ');
 
-const getApplicationDate = (application: Application): string | null =>
-  application.scheduled_at || application.created_at;
-
 const getApplicationSortTime = (application: Application): number => {
-  const date = getApplicationDate(application);
+  const date = application.scheduled_at;
   return date ? new Date(date).getTime() : 0;
 };
 
-const getTimeRange = (time: string) => {
+const getTimeRange = (time: string | null) => {
+  if (!time) return 'Время ещё не указано';
   const start = toMoscow(time);
   return `${start.format('HH:mm')} - ${start.add(1, 'hour').format('HH:mm')}`;
 };
 
 const getVenueDisplay = (application: Application) => {
   if (application.meeting_type === 'online') return 'Онлайн';
-  return application.location_address ? `${application.location_address} (очно)` : 'Очно';
+  if (application.meeting_type === 'offline') {
+    return application.location_address ? `${application.location_address} (очно)` : 'Очно';
+  }
+  return 'Формат ещё не указан';
 };
 
 const groupByDate = <T,>(
@@ -168,7 +169,7 @@ const PsychologistApplications = () => {
       const fromMs = dayjs(from).startOf('day').valueOf();
       const toMs = dayjs(to).endOf('day').valueOf();
       result = result.filter((a) => {
-        const date = getApplicationDate(a);
+        const date = a.scheduled_at;
         if (!date) return false;
         const t = dayjs(date).valueOf();
         return t >= fromMs && t <= toMs;
@@ -213,9 +214,7 @@ const PsychologistApplications = () => {
     const statusUI = ApplicationStatusTag[application.status];
     return (
       <article key={application.id} className={styles.appointmentRow} role="listitem">
-        {application.scheduled_at && (
-          <div className={styles.timeCol}>{getTimeRange(application.scheduled_at)}</div>
-        )}
+        <div className={styles.timeCol}>{getTimeRange(application.scheduled_at)}</div>
         <div className={styles.infoCol}>
           <span className={styles.patientName}>{getApplicantName(application)}</span>
           <span className={styles.venue}>{getVenueDisplay(application)}</span>
@@ -270,8 +269,8 @@ const PsychologistApplications = () => {
       <div className={styles.list} role="list">
         {paginated.length === 0 && <Empty description="Заявок нет" />}
         {groupByDate(paginated as Application[], (application) => {
-          const date = getApplicationDate(application);
-          return date ? toMoscow(date).format('D MMMM') : 'Время не указано';
+          const date = application.scheduled_at;
+          return date ? toMoscow(date).format('D MMMM') : 'Дата ещё не указана';
         }).map((group) => (
           <div key={group.date} className={styles.dateGroup}>
             <h3 className={styles.dateHeader}>{group.date}</h3>
