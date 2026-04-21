@@ -56,26 +56,26 @@ const PsychologistListFilters = ({
   statusPlaceholder = 'Все статусы',
 }: PsychologistListFiltersProps) => {
   return (
-    <div className={styles.filtersContainer}>
-      <div className={styles.filtersRow} role="search">
+    <div className={styles.filters}>
+      <div className={styles.filters__bar} role="search">
         <AutoComplete
           value={searchQuery}
           options={searchSuggestions}
           onChange={onSearchQueryChange}
-          className={styles.searchInputWrapper}
+          className={styles['filters__search-autocomplete']}
         >
           <Input
             placeholder={searchPlaceholder}
             suffix={<SearchOutlined style={{ color: '#bfbfbf' }} />}
             allowClear
-            className={styles.inputField}
+            className={styles['filters__search-input']}
           />
         </AutoComplete>
 
         <Select
           value={formatFilter === 'all' ? null : formatFilter}
           onChange={(value) => onFormatFilterChange(value || 'all')}
-          className={styles.filterSelect}
+          className={styles['filters__format-select']}
           options={formatOptions}
           placeholder={formatPlaceholder}
           allowClear
@@ -93,22 +93,22 @@ const PsychologistListFilters = ({
           format="DD.MM.YYYY"
           placeholder={['От', 'До']}
           allowClear
-          className={styles.dateRangePicker}
+          className={styles['filters__date-range']}
         />
 
         <Select
           value={statusFilter === 'all' ? null : statusFilter}
           onChange={(value) => onStatusFilterChange(value || 'all')}
-          className={styles.filterSelect}
+          className={styles['filters__status-select']}
           options={statusOptions}
           placeholder={statusPlaceholder}
           allowClear
         />
       </div>
 
-      <div className={styles.sortRow}>
+      <div className={styles.filters__bar}>
         <button
-          className={styles.sortToggleBtn}
+          className={styles['filters__sort-button']}
           onClick={() => onSortDirectionChange(sortDirection === 'asc' ? 'desc' : 'asc')}
         >
           Сортировка по дате
@@ -116,7 +116,7 @@ const PsychologistListFilters = ({
         </button>
 
         {hasActiveFilters && (
-          <button className={styles.resetFiltersBtn} onClick={onResetFilters}>
+          <button className={styles['filters__reset-button']} onClick={onResetFilters}>
             Сбросить фильтры
           </button>
         )}

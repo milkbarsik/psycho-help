@@ -1,29 +1,29 @@
-.filtersContainer {
+.filters {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.filtersRow {
+.filters__bar {
   display: flex;
   gap: 16px;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.searchInputWrapper {
+.filters__search-autocomplete {
   flex: 1;
   min-width: 280px;
   max-width: 400px;
   height: unset;
 }
 
-.inputField {
+.filters__search-input {
   border-radius: 6px;
   height: 40px;
 }
 
-.filterSelect {
+.filters__format-select {
   min-width: 160px;
   height: 40px;
 
@@ -34,13 +34,19 @@
   }
 }
 
-.dateRangePicker {
+.filters__date-range {
   min-width: 240px;
   height: 40px;
   border-radius: 6px;
 }
 
-.sortToggleBtn {
+.filters__actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.filters__sort-button {
   align-self: flex-start;
   background: none;
   border: none;
@@ -63,13 +69,7 @@
   }
 }
 
-.sortRow {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.resetFiltersBtn {
+.filters__reset-button {
   background: none;
   border: none;
   color: black;

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import dayjs from 'dayjs';
 import type { ApplicationStatus } from '@/entities/application/types';
 import type { AppointmentStatus } from '@/entities/appointment/types';
 
@@ -29,14 +30,18 @@ interface ViewState {
   resetFilters: (tab: ActiveTab) => void;
 }
 
-const defaultFilters = {
+export const getDefaultDateRange = (): [string, string] => [
+  dayjs().startOf('day').toISOString(),
+  dayjs().add(1, 'month').startOf('day').toISOString(),
+];
+
+const getDefaultFilters = (): Omit<TabFilters<any>, 'statusFilter'> => ({
   currentPage: 1,
-  sortDirection: 'desc' as const,
-  statusFilter: 'all' as const,
+  sortDirection: 'asc' as const,
   formatFilter: 'all' as const,
   searchQuery: '',
-  dateRange: null,
-};
+  dateRange: getDefaultDateRange(),
+});
 
 const filtersKey = (tab: ActiveTab): 'applicationFilters' | 'appointmentFilters' =>
   tab === 'applications' ? 'applicationFilters' : 'appointmentFilters';
@@ -48,8 +53,14 @@ export const usePsychologistView = create<ViewState>((set, get) => {
   };
 
   return {
-    applicationFilters: { ...defaultFilters },
-    appointmentFilters: { ...defaultFilters },
+    applicationFilters: {
+      ...getDefaultFilters(),
+      statusFilter: 'all' as ApplicationStatusFilter,
+    },
+    appointmentFilters: {
+      ...getDefaultFilters(),
+      statusFilter: 'all' as AppointmentStatusFilter,
+    },
 
     setCurrentPage: (tab, page) => updateFilter(tab, { currentPage: page }),
     setSortDirection: (tab, dir) => updateFilter(tab, { sortDirection: dir, currentPage: 1 }),
@@ -58,6 +69,19 @@ export const usePsychologistView = create<ViewState>((set, get) => {
     setSearchQuery: (tab, query) => updateFilter(tab, { searchQuery: query, currentPage: 1 }),
     setDateRange: (tab, range) => updateFilter(tab, { dateRange: range, currentPage: 1 }),
 
-    resetFilters: (tab) => set({ [filtersKey(tab)]: { ...defaultFilters } }),
+    resetFilters: (tab) => {
+      const key = filtersKey(tab);
+      const defaultWithoutStatus = getDefaultFilters();
+      const statusFilter =
+        tab === 'applications'
+          ? ('all' as ApplicationStatusFilter)
+          : ('all' as AppointmentStatusFilter);
+      set({
+        [key]: {
+          ...defaultWithoutStatus,
+          statusFilter,
+        },
+      });
+    },
   };
 });
