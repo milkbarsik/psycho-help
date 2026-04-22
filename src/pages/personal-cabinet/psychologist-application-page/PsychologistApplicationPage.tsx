@@ -143,20 +143,9 @@ const PsychologistApplicationPage = () => {
 
   return (
     <div className={styles.page}>
-      {/* Хлебные крошки */}
-      <nav className={styles.breadcrumbs}>
-        <span className={styles.crumb} onClick={() => navigate('/')}>
-          Главная
-        </span>
-        <span className={styles.crumbSeparator}>/</span>
-        <span className={styles.crumb} onClick={() => navigate(-1)}>
-          Заявки
-        </span>
-        <span className={styles.crumbSeparator}>/</span>
-        <span className={styles.crumbActive}>
-          {application.last_name} {application.first_name}
-        </span>
-      </nav>
+      <button type="button" onClick={() => navigate(-1)} className={styles.back}>
+        Назад
+      </button>
 
       <div className={styles.layout}>
         {/* Левая колонка — основной контент */}
@@ -295,9 +284,6 @@ const PsychologistApplicationPage = () => {
                   {offerMutation.isPending ? 'Сохранение...' : 'Запросить подтверждение'}
                 </button>
               )}
-              <button type="button" onClick={() => navigate(-1)} className={styles.back}>
-                Назад
-              </button>
             </div>
           )}
         </div>

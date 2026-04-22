@@ -210,9 +210,6 @@ const PsychologistAppointmentPage = () => {
           >
             {completeMutation.isPending ? 'Завершение...' : 'Завершить'}
           </button>
-          <button type="button" onClick={() => navigate(-1)} className={styles.back}>
-            Назад
-          </button>
         </div>
       )}
 
