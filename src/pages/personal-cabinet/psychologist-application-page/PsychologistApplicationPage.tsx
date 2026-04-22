@@ -13,6 +13,7 @@ import {
   applicationQueries,
   applicationQueryKey,
   offerConsultation,
+  acceptApplication,
 } from '@/entities/application/api';
 import type { MeetingType } from '@/entities/application/types';
 import { Role } from '@/entities/role/helpers';
@@ -51,6 +52,7 @@ const PsychologistApplicationPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = useAuth((s) => s.user);
+  const userId = user?.id;
 
   const isPsychologist = useMemo(() => !!user && new Role(user.roles).isPsychologist(), [user]);
 
@@ -84,6 +86,15 @@ const PsychologistApplicationPage = () => {
     return selectedDate.tz(MOSCOW_TZ, true).hour(hours).minute(minutes).second(0);
   }, [selectedDate, selectedTime]);
 
+  const acceptMutation = useMutation({
+    mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] }),
+    onError: (error: AxiosError<{ detail?: string }>) => {
+      const detail = error.response?.data?.detail;
+      message.error(detail || 'Не удалось выполнить операцию');
+    },
+  });
+
   const offerMutation = useMutation({
     mutationFn: () =>
       offerConsultation(id!, {
@@ -109,7 +120,9 @@ const PsychologistApplicationPage = () => {
   if (isLoading) return <Loader />;
   if (!application) return <Empty description="Заявка не найдена" />;
 
-  const isInProgress = application.status === 'in_progress';
+  const canAccept = application.status === 'new';
+  const canChange =
+    application.status === 'in_progress' || application.status === 'awaiting_user_confirmation';
   const canReject =
     application.status === 'new' ||
     application.status === 'in_progress' ||
@@ -117,7 +130,7 @@ const PsychologistApplicationPage = () => {
 
   // Проверка обязательных полей для записи
   const canSave =
-    isInProgress &&
+    canChange &&
     meetingType &&
     selectedDateTime &&
     (meetingType === 'offline' ? locationAddress.trim().length > 0 : meetingUrl.trim().length > 0);
@@ -148,7 +161,7 @@ const PsychologistApplicationPage = () => {
       <div className={styles.layout}>
         {/* Левая колонка — основной контент */}
         <div className={styles.mainContent}>
-          <h1 className={styles.pageTitle}>Первичная консультация</h1>
+          <h1 className={styles.pageTitle}>Заявка</h1>
 
           <h2 className={styles.userName}>
             {application.last_name} {application.first_name}
@@ -179,8 +192,6 @@ const PsychologistApplicationPage = () => {
             </div>
           )}
 
-          <hr className={styles.divider} />
-
           {/* Данные, указанные при записи */}
           <section className={styles.dataSection}>
             <h3 className={styles.sectionTitle}>
@@ -208,8 +219,8 @@ const PsychologistApplicationPage = () => {
 
           <hr className={styles.divider} />
 
-          {/* Формат и дата (только для in_progress) */}
-          {isInProgress && (
+          {/* Формат и дата (только при редактировании) */}
+          {canChange && (
             <section className={styles.dataSection}>
               <h3 className={styles.sectionTitle}>Назначить консультацию</h3>
               <div className={styles.formRow}>
@@ -254,7 +265,7 @@ const PsychologistApplicationPage = () => {
           )}
 
           {/* Кнопки действий */}
-          {(isInProgress || canReject) && (
+          {(canReject || canAccept || canChange) && (
             <div className={styles.actions}>
               {canReject && (
                 <button
@@ -265,22 +276,34 @@ const PsychologistApplicationPage = () => {
                   Отклонить заявку
                 </button>
               )}
-              {isInProgress && (
+              {canAccept && (
+                <button
+                  className={styles.btnConfirm}
+                  onClick={() => acceptMutation.mutate(application.id)}
+                  disabled={acceptMutation.isPending}
+                >
+                  В работу
+                </button>
+              )}
+              {canChange && (
                 <button
                   className={styles.btnPrimary}
                   type="button"
                   onClick={() => offerMutation.mutate()}
                   disabled={!canSave}
                 >
-                  {offerMutation.isPending ? 'Сохранение...' : 'Предложить время'}
+                  {offerMutation.isPending ? 'Сохранение...' : 'Запросить подтверждение'}
                 </button>
               )}
+              <button type="button" onClick={() => navigate(-1)} className={styles.back}>
+                Назад
+              </button>
             </div>
           )}
         </div>
 
         {/* Правая колонка — запись на сессию */}
-        {isInProgress && (
+        {canChange && (
           <aside className={styles.sidebar}>
             <div className={styles.sidebarCard}>
               <h3 className={styles.sidebarTitle}>Запись на сессию</h3>
@@ -339,16 +362,6 @@ const PsychologistApplicationPage = () => {
                   options={TIME_SLOTS.map((slot) => ({ value: slot, label: slot }))}
                 />
               </div>
-
-              {/* Кнопка записи */}
-              <button
-                className={styles.btnPrimaryFull}
-                type="button"
-                onClick={() => offerMutation.mutate()}
-                disabled={!canSave}
-              >
-                {offerMutation.isPending ? 'Запись...' : 'Предложить запись'}
-              </button>
             </div>
           </aside>
         )}

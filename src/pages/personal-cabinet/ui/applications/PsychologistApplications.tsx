@@ -36,7 +36,7 @@ const APPLICATION_STATUS_OPTIONS = [
   { value: 'all', label: 'Все статусы' },
   { value: 'new', label: 'Новая' },
   { value: 'in_progress', label: 'В работе' },
-  { value: 'awaiting_user_confirmation', label: 'Ожидает подтверждения' },
+  { value: 'awaiting_user_confirmation', label: 'На подтверждении' },
   { value: 'completed', label: 'Завершено' },
   { value: 'closed', label: 'Отменено' },
 ];

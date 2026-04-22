@@ -101,7 +101,7 @@ const PsychologistAppointmentPage = () => {
         Назад
       </button>
 
-      <h2 className={styles.title}>Запись на консультацию</h2>
+      <h2 className={styles.title}>Запись</h2>
 
       {appointment.status === 'cancelled' && serverCancelReason && (
         <div className={styles.reasonBlockCancelled}>
@@ -200,6 +200,9 @@ const PsychologistAppointmentPage = () => {
 
       {isActive && (
         <div className={styles.actions}>
+          <button onClick={() => setCancelModalOpen(true)} disabled={completeMutation.isPending}>
+            Отменить
+          </button>
           <button
             type="button"
             onClick={() => completeMutation.mutate()}
@@ -207,8 +210,8 @@ const PsychologistAppointmentPage = () => {
           >
             {completeMutation.isPending ? 'Завершение...' : 'Завершить'}
           </button>
-          <button onClick={() => setCancelModalOpen(true)} disabled={completeMutation.isPending}>
-            Отменить
+          <button type="button" onClick={() => navigate(-1)} className={styles.back}>
+            Назад
           </button>
         </div>
       )}
