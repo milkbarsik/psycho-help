@@ -7,7 +7,7 @@
 .status {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.8rem;
 }
 
 .status-dot {
@@ -37,9 +37,11 @@
 }
 
 .status-text {
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--color-label-neutral-secondary);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: var( --color-label-neutral-primary);
+  font-family: var(--font-text-medium);
+  font-weight: 400;
 }
 
 .breadcrumbs {
@@ -70,7 +72,7 @@
 
 .layout {
   display: flex;
-  gap: 32px;
+  gap: 2.4rem;
   align-items: flex-start;
 }
 
@@ -80,17 +82,20 @@
 }
 
 .pageTitle {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 3.2rem;
+  line-height: 3.6rem;
+  font-family: var(--font-h4);
+  font-weight: 700;
   color: var(--color-label-neutral-primary, #111827);
-  margin: 0 0 16px 0;
+  margin: 24px 0 24px 0;
 }
 
 .userName {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  font-weight: 400;
   color: var(--color-label-neutral-primary, #111827);
-  margin: 0 0 4px 0;
+  margin: 0 0 24px 0;
 }
 
 .userStatus {
@@ -101,8 +106,7 @@
 
 .statusRow {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
   margin-bottom: 12px;
 }
 
@@ -172,13 +176,17 @@
 
 .dataSection {
   margin-bottom: 8px;
+  margin-top: 24px;
 }
 
 .sectionTitle {
-  font-size: 16px;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  font-family: var(--font-text-large);
   font-weight: 500;
   color: var(--color-label-neutral-primary, #111827);
-  margin: 0 0 16px 0;
+  margin: 0 0 10px 0;
+  padding: 0 24px;
 }
 
 .requiredStar {
@@ -187,18 +195,23 @@
 }
 
 .dataGrid {
+  width: 100% ;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr 1fr;
   gap: 16px;
+  justify-items: center;
 }
 
 .dataItem {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
 .dataItemFull {
+  width: 100%;
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
@@ -206,21 +219,49 @@
 }
 
 .dataLabel {
-  font-size: 13px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-family: var(--font-text-medium);
   color: var(--color-label-neutral-secondary, #6b7280);
 }
 
 .dataValue {
-  font-size: 15px;
+  font-size: 1.6rem;
+  font-family: var(--font-text-medium);
   color: var(--color-label-neutral-primary, #111827);
-  line-height: 1.5;
+  line-height: 2.4rem;
+  border: 1px solid var(--color-border-neutral-base, #e5e7eb);
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.dataValueDescription {
+  width: 100%;
+  font-size: 1.6rem;
+  font-family: var(--font-text-medium);
+  color: var(--color-label-neutral-primary, #111827);
+  line-height: 2.4rem;
+  margin-top: 12px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dataValueDescription.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
 }
 
 .formRow {
+  width: 100%;
   display: flex;
-  gap: 16px;
   align-items: flex-end;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .formField {
@@ -228,6 +269,8 @@
   flex-direction: column;
   gap: 6px;
   min-width: 220px;
+  width: 100%;
+  padding: 10px 24px;
 }
 
 .formFieldGrow {
@@ -235,9 +278,10 @@
 }
 
 .fieldLabel {
-  font-size: 14px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
   color: var(--color-label-neutral-primary, #111827);
-  font-weight: 500;
+  font-family: var(--font-text-medium);
 }
 
 .fieldSelect {
@@ -273,7 +317,7 @@
   display: flex;
   gap: 12px;
   justify-content: flex-end;
-  margin-top: 32px;
+  margin-top: 36px;
 }
 
 .btnPrimary {
@@ -281,8 +325,10 @@
   background-color: var(--color-interactive-brand-primary, #2563eb);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  font-size: 15px;
+  border-radius: 16px;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  font-family: var(--font-text-large-button);
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -298,18 +344,21 @@
 }
 
 .btnSecondary {
-  padding: 10px 24px;
-  background-color: transparent;
-  color: var(--color-label-neutral-primary, #111827);
-  border: 1px solid var(--color-border-neutral-base, #e5e7eb);
-  border-radius: 8px;
-  font-size: 15px;
+  padding: 1.2rem 3.6rem;
+  background-color: var(  --color-fill-danger-tetriary);
+  color: var(--color-label-danger-primary);
+  border: 1px solid transparent;
+  border-radius: 16px;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  font-family: var(--font-text-large-button);
   font-weight: 500;
   cursor: pointer;
   transition: border-color 0.2s;
 
   &:hover {
-    border-color: var(--color-label-neutral-primary, #111827);
+    border-color: var(--color-label-danger-secondary);
+    transition: all 0.4s;
   }
 }
 
@@ -325,8 +374,9 @@
 }
 
 .sidebarTitle {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  font-family: var(--font-text-large);
   color: var(--color-label-neutral-primary, #111827);
   margin: 0 0 16px 0;
 }
@@ -447,4 +497,46 @@
   .btnSecondary {
     width: 100%;
   }
+}
+
+.back {
+  display: flex;
+  gap: 1.2rem;
+  outline: none;
+  background: none;
+  border: none;
+  color: var(--color-label-neutral-primary);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-family: var(--font-text-medium);
+  margin-top: 7.2rem;
+}
+
+.statusLabel {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-family: var(--font-text-medium);
+  font-weight: 400;
+  color: var( --color-label-neutral-secondary, #111827);
+}
+
+.expandButton {
+  color: var(--color-label-brand-primary);
+  outline: none;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-family: var(--font-text-medium);
+  margin-top: 10px;
+  margin-left: auto;
+}
+
+.dataValueDescriptionWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldLabel input {
+  font-family: var(--font-text-medium);
 }

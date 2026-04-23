@@ -139,26 +139,53 @@ const PsychologistApplicationPage = () => {
     return current && current < dayjs().startOf('day');
   };
 
+  interface ExpandableTextProps {
+    text: string;
+  }
+
+  const ExpandableText: React.FC<ExpandableTextProps> = ({ text }) => {
+    const [isExpanded, setIsExpanded] = useState<boolean>(false);
+    if (!text) return null;
+    return (
+      <div className={styles.dataValueDescriptionWrapper}>
+      <span
+        className={`${styles.dataValueDescription} ${isExpanded ? styles.expanded : ''}`}
+      >
+        {text}
+      </span>
+        {text.length > 100 && (
+          <button
+            className={styles.expandButton}
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? 'Свернуть' : 'Открыть полностью'}
+          </button>
+        )}
+      </div>
+    );
+  };
+
   const statusUI = ApplicationStatusTag[application.status];
 
   return (
     <div className={styles.page}>
       <button type="button" onClick={() => navigate(-1)} className={styles.back}>
-        Назад
+        <span>&lt;</span>
+        <span>Вернуться назад</span>
       </button>
 
       <div className={styles.layout}>
-        {/* Левая колонка — основной контент */}
+        {/* правая колонка — основной контент */}
         <div className={styles.mainContent}>
           <h1 className={styles.pageTitle}>Заявка</h1>
 
           <h2 className={styles.userName}>
             {application.last_name} {application.first_name}
           </h2>
-          <p className={styles.userStatus}>{application.university_status}</p>
 
           {/* Статус заявки */}
           <div className={styles.statusRow}>
+            <p className={styles.statusLabel}>Статус</p>
             <div className={styles['status']}>
               <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
               <span className={styles['status-text']}>{statusUI.text}</span>
@@ -183,9 +210,9 @@ const PsychologistApplicationPage = () => {
 
           {/* Данные, указанные при записи */}
           <section className={styles.dataSection}>
-            <h3 className={styles.sectionTitle}>
-              <span className={styles.requiredStar}>*</span> Данные, указанные при записи
-            </h3>
+            {/*<h3 className={styles.sectionTitle}>*/}
+            {/*  <span className={styles.requiredStar}>*</span> Данные, указанные при записи*/}
+            {/*</h3>*/}
             <div className={styles.dataGrid}>
               <div className={styles.dataItem}>
                 <span className={styles.dataLabel}>Email:</span>
@@ -199,59 +226,20 @@ const PsychologistApplicationPage = () => {
                 <span className={styles.dataLabel}>Кампус:</span>
                 <span className={styles.dataValue}>{application.preferred_campus || '—'}</span>
               </div>
-              <div className={styles.dataItemFull}>
-                <span className={styles.dataLabel}>Описание проблемы:</span>
-                <span className={styles.dataValue}>{application.problem_description}</span>
+              <div className={styles.dataItem}>
+                <span className={styles.dataLabel}>Время:</span>
+                <span className={styles.dataValue}>{application.scheduled_at || '—'}</span>
               </div>
             </div>
           </section>
 
           <hr className={styles.divider} />
 
-          {/* Формат и дата (только при редактировании) */}
-          {canChange && (
-            <section className={styles.dataSection}>
-              <h3 className={styles.sectionTitle}>Назначить консультацию</h3>
-              <div className={styles.formRow}>
-                <div className={styles.formField}>
-                  <label className={styles.fieldLabel}>Формат</label>
-                  <Select
-                    value={meetingType}
-                    onChange={(val) => {
-                      setUserMeetingType(val);
-                      setLocationAddress('');
-                      setMeetingUrl('');
-                    }}
-                    options={MEETING_TYPE_OPTIONS}
-                    placeholder="Выберите формат"
-                    className={styles.fieldSelect}
-                  />
-                </div>
+          <div className={styles.dataItemFull}>
+            <span className={styles.dataLabel}>Описание проблемы:</span>
+            <ExpandableText text={application.problem_description} />
+          </div>
 
-                {meetingType === 'offline' && (
-                  <div className={`${styles.formField} ${styles.formFieldGrow}`}>
-                    <label className={styles.fieldLabel}>Адрес проведения</label>
-                    <Input
-                      placeholder="Укажите кабинет / здание"
-                      value={locationAddress}
-                      onChange={(e) => setLocationAddress(e.target.value)}
-                    />
-                  </div>
-                )}
-
-                {meetingType === 'online' && (
-                  <div className={`${styles.formField} ${styles.formFieldGrow}`}>
-                    <label className={styles.fieldLabel}>Ссылка на встречу</label>
-                    <Input
-                      placeholder="Zoom, Google Meet или другая платформа"
-                      value={meetingUrl}
-                      onChange={(e) => setMeetingUrl(e.target.value)}
-                    />
-                  </div>
-                )}
-              </div>
-            </section>
-          )}
 
           {/* Кнопки действий */}
           {(canReject || canAccept || canChange) && (
@@ -349,6 +337,50 @@ const PsychologistApplicationPage = () => {
                 />
               </div>
             </div>
+            {/* Формат и дата (только при редактировании) */}
+            {canChange && (
+              <section className={styles.dataSection}>
+                <h3 className={styles.sectionTitle}>Назначить консультацию</h3>
+                <div className={styles.formRow}>
+                  <div className={styles.formField}>
+                    <label className={styles.fieldLabel}>Формат</label>
+                    <Select
+                      value={meetingType}
+                      onChange={(val) => {
+                        setUserMeetingType(val);
+                        setLocationAddress('');
+                        setMeetingUrl('');
+                      }}
+                      options={MEETING_TYPE_OPTIONS}
+                      placeholder="Выберите формат"
+                      className={styles.fieldSelect}
+                    />
+                  </div>
+
+                  {meetingType === 'offline' && (
+                    <div className={`${styles.formField} ${styles.formFieldGrow}`}>
+                      <label className={styles.fieldLabel}>Адрес проведения</label>
+                      <Input
+                        placeholder="Укажите кабинет / здание"
+                        value={locationAddress}
+                        onChange={(e) => setLocationAddress(e.target.value)}
+                      />
+                    </div>
+                  )}
+
+                  {meetingType === 'online' && (
+                    <div className={`${styles.formField} ${styles.formFieldGrow}`}>
+                      <label className={styles.fieldLabel}>Ссылка на встречу</label>
+                      <Input
+                        placeholder="Zoom, Google Meet или другая платформа"
+                        value={meetingUrl}
+                        onChange={(e) => setMeetingUrl(e.target.value)}
+                      />
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
           </aside>
         )}
       </div>
