@@ -82,6 +82,7 @@ const PsychologistRejectModal = ({
       styles={{
         body: { marginBottom: 25 },
       }}
+      centered={true}
       title={config.title}
       open={entityId !== null}
       onCancel={handleClose}

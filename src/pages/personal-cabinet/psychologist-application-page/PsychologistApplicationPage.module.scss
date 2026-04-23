@@ -41,7 +41,7 @@
   line-height: 2.4rem;
   color: var( --color-label-neutral-primary);
   font-family: var(--font-text-medium);
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .breadcrumbs {
@@ -74,6 +74,7 @@
   display: flex;
   gap: 2.4rem;
   align-items: flex-start;
+  margin-bottom: 140px;
 }
 
 .mainContent {
@@ -357,8 +358,7 @@
   transition: border-color 0.2s;
 
   &:hover {
-    border-color: var(--color-label-danger-secondary);
-    transition: all 0.4s;
+    background-color: var(--color-fill-danger-secondary);
   }
 }
 

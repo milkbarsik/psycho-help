@@ -98,7 +98,8 @@ const PsychologistAppointmentPage = () => {
   return (
     <article className={styles.wrapper}>
       <button type="button" onClick={() => navigate(-1)} className={styles.back}>
-        Назад
+        <span>&lt;</span>
+        <span>Вернуться назад</span>
       </button>
 
       <h2 className={styles.title}>Запись</h2>
@@ -114,47 +115,59 @@ const PsychologistAppointmentPage = () => {
         {patientName && (
           <div className={styles.infoRow}>
             <span className={styles.infoLabel}>Пациент</span>
-            <span className={styles.infoValue}>{patientName}</span>
+            <span className={styles.infoName}>{patientName}</span>
+          </div>
+        )}
+        {statusUI && (
+          <div className={styles.infoRow}>
+            <span className={styles.statusLabel}>Статус</span>
+            <div className={styles['status']}>
+              <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
+              <span className={styles['status-text']}>{statusUI.text}</span>
+            </div>
           </div>
         )}
         {patient?.email && (
           <div className={styles.infoRow}>
             <span className={styles.infoLabel}>Email пациента</span>
-            <span className={styles.infoValue}>{patient.email}</span>
+            <span className={styles.infoValueEmail}>{patient.email}</span>
           </div>
         )}
         {patient?.phone_number && (
           <div className={styles.infoRow}>
             <span className={styles.infoLabel}>Телефон пациента</span>
-            <span className={styles.infoValue}>{patient.phone_number}</span>
+            <span className={styles.infoValuePhone}>{patient.phone_number}</span>
           </div>
         )}
-        {patient?.social_media && (
-          <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Соцсети</span>
-            <span className={styles.infoValue}>{patient.social_media}</span>
-          </div>
-        )}
-        {formatDateTime(appointment.scheduled_time) && (
-          <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Дата и время</span>
-            <span className={styles.infoValue}>{formatDateTime(appointment.scheduled_time)}</span>
-          </div>
-        )}
-        {appointment.type && (
-          <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Формат</span>
-            <span className={styles.infoValue}>
+        <div className={styles.infoGrid}>
+          {patient?.social_media && (
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Соцсети</span>
+              <span className={styles.infoValueGrid}>{patient.social_media}</span>
+            </div>
+          )}
+          {formatDateTime(appointment.scheduled_time) && (
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Дата и время</span>
+              <span className={styles.infoValueGrid}>{formatDateTime(appointment.scheduled_time)}</span>
+            </div>
+          )}
+          {appointment.type && (
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Формат</span>
+              <span className={styles.infoValueGrid}>
               {TYPE_LABELS[appointment.type] ?? appointment.type}
             </span>
-          </div>
-        )}
-        {appointment.venue && (
-          <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Место</span>
-            <span className={styles.infoValue}>{appointment.venue}</span>
-          </div>
-        )}
+            </div>
+          )}
+          {appointment.venue && (
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Место</span>
+              <span className={styles.infoValueGrid}>{appointment.venue}</span>
+            </div>
+          )}
+        </div>
+
         {appointment.reason && (
           <div className={styles.infoRow}>
             <span className={styles.infoLabel}>Причина записи</span>
@@ -173,14 +186,7 @@ const PsychologistAppointmentPage = () => {
             <span className={styles.infoValue}>{formatDateTime(appointment.last_change_time)}</span>
           </div>
         )}
-        {statusUI && (
-          <div className={styles.infoRow}>
-            <div className={styles['status']}>
-              <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
-              <span className={styles['status-text']}>{statusUI.text}</span>
-            </div>
-          </div>
-        )}
+
         {isActive && (
           <div className={styles.infoRow}>
             <span className={styles.infoLabel}>Заключение</span>
@@ -200,11 +206,12 @@ const PsychologistAppointmentPage = () => {
 
       {isActive && (
         <div className={styles.actions}>
-          <button onClick={() => setCancelModalOpen(true)} disabled={completeMutation.isPending}>
+          <button className={styles.actionButtonCancel} onClick={() => setCancelModalOpen(true)} disabled={completeMutation.isPending}>
             Отменить
           </button>
           <button
             type="button"
+            className={styles.actionButtonEnd}
             onClick={() => completeMutation.mutate()}
             disabled={comment.trim().length === 0 || completeMutation.isPending}
           >

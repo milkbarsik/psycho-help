@@ -384,9 +384,7 @@ const PsychologistApplicationPage = () => {
           </aside>
         )}
       </div>
-      <div>
 
-      </div>
       <PsychologistRejectModal
         type="application"
         entityId={rejectModalOpen ? id! : null}
