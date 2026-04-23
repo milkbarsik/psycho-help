@@ -540,3 +540,26 @@
 .fieldLabel input {
   font-family: var(--font-text-medium);
 }
+
+.btnConfirm {
+  padding: 12px 50px;
+  background-color: var(--color-interactive-brand-primary, #2563eb);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  font-family: var(--font-text-large);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--color-interactive-brand-hover, #1d4ed8);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
