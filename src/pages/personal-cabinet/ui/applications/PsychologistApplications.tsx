@@ -202,14 +202,18 @@ const PsychologistApplications = () => {
     const statusUI = ApplicationStatusTag[application.status];
     return (
       <article key={application.id} className={styles.appointmentRow} role="listitem">
-        <div className={styles.timeCol}>{getTimeRange(application.scheduled_at)}</div>
-        <div className={styles.infoCol}>
-          <span className={styles.patientName}>{getApplicantName(application)}</span>
-          <span className={styles.venue}>{getVenueDisplay(application)}</span>
-        </div>
-        <div className={styles['status']}>
-          <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
-          <span className={styles['status-text']}>{statusUI.text}</span>
+        <div className={styles.contentCol}>
+          <div className={styles.timeStatusRow}>
+            <div className={styles.timeCol}>{getTimeRange(application.scheduled_at)}</div>
+            <div className={styles['status']}>
+              <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
+              <span className={styles['status-text']}>{statusUI.text}</span>
+            </div>
+          </div>
+          <div className={styles.infoCol}>
+            <span className={styles.patientName}>{getApplicantName(application)}</span>
+            <span className={styles.location}>{getVenueDisplay(application)}</span>
+          </div>
         </div>
         <div className={styles.actionsCol}>
           {application.status === 'new' && (
@@ -222,7 +226,7 @@ const PsychologistApplications = () => {
             </button>
           )}
           <button
-            className={styles.btnOpenOutline}
+            className={styles.btnOpen}
             onClick={() => navigate(`/cabinet/application/${application.id}`)}
           >
             Открыть
