@@ -73,6 +73,15 @@ const PsychologistListFilters = ({
         </AutoComplete>
 
         <Select
+          value={statusFilter === 'all' ? null : statusFilter}
+          onChange={(value) => onStatusFilterChange(value || 'all')}
+          className={styles['filters__status-select']}
+          options={statusOptions}
+          placeholder={statusPlaceholder}
+          allowClear
+        />
+
+        <Select
           value={formatFilter === 'all' ? null : formatFilter}
           onChange={(value) => onFormatFilterChange(value || 'all')}
           className={styles['filters__format-select']}
@@ -94,15 +103,6 @@ const PsychologistListFilters = ({
           placeholder={['От', 'До']}
           allowClear
           className={styles['filters__date-range']}
-        />
-
-        <Select
-          value={statusFilter === 'all' ? null : statusFilter}
-          onChange={(value) => onStatusFilterChange(value || 'all')}
-          className={styles['filters__status-select']}
-          options={statusOptions}
-          placeholder={statusPlaceholder}
-          allowClear
         />
       </div>
 
