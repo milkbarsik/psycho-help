@@ -285,17 +285,78 @@ const PsychologistApplicationPage = () => {
                     <span className={styles.dataValue}>{application.preferred_campus || '—'}</span>
                   </div>
                   <div className={styles.dataItem}>
-                    <span className={styles.dataLabel}>Время:</span>
-                    <span className={styles.dataValue}>
-                      {applicationScheduledAt
-                        ? applicationScheduledAt.format('D MMMM YYYY, HH:mm')
-                        : '—'}
-                    </span>
+                    <span className={styles.dataLabel}>Статус пациента:</span>
+                    <span className={styles.dataValue}>{application.university_status}</span>
                   </div>
+                  <h3 className={styles.sidebarTitle}>Запись на сессию</h3>
+                  <label className={styles.fieldLabel}>
+                    <span className={styles.dataLabel}>Дата</span>
+                    <div className={styles.timeWrapper}>
+                      <DatePicker
+                        className={styles.fieldPicker}
+                        value={selectedDate}
+                        onChange={(date) => setUserDate(date ? date.startOf('day') : null)}
+                        disabledDate={disabledDates}
+                        format="DD.MM.YYYY"
+                        placeholder="—"
+                        allowClear={false}
+                      />
+                    </div>
+                  </label>
+
+                  <label className={styles.fieldLabel}>
+                    <span className={styles.fieldLabel}>Время</span>
+                    <div className={styles.fieldSelectWrapper}>
+                      <Select
+                        className={styles.fieldSelect}
+                        prefixCls="customSelect"
+                        value={selectedTime || undefined}
+                        onChange={setUserTime}
+                        placeholder="—"
+                        options={timeOptions}
+                      />
+                    </div>
+                  </label>
+
+                  <label className={styles.fieldLabel}>
+                    <span className={styles.fieldLabel}>Формат</span>
+                    <div className={styles.fieldSelectWrapper}>
+                      <Select
+                        className={styles.fieldSelect}
+                        prefixCls="customSelect"
+                        value={meetingType ?? undefined}
+                        onChange={setUserMeetingType}
+                        options={MEETING_TYPE_OPTIONS}
+                        placeholder="—"
+                      />
+                    </div>
+                  </label>
+
+                  {meetingType === 'offline' && (
+                    <label className={styles.fieldLabel}>
+                      <span className={styles.fieldLabel}>Адрес проведения</span>
+                      <Input
+                        className={styles.dataValue}
+                        placeholder="—"
+                        value={locationAddress}
+                        onChange={(e) => setUserLocationAddress(e.target.value)}
+                      />
+                    </label>
+                  )}
+
+                  {meetingType === 'online' && (
+                    <label className={styles.fieldLabel}>
+                      <span className={styles.fieldLabel}>Ссылка на встречу</span>
+                      <Input
+                        className={styles.dataValue}
+                        placeholder="—"
+                        value={meetingUrl}
+                        onChange={(e) => setUserMeetingUrl(e.target.value)}
+                      />
+                    </label>
+                  )}
                 </div>
               </section>
-
-              <hr className={styles.divider} />
 
               <div className={styles.dataItemFull}>
                 <span className={styles.dataLabel}>Описание проблемы:</span>
@@ -336,74 +397,6 @@ const PsychologistApplicationPage = () => {
                 </div>
               )}
             </div>
-
-            {/* Правая колонка — запись на сессию */}
-            {canChange && (
-              <aside className={styles.sidebar}>
-                <div className={styles.sidebarCard}>
-                  <h3 className={styles.sidebarTitle}>Запись на сессию</h3>
-
-                  <div className={styles.scheduleFields}>
-                    <label className={styles.fieldLabel}>
-                      <span>Дата</span>
-                      <DatePicker
-                        value={selectedDate}
-                        onChange={(date) => setUserDate(date ? date.startOf('day') : null)}
-                        disabledDate={disabledDates}
-                        format="DD.MM.YYYY"
-                        placeholder="—"
-                        allowClear={false}
-                        className={styles.fieldPicker}
-                      />
-                    </label>
-
-                    <label className={styles.fieldLabel}>
-                      <span>Время</span>
-                      <Select
-                        value={selectedTime || undefined}
-                        onChange={setUserTime}
-                        placeholder="—"
-                        className={styles.fieldSelect}
-                        options={timeOptions}
-                      />
-                    </label>
-
-                    <label className={styles.fieldLabel}>
-                      <span>Формат</span>
-                      <Select
-                        value={meetingType ?? undefined}
-                        onChange={setUserMeetingType}
-                        options={MEETING_TYPE_OPTIONS}
-                        placeholder="—"
-                        className={styles.fieldSelect}
-                      />
-                    </label>
-
-                    {meetingType === 'offline' && (
-                      <label className={styles.fieldLabel}>
-                        <span>Адрес проведения</span>
-                        <Input
-                          placeholder="—"
-                          value={locationAddress}
-                          onChange={(e) => setUserLocationAddress(e.target.value)}
-                        />
-                      </label>
-                    )}
-
-                    {meetingType === 'online' && (
-                      <label className={styles.fieldLabel}>
-                        <span>Ссылка на встречу</span>
-                        <Input
-                          placeholder="—"
-                          value={meetingUrl}
-                          onChange={(e) => setUserMeetingUrl(e.target.value)}
-                        />
-                      </label>
-                    )}
-                  </div>
-                </div>
-              </aside>
-            )}
           </div>
         </main>
       </div>

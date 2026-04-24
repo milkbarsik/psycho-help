@@ -1,27 +1,32 @@
 .page {
-  max-width: 1328px;
+  max-width: 1512px;
   margin: 0 auto;
-  padding: 72px 40px 140px;
 }
 
 .cabinetLayout {
   display: grid;
-  grid-template-columns: 28.8rem minmax(0, 1fr);
+  grid-template-columns: 28.8rem 1fr;
   gap: 2.4rem;
-  align-items: flex-start;
+  max-width: 122.4rem;
+  margin: 0 auto;
+  padding: 4rem 2.4rem;
+  min-height: calc(100vh - 8rem);
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+    padding: 2.4rem 1.6rem;
+  }
 }
 
 .sidebarWrapper {
   position: sticky;
+  // top: 4rem;
   top: calc(var(--header-height) + 4rem);
   height: fit-content;
-}
-
-.wrapper {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 20px;
+  // @media (max-width: 1023px) {
+  @media (max-height: 900px), (max-width: 1023px) {
+    position: static;
+  }
 }
 
 .back {
@@ -34,7 +39,6 @@
   font-size: 1.6rem;
   line-height: 2.4rem;
   font-family: var(--font-text-medium);
-  margin-left: 12px;
 }
 
 .title {
@@ -42,7 +46,7 @@
   line-height: 3.6rem;
   font-family: var(--font-h4);
   font-weight: 700;
-  margin: 24px 0 24px 12px;
+  margin: 24px 0 24px 0;
 }
 
 .status {
@@ -78,7 +82,7 @@
 
 .reasonBlockCancelled {
   margin-bottom: 24px;
-  padding: 12px 16px;
+  padding: 16px 12px 0 16px;
   background-color: var(--color-bg-warning-light, #fffbeb);
   border-left: 4px solid var(--color-label-warning-primary, #f59e0b);
   border-radius: 4px;
@@ -106,7 +110,7 @@
 .infoRow {
   display: flex;
   flex-direction: column;
-  padding: 1.2rem 1.6rem;
+  padding: 1.6rem 0;
   font-size: 1.6rem;
   line-height: 2.8rem;
   font-family: var(--font-text-medium);
@@ -152,7 +156,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 1.2rem 1.6rem;
   font-size: 1.6rem;
   line-height: 2.8rem;
   font-family: var(--font-text-medium);
