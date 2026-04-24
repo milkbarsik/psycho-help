@@ -1,11 +1,14 @@
-import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Input, message, Modal } from 'antd';
 import { AxiosError } from 'axios';
 import { applicationQueryKey, rejectApplication } from '@/entities/application/api';
 import { appointmentQueryKey, cancelAppointment } from '@/entities/appointment/api';
+import {
+  usePsychologistDrafts,
+  type PsychologistReasonDraftType,
+} from '@/features/personal-cabinet/model/psychologist-drafts';
 
-type ModalType = 'application' | 'appointment';
+type ModalType = PsychologistReasonDraftType;
 
 const CONFIG: Record<
   ModalType,
@@ -55,14 +58,18 @@ const PsychologistRejectModal = ({
   onSuccess,
 }: PsychologistRejectModalProps) => {
   const queryClient = useQueryClient();
-  const [reason, setReason] = useState('');
+  const reason = usePsychologistDrafts((state) =>
+    entityId ? state.reasonDrafts[type]?.[entityId] ?? '' : '',
+  );
+  const setReasonDraft = usePsychologistDrafts((state) => state.setReasonDraft);
+  const clearReasonDraft = usePsychologistDrafts((state) => state.clearReasonDraft);
   const config = CONFIG[type];
 
   const mutation = useMutation({
     mutationFn: ({ id, reason }: { id: string; reason: string }) => config.mutationFn(id, reason),
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: [config.queryKey] });
-      setReason('');
+      clearReasonDraft(type, variables.id);
       onClose();
       onSuccess?.();
     },
@@ -73,7 +80,6 @@ const PsychologistRejectModal = ({
   });
 
   const handleClose = () => {
-    setReason('');
     onClose();
   };
 
@@ -104,7 +110,11 @@ const PsychologistRejectModal = ({
       <Input.TextArea
         rows={6}
         value={reason}
-        onChange={(e) => setReason(e.target.value)}
+        onChange={(e) => {
+          if (entityId) {
+            setReasonDraft(type, entityId, e.target.value);
+          }
+        }}
         placeholder={config.placeholder}
         maxLength={500}
         showCount

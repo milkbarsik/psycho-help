@@ -11,7 +11,7 @@ import { applicationQueries } from '@/entities/application/api';
 import type { Application } from '@/entities/application/types';
 import { appointmentQueries } from '@/entities/appointment/api';
 import type { Appointment } from '@/entities/appointment/types';
-import { usePsychologistView } from '@/features/personal-cabinet/model/PsychologistView';
+import { usePsychologistView } from '@/features/personal-cabinet/model/psychologist-view';
 import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-filters/PsychologistFilters';
 import Loader from '@/shared/ui/loader/loader';
 import { AppointmentStatusTag } from '@/pages/personal-cabinet/constants';
@@ -24,7 +24,7 @@ dayjs.locale('ru');
 const MOSCOW_TZ = 'Europe/Moscow';
 const toMoscow = (date: string) => dayjs(date).tz(MOSCOW_TZ);
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 5;
 
 const APPOINTMENT_STATUS_OPTIONS = [
   { value: 'all', label: 'Все статусы' },

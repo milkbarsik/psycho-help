@@ -15,7 +15,7 @@ import {
 } from '@/entities/application/api';
 import type { Application, ApplicationStatus } from '@/entities/application/types';
 import { useAuth } from '@/features/auth/api/useAuth';
-import { usePsychologistView } from '@/features/personal-cabinet/model/PsychologistView';
+import { usePsychologistView } from '@/features/personal-cabinet/model/psychologist-view';
 import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-filters/PsychologistFilters';
 import Loader from '@/shared/ui/loader/loader';
 import { ApplicationStatusTag } from '@/pages/personal-cabinet/constants';
@@ -28,7 +28,7 @@ dayjs.locale('ru');
 const MOSCOW_TZ = 'Europe/Moscow';
 const toMoscow = (date: string) => dayjs(date).tz(MOSCOW_TZ);
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 5;
 
 const CLOSED_STATUSES: ApplicationStatus[] = ['rejected', 'cancelled', 'expired'];
 

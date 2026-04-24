@@ -2,7 +2,7 @@ import { AutoComplete, DatePicker, Input, Select } from 'antd';
 import { SortAscendingOutlined, SortDescendingOutlined, SearchOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import type { SortDirection } from '@/features/personal-cabinet/model/PsychologistView';
+import type { SortDirection } from '@/features/personal-cabinet/model/psychologist-view';
 import styles from './PsychologistFilters.module.scss';
 
 interface SelectOption {
@@ -59,38 +59,40 @@ const PsychologistListFilters = ({
     <div className={styles['filters']}>
       <div className={styles['filters__bar']} role="search">
         <AutoComplete
+          className={styles['filters__search-autocomplete']}
           value={searchQuery}
           options={searchSuggestions}
           onChange={onSearchQueryChange}
-          className={styles['filters__search-autocomplete']}
         >
           <Input
+            className={styles['filters__search-input']}
             placeholder={searchPlaceholder}
             suffix={<SearchOutlined style={{ color: '#bfbfbf' }} />}
             allowClear
-            className={styles['filters__search-input']}
           />
         </AutoComplete>
 
         <Select
+          className={styles['filters__status-select']}
           value={statusFilter === 'all' ? null : statusFilter}
           onChange={(value) => onStatusFilterChange(value || 'all')}
-          className={styles['filters__status-select']}
           options={statusOptions}
           placeholder={statusPlaceholder}
           allowClear
         />
 
         <Select
+          className={styles['filters__format-select']}
           value={formatFilter === 'all' ? null : formatFilter}
           onChange={(value) => onFormatFilterChange(value || 'all')}
-          className={styles['filters__format-select']}
           options={formatOptions}
           placeholder={formatPlaceholder}
           allowClear
         />
 
         <DatePicker.RangePicker
+          className={styles['filters__date-range']}
+          separator={<span style={{ color: '#C4C4C4' }}>&#10132;</span>}
           value={dateRange ? [dayjs(dateRange[0]), dayjs(dateRange[1])] : null}
           onChange={(dates: [Dayjs | null, Dayjs | null] | null) => {
             if (dates && dates[0] && dates[1]) {
@@ -102,7 +104,6 @@ const PsychologistListFilters = ({
           format="DD.MM.YYYY"
           placeholder={['От', 'До']}
           allowClear
-          className={styles['filters__date-range']}
         />
       </div>
 
