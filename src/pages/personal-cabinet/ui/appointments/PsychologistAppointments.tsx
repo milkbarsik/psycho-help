@@ -7,8 +7,6 @@ import 'dayjs/locale/ru';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import clsx from 'clsx';
-import { applicationQueries } from '@/entities/application/api';
-import type { Application } from '@/entities/application/types';
 import { appointmentQueries } from '@/entities/appointment/api';
 import type { Appointment } from '@/entities/appointment/types';
 import { usePsychologistView } from '@/features/personal-cabinet/model/psychologist-view';
@@ -39,9 +37,8 @@ const APPOINTMENT_FORMAT_OPTIONS = [
   { value: 'online', label: 'Онлайн' },
 ];
 
-/* ── Helpers ── */
-const getApplicantName = (application: Application) =>
-  [application.last_name, application.first_name].filter(Boolean).join(' ');
+const getPatientName = (appointment: Appointment) =>
+  [appointment.patient_last_name, appointment.patient_first_name].filter(Boolean).join(' ');
 
 const getTimeRange = (time: string) => {
   const start = toMoscow(time);
@@ -97,23 +94,9 @@ const PsychologistAppointments = () => {
     sortDirection !== 'asc' ||
     dateRange !== null;
 
-  /* Applications (Заявки) */
-  const { data: allApplications = [] } = useQuery(applicationQueries.list());
-
-  /* Appointments (Записи) */
   const { data: allAppointments = [], isLoading: isLoadingAppointments } = useQuery(
     appointmentQueries.list(),
   );
-
-  const appointmentPatientMap = useMemo(() => {
-    const map = new Map<string, string>();
-    allApplications.forEach((application) => {
-      if (application.appointment_id) {
-        map.set(application.appointment_id, getApplicantName(application));
-      }
-    });
-    return map;
-  }, [allApplications]);
 
   const filteredAppointments = useMemo(() => {
     let result = allAppointments;
@@ -129,10 +112,7 @@ const PsychologistAppointments = () => {
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      result = result.filter((a) => {
-        const name = appointmentPatientMap.get(a.id) || '';
-        return name.toLowerCase().includes(q);
-      });
+      result = result.filter((a) => getPatientName(a).toLowerCase().includes(q));
     }
 
     if (dateRange) {
@@ -149,17 +129,8 @@ const PsychologistAppointments = () => {
     return [...result].sort(
       (a, b) => dir * (new Date(a.scheduled_time).getTime() - new Date(b.scheduled_time).getTime()),
     );
-  }, [
-    allAppointments,
-    appointmentPatientMap,
-    statusFilter,
-    formatFilter,
-    searchQuery,
-    dateRange,
-    sortDirection,
-  ]);
+  }, [allAppointments, statusFilter, formatFilter, searchQuery, dateRange, sortDirection]);
 
-  /* ── Pagination & Suggestions ── */
   const currentItems = filteredAppointments;
   const paginated = currentItems.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -169,21 +140,17 @@ const PsychologistAppointments = () => {
   const searchSuggestions = useMemo(() => {
     if (!searchQuery) return [];
     const q = searchQuery.toLowerCase();
-    const appointmentNames = new Set(
-      allAppointments.map((a) => appointmentPatientMap.get(a.id)).filter(Boolean),
-    );
-    return [...appointmentNames]
-      .filter((name) => name!.toLowerCase().includes(q))
-      .map((name) => ({ value: name! }));
-  }, [allAppointments, appointmentPatientMap, searchQuery]);
+    const names = new Set(allAppointments.map(getPatientName));
+    return [...names]
+      .filter((name) => name.toLowerCase().includes(q))
+      .map((name) => ({ value: name }));
+  }, [allAppointments, searchQuery]);
 
   const isLoading = isLoadingAppointments;
 
   if (isLoading) return <Loader />;
 
-  // Рендер строки Записи
   const renderAppointmentRow = (appointment: Appointment) => {
-    const patientName = appointmentPatientMap.get(appointment.id);
     const statusUI = AppointmentStatusTag[appointment.status];
 
     return (
@@ -197,7 +164,9 @@ const PsychologistAppointments = () => {
             </div>
           </div>
           <div className={styles.infoCol}>
-            {patientName && <span className={styles.patientName}>{patientName}</span>}
+            <span
+              className={styles.patientName}
+            >{`${appointment.patient_last_name} ${appointment.patient_first_name}`}</span>
             <span className={styles.location}>{getVenueDisplay(appointment)}</span>
           </div>
         </div>
@@ -235,7 +204,6 @@ const PsychologistAppointments = () => {
         onResetFilters={() => resetFilters(FILTERS_TAB)}
       />
 
-      {/* Список */}
       <div className={styles.list} role="list">
         {paginated.length === 0 && <Empty description="Записей нет" />}
 

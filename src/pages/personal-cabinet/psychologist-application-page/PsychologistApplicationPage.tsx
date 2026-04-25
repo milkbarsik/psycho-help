@@ -81,12 +81,10 @@ const PsychologistApplicationPage = () => {
     enabled: isPsychologist && !!id,
   });
 
-  // Локальные стейты для формы назначения времени
   const [userMeetingType, setUserMeetingType] = useState<MeetingType | null>(null);
   const [userDate, setUserDate] = useState<dayjs.Dayjs | null>(null);
   const [userTime, setUserTime] = useState<string | null>(null);
 
-  // Дополнительные поля для формата встречи
   const [userLocationAddress, setUserLocationAddress] = useState<string | null>(null);
   const [userMeetingUrl, setUserMeetingUrl] = useState<string | null>(null);
   const [formInitializedForId, setFormInitializedForId] = useState<string | null>(null);
@@ -109,7 +107,6 @@ const PsychologistApplicationPage = () => {
     [application?.scheduled_at],
   );
 
-  // Вычисляемые значения: отдан приоритет пользовательскому вводу
   const meetingType = userMeetingType ?? application?.meeting_type ?? null;
   const selectedDate = useMemo(
     () => userDate ?? applicationScheduledAt?.startOf('day') ?? null,
@@ -180,7 +177,6 @@ const PsychologistApplicationPage = () => {
     application.status === 'in_progress' ||
     application.status === 'awaiting_user_confirmation';
 
-  // Проверка обязательных полей для записи
   const canSave =
     canChange &&
     meetingType &&
@@ -236,7 +232,6 @@ const PsychologistApplicationPage = () => {
           </button>
 
           <div className={styles.layout}>
-            {/* правая колонка — основной контент */}
             <div className={styles.mainContent}>
               <h1 className={styles.pageTitle}>Заявка</h1>
 
@@ -244,7 +239,6 @@ const PsychologistApplicationPage = () => {
                 {application.last_name} {application.first_name}
               </h2>
 
-              {/* Статус заявки */}
               <div className={styles.statusRow}>
                 <p className={styles.statusLabel}>Статус</p>
                 <div className={styles['status']}>
@@ -253,7 +247,6 @@ const PsychologistApplicationPage = () => {
                 </div>
               </div>
 
-              {/* Причина отклонения */}
               {application.status === 'rejected' && application.reject_reason && (
                 <div className={styles.reasonBlock}>
                   <span className={styles.reasonLabel}>Причина отказа:</span>
@@ -261,7 +254,6 @@ const PsychologistApplicationPage = () => {
                 </div>
               )}
 
-              {/* Причина отмены пользователем */}
               {application.status === 'cancelled' && application.cancel_reason && (
                 <div className={styles.reasonBlock}>
                   <span className={styles.reasonLabel}>Причина отмены:</span>
@@ -269,7 +261,6 @@ const PsychologistApplicationPage = () => {
                 </div>
               )}
 
-              {/* Данные, указанные при записи */}
               <section className={styles.dataSection}>
                 <div className={styles.dataGrid}>
                   <div className={styles.dataItem}>
@@ -363,7 +354,6 @@ const PsychologistApplicationPage = () => {
                 <ExpandableText text={application.problem_description} />
               </div>
 
-              {/* Кнопки действий */}
               {(canReject || canAccept || canChange) && (
                 <div className={styles.actions}>
                   {canReject && (

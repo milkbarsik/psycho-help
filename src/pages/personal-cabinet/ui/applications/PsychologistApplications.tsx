@@ -48,8 +48,7 @@ const APPLICATION_FORMAT_OPTIONS = [
   { value: 'unknown', label: 'Не указано' },
 ];
 
-/* ── Helpers ── */
-const getApplicantName = (application: Application) =>
+const getPatientName = (application: Application) =>
   [application.last_name, application.first_name].filter(Boolean).join(' ');
 
 const getApplicationSortTime = (application: Application): number => {
@@ -148,7 +147,7 @@ const PsychologistApplications = () => {
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      result = result.filter((a) => getApplicantName(a).toLowerCase().includes(q));
+      result = result.filter((a) => getPatientName(a).toLowerCase().includes(q));
     }
 
     if (formatFilter === 'unknown') {
@@ -175,7 +174,6 @@ const PsychologistApplications = () => {
     );
   }, [relevantApplications, statusFilter, formatFilter, searchQuery, dateRange, sortDirection]);
 
-  /* ── Pagination & Suggestions ── */
   const currentItems = filteredApplications;
   const paginated = currentItems.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -185,7 +183,7 @@ const PsychologistApplications = () => {
   const searchSuggestions = useMemo(() => {
     if (!searchQuery) return [];
     const q = searchQuery.toLowerCase();
-    const names = new Set(relevantApplications.map(getApplicantName));
+    const names = new Set(relevantApplications.map(getPatientName));
     return [...names]
       .filter((name) => name.toLowerCase().includes(q))
       .map((name) => ({ value: name }));
@@ -195,9 +193,6 @@ const PsychologistApplications = () => {
 
   if (isLoading) return <Loader />;
 
-  /* ── Render Logic ── */
-
-  // Рендер строки Заявки
   const renderApplicationRow = (application: Application) => {
     const statusUI = ApplicationStatusTag[application.status];
     return (
@@ -211,7 +206,7 @@ const PsychologistApplications = () => {
             </div>
           </div>
           <div className={styles.infoCol}>
-            <span className={styles.patientName}>{getApplicantName(application)}</span>
+            <span className={styles.patientName}>{getPatientName(application)}</span>
             <span className={styles.location}>{getVenueDisplay(application)}</span>
           </div>
         </div>
@@ -258,7 +253,6 @@ const PsychologistApplications = () => {
         onResetFilters={() => resetFilters(FILTERS_TAB)}
       />
 
-      {/* Список */}
       <div className={styles.list} role="list">
         {paginated.length === 0 && <Empty description="Заявок нет" />}
         {groupByDate(paginated as Application[], (application) => {
