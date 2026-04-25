@@ -107,12 +107,20 @@
   height: 1rem;
   border-radius: 100%;
 
-  &--awaiting {
+  &--new {
+    background-color: var(--color-label-success-primary);
+  }
+
+  &--in-progress {
+    background-color: var(--color-label-brand-primary);
+  }
+
+  &--awaiting-user-confirmation {
     background-color: var(--color-label-neutral-secondary);
   }
 
-  &--done {
-    background-color: var(--color-label-success-primary);
+  &--completed {
+    background-color: var(--color-label-neutral-primary);
   }
 
   &--cancelled {
@@ -125,10 +133,35 @@
   color: var(--color-label-neutral-primary);
 }
 
-.btnPrimary {
+.btnConfirm {
   padding: 0.8rem 2.7rem;
   border-radius: 12px;
   border: none;
+  background-color: var(--color-interactive-brand-secondary);
+  color: var(--color-label-brand-primary);
+  font: var(--font-text-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: var(--color-interactive-brand-hover-secondary);
+  }
+
+  &:active {
+    background-color: var(--color-interactive-brand-active-secondary);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btnOpen {
+  padding: 0.8rem 2.7rem;
+  border-radius: 12px;
+  border: 0;
   background-color: var(--color-interactive-brand-primary);
   color: var(--color-label-neutral-inverted-primary);
   font: var(--font-text-medium);
@@ -142,11 +175,6 @@
 
   &:active {
     background-color: var(--color-interactive-brand-active);
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 }
 

@@ -4,7 +4,7 @@ import type { RoleCode } from '@/entities/role/types';
 import { therapistQueries } from '@/entities/therapist/api';
 import Loader from '@/shared/ui/loader/loader';
 import AppointmentForm from '@/features/personal-cabinet/ui/input-block/AppointmentForm';
-import styles from './AppointmentsPage.module.scss';
+import styles from './Appointments.module.scss';
 import PsychologistAppointments from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointments';
 
 interface AppointmentsPageProps {

@@ -5,6 +5,7 @@ import { authApi } from '@/entities/auth/api/api.ts';
 
 export const authQueryKey = {
   user: 'auth.user',
+  userById: 'auth.userById',
 };
 
 export const authQueries = {
@@ -13,5 +14,12 @@ export const authQueries = {
       queryKey: [authQueryKey.user],
       queryFn: authApi.getUser,
       ...options,
+    }),
+
+  getUserById: (id: string) =>
+    queryOptions<User, ResponseError>({
+      queryKey: [authQueryKey.userById, id],
+      queryFn: () => authApi.getUserById(id),
+      enabled: !!id,
     }),
 };

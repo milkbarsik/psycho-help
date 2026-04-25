@@ -15,3 +15,5 @@ export default class AppointmentDto {
     this.venue = appointment.venue ?? '';
   }
 }
+
+// Зачем это вообще нужно? Нигде не используется, да и можно напрямую использовать тип Appointment...

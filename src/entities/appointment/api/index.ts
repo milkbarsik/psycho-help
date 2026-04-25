@@ -26,8 +26,8 @@ export const cancelAppointment = async (id: string, cancelReason: string): Promi
   await $api.put(`/appointments/${id}/cancel`, { cancel_reason: cancelReason });
 };
 
-export const completeAppointment = async (id: string, comment: string): Promise<Appointment> => {
-  const { data } = await $api.put(`/appointments/${id}/complete`, { comment });
+export const completeAppointment = async (id: string, conclusion: string): Promise<Appointment> => {
+  const { data } = await $api.put(`/appointments/${id}/done`, { conclusion });
   return data;
 };
 
