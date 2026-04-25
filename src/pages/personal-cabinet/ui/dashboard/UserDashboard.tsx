@@ -77,7 +77,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     (serverAppointments || []).forEach((item) => {
       const appointmentDate = dayjs(item.scheduled_time);
       if (appointmentDate.isValid()) {
-        if (appointmentDate.isAfter(now) && item.status !== 'Cancelled') {
+        if (appointmentDate.isAfter(now) && item.status !== 'cancelled') {
           upc.push(item);
         } else {
           pst.push(item);
@@ -122,7 +122,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
         type: apptType,
         scheduled_time: scheduledTime,
         reason: app.problem_description,
-        venue: app.location_address || app.preferred_campus || undefined,
+        venue: app.location_address || app.preferred_campus || app.meeting_url || undefined,
       });
 
       return confirmApplication(app.id, createdAppointment.id);

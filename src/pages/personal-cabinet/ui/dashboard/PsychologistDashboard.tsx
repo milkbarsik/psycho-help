@@ -8,7 +8,6 @@ import type { Dayjs } from 'dayjs';
 import clsx from 'clsx';
 
 import { appointmentQueries } from '@/entities/appointment/api';
-import { applicationQueries } from '@/entities/application/api';
 import Loader from '@/shared/ui/loader/loader';
 
 import styles from './PsychologistDashboard.module.scss';
@@ -26,20 +25,6 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
   const [selectedAptId, setSelectedAptId] = useState<string | null>(null);
 
   const { data: appointments = [], isLoading: isLoadingApts } = useQuery(appointmentQueries.list());
-  const { data: applications = [], isLoading: isLoadingApps } = useQuery(applicationQueries.list());
-
-  const patientInfoMap = useMemo(() => {
-    const map = new Map<string, { name: string; problem: string }>();
-    applications.forEach((app) => {
-      if (app.appointment_id) {
-        map.set(app.appointment_id, {
-          name: [app.last_name, app.first_name].filter(Boolean).join(' '),
-          problem: app.problem_description || 'Нет комментария',
-        });
-      }
-    });
-    return map;
-  }, [applications]);
 
   const todaysAppointments = useMemo(() => {
     const startOfDay = currentDate.startOf('day').valueOf();
@@ -71,12 +56,10 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
     return `${start.format('HH:mm')} - ${end.format('HH:mm')}`;
   };
 
-  if (isLoadingApts || isLoadingApps) return <Loader />;
+  if (isLoadingApts) return <Loader />;
 
   return (
-    <div className={styles.dashboardContainer}>
-      
-      {/* Строка 1: Заголовок и кнопка Добавить */}
+    <>
       <div className={styles.headerRow}>
         <h1 className={styles.pageTitle}>Расписание</h1>
         <button className={styles.btnAdd} onClick={onBookClick}>
@@ -84,7 +67,6 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
         </button>
       </div>
 
-      {/* Строка 2: Дни недели и DatePicker (Вынесено наверх!) */}
       <div className={styles.navigationRow}>
         <div className={styles.weekSelector}>
           {weekDays.map((day) => {
@@ -113,7 +95,6 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
       </div>
 
       <section className={styles.wrapper}>
-        {/* Левая колонка (Только сетка) */}
         <div className={styles.mainContent}>
           <div className={styles.scheduleGrid}>
             <div className={styles.timeLabels}>
@@ -138,7 +119,6 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
                   (aptTime.minute() / 60) * HOUR_HEIGHT;
                 const durationHeight = HOUR_HEIGHT;
 
-                const patientInfo = patientInfoMap.get(apt.id);
                 const venueStr =
                   apt.type === 'Online' ? 'Онлайн' : apt.venue ? `${apt.venue} (очно)` : 'Очно';
 
@@ -153,7 +133,7 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
                   >
                     <div className={styles.eventTime}>{getTimeRange(apt.scheduled_time)}</div>
                     <div className={styles.eventName}>
-                      {patientInfo?.name || 'Пациент не указан'}
+                      {[apt.patient_first_name, apt.patient_last_name].join(' ') || 'Пациент не указан'}
                     </div>
                     <div className={styles.eventVenue}>{venueStr}</div>
                   </div>
@@ -163,7 +143,6 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
           </div>
         </div>
 
-        {/* Правая колонка: Боковая панель */}
         <aside className={styles.detailsPanel}>
           {selectedAppointment ? (
             <div className={styles.detailsCard}>
@@ -175,7 +154,7 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
                 <div className={styles.infoRow}>
                   <UserOutlined className={styles.infoIcon} />
                   <span>
-                    {patientInfoMap.get(selectedAppointment.id)?.name || 'Пациент не указан'}
+                    {[selectedAppointment.patient_first_name, selectedAppointment.patient_last_name].join(' ') || 'Пациент не указан'}
                   </span>
                 </div>
                 <div className={styles.infoRow}>
@@ -191,14 +170,8 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
               <div className={styles.commentBlock}>
                 <h4 className={styles.commentLabel}>Комментарий</h4>
                 <p className={styles.commentText}>
-                  {patientInfoMap.get(selectedAppointment.id)?.problem || 'Комментарий отсутствует'}
+                  {selectedAppointment.comment || 'Комментарий отсутствует'}
                 </p>
-                <button
-                  className={styles.btnReadMore}
-                  onClick={() => navigate(`/cabinet/application/${selectedAppointment.id}`)}
-                >
-                  Открыть полностью
-                </button>
               </div>
 
               <Button
@@ -216,7 +189,7 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
           )}
         </aside>
       </section>
-    </div>
+    </>
   );
 };
 

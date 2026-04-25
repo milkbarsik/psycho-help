@@ -1,12 +1,3 @@
-/* Общий контейнер, который ограничивает ширину всего дашборда */
-.dashboardContainer {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1200px; /* Можно изменить под ширину вашей сетки, если она больше/меньше */
-}
-
-/* Строка 1: Заголовок и кнопка */
 .headerRow {
   display: flex;
   justify-content: space-between;
@@ -34,6 +25,7 @@
   align-items: center;
   gap: 6px;
   padding: 0;
+  margin-left: auto;
   transition: opacity 0.2s;
 
   &:hover {
@@ -41,7 +33,6 @@
   }
 }
 
-/* Строка 2: Дни недели и DatePicker */
 .navigationRow {
   display: flex;
   justify-content: space-between;
@@ -94,9 +85,9 @@
   border-radius: 8px;
   height: 40px;
   width: 160px;
+  margin-left: auto;
 }
 
-/* Расписание: Сетка слева + Панель справа */
 .wrapper {
   display: flex;
   gap: 32px;
@@ -110,11 +101,94 @@
   flex-direction: column;
 }
 
-/* Боковая панель */
+.scheduleGrid {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeLabels {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeLabelRow {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.timeText {
+  width: 50px;
+  font-size: 13px;
+  color: #888;
+  transform: translateY(-8px); 
+}
+
+.gridLine {
+  flex: 1;
+  border-top: 1px solid #f0f0f0;
+  margin-left: 16px;
+}
+
+.eventsContainer {
+  position: absolute;
+  top: 0;
+  left: 66px; 
+  right: 0;
+  bottom: 0;
+  pointer-events: none; 
+}
+
+.eventCard {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+}
+
+.eventCardActive {
+  background-color: #eff6ff;
+  border-left: 3px solid #3b82f6;
+
+  &:hover {
+    background-color: #eff6ff;
+  }
+}
+
+.eventTime {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.eventName {
+  font-size: 13px;
+  color: #4a4a4a;
+  margin-bottom: 4px;
+}
+
+.eventVenue {
+  font-size: 12px;
+  color: #888888;
+}
+
 .detailsPanel {
   width: 340px;
   flex-shrink: 0;
-  padding-top: 4px; /* Совсем легкий отступ, чтобы блок ровно стоял с текстом "09:00" */
+  padding-top: 8px; 
 }
 
 .detailsCard {
@@ -169,7 +243,6 @@
   line-height: 1.5;
   margin: 0 0 8px 0;
   
-  /* Обрезка строк */
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
@@ -197,6 +270,10 @@
   background-color: #2563eb;
   font-size: 15px;
   font-weight: 500;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
 
   &:hover {
     background-color: #1d4ed8 !important;
