@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import backArrow from '@/shared/assets/images/appointments/backArrow.svg';
 import { useAuth } from '@/features/auth/api/useAuth';
 import type { ApplicationCreateRequest, UniversityStatus } from '@/entities/application/types';
-import { createApplication } from '@/entities/application/api';
+import { createApplication, getUniversityStatuses } from '@/entities/application/api';
 import { message } from 'antd';
 
 interface Props {
@@ -23,6 +23,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
   const [window, setWindow] = useState<'form' | 'results'>('form');
   const [meetingType, setMeetingType] = useState<'online' | 'offline' | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [universityStatuses, setUniversityStatuses] = useState<string[]>([]);
 
   // 🎯 Уникальные офисы — берём из всех психологов, удаляем дубликаты через Set
   const uniqueOffices = useMemo(
@@ -36,6 +37,22 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
       setApplication({ preferred_campus: undefined });
     }
   }, [meetingType, setApplication]);
+
+  // 📚 Загрузка статусов в университете с бэкенда
+  useEffect(() => {
+    const fetchUniversityStatuses = async () => {
+      try {
+        const statuses = await getUniversityStatuses();
+        setUniversityStatuses(statuses);
+      } catch (error) {
+        console.error('Failed to fetch university statuses:', error);
+        // Fallback to hardcoded values if API fails
+        setUniversityStatuses(['студент', 'аспирант', 'преподаватель', 'сотрудник']);
+      }
+    };
+
+    fetchUniversityStatuses();
+  }, []);
 
   const handleSubmit = async () => {
     if (!user) {
@@ -138,10 +155,11 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
                   className={styles.selectInput}
                   aria-label="Статус в университете"
                 >
-                  <option value="студент">Студент</option>
-                  <option value="аспирант">Аспирант</option>
-                  <option value="преподаватель">Преподаватель</option>
-                  <option value="сотрудник">Сотрудник</option>
+                  {universityStatuses.map((status) => (
+                    <option key={status} value={status}>
+                      {status.charAt(0).toUpperCase() + status.slice(1)}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -210,21 +228,13 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
             />
           </div>
 
-          <button
-            className={styles.subButton}
-            type="button"
-            onClick={() => setWindow('results')}
-          >
+          <button className={styles.subButton} type="button" onClick={() => setWindow('results')}>
             Далее
           </button>
         </div>
       ) : (
         <div className={styles.results}>
-          <button
-            className={styles.backButton}
-            type="button"
-            onClick={() => setWindow('form')}
-          >
+          <button className={styles.backButton} type="button" onClick={() => setWindow('form')}>
             <div className={styles.backArrow}>
               <img src={backArrow} alt="backArrow" />
               <p className={styles.backArrow__text}>Назад</p>
@@ -248,9 +258,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               {userEmail}
             </p>
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>
-                Формат:{' '}
-              </span>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Формат: </span>
               {meetingType === 'online' ? 'Онлайн' : 'Очно'}
             </p>
             {meetingType === 'offline' && application.preferred_campus && (
@@ -262,9 +270,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               </p>
             )}
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>
-                Статус:{' '}
-              </span>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Статус: </span>
               {application.university_status || 'студент'}
             </p>
             <p className={clsx(styles.results__text, styles.results__textGray)}>Описание:</p>

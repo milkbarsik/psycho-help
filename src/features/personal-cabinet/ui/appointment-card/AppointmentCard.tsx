@@ -19,6 +19,7 @@ interface AppointmentCardProps {
   rating?: 'good' | 'bad' | null;
   onConfirm?: () => void;
   onComment?: () => void;
+  onCancel?: () => void;
 }
 
 const getStatusConfig = (status?: string) => {
@@ -44,6 +45,7 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
   rating,
   onConfirm,
   onComment,
+  onCancel,
 }) => {
   const statusConfig = getStatusConfig(status);
 
@@ -76,19 +78,28 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
           </div>
         )}
 
-        {type === 'confirmation' && (
-          <button className={styles.confirmButton} onClick={onConfirm}>
-            Подтвердить
-          </button>
-        )}
+        {/* Группа кнопок действий */}
+        <div className={styles.actions}>
+          {type === 'confirmation' && (
+            <button className={styles.confirmButton} onClick={onConfirm}>
+              Подтвердить
+            </button>
+          )}
 
-        {type === 'past' && !rating && <button className={styles.rateButton}>Оценить</button>}
+          {(type === 'upcoming' || type === 'confirmation') && onCancel && (
+            <button className={styles.cancelButton} onClick={onCancel}>
+              Отменить
+            </button>
+          )}
 
-        {type === 'past' && rating && (
-          <button className={styles.commentLink} onClick={onComment}>
-            Посмотреть комментарий
-          </button>
-        )}
+          {type === 'past' && !rating && <button className={styles.rateButton}>Оценить</button>}
+
+          {type === 'past' && rating && (
+            <button className={styles.commentLink} onClick={onComment}>
+              Посмотреть комментарий
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
