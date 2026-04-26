@@ -13,7 +13,6 @@ import {
   appointmentQueryKey,
   completeAppointment,
 } from '@/entities/appointment/api';
-import { authQueries } from '@/entities/auth/api/queries';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { useCabinetTab } from '@/features/personal-cabinet/model/personal-cabinet-tab';
@@ -67,11 +66,6 @@ const PsychologistAppointmentPage = () => {
     enabled: isPsychologist && !!id,
   });
 
-  const { data: patient, isLoading: isPatientLoading } = useQuery({
-    ...authQueries.getUserById(appointment?.patient_id ?? ''),
-    enabled: isPsychologist && !!appointment?.patient_id,
-  });
-
   const comment = usePsychologistDrafts((state) =>
     appointmentId ? (state.conclusionDrafts[appointmentId] ?? '') : '',
   );
@@ -108,7 +102,7 @@ const PsychologistAppointmentPage = () => {
   });
 
   if (!isPsychologist) return <Navigate to="/" replace />;
-  if (isLoading || isPatientLoading) return <Loader />;
+  if (isLoading) return <Loader />;
   if (!appointment) return <Empty description="Запись не найдена" />;
 
   const isActive = appointment.status === 'awaiting';
@@ -119,7 +113,7 @@ const PsychologistAppointmentPage = () => {
 
   const statusUI = AppointmentStatusTag[appointment.status];
 
-  const patientName = [patient?.last_name, patient?.first_name, patient?.middle_name]
+  const patientName = [appointment.patient?.last_name, appointment.patient?.first_name, appointment.patient?.middle_name]
     .filter(Boolean)
     .join(' ');
 
@@ -166,23 +160,23 @@ const PsychologistAppointmentPage = () => {
                 </div>
               </div>
             )}
-            {patient?.email && (
+            {appointment.patient?.email && (
               <div className={styles.infoRow}>
                 <span className={styles.infoLabel}>Email пациента</span>
-                <span className={styles.infoValueEmail}>{patient.email}</span>
+                <span className={styles.infoValueEmail}>{appointment.patient.email}</span>
               </div>
             )}
-            {patient?.phone_number && (
+            {appointment.patient?.phone_number && (
               <div className={styles.infoRow}>
                 <span className={styles.infoLabel}>Телефон пациента</span>
-                <span className={styles.infoValuePhone}>{patient.phone_number}</span>
+                <span className={styles.infoValuePhone}>{appointment.patient.phone_number}</span>
               </div>
             )}
             <div className={styles.infoGrid}>
-              {patient?.social_media && (
+              {appointment.patient?.social_media && (
                 <div className={styles.infoRowGrid}>
                   <span className={styles.infoLabel}>Соцсети</span>
-                  <span className={styles.infoValueGrid}>{patient.social_media}</span>
+                  <span className={styles.infoValueGrid}>{appointment.patient.social_media}</span>
                 </div>
               )}
               {appointment.scheduled_time && (

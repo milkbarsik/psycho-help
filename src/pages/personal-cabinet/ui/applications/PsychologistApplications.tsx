@@ -49,7 +49,7 @@ const APPLICATION_FORMAT_OPTIONS = [
 ];
 
 const getPatientName = (application: Application) =>
-  [application.last_name, application.first_name].filter(Boolean).join(' ');
+  [application.user.last_name, application.user.first_name].filter(Boolean).join(' ');
 
 const getApplicationSortTime = (application: Application): number => {
   const date = application.scheduled_at;
@@ -65,7 +65,7 @@ const getTimeRange = (time: string | null) => {
 const getVenueDisplay = (application: Application) => {
   if (application.meeting_type === 'online') return 'Онлайн';
   if (application.meeting_type === 'offline') {
-    return application.location_address ? `${application.location_address} (очно)` : 'Очно';
+    return application.location_address ? `${application.location_address}` : 'Очно';
   }
   return 'Формат ещё не указан';
 };
@@ -132,7 +132,7 @@ const PsychologistApplications = () => {
 
   const relevantApplications = useMemo(() => {
     return allApplications.filter(
-      (application) => application.status === 'new' || application.assigned_to === userId,
+      (application) => application.status === 'new' || application.assigned_to_user?.id === userId,
     );
   }, [allApplications, userId]);
 
@@ -223,6 +223,7 @@ const PsychologistApplications = () => {
           <button
             className={styles.btnOpen}
             onClick={() => navigate(`/cabinet/application/${application.id}`)}
+            disabled={application.status === 'new'}
           >
             Открыть
           </button>

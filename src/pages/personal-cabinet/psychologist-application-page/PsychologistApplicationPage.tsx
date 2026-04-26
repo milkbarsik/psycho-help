@@ -236,7 +236,7 @@ const PsychologistApplicationPage = () => {
               <h1 className={styles.pageTitle}>Заявка</h1>
 
               <h2 className={styles.userName}>
-                {application.last_name} {application.first_name}
+                {application.user.last_name} {application.user.first_name}
               </h2>
 
               <div className={styles.statusRow}>
@@ -265,11 +265,11 @@ const PsychologistApplicationPage = () => {
                 <div className={styles.dataGrid}>
                   <div className={styles.dataItem}>
                     <span className={styles.dataLabel}>Email:</span>
-                    <span className={styles.dataValue}>{application.email || '—'}</span>
+                    <span className={styles.dataValue}>{application.user.email || '—'}</span>
                   </div>
                   <div className={styles.dataItem}>
                     <span className={styles.dataLabel}>Телефон:</span>
-                    <span className={styles.dataValue}>{application.phone || '—'}</span>
+                    <span className={styles.dataValue}>{application.user.phone_number || '—'}</span>
                   </div>
                   <div className={styles.dataItem}>
                     <span className={styles.dataLabel}>Кампус:</span>

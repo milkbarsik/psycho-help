@@ -38,7 +38,7 @@ const APPOINTMENT_FORMAT_OPTIONS = [
 ];
 
 const getPatientName = (appointment: Appointment) =>
-  [appointment.patient_last_name, appointment.patient_first_name].filter(Boolean).join(' ');
+  [appointment.patient.last_name, appointment.patient.first_name].filter(Boolean).join(' ');
 
 const getTimeRange = (time: string) => {
   const start = toMoscow(time);
@@ -47,7 +47,7 @@ const getTimeRange = (time: string) => {
 
 const getVenueDisplay = (appointment: Appointment) => {
   if (appointment.type === 'Online') return 'Онлайн';
-  return appointment.venue ? `${appointment.venue} (очно)` : 'Очно';
+  return appointment.venue ? `${appointment.venue}` : 'Очно';
 };
 
 const groupByDate = <T,>(
@@ -166,7 +166,7 @@ const PsychologistAppointments = () => {
           <div className={styles.infoCol}>
             <span
               className={styles.patientName}
-            >{`${appointment.patient_last_name} ${appointment.patient_first_name}`}</span>
+            >{`${appointment.patient.last_name} ${appointment.patient.first_name}`}</span>
             <span className={styles.location}>{getVenueDisplay(appointment)}</span>
           </div>
         </div>

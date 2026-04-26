@@ -120,7 +120,7 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
                 const durationHeight = HOUR_HEIGHT;
 
                 const venueStr =
-                  apt.type === 'Online' ? 'Онлайн' : apt.venue ? `${apt.venue} (очно)` : 'Очно';
+                  apt.type === 'Online' ? 'Онлайн' : apt.venue ? `${apt.venue}` : 'Очно';
 
                 if (aptTime.hour() < 9 || aptTime.hour() > 19) return null;
 
@@ -133,7 +133,7 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
                   >
                     <div className={styles.eventTime}>{getTimeRange(apt.scheduled_time)}</div>
                     <div className={styles.eventName}>
-                      {[apt.patient_first_name, apt.patient_last_name].join(' ') || 'Пациент не указан'}
+                      {[apt.patient.first_name, apt.patient.last_name].join(' ') || 'Пациент не указан'}
                     </div>
                     <div className={styles.eventVenue}>{venueStr}</div>
                   </div>
@@ -154,7 +154,7 @@ const PsychologistDashboard: React.FC<PsychologistDashboardProps> = ({ onBookCli
                 <div className={styles.infoRow}>
                   <UserOutlined className={styles.infoIcon} />
                   <span>
-                    {[selectedAppointment.patient_first_name, selectedAppointment.patient_last_name].join(' ') || 'Пациент не указан'}
+                    {[selectedAppointment.patient.first_name, selectedAppointment.patient.last_name].join(' ') || 'Пациент не указан'}
                   </span>
                 </div>
                 <div className={styles.infoRow}>

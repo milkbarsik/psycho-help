@@ -176,6 +176,13 @@
   &:active {
     background-color: var(--color-interactive-brand-active);
   }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    &:hover {
+      background-color: var(--color-interactive-brand-primary);
+    }
+  }
 }
 
 .pagination {

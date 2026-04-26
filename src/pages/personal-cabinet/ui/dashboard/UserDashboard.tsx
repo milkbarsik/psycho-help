@@ -77,7 +77,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
     (serverAppointments || []).forEach((item) => {
       const appointmentDate = dayjs(item.scheduled_time);
       if (appointmentDate.isValid()) {
-        if (appointmentDate.isAfter(now) && item.status !== 'cancelled') {
+        if (appointmentDate.isAfter(now) && item.status !== 'cancelled' && item.status !== 'done') {
           upc.push(item);
         } else {
           pst.push(item);
@@ -118,7 +118,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
       const createdAppointment = await createAppointment({
         application_id: app.id,
         patient_id: user!.id,
-        psychologist_id: app.psychologist_id!,
+        psychologist_id: app.psychologist.id!,
         type: apptType,
         scheduled_time: scheduledTime,
         reason: app.problem_description,
@@ -211,7 +211,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
               <AppointmentCard
                 key={app.id}
                 date={dayjs(app.scheduled_time).format('D MMMM, HH:mm')}
-                doctorName={getTherapistName(app.psychologist_id)}
+                doctorName={getTherapistName(app.psychologist.id)}
                 address={app.venue || (app.type === 'Online' ? 'Онлайн сессия' : 'Офлайн')}
                 type="upcoming"
                 status={app.status}
@@ -245,7 +245,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                 <AppointmentCard
                   key={app.id}
                   date={scheduledStr}
-                  doctorName={getTherapistName(app.psychologist_id || undefined)}
+                  doctorName={getTherapistName(app.psychologist.id || undefined)}
                   address={`${meetingTypeStr} — ${locationStr}`}
                   type="upcoming"
                   status={app.status}
@@ -282,7 +282,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                 <AppointmentCard
                   key={app.id}
                   date={scheduledStr}
-                  doctorName={getTherapistName(app.psychologist_id || undefined)}
+                  doctorName={getTherapistName(app.psychologist.id || undefined)}
                   address={`${meetingTypeStr} — ${locationStr}`}
                   type="confirmation"
                   status={app.status}
@@ -311,7 +311,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                 <AppointmentCard
                   key={app.id}
                   date={dayjs(app.scheduled_time).format('D MMMM, HH:mm')}
-                  doctorName={getTherapistName(app.psychologist_id)}
+                  doctorName={getTherapistName(app.psychologist.id)}
                   address={app.venue || (app.type === 'Online' ? 'Онлайн сессия' : 'Офлайн')}
                   type="past"
                   rating={mockRating}

@@ -1,16 +1,15 @@
+import type { User } from "../auth";
+import type { Therapist } from "../therapist/types";
+
 export interface Application {
   id: string;
-  user_id: string | null;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
+  user: User;
   problem_description: string;
   preferred_campus: string | null;
   university_status: UniversityStatus;
   status: ApplicationStatus;
-  assigned_to: string | null;
-  psychologist_id: string | null;
+  assigned_to_user: User | null;
+  psychologist: Therapist;
   meeting_type: MeetingType | null;
   scheduled_at: string | null;
   location_address: string | null;

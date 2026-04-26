@@ -1,9 +1,10 @@
+import type { User } from "@/entities/auth";
+import type { Therapist } from "@/entities/therapist/types";
+
 export interface Appointment {
   id: string;
-  patient_id: string;
-  patient_first_name: string;
-  patient_last_name: string;
-  psychologist_id: string;
+  patient: User;
+  psychologist: Therapist;
   type: AppointmentType;
   reason: string | null;
   status: AppointmentStatus;
