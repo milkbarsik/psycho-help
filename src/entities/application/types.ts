@@ -40,15 +40,13 @@ export type ApplicationStatus =
   | 'cancelled'
   | 'expired';
 
-export type UniversityStatus = string; // А почему убрали?
+export type UniversityStatus = string;
 export type MeetingType = 'offline' | 'online';
 export type CancelInitiator = 'user' | 'psychologist' | 'manager' | 'system';
 
 export interface ApplicationCreateRequest {
-  first_name: string;
-  last_name: string;
-  email?: string;
-  phone?: string;
+  psychologist_id: string;
+  scheduled_at: string;
   problem_description: string;
   preferred_campus?: string;
   university_status: UniversityStatus;

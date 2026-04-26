@@ -2,13 +2,18 @@ import type { FC } from 'react';
 import styles from './AppointmentForm.module.css';
 import { useApplication } from '@/features/personal-cabinet/model/application';
 import type { Therapist } from '@/entities/therapist/types';
-import { useMemo, useState, useEffect } from 'react';
+import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
 import clsx from 'clsx';
+import { Img } from '@/shared/ui';
+import { useState, useMemo, useEffect } from 'react';
+import arrow from '@/shared/assets/images/appointments/arrow.svg';
 import backArrow from '@/shared/assets/images/appointments/backArrow.svg';
 import { useAuth } from '@/features/auth/api/useAuth';
 import type { ApplicationCreateRequest, UniversityStatus } from '@/entities/application/types';
 import { createApplication, getUniversityStatuses } from '@/entities/application/api';
-import { message } from 'antd';
+import { message, DatePicker, ConfigProvider } from 'antd';
+import locale from 'antd/es/locale/ru_RU';
+import dayjs, { Dayjs } from 'dayjs';
 
 interface Props {
   doctors: Therapist[];
@@ -16,75 +21,138 @@ interface Props {
 
 const AppointmentForm: FC<Props> = ({ doctors }) => {
   const user = useAuth((s) => s.user);
-
   const application = useApplication((state) => state.application);
   const setApplication = useApplication((state) => state.setApplication);
 
-  const [window, setWindow] = useState<'form' | 'results'>('form');
-  const [meetingType, setMeetingType] = useState<'online' | 'offline' | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // 🎯 State для навигации по галерее и фильтров
+  const [currentTherapistIndex, setCurrentTherapistIndex] = useState(0);
+  const[selectedOffices, setSelectedOffices] = useState<Set<string>>(new Set());
+  const[window, setWindow] = useState<'form' | 'results'>('form');
+  const[meetingType, setMeetingType] = useState<'online' | 'offline' | null>(null);
+  const[selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [universityStatuses, setUniversityStatuses] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 🎯 Уникальные офисы — берём из всех психологов, удаляем дубликаты через Set
-  const uniqueOffices = useMemo(
-    () => Array.from(new Set(doctors.map((d) => d.office).filter(Boolean))),
-    [doctors],
-  );
+  // 🔍 Фильтрация врачей по формату и выбранным офисам
+  const filteredDoctors = useMemo(() => {
+    let availableDoctors = doctors;
 
-  // 🔄 Сброс места консультации при переключении на Online
+    // Если выбрано "очно", исключаем психологов, которые принимают ТОЛЬКО онлайн
+    if (meetingType === 'offline') {
+      availableDoctors = availableDoctors.filter(
+        (doctor) => doctor.office && doctor.office.toLowerCase() !== 'онлайн'
+      );
+    }
+
+    // Фильтр по чекбоксам офисов (применяется только для очного формата)
+    if (meetingType === 'offline' && selectedOffices.size > 0) {
+      availableDoctors = availableDoctors.filter(
+        (doctor) => doctor.office && selectedOffices.has(doctor.office)
+      );
+    }
+
+    return availableDoctors;
+  },[doctors, selectedOffices, meetingType]);
+
+  // 🔄 Сброс индекса галереи при изменении списка или формата встречи
+  useEffect(() => {
+    setCurrentTherapistIndex(0);
+  }, [filteredDoctors.length, meetingType]);
+
+  // 🔄 Сброс чекбоксов при переключении на Online
   useEffect(() => {
     if (meetingType === 'online') {
-      setApplication({ preferred_campus: undefined });
+      setSelectedOffices(new Set());
     }
-  }, [meetingType, setApplication]);
+  }, [meetingType]);
 
-  // 📚 Загрузка статусов в университете с бэкенда
+  // 📚 Загрузка статусов
   useEffect(() => {
     const fetchUniversityStatuses = async () => {
       try {
         const statuses = await getUniversityStatuses();
         setUniversityStatuses(statuses);
-      } catch (error) {
-        console.error('Failed to fetch university statuses:', error);
-        // Fallback to hardcoded values if API fails
+      } catch {
         setUniversityStatuses(['студент', 'аспирант', 'преподаватель', 'сотрудник']);
       }
     };
-
     fetchUniversityStatuses();
-  }, []);
+  },[]);
 
-  const handleSubmit = async () => {
-    if (!user) {
-      message.error('Вы должны быть авторизованы');
+  // 🎯 Обработчик чекбокса офиса
+  const handleOfficeToggle = (office: string) => {
+    setSelectedOffices((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(office)) {
+        newSet.delete(office);
+      } else {
+        newSet.add(office);
+      }
+      return newSet;
+    });
+    setCurrentTherapistIndex(0);
+  };
+
+  // 🎯 Навигация по специалистам (вперед/назад)
+  const handleNextTherapist = () => {
+    if (currentTherapistIndex < filteredDoctors.length - 1) {
+      setCurrentTherapistIndex((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevTherapist = () => {
+    if (currentTherapistIndex > 0) {
+      setCurrentTherapistIndex((prev) => prev - 1);
+    }
+  };
+
+  const currentTherapist = filteredDoctors[currentTherapistIndex];
+  const isOnlineOnly = currentTherapist?.office?.toLowerCase() === 'онлайн';
+
+  // 🎯 Уникальные офисы для чекбоксов (исключаем "Онлайн", так как это формат, а не офис)
+  const uniqueOffices = useMemo(
+    () =>
+      Array.from(new Set(doctors.map((d) => d.office).filter(Boolean))).filter(
+        (office) => office?.toLowerCase() !== 'онлайн'
+      ),
+    [doctors]
+  );
+
+  const handleNextButton = () => {
+    if (!meetingType) {
+      message.error('Выберите формат консультации');
       return;
     }
-
+    if (!currentTherapist) {
+      message.error('Специалист не выбран');
+      return;
+    }
+    if (!selectedDate) {
+      message.error('Выберите дату и время приема');
+      return;
+    }
+    if (!application.university_status) {
+      message.error('Укажите ваш статус в университете');
+      return;
+    }
     const description = application.problem_description?.trim();
     if (!description || description.length < 10) {
-      message.error('Опишите проблему подробнее (минимум 10 символов)');
+      message.error('Опишите проблему (минимум 10 символов)');
       return;
     }
 
-    if (!application.university_status) {
-      message.error('Укажите статус в университете');
-      return;
-    }
+    setWindow('results');
+  };
 
-    if (meetingType === 'offline' && !application.preferred_campus) {
-      message.error('Выберите место консультации');
-      return;
-    }
-
+  const handleSubmit = async () => {
+    if (!user || !currentTherapist || !selectedDate) return;
     setIsSubmitting(true);
 
     const requestData: ApplicationCreateRequest = {
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      phone: user.phone_number,
-      problem_description: description,
-      preferred_campus: application.preferred_campus,
+      psychologist_id: currentTherapist.id!,
+      scheduled_at: selectedDate.toISOString(),
+      problem_description: application.problem_description!,
+      preferred_campus: meetingType === 'offline' ? currentTherapist.office : undefined,
       university_status: application.university_status as UniversityStatus,
     };
 
@@ -92,130 +160,179 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
       await createApplication(requestData);
       message.success('Заявка успешно отправлена');
       useApplication.getState().resetApplication();
-      setWindow('form');
+      setSelectedDate(null);
       setMeetingType(null);
+      setWindow('form');
     } catch {
-      message.error('Не удалось отправить заявку, попробуйте позже');
+      message.error('Не удалось отправить заявку');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const userName = user
-    ? `${user.last_name} ${user.first_name}${user.middle_name ? ` ${user.middle_name}` : ''}`
-    : '';
-  const userPhone = user?.phone_number || '';
-  const userEmail = user?.email || '';
-
   return (
-    <>
+    <ConfigProvider locale={locale}>
       {window === 'form' ? (
         <div className={styles.form}>
-          {/* Данные заявителя */}
-          <div className={styles.userInfo}>
-            <h3 className={styles.label}>Данные заявителя</h3>
-            <div className={styles.userInfo__fields}>
-              <div className={styles.userInfo__field}>
-                <label className={styles.fieldLabel}>ФИО</label>
-                <input
-                  type="text"
-                  value={userName}
-                  readOnly
-                  className={styles.readonlyInput}
-                  aria-label="ФИО пользователя"
-                />
-              </div>
-              <div className={styles.userInfo__field}>
-                <label className={styles.fieldLabel}>Телефон</label>
-                <input
-                  type="tel"
-                  value={userPhone}
-                  readOnly
-                  className={styles.readonlyInput}
-                  aria-label="Телефон пользователя"
-                />
-              </div>
-              <div className={styles.userInfo__field}>
-                <label className={styles.fieldLabel}>Email</label>
-                <input
-                  type="email"
-                  value={userEmail}
-                  readOnly
-                  className={styles.readonlyInput}
-                  aria-label="Email пользователя"
-                />
-              </div>
-              <div className={styles.userInfo__field}>
-                <label className={styles.fieldLabel}>Статус в университете</label>
-                <select
-                  value={application.university_status || 'студент'}
-                  onChange={(e) =>
-                    setApplication({ university_status: e.target.value as UniversityStatus })
-                  }
-                  className={styles.selectInput}
-                  aria-label="Статус в университете"
-                >
-                  {universityStatuses.map((status) => (
-                    <option key={status} value={status}>
-                      {status.charAt(0).toUpperCase() + status.slice(1)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-
           {/* Формат встречи */}
           <div className={styles.format}>
             <h3 className={styles.label}>Выберите формат консультации</h3>
             <div className={styles.format__btns}>
               <button
                 type="button"
-                className={clsx(styles.formatButton, {
-                  [styles.active]: meetingType === 'online',
-                })}
-                onClick={() => {
-                  setMeetingType('online');
-                  setApplication({ preferred_campus: undefined });
-                }}
-                aria-label="Кнопка выбора онлайн"
+                className={clsx(styles.formatButton, { [styles.active]: meetingType === 'online' })}
+                onClick={() => setMeetingType('online')}
               >
                 Онлайн
               </button>
               <button
                 type="button"
-                className={clsx(styles.formatButton, {
-                  [styles.active]: meetingType === 'offline',
-                })}
+                className={clsx(styles.formatButton, { [styles.active]: meetingType === 'offline' })}
                 onClick={() => setMeetingType('offline')}
-                aria-label="Кнопка выбора очно"
               >
                 Очно
               </button>
             </div>
           </div>
 
-          {/* Место консультации (только для Offline) */}
-          {meetingType === 'offline' && (
+          {/* Фильтр по офисам (только для Offline) */}
+          {meetingType === 'offline' && uniqueOffices.length > 0 && (
             <div className={styles.location}>
-              <label className={styles.label}>Место консультации</label>
-              <select
-                value={application.preferred_campus || ''}
-                onChange={(e) => setApplication({ preferred_campus: e.target.value })}
-                className={styles.locationSelect}
-                aria-label="Место консультации"
-              >
-                <option value="" disabled>
-                  Выберите место
-                </option>
+              <p className={styles.label}>Выберите место консультации</p>
+              <div className={styles.location__btns}>
                 {uniqueOffices.map((office) => (
-                  <option key={office} value={office}>
-                    {office}
-                  </option>
+                  <div key={office} className={styles.location__element}>
+                    <input
+                      type="checkbox"
+                      id={`office-${office}`}
+                      checked={selectedOffices.has(office)}
+                      onChange={() => handleOfficeToggle(office)}
+                    />
+                    <label htmlFor={`office-${office}`} className={styles.location__text}>
+                      {office}
+                    </label>
+                  </div>
                 ))}
-              </select>
+              </div>
             </div>
           )}
+
+          {/* Галерея специалистов */}
+          <div className={styles.therapist}>
+            <p className={styles.label}>Выберите специалиста</p>
+
+            {filteredDoctors.length > 0 && currentTherapist ? (
+              <div className={styles.galleryWrapper}>
+                <div className={styles.mainInfo}>
+                  <div className={styles.imgWrapper}>
+                    <Img
+                      key={currentTherapist.id || currentTherapist.photo}
+                      className={styles.photo}
+                      photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}${currentTherapist.photo}`}
+                      altPhoto={altPhoto}
+                    />
+                  </div>
+                  <div className={styles.info}>
+                    <div className={styles.infoBlock}>
+                      <p className={styles.name}>
+                        {[currentTherapist.last_name, currentTherapist.first_name, currentTherapist.middle_name]
+                          .filter(Boolean)
+                          .join(' ')}
+                      </p>
+                      <p className={styles.qual}>{currentTherapist.qualification}</p>
+                      <p className={styles.exp}>Опыт {currentTherapist.experience}</p>
+                    </div>
+
+                    <div className={styles.infoBlock}>
+                      <p className={styles.qual}>
+                        {isOnlineOnly ? 'Принимает только онлайн' : 'Принимает лично и онлайн'}
+                      </p>
+                      {/* Если только онлайн, не дублируем слово "Онлайн" как адрес офиса */}
+                      {!isOnlineOnly && <p className={styles.office}>{currentTherapist.office}</p>}
+                    </div>
+
+                    <div>
+                      <p className={styles.qual}>С чем поможет</p>
+                      <div className={styles.consultAreas}>
+                        {currentTherapist.consult_areas?.split(',').map((item) => {
+                          const text = item.trim().charAt(0).toUpperCase() + item.trim().slice(1);
+                          if (!text) return null;
+                          return (
+                            <span key={text} className={styles.consultArea}>
+                              {text}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Кнопки навигации */}
+                {filteredDoctors.length > 1 && (
+                  <>
+                    {currentTherapistIndex > 0 && (
+                      <button
+                        type="button"
+                        className={clsx(styles.galleryBtn, styles.galleryPrevBtn)}
+                        onClick={handlePrevTherapist}
+                        aria-label="Предыдущий специалист"
+                      >
+                        <img src={arrow} alt="prev" />
+                      </button>
+                    )}
+                    {currentTherapistIndex < filteredDoctors.length - 1 && (
+                      <button
+                        type="button"
+                        className={clsx(styles.galleryBtn, styles.galleryNextBtn)}
+                        onClick={handleNextTherapist}
+                        aria-label="Следующий специалист"
+                      >
+                        <img src={arrow} alt="next" />
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
+            ) : (
+              <p className={styles.empty}>
+                {meetingType === 'offline'
+                  ? 'По выбранным фильтрам специалисты не найдены'
+                  : 'Список специалистов загружается...'}
+              </p>
+            )}
+          </div>
+
+          {/* Выбор времени (календарь) */}
+          <div className={styles.field}>
+            <label className={styles.label}>Выберите дату и время</label>
+            <DatePicker
+              showTime={{ format: 'HH:mm', minuteStep: 15 }}
+              format="DD.MM.YYYY HH:mm"
+              className={styles.datePicker}
+              placeholder="Выберите время приема"
+              onChange={(value) => setSelectedDate(value)}
+              value={selectedDate}
+              disabledDate={(current) => current && current < dayjs().startOf('day')}
+              hideDisabledOptions
+            />
+          </div>
+
+          {/* Статус в университете (необходим для бэка) */}
+          <div className={styles.field}>
+            <label className={styles.label}>Ваш статус в университете</label>
+            <select
+              value={application.university_status || 'студент'}
+              onChange={(e) => setApplication({ university_status: e.target.value as UniversityStatus })}
+              className={styles.selectInput}
+            >
+              {universityStatuses.map((status) => (
+                <option key={status} value={status}>
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {/* Запрос */}
           <div className={styles.field}>
@@ -228,7 +345,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
             />
           </div>
 
-          <button className={styles.subButton} type="button" onClick={() => setWindow('results')}>
+          <button className={styles.subButton} type="button" onClick={handleNextButton}>
             Далее
           </button>
         </div>
@@ -241,57 +358,46 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
             </div>
           </button>
           <div className={styles.results__info}>
-            <h3 className={styles.results__title}>Заявка</h3>
+            <h3 className={styles.results__title}>Запись</h3>
+            
+            <p className={styles.results__text}>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Дата и время: </span>
+              {selectedDate?.format('DD MMMM YYYY, HH:mm')}
+            </p>
 
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>ФИО: </span>
-              {userName}
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Психолог: </span>
+              {[currentTherapist.last_name, currentTherapist.first_name, currentTherapist.middle_name].join(' ')}
             </p>
+
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>
-                Телефон:{' '}
-              </span>
-              {userPhone}
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Место: </span>
+              {meetingType === 'online' ? 'Онлайн' : currentTherapist.office}
             </p>
+            
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>Email: </span>
-              {userEmail}
-            </p>
-            <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>Формат: </span>
-              {meetingType === 'online' ? 'Онлайн' : 'Очно'}
-            </p>
-            {meetingType === 'offline' && application.preferred_campus && (
-              <p className={styles.results__text}>
-                <span className={clsx(styles.results__text, styles.results__textGray)}>
-                  Место:{' '}
-                </span>
-                {application.preferred_campus}
-              </p>
-            )}
-            <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>Статус: </span>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Статус в ВУЗе: </span>
               {application.university_status || 'студент'}
             </p>
-            <p className={clsx(styles.results__text, styles.results__textGray)}>Описание:</p>
+
+            <p className={clsx(styles.results__text, styles.results__textGray)}>Тема встречи:</p>
             <textarea
               value={application.problem_description}
               readOnly
               className={clsx(styles.textarea, styles.results__textarea)}
-              placeholder="Ваш запрос"
             />
-            <button
-              className={styles.submitBtn}
-              type="button"
+            
+            <button 
+              className={styles.submitBtn} 
               onClick={handleSubmit}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
+              {isSubmitting ? 'Отправка...' : 'Записаться'}
             </button>
           </div>
         </div>
       )}
-    </>
+    </ConfigProvider>
   );
 };
 

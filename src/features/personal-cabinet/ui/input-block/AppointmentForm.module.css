@@ -5,7 +5,7 @@
   padding: 0 24px 24px 24px;
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: 48px;
 }
 
 .label {
@@ -13,71 +13,15 @@
   font-size: 2.4rem;
   color: var(--color-label-neutral-primary);
   font-weight: 500;
+  margin-bottom: 8px;
 }
 
-/* --- Блок данных пользователя --- */
-.userInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.userInfo__fields {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.userInfo__field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.fieldLabel {
-  display: block;
-  font-size: 1.6rem;
-  color: var(--color-label-neutral-secondary);
-  margin-bottom: 4px;
-}
-
-.readonlyInput {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--color-border-neutral-base);
-  border-radius: 8px;
-  font-size: 16px;
-  background: #f5f5f5;
-  color: var(--color-label-neutral-secondary);
-  cursor: not-allowed;
-}
-
-.selectInput {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  background: #fff;
-  color: var(--color-label-neutral-primary);
-  cursor: pointer;
-  appearance: auto;
-}
-
-/* --- Поле с textarea --- */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* --- Формат встречи --- */
 .format__btns {
   display: flex;
   justify-content: space-between;
   gap: 16px;
   width: 40%;
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .formatButton {
@@ -95,33 +39,202 @@
   color: var(--color-label-neutral-inverted-primary);
 }
 
-/* --- Место консультации --- */
-.location {
+.location__btns {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.location__element {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.location__element input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.location__text {
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.6rem;
+  color: var(--color-label-neutral-primary);
+}
+
+.mainInfo {
+  display: flex;
+  color: var(--color-label-neutral-primary);
+  gap: 36px;
+  margin-top: 24px;
+}
+
+.imgWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.photo {
+  width: 244px;
+  height: 267px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.name {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.qual {
+  font-size: 2rem;
+}
+
+.exp {
+  font-size: 2rem;
+  color: var(--color-label-neutral-secondary);
+}
+
+.office {
+  font-size: 1.6rem;
+  color: var(--color-label-neutral-secondary);
+}
+
+.consultAreas {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+  max-width: 467px;
+  flex-wrap: wrap;
+}
+
+.consultArea {
+  color: var(--color-label-neutral-secondary);
+  border: var(--color-border-neutral-base) 1px solid;
+  padding: 4px 16px;
+  border-radius: 16px;
+  font-size: 1.4rem;
+}
+
+/* Обёртка галереи для позиционирования кнопок */
+.therapist .galleryWrapper {
+  position: relative;
+}
+
+/* Кнопки навигации галереи (Вперед / Назад) */
+.galleryBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--color-interactive-brand-primary, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.galleryBtn img {
+  /* Делаем внутреннюю SVG стрелку белой через инверсию цветов */
+  filter: brightness(0) invert(1);
+}
+
+.galleryPrevBtn {
+  left: -20px;
+}
+
+.galleryPrevBtn img {
+  /* Разворачиваем стрелку для левой кнопки */
+  transform: scaleX(-1);
+}
+
+.galleryNextBtn {
+  right: -20px;
+}
+
+.galleryBtn:hover {
+  opacity: 0.9;
+}
+
+.galleryBtn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .mainInfo {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .galleryBtn {
+    position: static;
+    transform: none;
+    margin: 16px 8px 0;
+    display: inline-flex;
+  }
+
+  .galleryBtn:active {
+    transform: scale(0.95);
+  }
+}
+
+.therapist .empty {
+  text-align: center;
+  color: var(--text-secondary, #666);
+  padding: 24px;
+  font-style: italic;
+  font-size: 1.6rem;
+}
+
+/* Элементы формы (календарь, дропдаун, текст) */
+.field {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.locationSelect {
+.datePicker, .selectInput {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 1.6rem;
   background: #fff;
-  color: var(--color-label-neutral-primary);
   cursor: pointer;
-  appearance: auto;
-  margin-top: 24px;
 }
 
-.locationSelect:focus {
-  outline: none;
-  border-color: var(--color-interactive-brand-primary);
-  box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.15);
+.datePicker :global(.ant-picker-input > input) {
+  font-size: 1.6rem;
 }
 
-/* --- Textarea --- */
 .textarea {
   width: 100%;
   height: 100px;
@@ -131,10 +244,8 @@
   font-size: 16px;
   resize: none;
   background: #fff;
-  margin-top: 24px;
 }
 
-/* --- Кнопка "Далее" --- */
 .subButton {
   background-color: var(--color-interactive-brand-primary);
   color: var(--color-label-neutral-inverted-primary);
@@ -147,16 +258,16 @@
   cursor: pointer;
 }
 
-.subButton:hover {
+.subButton:hover, .submitBtn:hover {
   opacity: 0.9;
 }
 
-.subButton:disabled {
+.subButton:disabled, .submitBtn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-/* --- Результаты --- */
+/* Результаты */
 .backButton {
   background: none;
   border: none;
@@ -195,6 +306,7 @@
 
 .results__textarea {
   margin-top: 0;
+  cursor: default;
 }
 
 .submitBtn {
@@ -208,13 +320,4 @@
   border-radius: 16px;
   cursor: pointer;
   font-size: 2rem;
-}
-
-.submitBtn:hover {
-  opacity: 0.9;
-}
-
-.submitBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
