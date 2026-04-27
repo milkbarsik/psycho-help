@@ -421,4 +421,7 @@
   .Suggestion span {
     color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
+  .checkbox_custom{
+    border:1px solid var(--color-border-neutral-inverted);
+  }
 }

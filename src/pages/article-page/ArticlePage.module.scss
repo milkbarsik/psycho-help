@@ -145,15 +145,25 @@
 }
 
 [data-theme='dark'] {
-  .info {
-    color: white;
+  .wrapper {
+    .info,
+    .title {
+      color: var(--color-label-neutral-inverted-primary);
+    }
   }
-  .title,
-  h2 {
-    color: white !important;
-  }
-  li,
-  p {
-    color: white !important;
+  .content {
+    & > h1,
+    & > h2,
+    & > p {
+      color: var(--color-label-neutral-inverted-primary);
+    }
+    .block {
+      & > p {
+        color: var(--color-label-neutral-inverted-primary);
+      }
+      & > ul > li {
+        color: var(--color-label-neutral-inverted-primary) !important;
+      }
+    }
   }
 }
