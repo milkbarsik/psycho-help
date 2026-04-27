@@ -1,3 +1,5 @@
+import type { User } from "@/entities/auth";
+
 export type Therapist = {
   id?: string;
   photo?: string;
@@ -15,4 +17,5 @@ export type Therapist = {
   short_description: string;
   description: string;
   office: string;
+  user?: User;
 };

@@ -2,6 +2,7 @@ import { useAuth } from "./useAuth";
 import AuthApi from "./auth-api";
 import { act } from '@testing-library/react'
 import type { User } from "@/shared/api/types";
+import type { Role } from "@/entities/role/types";
 import type { AxiosResponse } from 'axios';
 import {vi, describe, beforeEach, it, expect} from 'vitest';
 
@@ -22,6 +23,7 @@ describe('useAuth Store', () => {
         phone_number: '+7 999 999 99 99',
         email: 'gojosatoru@juju.com',
         social_media: 'tg',
+        roles: [],
     }
 
     beforeEach(() => {

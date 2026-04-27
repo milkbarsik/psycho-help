@@ -73,11 +73,6 @@
   right: 0;
 }
 
-.modalHeaderPassword .closeButton {
-  position: absolute;
-  right: 0;
-}
-
 .closeButton:hover {
   color: var(--color-border-neutral-strong);
 }
@@ -159,6 +154,7 @@
   overflow: hidden;
   position: absolute;
 }
+
 .checkbox_custom {
   flex-shrink: 0;
   position: relative;
@@ -327,76 +323,12 @@
   flex-wrap: wrap;
 }
 
-.button {
-  background: none;
-  border: 1px solid transparent;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  font-weight: 500;
-  font-size: 2rem;
-  line-height: 2.8rem;
-  padding: 1.5rem;
-  border-radius: 1.2rem;
-  text-decoration: none;
-  color: var(--color-label-neutral-primary);
-  transition: 0.3s all;
-}
-
-.button svg {
-  stroke: currentColor;
-}
-
-.button:hover {
-  background-color: var(--color-interactive-brand-secondary);
-  border: 1px solid var(--color-interactive-brand-secondary);
-  color: var(--color-interactive-brand-primary);
-}
-
-.button:active {
-  background-color: transparent;
-  border-color: var(--color-border-brand-strong);
-  color: var(--color-interactive-brand-primary);
-}
-
-.button:focus-visible {
-  border-radius: 4px;
-  border-color: #1b50f5;
-}
-
 .input:has(+ .errorText) {
   border: 1px solid var(--color-border-danger-strong);
 }
 
 .passwordWrapper:has(+ .errorText) .passwordInput {
   border: 1px solid var(--color-border-danger-strong);
-}
-
-@media (max-width: 1024px) {
-  .button {
-    font-size: 1.6rem;
-    line-height: 2.4rem;
-    color: var(--color-label-neutral-inverted-primary);
-  }
-
-  .button:hover {
-    background-color: var(--color-interactive-brand-secondary);
-    border: 1px solid var(--color-interactive-brand-secondary);
-    color: var(--color-interactive-brand-primary);
-  }
-
-  .button:active {
-    background-color: transparent;
-    border: 1px solid var(--color-interactive-brand-secondary);
-    color: var(--color-label-neutral-inverted-primary);
-  }
-}
-
-@media (max-width: 425px) {
-  .button {
-    padding: 1rem;
-  }
 }
 
 [data-theme='dark'] {

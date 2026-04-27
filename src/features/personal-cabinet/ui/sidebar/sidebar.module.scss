@@ -47,6 +47,10 @@
   color: var(--color-label-neutral-secondary);
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
   &:hover {
     color: var(--color-label-neutral-primary);
   }
@@ -55,6 +59,10 @@
     color: var(--color-interactive-brand-primary);
     font: var(--font-text-large-button);
   }
+}
+
+.navLabel {
+  flex: 1;
 }
 .footer {
   margin-top: 3.2rem;

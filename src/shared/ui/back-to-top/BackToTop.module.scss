@@ -23,6 +23,11 @@
     transform 320ms ease,
     box-shadow 200ms ease,
     visibility 320ms;
+  transition:
+    opacity 320ms ease,
+    transform 320ms ease,
+    box-shadow 200ms ease,
+    visibility 320ms;
   outline: 2px solid transparent;
 }
 

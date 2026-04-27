@@ -5,7 +5,7 @@
   padding: 0 24px 24px 24px;
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: 48px;
 }
 
 .label {
@@ -13,6 +13,7 @@
   font-size: 2.4rem;
   color: var(--color-label-neutral-primary);
   font-weight: 500;
+  margin-bottom: 8px;
 }
 
 .format__btns {
@@ -20,7 +21,7 @@
   justify-content: space-between;
   gap: 16px;
   width: 40%;
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .formatButton {
@@ -38,25 +39,30 @@
   color: var(--color-label-neutral-inverted-primary);
 }
 
-.textarea {
-  width: 100%;
-  height: 100px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  resize: none;
-  background: #fff;
-  margin-top: 24px;
-}
-
 .location__btns {
-  margin-top: 24px;
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .location__element {
   display: flex;
+  align-items: center;
   gap: 8px;
+}
+
+.location__element input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.location__text {
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.6rem;
+  color: var(--color-label-neutral-primary);
 }
 
 .mainInfo {
@@ -100,13 +106,6 @@
   gap: 4px;
 }
 
-.line {
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-border-neutral-base);
-  margin: 24px 0;
-}
-
 .qual {
   font-size: 2rem;
 }
@@ -135,6 +134,116 @@
   border: var(--color-border-neutral-base) 1px solid;
   padding: 4px 16px;
   border-radius: 16px;
+  font-size: 1.4rem;
+}
+
+/* Обёртка галереи для позиционирования кнопок */
+.therapist .galleryWrapper {
+  position: relative;
+}
+
+/* Кнопки навигации галереи (Вперед / Назад) */
+.galleryBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--color-interactive-brand-primary, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.galleryBtn img {
+  /* Делаем внутреннюю SVG стрелку белой через инверсию цветов */
+  filter: brightness(0) invert(1);
+}
+
+.galleryPrevBtn {
+  left: -20px;
+}
+
+.galleryPrevBtn img {
+  /* Разворачиваем стрелку для левой кнопки */
+  transform: scaleX(-1);
+}
+
+.galleryNextBtn {
+  right: -20px;
+}
+
+.galleryBtn:hover {
+  opacity: 0.9;
+}
+
+.galleryBtn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .mainInfo {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .galleryBtn {
+    position: static;
+    transform: none;
+    margin: 16px 8px 0;
+    display: inline-flex;
+  }
+
+  .galleryBtn:active {
+    transform: scale(0.95);
+  }
+}
+
+.therapist .empty {
+  text-align: center;
+  color: var(--text-secondary, #666);
+  padding: 24px;
+  font-style: italic;
+  font-size: 1.6rem;
+}
+
+/* Элементы формы (календарь, дропдаун, текст) */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.datePicker, .selectInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.datePicker :global(.ant-picker-input > input) {
+  font-size: 1.6rem;
+}
+
+.textarea {
+  width: 100%;
+  height: 100px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  resize: none;
+  background: #fff;
 }
 
 .subButton {
@@ -149,58 +258,16 @@
   cursor: pointer;
 }
 
-/* Обёртка галереи для позиционирования кнопки */
-.therapist .galleryWrapper {
-  position: relative;
+.subButton:hover, .submitBtn:hover {
+  opacity: 0.9;
 }
 
-/* Кнопка навигации галереи */
-.therapist .galleryNextBtn {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  color: var(--color-label-neutral-inverted-primary);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  z-index: 2;
+.subButton:disabled, .submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.therapist .galleryNextBtn:hover {
-  background: var(--primary-hover, #0056b3);
-}
-
-.therapist .galleryNextBtn:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
-/* Адаптив: на мобильных кнопка снизу */
-@media (max-width: 768px) {
-  .therapist .galleryNextBtn {
-    position: static;
-    transform: none;
-    margin: 16px auto 0;
-    display: flex;
-  }
-}
-
-/* Пустое состояние */
-.therapist .empty {
-  text-align: center;
-  color: var(--text-secondary, #666);
-  padding: 24px;
-  font-style: italic;
-}
-
+/* Результаты */
 .backButton {
   background: none;
   border: none;
@@ -210,7 +277,6 @@
 
 .backArrow {
   display: flex;
-  align-items: center;
   gap: 7.5px;
 }
 
@@ -240,6 +306,7 @@
 
 .results__textarea {
   margin-top: 0;
+  cursor: default;
 }
 
 .submitBtn {
@@ -254,25 +321,6 @@
   cursor: pointer;
   font-size: 2rem;
 }
-
-/* Улучшения для чекбоксов */
-/* .location__element {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 8px 0;
-}
-
-.location__element input[type="checkbox"] {
-  cursor: pointer;
-  width: 18px;
-  height: 18px;
-}
-
-.location__element label {
-  cursor: pointer;
-  user-select: none;
-} */
 
 [data-theme='dark'] {
   .label {

@@ -1,27 +1,47 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
-import Logo from './Logo.svg?react';
+import Logo from '@/shared/assets/images/logo.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
+import Auth from '@/shared/assets/images/header/auth.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
+import { navPages, CABINET_PATH } from '@/app/router/routes';
 
 const Header = () => {
   const { isAuth } = useAuth();
+  const headerRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLUListElement>(null);
-  const burgerRef = useRef<HTMLButtonElement>(null);
-
-  const items = [
-    { link: '/', text: 'Главная' },
-    { link: '/therapists', text: 'Психологи' },
-    { link: '/news', text: 'Новости' },
-    { link: '/resources', text: 'Полезные материалы' },
-    { link: '/faq/', text: 'FAQ' },
-  ];
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const closeMenu = useCallback(() => {
     setMenuOpen(false);
+    setTimeout(() => setIsAnimating(false), 300);
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    if (menuOpen) {
+      closeMenu();
+    } else {
+      setIsAnimating(true);
+      setMenuOpen(true);
+    }
+  }, [menuOpen, closeMenu]);
+
+  const handleAuthClick = () => {
+    closeMenu();
+    setModalOpen(true);
+  };
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    });
+    observer.observe(header);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -34,52 +54,69 @@ const Header = () => {
     }
   }, [menuOpen]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1200 && menuOpen) {
+        closeMenu();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [menuOpen, closeMenu]);
+
   return (
-    <header className={styles.header}>
-      <nav className={styles.header__nav}>
-        <Link
-          to="/"
-          className={styles.header__logo}
-          aria-label="Вернуться на главную страницу"
-        >
-          <Logo />
+    <header ref={headerRef} className={styles.header}>
+      <nav className={styles.header__nav} aria-label="Основная навигация">
+        <Link to="/" className={styles.header__logo} aria-label="Вернуться на главную страницу">
+          <Logo aria-hidden="true" />
         </Link>
         <button
           className={`${styles.header__burger} ${menuOpen ? styles.header__burger_open : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
-          ref={burgerRef}
+          onClick={toggleMenu}
+          type="button"
+          aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+          aria-expanded={menuOpen}
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </button>
         <ul
-          className={`${styles.header__list} ${menuOpen ? styles.header__list_open : ''}`}
-          ref={menuRef}
+          className={`${styles.header__list} ${isAnimating ? styles.header__list_animating : ''} ${menuOpen ? styles.header__list_open : ''}`}
         >
-          {items.map((item, index) => (
+          {navPages.map((item, index) => (
             <li key={index} className={styles.header__item}>
-              <Link
-                to={item.link}
-                className={styles.header__link}
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.text}
+              <Link to={item.path} className={styles.header__link} onClick={closeMenu}>
+                {item.navText}
               </Link>
             </li>
           ))}
           <li className={styles.header__item}>
             {isAuth ? (
-              <Link to="/cabinet" className={styles.header__link}>
-                <Profile className={styles.profileIcon} />
+              <Link
+                to={CABINET_PATH}
+                className={styles.header__link}
+                onClick={closeMenu}
+                aria-label="Личный кабинет"
+              >
+                <Profile className={styles.header__profile} aria-hidden="true" />
               </Link>
             ) : (
-              <ModalWindow onMenuClose={closeMenu} />
+              <button
+                className={styles.header__auth}
+                onClick={handleAuthClick}
+                type="button"
+                aria-label="Открыть окно входа"
+                data-testid="auth-button"
+              >
+                <Auth aria-hidden="true" />
+                <span>Войти</span>
+              </button>
             )}
           </li>
         </ul>
       </nav>
+      {!isAuth && <ModalWindow isOpen={isModalOpen} onClose={() => setModalOpen(false)} />}
     </header>
   );
 };
