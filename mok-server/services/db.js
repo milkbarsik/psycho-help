@@ -1,3 +1,22 @@
+export const ROLES = {
+  user: {
+    code: 'user',
+    name: 'Пользователь',
+    description: 'Студент или преподаватель - обычный пользователь системы',
+  },
+  psychologist: {
+    code: 'psychologist',
+    name: 'Психолог',
+    description: 'Психолог, проводящий консультации',
+  },
+  admin: { code: 'admin', name: 'Администратор', description: 'Администратор системы' },
+  content_manager: {
+    code: 'content_manager',
+    name: 'Контент-менеджер',
+    description: 'Управление контентом сайта',
+  },
+};
+
 export const users = [
   {
     id: '64179a88-2053-44ee-97aa-23724be4cd44',
@@ -8,7 +27,9 @@ export const users = [
     email: 'anna.petrova@example.com',
     social_media: 'https://vk.com/anna_petrova',
     password: 'therapist2024',
-    role: 'therapist',
+    roles: [ROLES.psychologist],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: 'ff431e7d-8930-46b4-b287-c9cba1f21158',
@@ -19,7 +40,9 @@ export const users = [
     email: 'dmitry.ivanov@example.com',
     social_media: 'https://t.me/dmitry_ivanov',
     password: 'studentPass1',
-    role: 'student',
+    roles: [ROLES.user],
+    study_group: 'ИС22-11Б',
+    avatar_url: null,
   },
   {
     id: '0fcd0559-df8b-4ad2-be9e-03c7ef1dd48a',
@@ -30,7 +53,9 @@ export const users = [
     email: 'elena.smirnova@example.com',
     social_media: 'https://instagram.com/elena_smirnova',
     password: 'adminSecure123',
-    role: 'administrator',
+    roles: [ROLES.admin],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '87270d78-36e0-4675-9f38-f151028c0125',
@@ -41,7 +66,9 @@ export const users = [
     email: 'sergey.kozlov@example.com',
     social_media: 'https://vk.com/sergey_kozlov',
     password: 'therapistPass',
-    role: 'therapist',
+    roles: [ROLES.psychologist],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '3693dc1a-1a29-4ef4-a0c9-97e47dd01cb5',
@@ -52,7 +79,9 @@ export const users = [
     email: 'olga.novikova@example.com',
     social_media: 'https://t.me/olga_novikova',
     password: 'student2024',
-    role: 'student',
+    roles: [ROLES.user],
+    study_group: 'ИБ22-12Б',
+    avatar_url: null,
   },
   {
     id: '560cb505-eb19-4ad5-a4b7-b29d1c1844ed',
@@ -63,7 +92,9 @@ export const users = [
     email: 'alexey.morozov@example.com',
     social_media: 'https://instagram.com/alexey_morozov',
     password: 'adminPass123',
-    role: 'administrator',
+    roles: [ROLES.admin],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '242ba8b3-2821-4962-9d1c-25d2a02ffcf0',
@@ -74,7 +105,9 @@ export const users = [
     email: 'tatiana.volkova@example.com',
     social_media: 'https://vk.com/tatiana_volkova',
     password: 'therapy2024',
-    role: 'therapist',
+    roles: [ROLES.psychologist],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '1818d2ef-55ce-4826-9a11-1a9c4581a005',
@@ -85,7 +118,9 @@ export const users = [
     email: 'pavel.sokolov@example.com',
     social_media: 'https://t.me/pavel_sokolov',
     password: 'studentLearn1',
-    role: 'student',
+    roles: [ROLES.user],
+    study_group: 'СТ22-13Б',
+    avatar_url: null,
   },
   {
     id: '79a7b6f6-44c9-4f9f-aeb0-1e5352d832c4',
@@ -96,7 +131,9 @@ export const users = [
     email: 'natalia.lebedeva@example.com',
     social_media: 'https://instagram.com/natalia_lebedeva',
     password: 'therapistHeal',
-    role: 'therapist',
+    roles: [ROLES.psychologist, ROLES.content_manager],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '6b879aa7-3b0e-41a8-9c2c-510c8a970bd0',
@@ -107,7 +144,9 @@ export const users = [
     email: 'igor.komarov@example.com',
     social_media: 'https://vk.com/igor_komarov',
     password: 'adminMaster456',
-    role: 'administrator',
+    roles: [ROLES.admin],
+    study_group: null,
+    avatar_url: null,
   },
 ];
 

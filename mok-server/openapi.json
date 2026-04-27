@@ -471,6 +471,66 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppointmentCancelRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appointments/{id}/done": {
+      "put": {
+        "tags": ["appointments"],
+        "summary": "Завершить прием и написать заключение",
+        "description": "Завершает запись на прием (переводит в статус Done).\nДоступно только психологу, который вел этот прием.\nТребует обязательного заключения (conclusion).",
+        "operationId": "complete_appointment_endpoint_appointments__id__done_put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppointmentDoneRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -870,6 +930,30 @@
         }
       }
     },
+    "/applications/university-statuses": {
+      "get": {
+        "tags": ["applications"],
+        "summary": "Получить статусы в университете",
+        "description": "Возвращает список всех доступных статусов в университете\n(студент, аспирант и т.д.) для выпадающего списка на фронтенде.",
+        "operationId": "get_university_statuses_applications_university_statuses_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "title": "Response Get University Statuses Applications University Statuses Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/applications/": {
       "post": {
         "tags": ["applications"],
@@ -951,6 +1035,43 @@
               ],
               "title": "Status"
             }
+          },
+          {
+            "name": "assigned_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Assigned To"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "created_at",
+              "title": "Sort By"
+            }
+          },
+          {
+            "name": "sort_desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Sort Desc"
+            }
           }
         ],
         "responses": {
@@ -1020,11 +1141,13 @@
             }
           }
         }
-      },
-      "patch": {
+      }
+    },
+    "/applications/{application_id}/accept": {
+      "post": {
         "tags": ["applications"],
-        "summary": "Update Application",
-        "operationId": "update_application_applications__application_id__patch",
+        "summary": "Accept Application",
+        "operationId": "accept_application_applications__application_id__accept_post",
         "parameters": [
           {
             "name": "application_id",
@@ -1042,7 +1165,218 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ApplicationUpdateRequest"
+                "$ref": "#/components/schemas/AcceptToProcessingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}/offer": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Offer Consultation Endpoint",
+        "operationId": "offer_consultation_endpoint_applications__application_id__offer_post",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Application Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OfferConsultationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}/confirm": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Confirm Application Endpoint",
+        "operationId": "confirm_application_endpoint_applications__application_id__confirm_post",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Application Id"
+            }
+          },
+          {
+            "name": "appointment_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Appointment Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}/reject": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Reject Application Endpoint",
+        "operationId": "reject_application_endpoint_applications__application_id__reject_post",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Application Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{application_id}/cancel": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Cancel Application Endpoint",
+        "operationId": "cancel_application_endpoint_applications__application_id__cancel_post",
+        "parameters": [
+          {
+            "name": "application_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Application Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelRequest"
               }
             }
           }
@@ -1074,6 +1408,18 @@
   },
   "components": {
     "schemas": {
+      "AcceptToProcessingRequest": {
+        "properties": {
+          "assigned_to": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Assigned To"
+          }
+        },
+        "type": "object",
+        "required": ["assigned_to"],
+        "title": "AcceptToProcessingRequest"
+      },
       "ApplicationCreateRequest": {
         "properties": {
           "first_name": {
@@ -1089,14 +1435,28 @@
             "title": "Last Name"
           },
           "email": {
-            "type": "string",
-            "format": "email",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Email"
           },
           "phone": {
-            "type": "string",
-            "maxLength": 20,
-            "minLength": 10,
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 20,
+                "minLength": 10
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Phone"
           },
           "problem_description": {
@@ -1106,9 +1466,15 @@
             "title": "Problem Description"
           },
           "preferred_campus": {
-            "type": "string",
-            "maxLength": 128,
-            "minLength": 1,
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Preferred Campus"
           },
           "university_status": {
@@ -1116,15 +1482,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "first_name",
-          "last_name",
-          "email",
-          "phone",
-          "problem_description",
-          "preferred_campus",
-          "university_status"
-        ],
+        "required": ["first_name", "last_name", "problem_description", "university_status"],
         "title": "ApplicationCreateRequest"
       },
       "ApplicationResponse": {
@@ -1167,7 +1525,14 @@
             "title": "Problem Description"
           },
           "preferred_campus": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Preferred Campus"
           },
           "university_status": {
@@ -1175,6 +1540,74 @@
           },
           "status": {
             "$ref": "#/components/schemas/ApplicationStatus"
+          },
+          "assigned_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assigned To"
+          },
+          "psychologist_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Psychologist Id"
+          },
+          "meeting_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MeetingType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "location_address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location Address"
+          },
+          "meeting_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Meeting Url"
           },
           "created_at": {
             "type": "string",
@@ -1185,6 +1618,121 @@
             "type": "string",
             "format": "date-time",
             "title": "Updated At"
+          },
+          "processing_started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Processing Started At"
+          },
+          "confirmation_requested_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmation Requested At"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "rejected_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rejected At"
+          },
+          "cancelled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancelled At"
+          },
+          "expired_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expired At"
+          },
+          "reject_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reject Reason"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason"
+          },
+          "cancel_initiator": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CancelInitiator"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "internal_comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Internal Comment"
           },
           "appointment_id": {
             "anyOf": [
@@ -1197,6 +1745,10 @@
               }
             ],
             "title": "Appointment Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
           }
         },
         "type": "object",
@@ -1211,32 +1763,41 @@
           "preferred_campus",
           "university_status",
           "status",
+          "assigned_to",
+          "psychologist_id",
+          "meeting_type",
+          "scheduled_at",
+          "location_address",
+          "meeting_url",
           "created_at",
           "updated_at",
-          "appointment_id"
+          "processing_started_at",
+          "confirmation_requested_at",
+          "completed_at",
+          "rejected_at",
+          "cancelled_at",
+          "expired_at",
+          "reject_reason",
+          "cancel_reason",
+          "cancel_initiator",
+          "internal_comment",
+          "appointment_id",
+          "version"
         ],
         "title": "ApplicationResponse"
       },
       "ApplicationStatus": {
         "type": "string",
-        "enum": ["новая", "в обработке", "завершена", "отклонена"],
+        "enum": [
+          "new",
+          "in_progress",
+          "awaiting_user_confirmation",
+          "completed",
+          "rejected",
+          "cancelled",
+          "expired"
+        ],
         "title": "ApplicationStatus"
-      },
-      "ApplicationUpdateRequest": {
-        "properties": {
-          "status": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ApplicationStatus"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        },
-        "type": "object",
-        "title": "ApplicationUpdateRequest"
       },
       "AppointmentBase": {
         "properties": {
@@ -1323,8 +1884,31 @@
         ],
         "title": "AppointmentBase"
       },
+      "AppointmentCancelRequest": {
+        "properties": {
+          "cancel_reason": {
+            "type": "string",
+            "title": "Cancel Reason"
+          }
+        },
+        "type": "object",
+        "required": ["cancel_reason"],
+        "title": "AppointmentCancelRequest"
+      },
       "AppointmentCreateRequest": {
         "properties": {
+          "application_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Id"
+          },
           "patient_id": {
             "type": "string",
             "format": "uuid",
@@ -1393,6 +1977,17 @@
         "required": ["patient_id", "psychologist_id", "type", "scheduled_time"],
         "title": "AppointmentCreateRequest"
       },
+      "AppointmentDoneRequest": {
+        "properties": {
+          "conclusion": {
+            "type": "string",
+            "title": "Conclusion"
+          }
+        },
+        "type": "object",
+        "required": ["conclusion"],
+        "title": "AppointmentDoneRequest"
+      },
       "AppointmentStatus": {
         "type": "string",
         "enum": ["Approved", "Accepted", "Cancelled", "Done"],
@@ -1402,6 +1997,27 @@
         "type": "string",
         "enum": ["Offline", "Online"],
         "title": "AppointmentType"
+      },
+      "CancelInitiator": {
+        "type": "string",
+        "enum": ["user", "psychologist", "manager", "system"],
+        "title": "CancelInitiator"
+      },
+      "CancelRequest": {
+        "properties": {
+          "cancel_reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Cancel Reason"
+          },
+          "cancel_initiator": {
+            "$ref": "#/components/schemas/CancelInitiator"
+          }
+        },
+        "type": "object",
+        "required": ["cancel_reason", "cancel_initiator"],
+        "title": "CancelRequest"
       },
       "HTTPValidationError": {
         "properties": {
@@ -1433,6 +2049,53 @@
         "type": "object",
         "required": ["email", "password"],
         "title": "LoginRequest"
+      },
+      "MeetingType": {
+        "type": "string",
+        "enum": ["offline", "online"],
+        "title": "MeetingType"
+      },
+      "OfferConsultationRequest": {
+        "properties": {
+          "psychologist_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Psychologist Id"
+          },
+          "meeting_type": {
+            "$ref": "#/components/schemas/MeetingType"
+          },
+          "scheduled_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scheduled At"
+          },
+          "location_address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location Address"
+          },
+          "meeting_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Meeting Url"
+          }
+        },
+        "type": "object",
+        "required": ["psychologist_id", "meeting_type", "scheduled_at"],
+        "title": "OfferConsultationRequest"
       },
       "PasswordChangeRequest": {
         "properties": {
@@ -1602,7 +2265,24 @@
         ],
         "title": "PsychologistResponse"
       },
-      "ReviewsBase": { "properties": {}, "type": "object", "title": "ReviewsBase" },
+      "RejectRequest": {
+        "properties": {
+          "reject_reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reject Reason"
+          }
+        },
+        "type": "object",
+        "required": ["reject_reason"],
+        "title": "RejectRequest"
+      },
+      "ReviewsBase": {
+        "properties": {},
+        "type": "object",
+        "title": "ReviewsBase"
+      },
       "RoleAssignRequest": {
         "properties": {
           "role_code": {
@@ -1627,6 +2307,32 @@
         "type": "object",
         "required": ["role_code"],
         "title": "RoleRemoveRequest"
+      },
+      "RoleResponse": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": ["code", "name", "description"],
+        "title": "RoleResponse"
       },
       "UniversityStatus": {
         "type": "string",
@@ -1687,6 +2393,18 @@
             "maxLength": 256,
             "minLength": 8,
             "title": "Password"
+          },
+          "study_group": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Study Group"
           }
         },
         "type": "object",
@@ -1746,6 +2464,25 @@
               }
             ],
             "title": "Social Media"
+          },
+          "roles": {
+            "items": {
+              "$ref": "#/components/schemas/RoleResponse"
+            },
+            "type": "array",
+            "title": "Roles",
+            "default": []
+          },
+          "study_group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Study Group"
           }
         },
         "type": "object",
@@ -1829,6 +2566,18 @@
               }
             ],
             "title": "Social Media"
+          },
+          "study_group": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Study Group"
           }
         },
         "type": "object",

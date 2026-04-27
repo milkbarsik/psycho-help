@@ -1,16 +1,19 @@
-export type Appointment = {
-  id?: string;
-  patient_id?: string;
-  therapist_id?: string;
-  type?: AppointmentType;
-  reason?: string;
-  status?: AppointmentStatusType;
-  remind_time?: string;
-  last_change_time?: string;
-  venue?: string;
-  date?: string;
-  time?: string;
-};
+import type { User } from "@/entities/auth";
+import type { Therapist } from "@/entities/therapist/types";
 
-export type AppointmentStatusType = 'Approved' | 'Accepted' | 'Cancelled' | 'Done';
+export interface Appointment {
+  id: string;
+  patient: User;
+  psychologist: Therapist;
+  type: AppointmentType;
+  reason: string | null;
+  status: AppointmentStatus;
+  scheduled_time: string;
+  remind_time: string | null;
+  last_change_time: string;
+  venue: string;
+  comment: string | null;
+}
+
+export type AppointmentStatus = 'awaiting' | 'cancelled' | 'done';
 export type AppointmentType = 'Offline' | 'Online';

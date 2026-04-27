@@ -17,4 +17,8 @@ export const authApi = {
   getUser: async (): Promise<User> => {
     return (await $api.get('/users/user')).data;
   },
+
+  getUserById: async (id: string): Promise<User> => {
+    return (await $api.get(`/users/user/${id}`)).data;
+  },
 };

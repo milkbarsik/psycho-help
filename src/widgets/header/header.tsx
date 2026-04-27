@@ -1,22 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
-import Logo from './Logo.svg?react';
+import Logo from '@/shared/assets/images/logo.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
-import Auth from '@/features/auth/modal/icons/Auth.svg?react';
+import Auth from '@/shared/assets/images/header/auth.svg?react';
 import ModalWindow from '@/features/auth/modal/modal';
-
-const items = [
-  { link: '/', text: 'Главная' },
-  { link: '/therapists', text: 'Психологи' },
-  { link: '/news', text: 'Новости' },
-  { link: '/resources', text: 'Полезные материалы' },
-  { link: '/faq/', text: 'FAQ' },
-];
+import { navPages, CABINET_PATH } from '@/app/router/routes';
 
 const Header = () => {
   const { isAuth } = useAuth();
+  const headerRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -41,6 +35,16 @@ const Header = () => {
   };
 
   useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    });
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (menuOpen) {
       const initialOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
@@ -61,50 +65,57 @@ const Header = () => {
   }, [menuOpen, closeMenu]);
 
   return (
-    <header className={styles.header}>
-      <div className={styles.header__inner}>
-        <nav className={styles.header__nav}>
-          <Link to="/" className={styles.header__logo} aria-label="Вернуться на главную страницу">
-            <Logo />
-          </Link>
-          <button
-            className={`${styles.header__burger} ${menuOpen ? styles.header__burger_open : ''}`}
-            onClick={toggleMenu}
-            aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </button>
-          <ul
-            className={`${styles.header__list} ${isAnimating ? styles.header__list_animating : ''} ${menuOpen ? styles.header__list_open : ''}`}
-          >
-            {items.map((item, index) => (
-              <li key={index} className={styles.header__item}>
-                <Link to={item.link} className={styles.header__link} onClick={closeMenu}>
-                  {item.text}
-                </Link>
-              </li>
-            ))}
-            <li className={styles.header__item}>
-              {isAuth ? (
-                <Link to="/cabinet" className={styles.header__link}>
-                  <Profile className={styles.profileIcon} />
-                </Link>
-              ) : (
-                <button
-                  className={styles.header__authButton}
-                  onClick={handleAuthClick}
-                  aria-label="Открыть окно входа"
-                >
-                  <Auth />
-                  <span>Войти</span>
-                </button>
-              )}
+    <header ref={headerRef} className={styles.header}>
+      <nav className={styles.header__nav} aria-label="Основная навигация">
+        <Link to="/" className={styles.header__logo} aria-label="Вернуться на главную страницу">
+          <Logo aria-hidden="true" />
+        </Link>
+        <button
+          className={`${styles.header__burger} ${menuOpen ? styles.header__burger_open : ''}`}
+          onClick={toggleMenu}
+          type="button"
+          aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+          aria-expanded={menuOpen}
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+        <ul
+          className={`${styles.header__list} ${isAnimating ? styles.header__list_animating : ''} ${menuOpen ? styles.header__list_open : ''}`}
+        >
+          {navPages.map((item, index) => (
+            <li key={index} className={styles.header__item}>
+              <Link to={item.path} className={styles.header__link} onClick={closeMenu}>
+                {item.navText}
+              </Link>
             </li>
-          </ul>
-        </nav>
-      </div>
+          ))}
+          <li className={styles.header__item}>
+            {isAuth ? (
+              <Link
+                to={CABINET_PATH}
+                className={styles.header__link}
+                onClick={closeMenu}
+                aria-label="Личный кабинет"
+              >
+                <Profile className={styles.header__profile} aria-hidden="true" />
+              </Link>
+            ) : (
+              <button
+                className={styles.header__auth}
+                onClick={handleAuthClick}
+                type="button"
+                aria-label="Открыть окно входа"
+                data-testid="auth-button"
+              >
+                <Auth aria-hidden="true" />
+                <span>Войти</span>
+              </button>
+            )}
+          </li>
+        </ul>
+      </nav>
       {!isAuth && <ModalWindow isOpen={isModalOpen} onClose={() => setModalOpen(false)} />}
     </header>
   );

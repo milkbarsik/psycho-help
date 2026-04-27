@@ -8,22 +8,33 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  /* top: 2rem;
+  margin-top: 2rem; */
+  z-index: 200;
+  display: flex;
+  justify-content: center;
   background-color: var(--color-background-neutral-primary);
-}
-
-.header__inner {
-  max-width: 125.4rem;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 3.6rem;
 }
 
 .header__nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 125.4rem;
+  width: 100%;
+  margin: 0 9.3rem;
+  padding: 0 3.6rem;
+  border-radius: 2.8rem;
+  /* Надо будет поменять, когда дизайнеры нарисуют */
+  /* background-color: #f6f6f6dd;
+  backdrop-filter: blur(1rem);
+  background-color: var(--color-fill-neutral-quaternary); */
 }
+
+/* .header__nav:has(.header__list_open),
+.header__nav:has(.header__list_animating) {
+  backdrop-filter: none;
+} */
 
 .header__logo {
   display: flex;
@@ -32,19 +43,27 @@
   margin: 1.2rem 0;
   border-radius: 1.2rem;
   color: var(--color-label-neutral-primary);
+  -webkit-tap-highlight-color: transparent;
   transition:
     border-color 0.3s,
     color 0.3s;
 }
 
 .header__logo svg {
-  fill: currentColor;
   width: 12rem;
   height: 3.6rem;
 }
 
-.header__logo:hover {
-  color: var(--color-interactive-brand-primary);
+@media (hover: hover) {
+  .header__logo:hover {
+    color: var(--color-interactive-brand-primary);
+  }
+}
+
+@media (hover: none) {
+  .header__logo:hover {
+    color: var(--color-label-neutral-primary);
+  }
 }
 
 .header__logo:active,
@@ -73,16 +92,12 @@
 .header__item:nth-child(6) .header__link {
   width: 6rem;
   height: 6rem;
+  border-radius: 1.6rem;
 }
 
-.profileIcon {
+.header__profile {
   width: 2.8rem;
   height: 2.8rem;
-}
-
-.profileIcon > path {
-  stroke-width: 0.2px;
-  fill: var(--color-label-neutral-primary);
 }
 
 .header__link {
@@ -94,16 +109,16 @@
   font-size: 1.6rem;
   line-height: 2.4rem;
   color: var(--color-label-neutral-primary);
+  -webkit-tap-highlight-color: transparent;
   transition:
     background-color 0.3s,
     border-color 0.3s,
     color 0.3s;
 }
 
-.header__authButton {
-  background: none;
+.header__auth {
+  background-color: transparent;
   border: 1px solid transparent;
-  user-select: none;
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -111,44 +126,40 @@
   font-size: 2rem;
   line-height: 2.8rem;
   padding: 1.5rem;
-  border-radius: 1.2rem;
+  border-radius: 1.6rem;
   text-decoration: none;
   color: var(--color-label-neutral-primary);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition:
     background-color 0.3s,
     border-color 0.3s,
     color 0.3s;
 }
 
-.header__link:hover,
-.header__authButton:hover {
-  background-color: var(--color-interactive-brand-secondary);
-  border: 1px solid var(--color-interactive-brand-secondary);
-  color: var(--color-interactive-brand-primary);
+@media (hover: hover) {
+  .header__link:hover,
+  .header__auth:hover {
+    background-color: var(--color-interactive-brand-secondary);
+    border-color: var(--color-interactive-brand-secondary);
+    color: var(--color-interactive-brand-primary);
+  }
+}
+
+@media (hover: none) {
+  .header__link:hover {
+    color: var(--color-label-neutral-primary);
+  }
 }
 
 .header__link:active,
 .header__link:focus-visible,
-.header__authButton:active,
-.header__authButton:focus-visible {
+.header__auth:active,
+.header__auth:focus-visible {
   background-color: transparent;
   border-color: var(--color-border-brand-strong);
   color: var(--color-interactive-brand-primary);
   outline: none;
-}
-
-.header__link:hover .profileIcon > path {
-  fill: var(--color-interactive-brand-primary);
-}
-
-.header__link:active .profileIcon > path,
-.header__link:focus-visible .profileIcon > path {
-  fill: var(--color-interactive-brand-primary);
-}
-
-.header__authButton svg {
-  stroke: currentColor;
 }
 
 .header__burger {
@@ -156,8 +167,9 @@
 }
 
 @media (max-width: 1200px) {
-  .header__inner {
-    max-width: 116rem;
+  .header__nav {
+    width: 100%;
+    margin: 0 4.7rem;
     padding: 0 1.6rem;
   }
 
@@ -168,16 +180,16 @@
   .header__burger {
     position: relative;
     display: block;
-    z-index: 100;
-    width: 48px;
-    height: 48px;
-    padding: 12px;
+    z-index: 250;
+    width: 4.8rem;
+    height: 4.8rem;
+    padding: 1.2rem;
     border: none;
     background-color: transparent;
   }
 
   .header__burger:focus-visible {
-    border-radius: 1.2rem;
+    border-radius: 1.6rem;
     outline: 1px solid var(--color-border-brand-strong);
   }
 
@@ -188,23 +200,23 @@
   .header__burger span {
     display: block;
     position: absolute;
-    left: 15px;
-    height: 2px;
-    width: 18px;
+    left: 1.5rem;
+    height: 0.2rem;
+    width: 1.8rem;
     background-color: var(--color-label-neutral-primary);
     transition: all 0.3s;
   }
 
   .header__burger span:nth-child(1) {
-    top: 17px;
+    top: 1.7rem;
   }
 
   .header__burger span:nth-child(2) {
-    top: 23px;
+    top: 2.3rem;
   }
 
   .header__burger span:nth-child(3) {
-    top: 29px;
+    top: 2.9rem;
   }
 
   .header__burger_open span {
@@ -213,9 +225,9 @@
 
   .header__burger_open span:nth-child(1) {
     transform: rotate(45deg);
-    top: 23px;
-    width: 24px;
-    left: 12px;
+    top: 2.3rem;
+    width: 2.4rem;
+    left: 1.2rem;
   }
 
   .header__burger_open span:nth-child(2) {
@@ -224,9 +236,9 @@
 
   .header__burger_open span:nth-child(3) {
     transform: rotate(-45deg);
-    top: 23px;
-    width: 24px;
-    left: 12px;
+    top: 2.3rem;
+    width: 2.4rem;
+    left: 1.2rem;
   }
 
   .header__burger_open:focus-visible {
@@ -243,8 +255,7 @@
     flex-direction: column;
     align-items: start;
     gap: 0;
-    padding: 0 0 0 2rem;
-    z-index: 10;
+    padding: 0 0 0 4rem;
     transform: translate(100%, 0);
     opacity: 0;
     background-color: var(--color-fill-brand-primary);
@@ -270,7 +281,7 @@
     justify-content: start;
     flex-grow: 0;
     order: -1;
-    padding: 1.4rem 0 2.4rem;
+    padding: 3.4rem 0 1.4rem;
   }
 
   .header__item:nth-child(6) .header__link {
@@ -278,59 +289,64 @@
     height: 5.6rem;
   }
 
-  .profileIcon {
+  .header__profile {
     width: 2.4rem;
     height: 2.4rem;
-  }
-
-  .profileIcon > path {
-    fill: var(--color-label-neutral-inverted-primary);
   }
 
   .header__link {
     color: var(--color-label-neutral-inverted-primary);
   }
 
-  .header__authButton {
+  .header__auth {
     font-size: 1.6rem;
     line-height: 2.4rem;
     color: var(--color-label-neutral-inverted-primary);
   }
 
-  .header__link:hover,
-  .header__authButton:hover {
-    background-color: var(--color-interactive-brand-secondary);
-    border: 1px solid var(--color-interactive-brand-secondary);
-    color: var(--color-interactive-brand-primary);
+  @media (hover: hover) {
+    .header__link:hover,
+    .header__auth:hover {
+      background-color: var(--color-interactive-brand-hover);
+      border-color: var(--color-interactive-brand-hover);
+      color: var(--color-label-neutral-inverted-primary);
+    }
+  }
+
+  @media (hover: none) {
+    .header__link:hover,
+    .header__auth:hover {
+      color: var(--color-label-neutral-inverted-primary);
+    }
   }
 
   .header__link:active,
   .header__link:focus-visible,
-  .header__authButton:active,
-  .header__authButton:focus-visible {
+  .header__auth:active,
+  .header__auth:focus-visible {
     background-color: transparent;
-    border: 1px solid var(--color-label-neutral-inverted-primary);
+    border-color: var(--color-label-neutral-inverted-primary);
     color: var(--color-label-neutral-inverted-primary);
-  }
-
-  .header__link:hover .profileIcon > path {
-    fill: var(--color-interactive-brand-primary);
-  }
-
-  .header__link:active .profileIcon > path,
-  .header__link:focus-visible .profileIcon > path {
-    fill: var(--color-label-neutral-inverted-primary);
   }
 }
 
-@media (max-width: 634px) {
-  .header__inner {
-    max-width: 61rem;
+@media (max-width: 720px) {
+  .header {
+    top: 0;
+    /* top: 0.8rem;
+    margin-top: 0.8rem; */
+  }
+
+  .header__nav {
+    width: 100%;
+    margin: 0 1rem;
     padding: 0 0.4rem;
+    border-radius: 2rem;
   }
 
   .header__logo {
     margin: 0.4rem 0;
+    border-radius: 0.8rem;
   }
 
   .header__logo svg {
@@ -338,17 +354,11 @@
     height: 3rem;
   }
 
+  .header__list {
+    padding: 0 0 0 2rem;
+  }
+
   .header__item:last-child {
-    padding: 0.7rem 0 2.4rem;
-  }
-
-  .header__item:nth-child(6) .header__link {
-    width: 4.6rem;
-    height: 4.6rem;
-    padding: 1rem;
-  }
-
-  .header__authButton {
-    padding: 1rem;
+    padding: 1.1rem 0 0.3rem;
   }
 }

@@ -2,6 +2,7 @@ import Router from 'express';
 import * as db from './services/db.js';
 import userRouter from './routes/users.js';
 import appointmentRouter from './routes/appointments.js';
+import rolesRouter from './routes/roles.js';
 import * as OpenApiValidator from 'express-openapi-validator';
 import openapi from './openapi.json' with { type: 'json' };
 
@@ -33,6 +34,7 @@ router.use((req, res, next) => {
 });
 router.use('/users', userRouter);
 router.use('/appointments', appointmentRouter);
+router.use('/roles', rolesRouter);
 
 router.get('/therapists/', (req, res) => {
   const skip = parseInt(req.query.skip) || 0;
