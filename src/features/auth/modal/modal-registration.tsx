@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useFetch } from '@/shared/api/useFetch';
 import { useAuth } from '@/features/auth/api/useAuth';
-import type { regData } from '@/shared/api/types';
+import type { RegistrationData } from '@/entities/auth';
 import styles from './modal.module.css';
 import EyeIcon from './icons/Eye.svg?react';
 import EyeOffIcon from './icons/EyeOff.svg?react';
@@ -45,7 +45,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 
   const { fetching, isLoading, error } = useFetch(async () => {
     const { confirm_password, ...dataForServer } = formValue;
-    const res = await registration(dataForServer as regData);
+    await registration(dataForServer as RegistrationData);
   });
 
   //Функции для валидации полей формы

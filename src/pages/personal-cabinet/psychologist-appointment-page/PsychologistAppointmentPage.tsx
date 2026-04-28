@@ -51,7 +51,10 @@ const PsychologistAppointmentPage = () => {
   const appointmentId = id ?? '';
   const setSavedTab = useCabinetTab((s) => s.setActiveTab);
 
-  const isPsychologist = useMemo(() => !!user && new Role(user.roles).isPsychologist(), [user]);
+  const isPsychologist = useMemo(
+    () => (user?.roles ? new Role(user.roles).isPsychologist() : false),
+    [user?.roles],
+  );
 
   const handleSidebarTabChange = useCallback(
     (tabId: string) => {
@@ -112,10 +115,14 @@ const PsychologistAppointmentPage = () => {
   const serverCancelReason = (appointment as any).cancel_reason;
 
   const statusUI = AppointmentStatusTag[appointment.status];
-
-  const patientName = [appointment.patient?.last_name, appointment.patient?.first_name, appointment.patient?.middle_name]
-    .filter(Boolean)
-    .join(' ');
+  const patientName =
+    [
+      appointment.patient?.last_name,
+      appointment.patient?.first_name,
+      appointment.patient?.middle_name,
+    ]
+      .filter(Boolean)
+      .join(' ') || 'Имя не указано';
 
   return (
     <div className={styles.page}>

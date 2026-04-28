@@ -6,7 +6,8 @@ import { useAuth } from '@/features/auth/api/useAuth';
 import AuthApi from '@/features/auth/api/auth-api';
 import EditIcon from '@/shared/assets/images/cabinet/edit.svg?react';
 import ExitIcon from '@/shared/assets/images/cabinet/exit.svg?react';
-import type { User, UserProfileUpdate } from '@/shared/api/types';
+import type { UserProfileUpdate } from '@/shared/api/types';
+import type { User } from '@/entities/auth';
 import styles from './PersonalData.module.scss';
 
 interface PersonalDataProps {

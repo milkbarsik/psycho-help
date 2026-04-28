@@ -1,9 +1,8 @@
 import type { FC, ReactNode } from 'react';
 import clsx from 'clsx';
 import { UserOutlined } from '@ant-design/icons';
-import type { User } from '@/entities/auth/types';
+import type { User } from '@/entities/auth';
 import styles from './sidebar.module.scss';
-import React from 'react';
 
 export interface TabConfig {
   id: string;

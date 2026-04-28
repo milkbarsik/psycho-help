@@ -1,5 +1,8 @@
-export type Therapist = {
+import type { User } from '@/entities/auth';
+
+export type Psychologist = {
   id: string;
+  user_id: string;
   experience: string;
   qualification: string;
   consult_areas: string;
@@ -7,9 +10,6 @@ export type Therapist = {
   office: string;
   education: string;
   short_description: string;
-  first_name: string;
   photo: string | null;
-  middle_name: string | null;
-  last_name: string;
-  phone_number: string | null;
+  user: User;
 };

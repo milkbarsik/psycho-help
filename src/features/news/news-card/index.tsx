@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { News } from '@/shared/api/types';
+import type { News } from '@/entities/news/types';
 import styles from './NewsCard.module.scss';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';

@@ -66,7 +66,10 @@ const PsychologistApplicationPage = () => {
   const userId = user?.id;
   const setSavedTab = useCabinetTab((s) => s.setActiveTab);
 
-  const isPsychologist = useMemo(() => !!user && new Role(user.roles).isPsychologist(), [user]);
+  const isPsychologist = useMemo(
+    () => (user?.roles ? new Role(user.roles).isPsychologist() : false),
+    [user?.roles],
+  );
 
   const handleSidebarTabChange = useCallback(
     (tabId: string) => {
@@ -212,6 +215,10 @@ const PsychologistApplicationPage = () => {
   };
 
   const statusUI = ApplicationStatusTag[application.status];
+  const userName =
+    [application.user?.last_name, application.user?.first_name, application.user?.middle_name]
+      .filter(Boolean)
+      .join(' ') || 'Имя не указано';
 
   return (
     <div className={styles.page}>
@@ -235,9 +242,7 @@ const PsychologistApplicationPage = () => {
             <div className={styles.mainContent}>
               <h1 className={styles.pageTitle}>Заявка</h1>
 
-              <h2 className={styles.userName}>
-                {application.user.last_name} {application.user.first_name}
-              </h2>
+              <h2 className={styles.userName}>{userName}</h2>
 
               <div className={styles.statusRow}>
                 <p className={styles.statusLabel}>Статус</p>
@@ -265,11 +270,13 @@ const PsychologistApplicationPage = () => {
                 <div className={styles.dataGrid}>
                   <div className={styles.dataItem}>
                     <span className={styles.dataLabel}>Email:</span>
-                    <span className={styles.dataValue}>{application.user.email || '—'}</span>
+                    <span className={styles.dataValue}>{application.user?.email || '—'}</span>
                   </div>
                   <div className={styles.dataItem}>
                     <span className={styles.dataLabel}>Телефон:</span>
-                    <span className={styles.dataValue}>{application.user.phone_number || '—'}</span>
+                    <span className={styles.dataValue}>
+                      {application.user?.phone_number || '—'}
+                    </span>
                   </div>
                   <div className={styles.dataItem}>
                     <span className={styles.dataLabel}>Кампус:</span>

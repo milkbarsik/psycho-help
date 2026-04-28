@@ -112,17 +112,23 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
   // Подтверждение заявки
   const confirmMutation = useMutation({
     mutationFn: async (app: Application) => {
+      if (!app.psychologist?.id) {
+        throw new Error('Psychologist is not assigned');
+      }
+
       const apptType = app.meeting_type === 'online' ? 'Online' : 'Offline';
       const scheduledTime = app.scheduled_at || new Date().toISOString();
 
       const createdAppointment = await createAppointment({
         application_id: app.id,
         patient_id: user!.id,
-        psychologist_id: app.psychologist.id!,
+        psychologist_id: app.psychologist.id,
         type: apptType,
         scheduled_time: scheduledTime,
         reason: app.problem_description,
-        venue: app.location_address || app.preferred_campus || app.meeting_url || undefined,
+        remind_time: null,
+        venue: app.location_address || app.preferred_campus || app.meeting_url || null,
+        comment: null,
       });
 
       return confirmApplication(app.id, createdAppointment.id);
@@ -245,7 +251,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                 <AppointmentCard
                   key={app.id}
                   date={scheduledStr}
-                  doctorName={getTherapistName(app.psychologist.id || undefined)}
+                  doctorName={getTherapistName(app.psychologist?.id)}
                   address={`${meetingTypeStr} — ${locationStr}`}
                   type="upcoming"
                   status={app.status}
@@ -282,7 +288,7 @@ const UserDashboard: FC<UserDashboardProps> = ({ userName, onBookClick }) => {
                 <AppointmentCard
                   key={app.id}
                   date={scheduledStr}
-                  doctorName={getTherapistName(app.psychologist.id || undefined)}
+                  doctorName={getTherapistName(app.psychologist?.id)}
                   address={`${meetingTypeStr} — ${locationStr}`}
                   type="confirmation"
                   status={app.status}

@@ -38,7 +38,8 @@ const APPOINTMENT_FORMAT_OPTIONS = [
 ];
 
 const getPatientName = (appointment: Appointment) =>
-  [appointment.patient.last_name, appointment.patient.first_name].filter(Boolean).join(' ');
+  [appointment.patient?.last_name, appointment.patient?.first_name].filter(Boolean).join(' ') ||
+  'Имя не указано';
 
 const getTimeRange = (time: string) => {
   const start = toMoscow(time);
@@ -164,9 +165,7 @@ const PsychologistAppointments = () => {
             </div>
           </div>
           <div className={styles.infoCol}>
-            <span
-              className={styles.patientName}
-            >{`${appointment.patient.last_name} ${appointment.patient.first_name}`}</span>
+            <span className={styles.patientName}>{getPatientName(appointment)}</span>
             <span className={styles.location}>{getVenueDisplay(appointment)}</span>
           </div>
         </div>

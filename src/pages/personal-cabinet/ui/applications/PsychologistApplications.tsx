@@ -49,7 +49,8 @@ const APPLICATION_FORMAT_OPTIONS = [
 ];
 
 const getPatientName = (application: Application) =>
-  [application.user.last_name, application.user.first_name].filter(Boolean).join(' ');
+  [application.user?.last_name, application.user?.first_name].filter(Boolean).join(' ') ||
+  'Имя не указано';
 
 const getApplicationSortTime = (application: Application): number => {
   const date = application.scheduled_at;

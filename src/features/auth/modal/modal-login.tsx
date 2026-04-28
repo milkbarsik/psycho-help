@@ -49,7 +49,7 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
 
   const { fetching, isLoading, error } = useFetch(async () => {
     const { email, password } = { ...formValue };
-    const res = await login(email, password);
+    await login(email, password);
   });
 
   const validateEmail = (email: string) =>

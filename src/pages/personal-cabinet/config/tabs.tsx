@@ -1,8 +1,8 @@
 import type { FC } from 'react';
-import type { User } from '@/entities/auth/types';
+import type { User } from '@/entities/auth';
 import type { RoleCode } from '@/entities/role/types';
 import Dashboard from '../ui/dashboard/Dashboard';
-import Applications from '@/pages/personal-cabinet/ui/applications/Applications';
+import PsychologistApplications from '@/pages/personal-cabinet/ui/applications/PsychologistApplications';
 import Appointments from '@/pages/personal-cabinet/ui/appointments/Appointments';
 import ComingSoon from '../ui/PlaceholderComponent';
 import PersonalData from '@/features/personal-cabinet/ui/personal-data/PersonalData';
@@ -67,7 +67,7 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
     {
       id: 'applications',
       label: 'Заявки',
-      render: ({ primaryRoleCode }) => <Applications role={primaryRoleCode} />,
+      render: () => <PsychologistApplications />,
     },
     {
       id: 'appointments',
