@@ -12,6 +12,20 @@ const getInitialTheme = (): Theme => {
     : 'light';
 };
 
+const getSystemTheme = (): Theme => {
+  if (typeof window === 'undefined') return 'light';
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+};
+
+const updateFavicon = (theme: Theme) => {
+  const faviconLink = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+  if (faviconLink) {
+    faviconLink.href = theme === 'dark' ? '/favicon_dark.ico' : '/favicon.ico';
+  }
+};
+
 export function useTheme() {
   const [currentTheme, setThemeState] = useState<Theme>(getInitialTheme);
 
@@ -23,6 +37,24 @@ export function useTheme() {
       /* ignore */
     }
   }, [currentTheme]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    updateFavicon(getSystemTheme());
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const handleThemeChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      updateFavicon(e.matches ? 'dark' : 'light');
+    };
+
+    mediaQuery.addEventListener('change', handleThemeChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleThemeChange);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
