@@ -14,15 +14,10 @@
   justify-content: center;
   font-size: 1.5rem;
   box-shadow: 0 6px 18px var(--color-fill-neutral-primary);
-  z-index: 1000;
+  z-index: 100;
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px) scale(0.95);
-  transition:
-    opacity 320ms ease,
-    transform 320ms ease,
-    box-shadow 200ms ease,
-    visibility 320ms;
   transition:
     opacity 320ms ease,
     transform 320ms ease,
