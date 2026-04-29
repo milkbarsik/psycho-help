@@ -217,6 +217,7 @@ const PsychologistApplications = () => {
               className={styles.btnConfirm}
               onClick={() => acceptMutation.mutate(application.id)}
               disabled={acceptMutation.isPending}
+              type="button"
             >
               В работу
             </button>
@@ -225,6 +226,7 @@ const PsychologistApplications = () => {
             className={styles.btnOpen}
             onClick={() => navigate(`/cabinet/application/${application.id}`)}
             disabled={application.status === 'new'}
+            type="button"
           >
             Открыть
           </button>

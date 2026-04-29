@@ -137,7 +137,7 @@ const PsychologistAppointmentPage = () => {
         </div>
 
         <article className={styles.wrapper}>
-          <button type="button" onClick={() => navigate(-1)} className={styles.back}>
+          <button className={styles.back} type="button" onClick={() => navigate(-1)}>
             <span>&lt;</span>
             <span>Вернуться назад</span>
           </button>
@@ -254,14 +254,15 @@ const PsychologistAppointmentPage = () => {
                 className={styles.actionButtonCancel}
                 onClick={() => setCancelModalOpen(true)}
                 disabled={completeMutation.isPending}
+                type="button"
               >
                 Отменить
               </button>
               <button
-                type="button"
                 className={styles.actionButtonEnd}
                 onClick={() => completeMutation.mutate()}
                 disabled={comment.trim().length === 0 || completeMutation.isPending}
+                type="button"
               >
                 {completeMutation.isPending ? 'Завершение...' : 'Завершить'}
               </button>

@@ -1,6 +1,6 @@
 import type { User } from '@/entities/auth';
 
-export type Psychologist = {
+export interface Psychologist {
   id: string;
   user_id: string;
   experience: string;
@@ -12,4 +12,4 @@ export type Psychologist = {
   short_description: string;
   photo: string | null;
   user: User;
-};
+}

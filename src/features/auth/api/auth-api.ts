@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import { $serviceClient } from '@/shared/api/http';
-import type { UserProfileUpdate } from '@/shared/api/types';
+import type { UserProfileUpdate } from '@/entities/auth/types';
 import type { UserPasswordUpdate, User, RegistrationData } from '@/entities/auth';
 
 export default class AuthApi {

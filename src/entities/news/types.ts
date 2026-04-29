@@ -1,4 +1,4 @@
-export type News = {
+export interface News {
   id: string;
   slug: string;
   image?: string;
@@ -8,4 +8,4 @@ export type News = {
   description?: string;
   link?: string;
   text?: string;
-};
+}

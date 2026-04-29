@@ -31,7 +31,7 @@ const ACalendar: FC<Props> = ({ appointments }) => {
   useEffect(() => {
     setAppointment({ scheduled_time: dayjs().format('YYYY-MM-DD') });
     setSelectedDate(dayjs());
-  }, []);
+  }, [setAppointment]);
 
   // формирования объекта с помеченными датами
   useEffect(() => {

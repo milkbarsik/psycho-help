@@ -5,7 +5,7 @@ import type { Appointment } from '@/entities/appointment/types';
 export interface Application {
   id: string;
   user: User | null;
-  assigned_to_user: User | null;
+  assigned_to_user: User | null; // не ебу, зачем нужно 2 User, но в бэке люди поумнее меня сидят, наверное
   psychologist: Psychologist | null;
   appointment: Appointment | null;
   problem_description: string;
@@ -40,7 +40,8 @@ export type ApplicationStatus =
   | 'cancelled'
   | 'expired';
 
-export type UniversityStatus = string; // 'студент' | 'аспирант' | 'преподаватель' | 'сотрудник';
+export type UniversityStatus = string;
+// export type UniversityStatus = 'студент' | 'аспирант' | 'преподаватель' | 'сотрудник';
 export type MeetingType = 'offline' | 'online';
 export type CancelInitiator = 'user' | 'psychologist' | 'manager' | 'system';
 

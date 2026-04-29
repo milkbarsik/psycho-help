@@ -173,6 +173,7 @@ const PsychologistAppointments = () => {
           <button
             className={styles.btnPrimary}
             onClick={() => navigate(`/cabinet/appointment/${appointment.id}`)}
+            type="button"
           >
             Открыть
           </button>
@@ -218,12 +219,12 @@ const PsychologistAppointments = () => {
 
       {currentItems.length > ITEMS_PER_PAGE && (
         <Pagination
+          className={styles.pagination}
           current={currentPage}
           total={currentItems.length}
           pageSize={ITEMS_PER_PAGE}
           onChange={(page) => setCurrentPage(FILTERS_TAB, page)}
           showSizeChanger={false}
-          className={styles.pagination}
         />
       )}
     </section>

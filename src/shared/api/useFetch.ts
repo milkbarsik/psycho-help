@@ -1,27 +1,26 @@
 import { AxiosError } from 'axios';
-import { useState } from 'react';
-
-interface FetchError { // Общепринятая конвенция, лучше писать с заглавной буквы
-  message: string;
-  status: number | undefined; // 
-}
+import { useCallback, useRef, useState } from 'react';
+import type { ResponseError } from '@/entities/auth';
 
 export type UseFetchReturn = {
   isLoading: boolean;
-  error: FetchError;
+  error: ResponseError;
   fetching: () => Promise<void>;
 };
 
 // Вместо "any" используем дженерик T
 // Теперь можно строго типизировать возвращаемое значение функции
-export function useFetch<T>(foo: () => Promise<T>): UseFetchReturn { 
+export function useFetch<T>(foo: () => Promise<T>): UseFetchReturn {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<FetchError>({ message: '', status: undefined });
+  const [error, setError] = useState<ResponseError>({ message: '', status: undefined });
 
-  const fetching = async () => {
+  const fooRef = useRef(foo);
+  fooRef.current = foo;
+
+  const fetching = useCallback(async () => {
     try {
       setIsLoading(true);
-      await foo();
+      await fooRef.current();
       setError({ message: '', status: undefined });
     } catch (e) {
       if (e instanceof AxiosError) {
@@ -34,9 +33,7 @@ export function useFetch<T>(foo: () => Promise<T>): UseFetchReturn {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   return { fetching, isLoading, error };
 }
-
-

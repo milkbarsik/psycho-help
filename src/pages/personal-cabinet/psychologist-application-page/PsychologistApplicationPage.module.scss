@@ -1,15 +1,10 @@
 .page {
-  max-width: 151.2rem;
-  margin: 0 auto;
-}
-
-.cabinetLayout {
-  display: grid;
-  grid-template-columns: 28.8rem 1fr;
-  gap: 2.4rem;
   max-width: 122.4rem;
   margin: 0 auto;
   padding: 4rem 2.4rem;
+  display: grid;
+  grid-template-columns: 28.8rem 1fr;
+  gap: 2.4rem;
   min-height: calc(100vh - 8rem);
   @media (max-width: 1023px) {
     grid-template-columns: 1fr;
@@ -20,10 +15,8 @@
 
 .sidebarWrapper {
   position: sticky;
-  // top: 4rem;
   top: calc(var(--header-height) + 4rem);
   height: fit-content;
-  // @media (max-width: 1023px) {
   @media (max-height: 900px), (max-width: 1023px) {
     position: static;
   }
@@ -450,10 +443,6 @@
 }
 
 @media (max-width: 900px) {
-  .cabinetLayout {
-    grid-template-columns: 1fr;
-  }
-
   .layout {
     flex-direction: column;
   }
@@ -463,6 +452,7 @@
   }
 
   .page {
+    grid-template-columns: 1fr;
     padding: 2.4rem 1.6rem;
   }
 

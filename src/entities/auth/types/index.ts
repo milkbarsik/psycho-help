@@ -1,6 +1,6 @@
 import type { Role } from '@/entities/role/types';
 
-export type User = {
+export interface User {
   id: string;
   first_name: string;
   middle_name: string | null;
@@ -9,11 +9,11 @@ export type User = {
   email: string;
   social_media: string | null;
   study_group: string | null;
-  roles?: Role[]; // Тут я уже запутался
-  avatar_url?: string; // Тут я уже запутался
-};
+  roles?: Role[];
+  avatar_url?: string;
+}
 
-export type RegistrationData = {
+export interface RegistrationData {
   first_name: string;
   middle_name: string | null;
   last_name: string;
@@ -22,20 +22,38 @@ export type RegistrationData = {
   social_media: string | null;
   password: string;
   study_group: string | null;
-};
+}
 
-export type LoginData = {
+export interface LoginData {
   email: string;
   password: string;
-};
+}
 
-export type UserPasswordUpdate = {
+export interface UserPasswordUpdate {
   old_password: string;
   new_password: string;
-};
+}
 
-// Не используется
-export type UserUpdate = {
+export interface ResponseError {
+  message: string;
+  status: number | undefined;
+}
+
+// Нужно выбрать один из этих типов, прост я не знаю, насколько критично для бэка, чтобы эти поля были именно null, или же достаточно просто сделать их undefined
+export type UserProfileUpdate = Partial<
+  Pick<
+    User,
+    | 'first_name'
+    | 'middle_name'
+    | 'last_name'
+    | 'phone_number'
+    | 'email'
+    | 'social_media'
+    | 'study_group'
+  >
+>;
+
+export interface UserUpdate {
   first_name: string | null;
   middle_name: string | null;
   last_name: string | null;
@@ -43,4 +61,4 @@ export type UserUpdate = {
   email: string | null;
   social_media: string | null;
   study_group: string | null;
-};
+}
