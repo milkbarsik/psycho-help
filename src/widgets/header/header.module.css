@@ -370,7 +370,9 @@
   .header__nav {
     background-color: var(--color-fill-neutral-primary);
   }
-
+  .header__burger span {
+    background-color: var(--color-label-neutral-inverted-primary);
+  }
   .header__logo {
     color: var(--color-label-neutral-inverted-primary);
   }
@@ -394,7 +396,7 @@
   }
   .header__auth {
     color: var(--color-label-neutral-inverted-primary);
-    &:hover{
+    &:hover {
       color: var(--color-interactive-brand-hover);
     }
   }
