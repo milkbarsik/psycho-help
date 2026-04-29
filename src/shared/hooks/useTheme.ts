@@ -13,16 +13,16 @@ const getInitialTheme = (): Theme => {
 };
 
 export function useTheme() {
-  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
+  const [currentTheme, setThemeState] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme', currentTheme);
     try {
-      localStorage.setItem('theme', theme);
+      localStorage.setItem('theme', currentTheme);
     } catch {
       /* ignore */
     }
-  }, [theme]);
+  }, [currentTheme]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -74,5 +74,5 @@ export function useTheme() {
     [],
   );
 
-  return { theme, setTheme, toggleTheme } as const;
+  return { currentTheme, setTheme, toggleTheme } as const;
 }

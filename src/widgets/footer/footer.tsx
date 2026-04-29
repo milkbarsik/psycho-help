@@ -7,7 +7,7 @@ import styles from './footer.module.scss';
 import FooterLogo from '@/shared/assets/images/footer/logo.svg?react';
 
 const Footer = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { currentTheme, toggleTheme } = useTheme();
   const addresses = [
     {
       street: 'ул. Большая Семёновская, 38',
@@ -42,10 +42,10 @@ const Footer = () => {
         className={styles.themeToggle}
         onClick={toggleTheme}
         aria-label={
-          theme === 'light' ? 'Переключить на тёмную тему' : 'Переключить на светлую тему'
+          currentTheme === 'light' ? 'Переключить на тёмную тему' : 'Переключить на светлую тему'
         }
       >
-        <img src={theme === 'light' ? Moon : Sun} />
+        <img src={currentTheme === 'light' ? Moon : Sun} />
       </button>
       <div className={styles.container}>
         {/* Верхняя секция с логотипом, контактами и соцсетями */}
