@@ -197,7 +197,7 @@ const PsychologistApplications = () => {
   const renderApplicationRow = (application: Application) => {
     const statusUI = ApplicationStatusTag[application.status];
     return (
-      <article key={application.id} className={styles.appointmentRow} role="listitem">
+      <article className={styles.appointmentRow} key={application.id} role="listitem">
         <div className={styles.contentCol}>
           <div className={styles.timeStatusRow}>
             <div className={styles.timeCol}>{getTimeRange(application.scheduled_at)}</div>
@@ -263,7 +263,7 @@ const PsychologistApplications = () => {
           const date = application.scheduled_at;
           return date ? toMoscow(date).format('D MMMM') : 'Дата ещё не указана';
         }).map((group) => (
-          <div key={group.date} className={styles.dateGroup}>
+          <div className={styles.dateGroup} key={group.date}>
             <h3 className={styles.dateHeader}>{group.date}</h3>
             {group.items.map(renderApplicationRow)}
           </div>
@@ -272,12 +272,12 @@ const PsychologistApplications = () => {
 
       {currentItems.length > ITEMS_PER_PAGE && (
         <Pagination
+          className={styles.pagination}
           current={currentPage}
           total={currentItems.length}
           pageSize={ITEMS_PER_PAGE}
           onChange={(page) => setCurrentPage(FILTERS_TAB, page)}
           showSizeChanger={false}
-          className={styles.pagination}
         />
       )}
     </section>

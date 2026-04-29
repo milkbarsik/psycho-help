@@ -126,161 +126,159 @@ const PsychologistAppointmentPage = () => {
 
   return (
     <div className={styles.page}>
-      <div className={styles.cabinetLayout}>
-        <div className={styles.sidebarWrapper}>
-          <Sidebar
-            user={user}
-            activeTab="appointments"
-            onChangeTab={handleSidebarTabChange}
-            tabs={PSYCHOLOGIST_TABS}
-          />
-        </div>
+      <div className={styles.sidebarWrapper}>
+        <Sidebar
+          user={user}
+          activeTab="appointments"
+          onChangeTab={handleSidebarTabChange}
+          tabs={PSYCHOLOGIST_TABS}
+        />
+      </div>
 
-        <article className={styles.wrapper}>
-          <button className={styles.back} type="button" onClick={() => navigate(-1)}>
-            <span>&lt;</span>
-            <span>Вернуться назад</span>
-          </button>
+      <article className={styles.wrapper}>
+        <button className={styles.back} onClick={() => navigate(-1)} type="button">
+          <span>&lt;</span>
+          <span>Вернуться назад</span>
+        </button>
 
-          <h2 className={styles.title}>Запись</h2>
+        <h2 className={styles.title}>Запись</h2>
 
-          {appointment.status === 'cancelled' && serverCancelReason && (
-            <div className={styles.reasonBlockCancelled}>
-              <span className={styles.reasonLabel}>Причина отмены:</span>
-              <span className={styles.reasonText}>{serverCancelReason}</span>
+        {appointment.status === 'cancelled' && serverCancelReason && (
+          <div className={styles.reasonBlockCancelled}>
+            <span className={styles.reasonLabel}>Причина отмены:</span>
+            <span className={styles.reasonText}>{serverCancelReason}</span>
+          </div>
+        )}
+
+        <div className={styles.infoBlock}>
+          {patientName && (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Пациент</span>
+              <span className={styles.infoName}>{patientName}</span>
             </div>
           )}
-
-          <div className={styles.infoBlock}>
-            {patientName && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Пациент</span>
-                <span className={styles.infoName}>{patientName}</span>
+          {statusUI && (
+            <div className={styles.infoRow}>
+              <span className={styles.statusLabel}>Статус</span>
+              <div className={styles['status']}>
+                <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
+                <span className={styles['status-text']}>{statusUI.text}</span>
               </div>
-            )}
-            {statusUI && (
-              <div className={styles.infoRow}>
-                <span className={styles.statusLabel}>Статус</span>
-                <div className={styles['status']}>
-                  <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
-                  <span className={styles['status-text']}>{statusUI.text}</span>
-                </div>
-              </div>
-            )}
-            {appointment.patient?.email && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Email пациента</span>
-                <span className={styles.infoValueEmail}>{appointment.patient.email}</span>
-              </div>
-            )}
-            {appointment.patient?.phone_number && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Телефон пациента</span>
-                <span className={styles.infoValuePhone}>{appointment.patient.phone_number}</span>
-              </div>
-            )}
-            <div className={styles.infoGrid}>
-              {appointment.patient?.social_media && (
-                <div className={styles.infoRowGrid}>
-                  <span className={styles.infoLabel}>Соцсети</span>
-                  <span className={styles.infoValueGrid}>{appointment.patient.social_media}</span>
-                </div>
-              )}
-              {appointment.scheduled_time && (
-                <div className={styles.infoRowGrid}>
-                  <span className={styles.infoLabel}>Дата и время</span>
-                  <span className={styles.infoValueGrid}>
-                    {formatDateTime(appointment.scheduled_time)}
-                  </span>
-                </div>
-              )}
-              {appointment.type && (
-                <div className={styles.infoRowGrid}>
-                  <span className={styles.infoLabel}>Формат</span>
-                  <span className={styles.infoValueGrid}>
-                    {TYPE_LABELS[appointment.type] ?? appointment.type}
-                  </span>
-                </div>
-              )}
-              {appointment.venue && (
-                <div className={styles.infoRowGrid}>
-                  <span className={styles.infoLabel}>Место</span>
-                  <span className={styles.infoValueGrid}>{appointment.venue}</span>
-                </div>
-              )}
             </div>
-
-            {appointment.reason && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Причина записи</span>
-                <span className={styles.infoValue}>{appointment.reason}</span>
+          )}
+          {appointment.patient?.email && (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Email пациента</span>
+              <span className={styles.infoValueEmail}>{appointment.patient.email}</span>
+            </div>
+          )}
+          {appointment.patient?.phone_number && (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Телефон пациента</span>
+              <span className={styles.infoValuePhone}>{appointment.patient.phone_number}</span>
+            </div>
+          )}
+          <div className={styles.infoGrid}>
+            {appointment.patient?.social_media && (
+              <div className={styles.infoRowGrid}>
+                <span className={styles.infoLabel}>Соцсети</span>
+                <span className={styles.infoValueGrid}>{appointment.patient.social_media}</span>
               </div>
             )}
-            {appointment.remind_time && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Напоминание</span>
-                <span className={styles.infoValue}>{formatDateTime(appointment.remind_time)}</span>
-              </div>
-            )}
-            {appointment.last_change_time && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Последнее изменение</span>
-                <span className={styles.infoValue}>
-                  {formatDateTime(appointment.last_change_time)}
+            {appointment.scheduled_time && (
+              <div className={styles.infoRowGrid}>
+                <span className={styles.infoLabel}>Дата и время</span>
+                <span className={styles.infoValueGrid}>
+                  {formatDateTime(appointment.scheduled_time)}
                 </span>
               </div>
             )}
-
-            {isActive && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Заключение</span>
-                <span className={styles.infoValue}>
-                  <Input.TextArea
-                    rows={4}
-                    value={comment}
-                    onChange={(e) => setConclusionDraft(appointment.id, e.target.value)}
-                    placeholder="Введите заключение по консультации"
-                    // maxLength={2000}
-                    // showCount
-                  />
+            {appointment.type && (
+              <div className={styles.infoRowGrid}>
+                <span className={styles.infoLabel}>Формат</span>
+                <span className={styles.infoValueGrid}>
+                  {TYPE_LABELS[appointment.type] ?? appointment.type}
                 </span>
+              </div>
+            )}
+            {appointment.venue && (
+              <div className={styles.infoRowGrid}>
+                <span className={styles.infoLabel}>Место</span>
+                <span className={styles.infoValueGrid}>{appointment.venue}</span>
               </div>
             )}
           </div>
 
-          {isActive && (
-            <div className={styles.actions}>
-              <button
-                className={styles.actionButtonCancel}
-                onClick={() => setCancelModalOpen(true)}
-                disabled={completeMutation.isPending}
-                type="button"
-              >
-                Отменить
-              </button>
-              <button
-                className={styles.actionButtonEnd}
-                onClick={() => completeMutation.mutate()}
-                disabled={comment.trim().length === 0 || completeMutation.isPending}
-                type="button"
-              >
-                {completeMutation.isPending ? 'Завершение...' : 'Завершить'}
-              </button>
+          {appointment.reason && (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Причина записи</span>
+              <span className={styles.infoValue}>{appointment.reason}</span>
+            </div>
+          )}
+          {appointment.remind_time && (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Напоминание</span>
+              <span className={styles.infoValue}>{formatDateTime(appointment.remind_time)}</span>
+            </div>
+          )}
+          {appointment.last_change_time && (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Последнее изменение</span>
+              <span className={styles.infoValue}>
+                {formatDateTime(appointment.last_change_time)}
+              </span>
             </div>
           )}
 
-          <PsychologistRejectModal
-            type="appointment"
-            entityId={cancelModalOpen ? id! : null}
-            onClose={() => setCancelModalOpen(false)}
-            onSuccess={() => {
-              message.success('Запись отменена');
-              queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.byId, id] });
-              navigate(-1);
-            }}
-          />
-        </article>
-      </div>
+          {isActive && (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Заключение</span>
+              <span className={styles.infoValue}>
+                <Input.TextArea
+                  rows={4}
+                  value={comment}
+                  onChange={(e) => setConclusionDraft(appointment.id, e.target.value)}
+                  placeholder="Введите заключение по консультации"
+                  // maxLength={2000}
+                  // showCount
+                />
+              </span>
+            </div>
+          )}
+        </div>
+
+        {isActive && (
+          <div className={styles.actions}>
+            <button
+              className={styles.actionButtonCancel}
+              onClick={() => setCancelModalOpen(true)}
+              disabled={completeMutation.isPending}
+              type="button"
+            >
+              Отменить
+            </button>
+            <button
+              className={styles.actionButtonEnd}
+              onClick={() => completeMutation.mutate()}
+              disabled={comment.trim().length === 0 || completeMutation.isPending}
+              type="button"
+            >
+              {completeMutation.isPending ? 'Завершение...' : 'Завершить'}
+            </button>
+          </div>
+        )}
+
+        <PsychologistRejectModal
+          type="appointment"
+          entityId={cancelModalOpen ? id! : null}
+          onClose={() => setCancelModalOpen(false)}
+          onSuccess={() => {
+            message.success('Запись отменена');
+            queryClient.invalidateQueries({ queryKey: [appointmentQueryKey.byId, id] });
+            navigate(-1);
+          }}
+        />
+      </article>
     </div>
   );
 };

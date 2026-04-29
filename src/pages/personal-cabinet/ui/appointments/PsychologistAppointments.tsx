@@ -155,7 +155,7 @@ const PsychologistAppointments = () => {
     const statusUI = AppointmentStatusTag[appointment.status];
 
     return (
-      <article key={appointment.id} className={styles.appointmentRow} role="listitem">
+      <article className={styles.appointmentRow} key={appointment.id} role="listitem">
         <div className={styles.contentCol}>
           <div className={styles.timeStatusRow}>
             <div className={styles.timeCol}>{getTimeRange(appointment.scheduled_time)}</div>
@@ -210,7 +210,7 @@ const PsychologistAppointments = () => {
         {groupByDate(paginated as Appointment[], (appointment) =>
           toMoscow(appointment.scheduled_time).format('D MMMM'),
         ).map((group) => (
-          <div key={group.date} className={styles.dateGroup}>
+          <div className={styles.dateGroup} key={group.date}>
             <h3 className={styles.dateHeader}>{group.date}</h3>
             {group.items.map(renderAppointmentRow)}
           </div>

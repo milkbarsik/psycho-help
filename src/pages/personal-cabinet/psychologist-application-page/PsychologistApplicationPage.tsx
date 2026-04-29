@@ -241,162 +241,166 @@ const PsychologistApplicationPage = () => {
           <span>Вернуться назад</span>
         </button>
 
-        <div className={styles.layout}>
-          <div className={styles.mainContent}>
-            <h1 className={styles.pageTitle}>Заявка</h1>
+        <h1 className={styles.pageTitle}>Заявка</h1>
 
-            <h2 className={styles.userName}>{userName}</h2>
+        <h2 className={styles.userName}>{userName}</h2>
 
-            <div className={styles.statusRow}>
-              <p className={styles.statusLabel}>Статус</p>
-              <div className={styles['status']}>
-                <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
-                <span className={styles['status-text']}>{statusUI.text}</span>
-              </div>
-            </div>
-
-            {application.status === 'rejected' && application.reject_reason && (
-              <div className={styles.reasonBlock}>
-                <span className={styles.reasonLabel}>Причина отказа:</span>
-                <span className={styles.reasonText}>{application.reject_reason}</span>
-              </div>
-            )}
-
-            {application.status === 'cancelled' && application.cancel_reason && (
-              <div className={styles.reasonBlock}>
-                <span className={styles.reasonLabel}>Причина отмены:</span>
-                <span className={styles.reasonText}>{application.cancel_reason}</span>
-              </div>
-            )}
-
-            <section className={styles.dataSection}>
-              <div className={styles.dataGrid}>
-                <div className={styles.dataItem}>
-                  <span className={styles.dataLabel}>Email:</span>
-                  <span className={styles.dataValue}>{application.user?.email || '—'}</span>
-                </div>
-                <div className={styles.dataItem}>
-                  <span className={styles.dataLabel}>Телефон:</span>
-                  <span className={styles.dataValue}>{application.user?.phone_number || '—'}</span>
-                </div>
-                <div className={styles.dataItem}>
-                  <span className={styles.dataLabel}>Кампус:</span>
-                  <span className={styles.dataValue}>{application.preferred_campus || '—'}</span>
-                </div>
-                <div className={styles.dataItem}>
-                  <span className={styles.dataLabel}>Статус пациента:</span>
-                  <span className={styles.dataValue}>{application.university_status}</span>
-                </div>
-                <h3 className={styles.sidebarTitle}>Запись на сессию</h3>
-                <label className={styles.fieldLabel}>
-                  <span className={styles.dataLabel}>Дата</span>
-                  <div className={styles.timeWrapper}>
-                    <DatePicker
-                      className={styles.fieldPicker}
-                      value={selectedDate}
-                      onChange={(date) => setUserDate(date ? date.startOf('day') : null)}
-                      disabledDate={disabledDates}
-                      format="DD.MM.YYYY"
-                      placeholder="—"
-                      allowClear={false}
-                    />
-                  </div>
-                </label>
-
-                <label className={styles.fieldLabel}>
-                  <span className={styles.fieldLabel}>Время</span>
-                  <div className={styles.fieldSelectWrapper}>
-                    <Select
-                      className={styles.fieldSelect}
-                      prefixCls="customSelect"
-                      value={selectedTime || undefined}
-                      onChange={setUserTime}
-                      placeholder="—"
-                      options={timeOptions}
-                    />
-                  </div>
-                </label>
-
-                <label className={styles.fieldLabel}>
-                  <span className={styles.fieldLabel}>Формат</span>
-                  <div className={styles.fieldSelectWrapper}>
-                    <Select
-                      className={styles.fieldSelect}
-                      prefixCls="customSelect"
-                      value={meetingType ?? undefined}
-                      onChange={setUserMeetingType}
-                      options={MEETING_TYPE_OPTIONS}
-                      placeholder="—"
-                    />
-                  </div>
-                </label>
-
-                {meetingType === 'offline' && (
-                  <label className={styles.fieldLabel}>
-                    <span className={styles.fieldLabel}>Адрес проведения</span>
-                    <Input
-                      className={styles.dataValue}
-                      placeholder="—"
-                      value={locationAddress}
-                      onChange={(e) => setUserLocationAddress(e.target.value)}
-                    />
-                  </label>
-                )}
-
-                {meetingType === 'online' && (
-                  <label className={styles.fieldLabel}>
-                    <span className={styles.fieldLabel}>Ссылка на встречу</span>
-                    <Input
-                      className={styles.dataValue}
-                      placeholder="—"
-                      value={meetingUrl}
-                      onChange={(e) => setUserMeetingUrl(e.target.value)}
-                    />
-                  </label>
-                )}
-              </div>
-            </section>
-
-            <div className={styles.dataItemFull}>
-              <span className={styles.dataLabel}>Описание проблемы:</span>
-              <ExpandableText text={application.problem_description} />
-            </div>
-
-            {(canReject || canAccept || canChange) && (
-              <div className={styles.actions}>
-                {canReject && (
-                  <button
-                    className={styles.btnSecondary}
-                    onClick={() => setRejectModalOpen(true)}
-                    type="button"
-                  >
-                    Отклонить заявку
-                  </button>
-                )}
-                {canAccept && (
-                  <button
-                    className={styles.btnConfirm}
-                    onClick={() => acceptMutation.mutate(application.id)}
-                    disabled={acceptMutation.isPending}
-                    type="button"
-                  >
-                    В работу
-                  </button>
-                )}
-                {canChange && (
-                  <button
-                    className={styles.btnPrimary}
-                    onClick={() => offerMutation.mutate()}
-                    disabled={!canSave}
-                    type="button"
-                  >
-                    {offerMutation.isPending ? 'Сохранение...' : 'Запросить подтверждение'}
-                  </button>
-                )}
-              </div>
-            )}
+        <div className={styles.statusRow}>
+          <p className={styles.statusLabel}>Статус</p>
+          <div className={styles['status']}>
+            <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
+            <span className={styles['status-text']}>{statusUI.text}</span>
           </div>
         </div>
+
+        {application.status === 'rejected' && application.reject_reason && (
+          <div className={styles.reasonBlock}>
+            <span className={styles.reasonLabel}>Причина отказа:</span>
+            <span className={styles.reasonText}>{application.reject_reason}</span>
+          </div>
+        )}
+
+        {application.status === 'cancelled' && application.cancel_reason && (
+          <div className={styles.reasonBlock}>
+            <span className={styles.reasonLabel}>Причина отмены:</span>
+            <span className={styles.reasonText}>{application.cancel_reason}</span>
+          </div>
+        )}
+
+        <div className={styles.dataGrid}>
+          <div className={styles.dataItem}>
+            <span className={styles.dataLabel}>Email:</span>
+            <span className={styles.dataValue}>{application.user?.email || '—'}</span>
+          </div>
+
+          <div className={styles.dataItem}>
+            <span className={styles.dataLabel}>Телефон:</span>
+            <span className={styles.dataValue}>{application.user?.phone_number || '—'}</span>
+          </div>
+
+          <div className={styles.dataItem}>
+            <span className={styles.dataLabel}>Кампус:</span>
+            <span className={styles.dataValue}>{application.preferred_campus || '—'}</span>
+          </div>
+
+          <div className={styles.dataItem}>
+            <span className={styles.dataLabel}>Статус пациента:</span>
+            <span className={styles.dataValue}>{application.university_status || '—'}</span>
+          </div>
+
+          <h3 className={styles.sidebarTitle}>Запись на сессию</h3>
+
+          <label className={styles.fieldLabel}>
+            <span className={styles.dataLabel}>Дата</span>
+            <div className={styles.timeWrapper}>
+              <DatePicker
+                className={styles.fieldPicker}
+                value={selectedDate}
+                onChange={(date) => setUserDate(date ? date.startOf('day') : null)}
+                disabledDate={disabledDates}
+                format="DD.MM.YYYY"
+                placeholder="—"
+                allowClear={false}
+                disabled={!canChange}
+              />
+            </div>
+          </label>
+
+          <label className={styles.fieldLabel}>
+            <span className={styles.fieldLabel}>Время</span>
+            <div className={styles.fieldSelectWrapper}>
+              <Select
+                className={styles.fieldSelect}
+                prefixCls="customSelect"
+                value={selectedTime || undefined}
+                onChange={setUserTime}
+                placeholder="—"
+                options={timeOptions}
+                disabled={!canChange}
+              />
+            </div>
+          </label>
+
+          <label className={styles.fieldLabel}>
+            <span className={styles.fieldLabel}>Формат</span>
+            <div className={styles.fieldSelectWrapper}>
+              <Select
+                className={styles.fieldSelect}
+                prefixCls="customSelect"
+                value={meetingType ?? undefined}
+                onChange={setUserMeetingType}
+                options={MEETING_TYPE_OPTIONS}
+                placeholder="—"
+                disabled={!canChange}
+              />
+            </div>
+          </label>
+
+          {meetingType === 'offline' && (
+            <label className={styles.fieldLabel}>
+              <span className={styles.fieldLabel}>Адрес проведения</span>
+              <Input
+                className={styles.dataValue}
+                placeholder="—"
+                value={locationAddress}
+                onChange={(e) => setUserLocationAddress(e.target.value)}
+                disabled={!canChange}
+              />
+            </label>
+          )}
+
+          {meetingType === 'online' && (
+            <label className={styles.fieldLabel}>
+              <span className={styles.fieldLabel}>Ссылка на встречу</span>
+              <Input
+                className={styles.dataValue}
+                placeholder="—"
+                value={meetingUrl}
+                onChange={(e) => setUserMeetingUrl(e.target.value)}
+                disabled={!canChange}
+              />
+            </label>
+          )}
+        </div>
+
+        <div className={styles.dataItemFull}>
+          <span className={styles.dataLabel}>Описание проблемы:</span>
+          <ExpandableText text={application.problem_description} />
+        </div>
+
+        {(canReject || canAccept || canChange) && (
+          <div className={styles.actions}>
+            {canReject && (
+              <button
+                className={styles.btnSecondary}
+                onClick={() => setRejectModalOpen(true)}
+                type="button"
+              >
+                Отклонить заявку
+              </button>
+            )}
+            {canAccept && (
+              <button
+                className={styles.btnConfirm}
+                onClick={() => acceptMutation.mutate(application.id)}
+                disabled={acceptMutation.isPending}
+                type="button"
+              >
+                В работу
+              </button>
+            )}
+            {canChange && (
+              <button
+                className={styles.btnPrimary}
+                onClick={() => offerMutation.mutate()}
+                disabled={!canSave}
+                type="button"
+              >
+                {offerMutation.isPending ? 'Сохранение...' : 'Запросить подтверждение'}
+              </button>
+            )}
+          </div>
+        )}
       </main>
 
       <PsychologistRejectModal

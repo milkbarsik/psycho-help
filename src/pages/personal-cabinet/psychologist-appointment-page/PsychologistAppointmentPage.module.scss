@@ -1,4 +1,4 @@
-.cabinetLayout {
+.page {
   display: grid;
   grid-template-columns: 28.8rem 1fr;
   gap: 2.4rem;
@@ -242,9 +242,6 @@
 @media (max-width: 1023px) {
   .page {
     padding: 24px 16px 64px;
-  }
-
-  .cabinetLayout {
     grid-template-columns: 1fr;
   }
 
