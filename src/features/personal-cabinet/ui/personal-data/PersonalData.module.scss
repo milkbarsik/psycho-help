@@ -493,6 +493,9 @@
 }
 
 [data-theme='dark'] {
+  .name{
+    color: var(--color-label-neutral-inverted-primary);
+  }
   .avatarSection {
     background-color: transparent;
   }

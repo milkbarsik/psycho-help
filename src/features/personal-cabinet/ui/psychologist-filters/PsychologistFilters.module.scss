@@ -87,3 +87,12 @@
     color: var(--color-label-neutral-primary);
   }
 }
+
+[data-theme="dark"]{
+  .filters__sort-button{
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .filters__reset-button{
+    color: var(--color-label-neutral-inverted-primary);
+  }
+}

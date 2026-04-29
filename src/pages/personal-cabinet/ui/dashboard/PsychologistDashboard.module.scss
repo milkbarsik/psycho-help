@@ -122,7 +122,7 @@
   width: 50px;
   font-size: 13px;
   color: #888;
-  transform: translateY(-8px); 
+  transform: translateY(-8px);
 }
 
 .gridLine {
@@ -134,10 +134,10 @@
 .eventsContainer {
   position: absolute;
   top: 0;
-  left: 66px; 
+  left: 66px;
   right: 0;
   bottom: 0;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .eventCard {
@@ -188,7 +188,7 @@
 .detailsPanel {
   width: 340px;
   flex-shrink: 0;
-  padding-top: 8px; 
+  padding-top: 8px;
 }
 
 .detailsCard {
@@ -242,7 +242,7 @@
   color: #6b7280;
   line-height: 1.5;
   margin: 0 0 8px 0;
-  
+
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
@@ -257,7 +257,7 @@
   font-size: 13px;
   text-decoration: underline;
   cursor: pointer;
-  
+
   &:hover {
     color: #4a4a4a;
   }
@@ -291,4 +291,56 @@
   border: 1px dashed #e5e7eb;
   border-radius: 12px;
   background: #f9fafb;
+}
+
+[data-theme='dark'] {
+  .pageTitle,
+  .dayName,
+  .dayNumber,
+  .detailsTime,
+  .infoIcon,
+  .commentLabel,
+  .eventName,
+  .eventVenue {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .infoRow span:not(:first-child),
+  .commentText,
+  .eventTime {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-quaternary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .dayItem:hover:not(.dayActive) .dayNumber {
+    background-color: var(--color-interactive-brand-hover);
+  }
+  .emptyDetails {
+    background-color: var(--color-background-neutral-inverted);
+    border: 1px solid var(--color-border-neutral-disable);
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-quaternary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .detailsCard {
+    background-color: var(--color-background-neutral-inverted);
+    border: 1px solid var(--color-border-neutral-disable);
+  }
+
+  .eventCard {
+    background-color: var(--color-fill-neutral-primary);
+    &:hover {
+      background-color: var(--color-interactive-neutral-hover);
+    }
+  }
+  .eventCardActive {
+    background-color: var(--color-fill-brand-derivable-quaternary);
+    border-left: none;
+    &:hover {
+      background-color: var(--color-fill-brand-derivable-quaternary);
+    }
+  }
 }

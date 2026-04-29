@@ -180,4 +180,7 @@
     background-color: var(--color-background-neutral-primary);
     color: var(--color-label-neutral-primary);
   }
+  .photo{
+    background-color: var(--color-fill-neutral-primary);
+  }
 }

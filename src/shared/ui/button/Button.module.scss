@@ -96,12 +96,18 @@
 [data-theme="dark"]{
   .button{
      &.color-brand{
-        color: var(--color-label-neutral-primary);
+        background-color: var(--color-fill-neutral-none);
+        color: var(--color-interactive-neutral-primary);
         &:hover{
           background-color: var(--color-interactive-neutral-hover-secondary);
         }
         &:active{
           background-color: var(--color-interactive-neutral-active-secondary);
+          outline: none;
+        }
+        &:focus{
+          background-color: var(--color-fill-neutral-none);
+          outline: none;
         }
      }
   }

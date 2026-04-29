@@ -145,4 +145,7 @@
   .consult_areas {
     color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
   }
+  .photo{
+    background-color: var(--color-fill-neutral-primary);
+  }
 }
