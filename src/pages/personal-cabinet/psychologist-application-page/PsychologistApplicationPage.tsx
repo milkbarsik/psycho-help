@@ -294,6 +294,7 @@ const PsychologistApplicationPage = () => {
             <span className={styles.dataLabel}>Дата</span>
             <div className={styles.timeWrapper}>
               <DatePicker
+                id="field-date"
                 className={styles.fieldPicker}
                 value={selectedDate}
                 onChange={(date) => setUserDate(date ? date.startOf('day') : null)}
@@ -310,6 +311,7 @@ const PsychologistApplicationPage = () => {
             <span className={styles.fieldLabel}>Время</span>
             <div className={styles.fieldSelectWrapper}>
               <Select
+                id="field-time"
                 className={styles.fieldSelect}
                 prefixCls="customSelect"
                 value={selectedTime || undefined}
@@ -325,6 +327,7 @@ const PsychologistApplicationPage = () => {
             <span className={styles.fieldLabel}>Формат</span>
             <div className={styles.fieldSelectWrapper}>
               <Select
+                id="field-meeting-type"
                 className={styles.fieldSelect}
                 prefixCls="customSelect"
                 value={meetingType ?? undefined}
@@ -340,6 +343,7 @@ const PsychologistApplicationPage = () => {
             <label className={styles.fieldLabel}>
               <span className={styles.fieldLabel}>Адрес проведения</span>
               <Input
+                id="field-location-address"
                 className={styles.dataValue}
                 placeholder="—"
                 value={locationAddress}
@@ -353,6 +357,7 @@ const PsychologistApplicationPage = () => {
             <label className={styles.fieldLabel}>
               <span className={styles.fieldLabel}>Ссылка на встречу</span>
               <Input
+                id="field-meeting-url"
                 className={styles.dataValue}
                 placeholder="—"
                 value={meetingUrl}

@@ -179,34 +179,26 @@ const PsychologistAppointmentPage = () => {
             </div>
           )}
           <div className={styles.infoGrid}>
-            {appointment.patient?.social_media && (
-              <div className={styles.infoRowGrid}>
-                <span className={styles.infoLabel}>Соцсети</span>
-                <span className={styles.infoValueGrid}>{appointment.patient.social_media}</span>
-              </div>
-            )}
-            {appointment.scheduled_time && (
-              <div className={styles.infoRowGrid}>
-                <span className={styles.infoLabel}>Дата и время</span>
-                <span className={styles.infoValueGrid}>
-                  {formatDateTime(appointment.scheduled_time)}
-                </span>
-              </div>
-            )}
-            {appointment.type && (
-              <div className={styles.infoRowGrid}>
-                <span className={styles.infoLabel}>Формат</span>
-                <span className={styles.infoValueGrid}>
-                  {TYPE_LABELS[appointment.type] ?? appointment.type}
-                </span>
-              </div>
-            )}
-            {appointment.venue && (
-              <div className={styles.infoRowGrid}>
-                <span className={styles.infoLabel}>Место</span>
-                <span className={styles.infoValueGrid}>{appointment.venue}</span>
-              </div>
-            )}
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Соцсети</span>
+              <span className={styles.infoValueGrid}>
+                {appointment.patient?.social_media || '—'}
+              </span>
+            </div>
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Дата и время</span>
+              <span className={styles.infoValueGrid}>
+                {formatDateTime(appointment.scheduled_time) || '—'}
+              </span>
+            </div>
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Формат</span>
+              <span className={styles.infoValueGrid}>{TYPE_LABELS[appointment.type] || '—'}</span>
+            </div>
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Место</span>
+              <span className={styles.infoValueGrid}>{appointment.venue || '—'}</span>
+            </div>
           </div>
 
           {appointment.reason && (

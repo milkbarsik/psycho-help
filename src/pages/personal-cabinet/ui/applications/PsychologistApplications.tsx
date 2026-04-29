@@ -225,7 +225,6 @@ const PsychologistApplications = () => {
           <button
             className={styles.btnOpen}
             onClick={() => navigate(`/cabinet/application/${application.id}`)}
-            disabled={application.status === 'new'}
             type="button"
           >
             Открыть

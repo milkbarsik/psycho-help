@@ -39,20 +39,6 @@ export interface ResponseError {
   status: number | undefined;
 }
 
-// Нужно выбрать один из этих типов, прост я не знаю, насколько критично для бэка, чтобы эти поля были именно null, или же достаточно просто сделать их undefined
-export type UserProfileUpdate = Partial<
-  Pick<
-    User,
-    | 'first_name'
-    | 'middle_name'
-    | 'last_name'
-    | 'phone_number'
-    | 'email'
-    | 'social_media'
-    | 'study_group'
-  >
->;
-
 export interface UserUpdate {
   first_name: string | null;
   middle_name: string | null;
