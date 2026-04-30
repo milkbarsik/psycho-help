@@ -1,62 +1,85 @@
+import { useTheme } from '@/shared/hooks/useTheme';
 import VkIcon from '@/shared/assets/images/footer/vk.svg';
 import TgIcon from '@/shared/assets/images/footer/tg.svg';
+import Moon from '@/shared/assets/images/footer/moon.svg';
+import Sun from '@/shared/assets/images/footer/sun.svg';
 import styles from './footer.module.scss';
-import FooterLogo from '@/shared/assets/images/footer/logo.svg?react'
+import FooterLogo from '@/shared/assets/images/footer/logo.svg?react';
 
 const Footer = () => {
+  const { currentTheme, toggleTheme } = useTheme();
   const addresses = [
     {
       street: 'ул. Большая Семёновская, 38',
       auditorium: 'ауд. В-509',
-      letters: 'БС'
+      letters: 'БС',
     },
     {
       street: 'ул. Прянишникова, 2а',
       auditorium: 'ауд. 1401',
-      letters: 'ПР'
+      letters: 'ПР',
     },
     {
       street: 'ул. Павла Корчагина, 22',
       auditorium: 'ауд. 239',
-      letters: 'ПК'
+      letters: 'ПК',
     },
     {
       street: 'ул. Автозаводская, 16',
       auditorium: 'ауд. 1109',
-      letters: 'АВ'
-    }
+      letters: 'АВ',
+    },
   ];
 
   const socialLinks = [
     { icon: VkIcon, alt: 'VK', link: 'https://vk.com/spp_polytech' },
-    { icon: TgIcon, alt: 'Telegram', link: 'https://t.me/spp_mospolytech' }
+    { icon: TgIcon, alt: 'Telegram', link: 'https://t.me/spp_mospolytech' },
   ];
 
   return (
     <footer className={styles.footer}>
+      <button
+        className={styles.themeToggle}
+        onClick={toggleTheme}
+        aria-label={
+          currentTheme === 'light' ? 'Переключить на тёмную тему' : 'Переключить на светлую тему'
+        }
+      >
+        <img src={currentTheme === 'light' ? Moon : Sun} />
+      </button>
       <div className={styles.container}>
-        
-        
         {/* Верхняя секция с логотипом, контактами и соцсетями */}
         <div className={styles.topSection}>
           <div className={styles.logoSection}>
-            <div className={styles.logo}><FooterLogo /></div>
+            <div className={styles.logo}>
+              <FooterLogo />
+            </div>
           </div>
-          
+
           <div className={styles.contactInfo}>
             <div className={styles.contactItem}>
               <span className={styles.contactLabel}>Телефон:</span>
-              <a href="tel:+74952230541" className={styles.contactValue}>+7 (495) 223-05-41</a>
+              <a href="tel:+74952230541" className={styles.contactValue}>
+                +7 (495) 223-05-41
+              </a>
             </div>
             <div className={styles.contactItem}>
               <span className={styles.contactLabel}>E-mail:</span>
-              <a href="mailto:psycholog@mospolytech.ru" className={styles.contactValue}>psycholog@mospolytech.ru</a>
+              <a href="mailto:psycholog@mospolytech.ru" className={styles.contactValue}>
+                psycholog@mospolytech.ru
+              </a>
             </div>
           </div>
-          
+
           <div className={styles.socialSection}>
             {socialLinks.map((social, index) => (
-              <a key={index} href={social.link} className={styles.socialLink} target="_blank" rel="noopener noreferrer">
+              <a
+                key={index}
+                href={social.link}
+                className={styles.socialLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={social.icon} alt={social.alt} className={styles.socialIcon} />
               </a>
             ))}

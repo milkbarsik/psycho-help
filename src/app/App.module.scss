@@ -1,5 +1,12 @@
 .layout {
   overflow: clip;
   min-height: 100vh;
-  background: #ffffff;
+  background: var(--color-background-neutral-primary);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  .layout {
+    background: var(--color-background-neutral-inverted);
+  }
 }

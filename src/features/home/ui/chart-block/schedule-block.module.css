@@ -1,5 +1,5 @@
 .section {
-    padding: 80px 0;
+  padding: 80px 0;
 }
 
 .title {
@@ -7,26 +7,21 @@
     font-weight: 700;
     text-align: center;
     margin: 0 0 60px 0;
-    color: #000000;
+    color: var(--color-label-neutral-primary);
 }
-
-
 
 .scheduleSection {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
-
 
 .scheduleInfo {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 40px;
 }
-
-
 
 .lunchInfo,
 .fridayInfo {
@@ -34,7 +29,7 @@
     flex-direction: column;
     gap: 8px;
     padding: 24px;
-    background: #F9F9F9;
+    background: var(--color-background-neutral-secondary);
     width: 100%;
     border-radius: 24px;
 }
@@ -43,28 +38,28 @@
 .fridayLabel {
     font-size: 20px;
     font-weight: 600;
-    color: #000000;
+    color: var(--color-label-neutral-tetriary);
 }
 
 .lunchTime,
 .fridayTime {
     font-size: 22px;
     font-weight: 600;
-    color: #000000;
+    color: var(--color-label-neutral-primary);
 }
 
 .scheduleIllustration {
-    /* background-color: #ffffff; */
-    /* padding: 60px 40px; */
-    /* text-align: center; */
-    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); */
-    border-radius: 16px;
-    margin: 0 auto;
-    width: 100%;
+  /* background-color: #ffffff; */
+  /* padding: 60px 40px; */
+  /* text-align: center; */
+  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); */
+  border-radius: 16px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .scheduleImage {
-    width: 100%;
+  width: 100%;
 }
 
 /* .scheduleIllustration {
@@ -73,57 +68,70 @@
 } */
 
 .illustrationPlaceholder {
-    font-size: 18px;
-    color: #486CC0;
-    font-weight: 500;
+  font-size: 18px;
+  color: #486cc0;
+  font-weight: 500;
 }
 
 @media (max-width: 1024px) {
-    .title {
-        font-size: 40px;
-    }
+  .title {
+    font-size: 40px;
+  }
 }
 
 @media (max-width: 768px) {
-    .section {
-        padding: 60px 0;
-    }
+  .section {
+    padding: 60px 0;
+  }
 
-    .title {
-        font-size: 32px;
-        margin-bottom: 40px;
-    }
+  .title {
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
 
-    .scheduleInfo {
-        flex-direction: column;
-        gap: 30px;
-    }
+  .scheduleInfo {
+    flex-direction: column;
+    gap: 30px;
+  }
 
-    /* .scheduleIllustration {
+  /* .scheduleIllustration {
         padding: 40px 20px;
     } */
 
-    .illustrationPlaceholder {
-        font-size: 16px;
-    }
+  .illustrationPlaceholder {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 425px) {
-    .scheduleIllustration {
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
-        /* растянуть блок на всю ширину экрана */
-        overflow: visible;
-        border-radius: 0;
-        height: auto;
-    }
+  .scheduleIllustration {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    /* растянуть блок на всю ширину экрана */
+    overflow: visible;
+    border-radius: 0;
+    height: auto;
+  }
 
-    .scheduleImage {
-        width: 140vw;
-        /* картинка шире экрана */
-        max-width: none;
-        margin-left: -20vw;
-        /* смещение влево */
-        height: auto;
-    }
+  .scheduleImage {
+    width: 140vw;
+    /* картинка шире экрана */
+    max-width: none;
+    margin-left: -20vw;
+    /* смещение влево */
+    height: auto;
+  }
+}
+
+[data-theme='dark'] {
+  .lunchInfo {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .fridayInfo {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .fridayInfo span,
+  .lunchInfo span {
+    color: var(--color-label-neutral-inverted-primary);
+  }
 }

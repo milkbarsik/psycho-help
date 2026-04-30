@@ -1,5 +1,5 @@
 .button {
-  color: white;
+  color: var(--color-label-neutral-inverted-primary);
   font-size: 1.6rem;
   font-weight: bold;
   user-select: none;
@@ -43,16 +43,16 @@
     }
 
     &.primary {
-      background: #486cc0;
+      background: var(--color-fill-brand-primary);
 
       &:hover {
-        background: #36508a;
+        background: var(--color-interactive-neutral-hover);
       }
 
       &:focus {
-        outline: 2px solid #486cc0;
+        outline: 2px solid var(--color-border-brand-strong);
         outline-offset: 2px;
-        background: #36508a;
+        background: var(--color-fill-brand-primary);
       }
     }
   }
@@ -90,5 +90,25 @@
         height: 100%;
       }
     }
+  }
+}
+
+[data-theme="dark"]{
+  .button{
+     &.color-brand{
+        background-color: var(--color-fill-neutral-none);
+        color: var(--color-interactive-neutral-primary);
+        &:hover{
+          background-color: var(--color-interactive-neutral-hover-secondary);
+        }
+        &:active{
+          background-color: var(--color-interactive-neutral-active-secondary);
+          outline: none;
+        }
+        &:focus{
+          background-color: var(--color-fill-neutral-none);
+          outline: none;
+        }
+     }
   }
 }

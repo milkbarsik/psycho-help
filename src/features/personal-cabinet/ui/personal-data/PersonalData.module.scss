@@ -491,3 +491,86 @@
     cursor: not-allowed;
   }
 }
+
+[data-theme='dark'] {
+  .name{
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .avatarSection {
+    background-color: transparent;
+  }
+  .avatarIcon {
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+  }
+  .avatarUpload rect {
+    fill: transparent;
+  }
+
+  .profileSection {
+    background-color: transparent;
+  }
+  .editButton rect {
+    fill: transparent;
+  }
+  .editButton path {
+    stroke: var(--color-border-neutral-inverted);
+  }
+  .editButton:hover {
+    background-color: var(--color-interactive-neutral-hover);
+  }
+
+  .nameFieldsRow input {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .nameFieldsRow input::placeholder {
+    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
+  }
+  .cancelNameButton {
+    color: var(--color-label-neutral-inverted-primary);
+    border: 1px solid color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+  }
+  .cancelNameButton:hover {
+    background-color: var(--color-interactive-neutral-hover-secondary);
+    color: var(--color-interactive-neutral-active);
+  }
+
+  .fieldsGrid label {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .selectDropdown {
+    border: none;
+  }
+  .customSelect {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .selectArrow {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .selectOption {
+    background-color: var(--color-interactive-neutral-hover);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .selectOption.selected {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-interactive-brand-primary);
+  }
+
+  .editableField {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .editableField input {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .field .editableField input::placeholder {
+    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
+  }
+  .passwordField {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .passwordField input::placeholder {
+    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
+  }
+}

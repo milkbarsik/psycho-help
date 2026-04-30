@@ -74,6 +74,11 @@
   --color-fill-brand-secondary: #{$accent-brand-200};
   --color-fill-brand-tetriary: #{$accent-brand-100};
   --color-fill-brand-quaternary: #{$accent-brand-50};
+  
+  --color-fill-brand-derivable-primary: #{rgba($accent-brand-500, 0.8)};
+  --color-fill-brand-derivable-secondary: #{rgba($accent-brand-500, 0.52)};
+  --color-fill-brand-derivable-tetriary: #{rgba($accent-brand-500, 0.32)};
+  --color-fill-brand-derivable-quaternary: #{rgba($accent-brand-500, 0.12)};
 
   --color-fill-danger-primary: #{rgba($accent-status-red, 0.12)};
   --color-fill-danger-secondary: #{rgba($accent-status-red, 0.08)};
@@ -107,7 +112,7 @@
   --color-border-brand-base: #{$accent-brand-200};
   --color-border-brand-soft: #{$accent-brand-100};
 
-  --color-border-danger-strong: #{rgba($accent-status-red, 0.12)};
+  --color-border-danger-strong: #{rgba($accent-status-red, 0.8)};
   --color-border-danger-base: #{rgba($accent-status-red, 0.2)};
   --color-border-danger-soft: #{rgba($accent-status-red, 0.12)};
 
