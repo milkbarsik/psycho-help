@@ -82,7 +82,7 @@ const PsychologistAppointmentPage = () => {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!appointment?.id || hasCommentDraft || appointment.comment == null) return;
+    if (!appointment?.id || hasCommentDraft || appointment.comment == null) return; // заменить двойное равно
 
     setConclusionDraft(appointment.id, appointment.comment);
   }, [appointment?.id, appointment?.comment, hasCommentDraft, setConclusionDraft]);

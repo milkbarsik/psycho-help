@@ -227,6 +227,14 @@ const PsychologistApplicationPage = () => {
     [application.user?.last_name, application.user?.first_name, application.user?.middle_name]
       .filter(Boolean)
       .join(' ') || 'Имя не указано';
+  const preferPsychologistName =
+    [
+      application.psychologist?.user?.last_name,
+      application.psychologist?.user?.first_name,
+      application.psychologist?.user?.middle_name,
+    ]
+      .filter(Boolean)
+      .join(' ') || 'Предпочитаемый психолог не выбран';
 
   return (
     <div className={styles.page}>
@@ -256,6 +264,13 @@ const PsychologistApplicationPage = () => {
             <span className={styles['status-text']}>{statusUI.text}</span>
           </div>
         </div>
+
+        {application.status === 'new' && preferPsychologistName && (
+          <div className={styles.dataItemFull}>
+            <span className={styles.dataLabel}>Предпочитаемый психолог:</span>
+            <span className={styles.dataValue}>{preferPsychologistName}</span>
+          </div>
+        )}
 
         {application.status === 'rejected' && application.reject_reason && (
           <div className={styles.reasonBlock}>

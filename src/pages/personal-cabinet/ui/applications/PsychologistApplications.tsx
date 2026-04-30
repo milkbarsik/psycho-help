@@ -195,6 +195,15 @@ const PsychologistApplications = () => {
 
   const renderApplicationRow = (application: Application) => {
     const statusUI = ApplicationStatusTag[application.status];
+    // const preferPsychologistName =
+    //   [
+    //     application.psychologist?.user?.last_name,
+    //     application.psychologist?.user?.first_name,
+    //     application.psychologist?.user?.middle_name,
+    //   ]
+    //     .filter(Boolean)
+    //     .join(' ') || 'Предпочитаемый психолог не выбран';
+
     return (
       <article className={styles.appointmentRow} key={application.id} role="listitem">
         <div className={styles.contentCol}>
@@ -204,6 +213,12 @@ const PsychologistApplications = () => {
               <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
               <span className={styles['status-text']}>{statusUI.text}</span>
             </div>
+            {/* {application.status === 'new' && preferPsychologistName && (
+              <div className={styles.dataItemFull}>
+                <span className={styles.dataLabel}>Предпочитаемый психолог: </span>
+                <span className={styles.dataValue}>{preferPsychologistName}</span>
+              </div>
+            )} */}
           </div>
           <div className={styles.infoCol}>
             <span className={styles.patientName}>{getPatientName(application)}</span>
