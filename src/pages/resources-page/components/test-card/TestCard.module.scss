@@ -114,3 +114,22 @@
 .bottomSlot {
   margin-top: auto;
 }
+
+[data-theme='dark'] {
+  .wrapper {
+    background-color: var(--color-background-neutral-inverted);
+    border: 1px solid var(--color-border-neutral-inverted);
+  }
+  .imageWrapper {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .title {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .description {
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) !important;
+  }
+  .info{
+    color: var(--color-label-neutral-inverted-primary);
+  }
+}

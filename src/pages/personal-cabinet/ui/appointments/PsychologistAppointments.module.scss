@@ -165,3 +165,22 @@
     }
   }
 }
+
+[data-theme='dark'] {
+  .dateHeader,
+  .timeCol,
+  .patientName,
+  .status-text {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .location {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-quaternary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .appointmentRow:not(:first-of-type) {
+    border-top: 1px solid var(--color-border-neutral-inverted);
+  }
+}

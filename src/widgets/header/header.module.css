@@ -362,3 +362,42 @@
     padding: 1.1rem 0 0.3rem;
   }
 }
+
+[data-theme='dark'] {
+  .header {
+    background-color: var(--color-background-neutral-inverted);
+  }
+  .header__nav {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .header__burger span {
+    background-color: var(--color-label-neutral-inverted-primary);
+  }
+  .header__logo {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .header__logo:hover {
+    color: var(--color-interactive-brand-hover);
+  }
+
+  .header__logo:active {
+    border-color: var(--color-border-brand-strong);
+    color: var(--color-interactive-brand-active);
+  }
+
+  .header__link {
+    color: var(--color-label-neutral-inverted-primary);
+    &:hover {
+      color: var(--color-interactive-brand-primary);
+    }
+    &:active {
+      color: var(--color-interactive-brand-active);
+    }
+  }
+  .header__auth {
+    color: var(--color-label-neutral-inverted-primary);
+    &:hover {
+      color: var(--color-interactive-brand-hover);
+    }
+  }
+}

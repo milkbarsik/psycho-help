@@ -2,18 +2,18 @@
 
 .footer {
     background-color: var(--color-background-brand-primary);
-    color: #ffffff;
+    color: var(--color-label-neutral-inverted-primary);
     padding: 60px 0 30px 0;
     position: relative;
     overflow: hidden;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    position: relative;
-    z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
 }
 
 /* Фоновые буквы */
@@ -24,7 +24,7 @@
     transform: translateX(-50%);
     font-size: 200px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.1);
+    color: var(--color-label-brand-quaternary);
     z-index: 1;
     white-space: nowrap;
     letter-spacing: 0.1em;
@@ -33,136 +33,161 @@
 
 /* Верхняя секция */
 .topSection {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 50px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.themeToggle {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  transform: translate(-8px, 8px);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.themeToggle:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translate(-8px, 6px);
 }
 
 .logoSection {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .logo {
     font-size: 24px;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--color-label-neutral-inverted-primary);
     margin: 0;
     line-height: 1.2;
     text-transform: lowercase;
 }
 
 .contactInfo {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    width: fit-content;
-    margin: 0 70px 0 auto;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: fit-content;
+  margin: 0 70px 0 auto;
 
-    @include past-tablet {
-        gap: 36px;
-    }
+  @include past-tablet {
+    gap: 36px;
+  }
 
-    @include past-desktop {
-        gap: 70px;
-    }
-    
+  @include past-desktop {
+    gap: 70px;
+  }
 }
 
 .contactItem {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .contactLabel {
     font-size: 16px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--color-label-brand-quaternary);
     min-width: 80px;
 }
 
 .contactValue {
     font-size: 16px;
     font-weight: 400;
-    color: #ffffff;
+    color: var(--color-label-neutral-inverted-primary);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .contactValue:hover {
-    color: #e0e0e0;
+    color: var(--color-interactive-neutral-hover-secondary);
 }
 
 .socialSection {
-    display: flex;
-    gap: 16px;
-    flex-shrink: 0;
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0;
 }
 
 .socialLink {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .socialLink:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .socialIcon {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1);
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
 }
 
 /* Секция с адресами */
 .addressesSection {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-    margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  margin-bottom: 40px;
 }
 
 .addressItem {
-    text-align: left;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+  text-align: left;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
-    .adressItemContent {
-        position: absolute;
-        bottom: 24px;
-        left: 24px;
-    }
+  .adressItemContent {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+  }
 
-    .addressBackgroundLetters {
-        font-size: 23rem;
-        font-stretch: condensed;
-        line-height: .9;
-        color: var(--color-label-brand-quaternary);
-        opacity: 0.1;
-        font-weight: 900;
-        pointer-events: none;
-        white-space: nowrap;
-    }
+  .addressBackgroundLetters {
+    font-size: 23rem;
+    font-stretch: condensed;
+    line-height: 0.9;
+    color: var(--color-label-brand-quaternary);
+    opacity: 0.1;
+    font-weight: 900;
+    pointer-events: none;
+    white-space: nowrap;
+  }
 }
 
 .addressStreet {
     font-size: 16px;
     font-weight: 500;
-    color: #ffffff;
+    color: var(--color-label-neutral-inverted-primary);
     margin: 0 0 4px 0;
     line-height: 1.3;
     position: relative;
@@ -170,127 +195,127 @@
 }
 
 .addressAuditorium {
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0;
-    line-height: 1.3;
-    position: relative;
-    z-index: 2;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.3;
+  position: relative;
+  z-index: 2;
 }
 
 /* Копирайт */
 .copyright {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .copyright p {
     font-size: 14px;
     font-weight: 400;
-    color: #ffffff;
+    color: var(--color-label-neutral-inverted-primary);
     margin: 0;
 }
 
 /* Адаптивность */
 @media (max-width: 1024px) {
-    .topSection {
-        flex-direction: column;
-        gap: 30px;
-        align-items: flex-start;
-    }
+  .topSection {
+    flex-direction: column;
+    gap: 30px;
+    align-items: flex-start;
+  }
 
-    .contactInfo {
-        margin: 0;
-        width: 100%;
-    }
+  .contactInfo {
+    margin: 0;
+    width: 100%;
+  }
 
-    .addressesSection {
-        grid-template-columns: repeat(2, 1fr);
-        column-gap: 1.6rem;
-        row-gap: 1.2rem;
-    }
+  .addressesSection {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1.6rem;
+    row-gap: 1.2rem;
+  }
 
-    .addressBackgroundLetters {
-        font-size: 180px;
-    }
+  .addressBackgroundLetters {
+    font-size: 180px;
+  }
 
-    .backgroundLetters {
-        font-size: 180px;
-    }
+  .backgroundLetters {
+    font-size: 180px;
+  }
 }
 
 @media (max-width: 768px) {
-    .footer {
-        padding: 40px 0 20px 0;
-    }
+  .footer {
+    padding: 40px 0 20px 0;
+  }
 
-    .container {
-        padding: 0 1rem;
-    }
+  .container {
+    padding: 0 1rem;
+  }
 
-    .topSection {
-        gap: 20px;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-    }
+  .topSection {
+    gap: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+  }
 
-    .logo {
-        font-size: 20px;
-    }
+  .logo {
+    font-size: 20px;
+  }
 
-    .contactItem {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-    }
+  .contactItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 
-    .contactLabel {
-        min-width: auto;
-        font-size: 14px;
-    }
+  .contactLabel {
+    min-width: auto;
+    font-size: 14px;
+  }
 
-    .contactValue {
-        font-size: 14px;
-    }
+  .contactValue {
+    font-size: 14px;
+  }
 
-    .socialSection {
-        gap: 12px;
-    }
+  .socialSection {
+    gap: 12px;
+  }
 
-    .socialLink {
-        width: 40px;
-        height: 40px;
-    }
+  .socialLink {
+    width: 40px;
+    height: 40px;
+  }
 
-    .socialIcon {
-        width: 20px;
-        height: 20px;
-    }
+  .socialIcon {
+    width: 20px;
+    height: 20px;
+  }
 
-    .addressesSection {
-        grid-template-columns: 1fr;
-        gap: 1.2rem;
-    }
+  .addressesSection {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
 
-    .addressBackgroundLetters {
-        font-size: 180px;
-    }
+  .addressBackgroundLetters {
+    font-size: 180px;
+  }
 
-    .addressStreet {
-        font-size: 14px;
-    }
+  .addressStreet {
+    font-size: 14px;
+  }
 
-    .addressAuditorium {
-        font-size: 13px;
-    }
+  .addressAuditorium {
+    font-size: 13px;
+  }
 
-    .backgroundLetters {
-        font-size: 100px;
-    }
+  .backgroundLetters {
+    font-size: 100px;
+  }
 
-    .copyright p {
-        font-size: 12px;
-    }
+  .copyright p {
+    font-size: 12px;
+  }
 }

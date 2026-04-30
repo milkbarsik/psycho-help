@@ -130,3 +130,15 @@
     line-height: 2.4rem;
   }
 }
+
+[data-theme='dark'] {
+  .info{
+    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+  }
+  .title {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .content{
+    color: var(--color-label-neutral-inverted-primary);
+  }
+}

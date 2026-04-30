@@ -166,3 +166,22 @@
 .dotNeutral {
   background-color: var(--color-label-neutral-quaternary);
 }
+
+[data-theme='dark'] {
+  .card {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .date {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .icon {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .infoItem {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .commentLink {
+    background-color: var(--color-background-neutral-primary);
+    color: var(--color-label-neutral-primary);
+  }
+}
