@@ -31,11 +31,16 @@ export default defineConfig({
     // TODO: убрать этот прокси
     // Это очень плохое решение, но никак по-другому не работает, так как бек не поддерживает CORS
     proxy: {
-      '/users': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
-      '/appointments': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
-      '/therapists': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
-      '/roles': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
-      '/news': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
+      // '/users': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
+      // '/appointments': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
+      // '/therapists': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
+      // '/roles': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
+      // '/news': { target: 'https://api.psychohelp-mospoly.ru', changeOrigin: true },
+      '/users': { target: 'http://95.31.169.106/api', changeOrigin: true },
+      '/appointments': { target: 'http://95.31.169.106/api', changeOrigin: true },
+      '/therapists': { target: 'http://95.31.169.106/api', changeOrigin: true },
+      '/roles': { target: 'http://95.31.169.106/api', changeOrigin: true },
+      '/news': { target: 'http://95.31.169.106/api', changeOrigin: true },
     },
   },
 });

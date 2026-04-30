@@ -110,13 +110,17 @@ const PsychologistApplicationPage = () => {
     [application?.scheduled_at],
   );
 
-  const meetingType = userMeetingType ?? application?.meeting_type ?? null;
+  const meetingType =
+    userMeetingType ??
+    application?.meeting_type ??
+    (application?.preferred_campus ? 'offline' : 'online');
   const selectedDate = useMemo(
     () => userDate ?? applicationScheduledAt?.startOf('day') ?? null,
     [applicationScheduledAt, userDate],
   );
   const selectedTime = userTime ?? applicationScheduledAt?.format('HH:mm') ?? null;
-  const locationAddress = userLocationAddress ?? application?.location_address ?? '';
+  const locationAddress =
+    userLocationAddress ?? application?.location_address ?? application?.preferred_campus ?? '';
   const meetingUrl = userMeetingUrl ?? application?.meeting_url ?? '';
 
   const selectedDateTime = useMemo(() => {
@@ -330,7 +334,7 @@ const PsychologistApplicationPage = () => {
                 id="field-meeting-type"
                 className={styles.fieldSelect}
                 prefixCls="customSelect"
-                value={meetingType ?? undefined}
+                value={meetingType}
                 onChange={setUserMeetingType}
                 options={MEETING_TYPE_OPTIONS}
                 placeholder="—"

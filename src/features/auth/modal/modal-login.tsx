@@ -70,8 +70,8 @@ const ModalLogin: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }) => {
 
   const handleOk = async () => {
     if (!validateForm()) return;
-    await fetching();
-    if (error == null) {
+    const ok = await fetching();
+    if (ok) {
       setOpen(false);
       setModalOpen(false);
     }

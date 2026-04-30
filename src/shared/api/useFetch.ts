@@ -5,7 +5,7 @@ import type { ResponseError } from '@/entities/auth';
 export type UseFetchReturn = {
   isLoading: boolean;
   error: ResponseError;
-  fetching: () => Promise<void>;
+  fetching: () => Promise<boolean>;
 };
 
 // Вместо "any" используем дженерик T
@@ -17,19 +17,28 @@ export function useFetch<T>(foo: () => Promise<T>): UseFetchReturn {
   const fooRef = useRef(foo);
   fooRef.current = foo;
 
-  const fetching = useCallback(async () => {
+  const fetching = useCallback(async (): Promise<boolean> => {
     try {
       setIsLoading(true);
       await fooRef.current();
       setError({ message: '', status: undefined });
+      return true;
     } catch (e) {
       if (e instanceof AxiosError) {
-        setError({ message: e.message, status: e.response?.status });
+        const detail = e.response?.data?.detail;
+        const message =
+          typeof detail === 'string'
+            ? detail
+            : Array.isArray(detail)
+              ? detail.map((d: { msg: string }) => d.msg).join(', ')
+              : e.message;
+        setError({ message, status: e.response?.status });
       } else if (e instanceof Error) {
         setError({ message: e.message, status: undefined });
       } else {
         setError({ message: 'unknown error', status: undefined });
       }
+      return false;
     } finally {
       setIsLoading(false);
     }

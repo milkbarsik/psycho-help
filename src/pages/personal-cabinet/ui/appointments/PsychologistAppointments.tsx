@@ -47,8 +47,8 @@ const getTimeRange = (time: string) => {
 };
 
 const getVenueDisplay = (appointment: Appointment) => {
-  if (appointment.type === 'Online') return 'Онлайн';
-  return appointment.venue ? `${appointment.venue}` : 'Очно';
+  if (appointment.type === 'Online') return appointment.venue || 'Онлайн';
+  return appointment.venue || 'Очно';
 };
 
 const groupByDate = <T,>(

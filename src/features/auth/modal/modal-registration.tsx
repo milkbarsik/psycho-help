@@ -109,8 +109,8 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 
   const handleOk = async () => {
     if (!validateForm()) return;
-    await fetching();
-    if (error == null) {
+    const ok = await fetching();
+    if (ok) {
       setOpen(false);
       setModalOpen(false);
       resetForm();
@@ -313,10 +313,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           </label>
         </form>
 
-        {error.status === 422 && (
-          <p className={styles.errorMessage}>пользователь с таким email уже существует</p>
-        )}
-        {error.message !== '' && error.status !== 422 && (
+        {error.message !== '' && (
           <p className={styles.errorMessage}>{error.message}</p>
         )}
 

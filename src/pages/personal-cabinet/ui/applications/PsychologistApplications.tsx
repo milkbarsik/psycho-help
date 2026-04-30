@@ -64,11 +64,10 @@ const getTimeRange = (time: string | null) => {
 };
 
 const getVenueDisplay = (application: Application) => {
-  if (application.meeting_type === 'online') return 'Онлайн';
-  if (application.meeting_type === 'offline') {
-    return application.location_address ? `${application.location_address}` : 'Очно';
-  }
-  return 'Формат ещё не указан';
+  if (application.meeting_type === 'online') return application.meeting_url || 'Онлайн';
+  if (application.meeting_type === 'offline' || application.preferred_campus)
+    return application.location_address || application.preferred_campus || 'Очно';
+  return application.meeting_url || 'Онлайн';
 };
 
 const groupByDate = <T,>(

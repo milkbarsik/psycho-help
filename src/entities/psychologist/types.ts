@@ -11,5 +11,5 @@ export interface Psychologist {
   education: string;
   short_description: string;
   photo: string | null;
-  user: User;
+  user: User | null; // где-то на бэке может быть null, а где-то обязательный
 }
