@@ -3,7 +3,7 @@
 //   id: string;
 //   slug: string;
 //   image: string | null;
-//   type: NewsType;
+//   type: NewsType | null;
 //   date: string;
 //   title: string;
 //   description: string | null;
@@ -18,7 +18,7 @@ export interface News {
   id: string;
   slug: string;
   image?: string;
-  type: NewsType;
+  type: NewsType | null;
   date: string;
   title: string;
   description?: string;

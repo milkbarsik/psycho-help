@@ -26,7 +26,7 @@ export const NewsCard: FC<Props> = ({ newsItem, linkToDetails = true }) => {
         </div>
       )} */}
       <div className={styles.cardHeader}>
-        <div className={styles.type}>{newsItem.type}</div>
+        {newsItem.type && <div className={styles.type}>{newsItem.type}</div>}
         <div className={styles.date}>{dayjs(newsItem.date).format('DD.MM.YYYY')}</div>
       </div>
       <p className={styles.title}>{newsItem.title}</p>
