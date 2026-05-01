@@ -38,9 +38,14 @@ const TYPE_LABELS: Record<string, string> = {
 const PSYCHOLOGIST_TABS = getTabsForRole('psychologist');
 const CABINET_PATH = '/cabinet';
 
-const formatDateTime = (iso?: string | null) => {
+const formatDate = (iso?: string | null) => {
   if (!iso) return null;
-  return dayjs(iso).tz(MOSCOW_TZ).format('D MMMM YYYY, HH:mm');
+  return dayjs(iso).tz(MOSCOW_TZ).format('D MMMM YYYY');
+};
+
+const formatTime = (iso?: string | null) => {
+  if (!iso) return null;
+  return dayjs(iso).tz(MOSCOW_TZ).format('HH:mm');
 };
 
 const PsychologistAppointmentPage = () => {
@@ -48,7 +53,7 @@ const PsychologistAppointmentPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = useAuth((s) => s.user);
-  const appointmentId = id ?? '';
+  const appointmentId = id || '';
   const setSavedTab = useCabinetTab((s) => s.setActiveTab);
 
   const isPsychologist = useMemo(
@@ -69,26 +74,27 @@ const PsychologistAppointmentPage = () => {
     enabled: isPsychologist && !!id,
   });
 
-  const comment = usePsychologistDrafts((state) =>
-    appointmentId ? (state.conclusionDrafts[appointmentId] ?? '') : '',
+  const conclusion = usePsychologistDrafts((state) =>
+    appointmentId ? state.conclusionDrafts[appointmentId] || '' : '',
   );
-  const hasCommentDraft = usePsychologistDrafts((state) =>
+
+  const hasConclusionDraft = usePsychologistDrafts((state) =>
     appointmentId
       ? Object.prototype.hasOwnProperty.call(state.conclusionDrafts, appointmentId)
       : false,
   );
+
   const setConclusionDraft = usePsychologistDrafts((state) => state.setConclusionDraft);
   const clearConclusionDraft = usePsychologistDrafts((state) => state.clearConclusionDraft);
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!appointment?.id || hasCommentDraft || appointment.comment == null) return; // заменить двойное равно
-
-    setConclusionDraft(appointment.id, appointment.comment);
-  }, [appointment?.id, appointment?.comment, hasCommentDraft, setConclusionDraft]);
+    if (!appointment?.id || hasConclusionDraft || appointment.conclusion === null) return;
+    setConclusionDraft(appointment.id, appointment.conclusion);
+  }, [appointment?.id, appointment?.conclusion, hasConclusionDraft, setConclusionDraft]);
 
   const completeMutation = useMutation({
-    mutationFn: () => completeAppointment(id!, comment),
+    mutationFn: () => completeAppointment(id!, conclusion),
     onSuccess: () => {
       message.success('Запись завершена');
       if (appointmentId) {
@@ -107,12 +113,6 @@ const PsychologistAppointmentPage = () => {
   if (!isPsychologist) return <Navigate to="/" replace />;
   if (isLoading) return <Loader />;
   if (!appointment) return <Empty description="Запись не найдена" />;
-
-  const isActive = appointment.status === 'awaiting';
-
-  // TODO: Оно наверное пока что упадёт, надо будет поправить
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const serverCancelReason = (appointment as any).cancel_reason;
 
   const statusUI = AppointmentStatusTag[appointment.status];
   const patientName =
@@ -143,10 +143,10 @@ const PsychologistAppointmentPage = () => {
 
         <h2 className={styles.title}>Запись</h2>
 
-        {appointment.status === 'cancelled' && serverCancelReason && (
+        {appointment.status === 'cancelled' && appointment.cancel_reason && (
           <div className={styles.reasonBlockCancelled}>
             <span className={styles.reasonLabel}>Причина отмены:</span>
-            <span className={styles.reasonText}>{serverCancelReason}</span>
+            <span className={styles.reasonText}>{appointment.cancel_reason}</span>
           </div>
         )}
 
@@ -166,29 +166,43 @@ const PsychologistAppointmentPage = () => {
               </div>
             </div>
           )}
-          {appointment.patient?.email && (
-            <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>Email пациента</span>
-              <span className={styles.infoValueEmail}>{appointment.patient.email}</span>
-            </div>
-          )}
-          {appointment.patient?.phone_number && (
-            <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>Телефон пациента</span>
-              <span className={styles.infoValuePhone}>{appointment.patient.phone_number}</span>
-            </div>
-          )}
+
           <div className={styles.infoGrid}>
             <div className={styles.infoRowGrid}>
-              <span className={styles.infoLabel}>Соцсети</span>
+              <span className={styles.infoLabel}>Email</span>
+              <span className={styles.infoValueGrid}>{appointment.patient?.email || '—'}</span>
+            </div>
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Телефон</span>
+              <span className={styles.infoValueGrid}>
+                {appointment.patient?.phone_number || '—'}
+              </span>
+            </div>
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Статус</span>
               <span className={styles.infoValueGrid}>
                 {appointment.patient?.social_media || '—'}
               </span>
             </div>
             <div className={styles.infoRowGrid}>
-              <span className={styles.infoLabel}>Дата и время</span>
+              <span className={styles.infoLabel}>Группа</span>
               <span className={styles.infoValueGrid}>
-                {formatDateTime(appointment.scheduled_time) || '—'}
+                {appointment.patient?.study_group || '—'}
+              </span>
+            </div>
+          </div>
+
+          <div className={styles.infoGrid}>
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Дата</span>
+              <span className={styles.infoValueGrid}>
+                {formatDate(appointment.scheduled_time) || '—'}
+              </span>
+            </div>
+            <div className={styles.infoRowGrid}>
+              <span className={styles.infoLabel}>Время</span>
+              <span className={styles.infoValueGrid}>
+                {formatTime(appointment.scheduled_time) || '—'}
               </span>
             </div>
             <div className={styles.infoRowGrid}>
@@ -207,28 +221,21 @@ const PsychologistAppointmentPage = () => {
               <span className={styles.infoValue}>{appointment.reason}</span>
             </div>
           )}
-          {appointment.remind_time && (
+
+          {appointment.status === 'done' && appointment.conclusion && (
             <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>Напоминание</span>
-              <span className={styles.infoValue}>{formatDateTime(appointment.remind_time)}</span>
-            </div>
-          )}
-          {appointment.last_change_time && (
-            <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>Последнее изменение</span>
-              <span className={styles.infoValue}>
-                {formatDateTime(appointment.last_change_time)}
-              </span>
+              <span className={styles.infoLabel}>Заключение</span>
+              <span className={styles.infoValue}>{appointment.conclusion}</span>
             </div>
           )}
 
-          {isActive && (
+          {appointment.status === 'awaiting' && (
             <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Заключение</span>
               <span className={styles.infoValue}>
                 <Input.TextArea
                   rows={4}
-                  value={comment}
+                  value={conclusion}
                   onChange={(e) => setConclusionDraft(appointment.id, e.target.value)}
                   placeholder="Введите заключение по консультации"
                   // maxLength={2000}
@@ -239,7 +246,7 @@ const PsychologistAppointmentPage = () => {
           )}
         </div>
 
-        {isActive && (
+        {appointment.status === 'awaiting' && (
           <div className={styles.actions}>
             <button
               className={styles.actionButtonCancel}
@@ -252,7 +259,7 @@ const PsychologistAppointmentPage = () => {
             <button
               className={styles.actionButtonEnd}
               onClick={() => completeMutation.mutate()}
-              disabled={comment.trim().length === 0 || completeMutation.isPending}
+              disabled={conclusion.trim().length === 0 || completeMutation.isPending}
               type="button"
             >
               {completeMutation.isPending ? 'Завершение...' : 'Завершить'}

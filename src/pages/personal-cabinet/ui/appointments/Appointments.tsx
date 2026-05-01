@@ -29,12 +29,10 @@ const AppointmentsPage: FC<AppointmentsPageProps> = ({ role }) => {
     );
   }
 
-  // --- Psychologist: placeholder ---
   if (role === 'psychologist') {
     return <PsychologistAppointments />;
   }
 
-  // --- Admin / Content Manager: placeholder ---
   return (
     <div className={styles.container}>
       <div className={styles.placeholder}>

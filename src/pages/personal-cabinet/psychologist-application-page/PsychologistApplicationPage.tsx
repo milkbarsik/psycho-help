@@ -111,17 +111,17 @@ const PsychologistApplicationPage = () => {
   );
 
   const meetingType =
-    userMeetingType ??
-    application?.meeting_type ??
+    userMeetingType ||
+    application?.meeting_type ||
     (application?.preferred_campus ? 'offline' : 'online');
   const selectedDate = useMemo(
-    () => userDate ?? applicationScheduledAt?.startOf('day') ?? null,
+    () => userDate || applicationScheduledAt?.startOf('day') || null,
     [applicationScheduledAt, userDate],
   );
-  const selectedTime = userTime ?? applicationScheduledAt?.format('HH:mm') ?? null;
+  const selectedTime = userTime || applicationScheduledAt?.format('HH:mm') || null;
   const locationAddress =
-    userLocationAddress ?? application?.location_address ?? application?.preferred_campus ?? '';
-  const meetingUrl = userMeetingUrl ?? application?.meeting_url ?? '';
+    userLocationAddress || application?.location_address || application?.preferred_campus || '';
+  const meetingUrl = userMeetingUrl || application?.meeting_url || '';
 
   const selectedDateTime = useMemo(() => {
     if (!selectedDate || !selectedTime) return null;
@@ -234,7 +234,7 @@ const PsychologistApplicationPage = () => {
       application.psychologist?.user?.middle_name,
     ]
       .filter(Boolean)
-      .join(' ') || 'Предпочитаемый психолог не выбран';
+      .join(' ') || '—';
 
   return (
     <div className={styles.page}>
@@ -298,13 +298,13 @@ const PsychologistApplicationPage = () => {
           </div>
 
           <div className={styles.dataItem}>
-            <span className={styles.dataLabel}>Кампус:</span>
-            <span className={styles.dataValue}>{application.preferred_campus || '—'}</span>
+            <span className={styles.dataLabel}>Статус пациента:</span>
+            <span className={styles.dataValue}>{application.university_status || '—'}</span>
           </div>
 
           <div className={styles.dataItem}>
-            <span className={styles.dataLabel}>Статус пациента:</span>
-            <span className={styles.dataValue}>{application.university_status || '—'}</span>
+            <span className={styles.dataLabel}>Группа:</span>
+            <span className={styles.dataValue}>{application.user?.study_group || '—'}</span>
           </div>
 
           <h3 className={styles.sidebarTitle}>Запись на сессию</h3>

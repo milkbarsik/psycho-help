@@ -142,8 +142,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 1fr 1fr;
   gap: 16px;
+  padding: 1.6rem 0;
   justify-items: center;
 }
 
