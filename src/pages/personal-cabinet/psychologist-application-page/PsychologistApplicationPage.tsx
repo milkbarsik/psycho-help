@@ -144,7 +144,10 @@ const PsychologistApplicationPage = () => {
 
   const acceptMutation = useMutation({
     mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.byId, id] });
+    },
     onError: (error: AxiosError<{ detail?: string }>) => {
       const detail = error.response?.data?.detail;
       message.error(detail || 'Не удалось выполнить операцию');
@@ -410,7 +413,7 @@ const PsychologistApplicationPage = () => {
                 disabled={acceptMutation.isPending}
                 type="button"
               >
-                В работу
+                {acceptMutation.isPending ? 'Сохранение...' : 'В работу'}
               </button>
             )}
             {canChange && (

@@ -158,8 +158,8 @@ const PsychologistApplications = () => {
 
     if (dateRange) {
       const [from, to] = dateRange;
-      const fromMs = dayjs(from).startOf('day').valueOf();
-      const toMs = dayjs(to).endOf('day').valueOf();
+      const fromMs = dayjs(from).tz(MOSCOW_TZ).startOf('day').valueOf();
+      const toMs = dayjs(to).tz(MOSCOW_TZ).endOf('day').valueOf();
       result = result.filter((a) => {
         const date = a.scheduled_at;
         if (!date) return false;
@@ -233,7 +233,7 @@ const PsychologistApplications = () => {
               disabled={acceptMutation.isPending}
               type="button"
             >
-              В работу
+              {acceptMutation.isPending ? 'Сохранение...' : 'В работу'}
             </button>
           )}
           <button

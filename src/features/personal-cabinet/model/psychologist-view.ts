@@ -1,7 +1,14 @@
 import { create } from 'zustand';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import type { ApplicationStatus } from '@/entities/application/types';
 import type { AppointmentStatus } from '@/entities/appointment/types';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const MOSCOW_TZ = 'Europe/Moscow';
 
 export type SortDirection = 'asc' | 'desc';
 export type ApplicationStatusFilter = 'all' | ApplicationStatus | 'closed';
@@ -34,8 +41,8 @@ interface ViewState {
 }
 
 export const getDefaultAppointmentDateRange = (): [string, string] => [
-  dayjs().startOf('day').toISOString(),
-  dayjs().add(1, 'month').startOf('day').toISOString(),
+  dayjs().tz(MOSCOW_TZ).startOf('day').toISOString(),
+  dayjs().tz(MOSCOW_TZ).add(1, 'month').startOf('day').toISOString(),
 ];
 
 const getDefaultFilters = (): BaseFilters => ({

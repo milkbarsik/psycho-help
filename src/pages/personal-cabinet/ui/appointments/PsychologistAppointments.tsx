@@ -118,8 +118,8 @@ const PsychologistAppointments = () => {
 
     if (dateRange) {
       const [from, to] = dateRange;
-      const fromMs = dayjs(from).startOf('day').valueOf();
-      const toMs = dayjs(to).endOf('day').valueOf();
+      const fromMs = dayjs(from).tz(MOSCOW_TZ).startOf('day').valueOf();
+      const toMs = dayjs(to).tz(MOSCOW_TZ).endOf('day').valueOf();
       result = result.filter((a) => {
         const t = dayjs(a.scheduled_time).valueOf();
         return t >= fromMs && t <= toMs;
