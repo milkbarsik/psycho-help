@@ -51,6 +51,23 @@ const getPatientName = (application: Application) =>
   [application.user?.last_name, application.user?.first_name].filter(Boolean).join(' ') ||
   'Имя не указано';
 
+const getShortPsychologistName = (
+  user?: {
+    last_name?: string | null;
+    first_name?: string | null;
+    middle_name?: string | null;
+  } | null,
+) => {
+  if (!user) return '';
+
+  const initials = [user.first_name?.[0], user.middle_name?.[0]]
+    .filter(Boolean)
+    .map((initial) => `${initial}.`)
+    .join('');
+
+  return [user.last_name, initials].filter(Boolean).join(' ');
+};
+
 const getSortTime = (application: Application): number => {
   const date = application.scheduled_at;
   return date ? new Date(date).getTime() : 0;
@@ -208,14 +225,7 @@ const PsychologistApplications = () => {
 
   const renderApplicationRow = (application: Application) => {
     const statusUI = ApplicationStatusTag[application.status];
-    // const preferPsychologistName =
-    //   [
-    //     application.psychologist?.user?.last_name,
-    //     application.psychologist?.user?.first_name,
-    //     application.psychologist?.user?.middle_name,
-    //   ]
-    //     .filter(Boolean)
-    //     .join(' ') || 'Предпочитаемый психолог не выбран';
+    const preferPsychologistName = getShortPsychologistName(application.psychologist?.user);
 
     return (
       <article className={styles.appointmentRow} key={application.id} role="listitem">
@@ -226,12 +236,9 @@ const PsychologistApplications = () => {
               <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
               <span className={styles['status-text']}>{statusUI.text}</span>
             </div>
-            {/* {application.status === 'new' && preferPsychologistName && (
-              <div className={styles.dataItemFull}>
-                <span className={styles.dataLabel}>Предпочитаемый психолог: </span>
-                <span className={styles.dataValue}>{preferPsychologistName}</span>
-              </div>
-            )} */}
+            {application.status === 'new' && preferPsychologistName && (
+              <div className={styles.timeCol}>{preferPsychologistName}</div>
+            )}
           </div>
           <div className={styles.infoCol}>
             <span className={styles.patientName}>{getPatientName(application)}</span>
