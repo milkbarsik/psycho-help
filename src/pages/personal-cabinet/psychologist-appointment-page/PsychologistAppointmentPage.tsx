@@ -2,10 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Input, message, Empty, Result } from 'antd';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import dayjs from '@/shared/lib/dayjs';
 import { AxiosError } from 'axios';
 import clsx from 'clsx';
 import {
@@ -24,11 +21,6 @@ import PsychologistRejectModal from '@/features/personal-cabinet/ui/Psychologist
 import { usePsychologistDrafts } from '@/features/personal-cabinet/model/psychologist-drafts';
 import styles from './PsychologistAppointmentPage.module.scss';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.locale('ru');
-
-const MOSCOW_TZ = 'Europe/Moscow';
 
 const TYPE_LABELS: Record<string, string> = {
   Online: 'Онлайн',
@@ -40,12 +32,12 @@ const CABINET_PATH = '/cabinet';
 
 const formatDate = (iso?: string | null) => {
   if (!iso) return null;
-  return dayjs(iso).tz(MOSCOW_TZ).format('D MMMM YYYY');
+  return dayjs(iso).tz().format('D MMMM YYYY');
 };
 
 const formatTime = (iso?: string | null) => {
   if (!iso) return null;
-  return dayjs(iso).tz(MOSCOW_TZ).format('HH:mm');
+  return dayjs(iso).tz().format('HH:mm');
 };
 
 const PsychologistAppointmentPage = () => {

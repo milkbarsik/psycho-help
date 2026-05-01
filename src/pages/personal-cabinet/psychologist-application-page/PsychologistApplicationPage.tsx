@@ -3,10 +3,8 @@ import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { DatePicker, Empty, Input, message, Result, Select } from 'antd';
 import { AxiosError } from 'axios';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import dayjs from '@/shared/lib/dayjs';
+import { MOSCOW_TZ } from '@/shared/lib/dayjs';
 import clsx from 'clsx';
 import {
   applicationQueries,
@@ -25,11 +23,6 @@ import { getTabsForRole, type TabId } from '@/pages/personal-cabinet/config/tabs
 import PsychologistRejectModal from '@/features/personal-cabinet/ui/PsychologistRejectModal';
 import styles from './PsychologistApplicationPage.module.scss';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.locale('ru');
-
-const MOSCOW_TZ = 'Europe/Moscow';
 
 const MEETING_TYPE_OPTIONS = [
   { value: 'online' as const, label: 'Онлайн' },
@@ -111,7 +104,7 @@ const PsychologistApplicationPage = () => {
   }, [application?.id, formInitializedForId]);
 
   const applicationScheduledAt = useMemo(
-    () => (application?.scheduled_at ? dayjs(application.scheduled_at).tz(MOSCOW_TZ) : null),
+    () => (application?.scheduled_at ? dayjs(application.scheduled_at).tz() : null),
     [application?.scheduled_at],
   );
 
@@ -145,7 +138,7 @@ const PsychologistApplicationPage = () => {
       selectedTime && !TIME_SLOTS.includes(selectedTime)
         ? [...TIME_SLOTS, selectedTime].sort()
         : TIME_SLOTS;
-    const nowMoscow = dayjs().tz(MOSCOW_TZ);
+    const nowMoscow = dayjs.tz();
 
     return options.map((slot) => ({
       value: slot,
@@ -218,12 +211,12 @@ const PsychologistApplicationPage = () => {
     canChange &&
     meetingType &&
     selectedDateTime &&
-    selectedDateTime.isAfter(dayjs().tz(MOSCOW_TZ)) &&
+    selectedDateTime.isAfter(dayjs.tz()) &&
     (meetingType === 'offline' ? locationAddress.trim().length > 0 : meetingUrl.trim().length > 0);
 
   const disabledDates = (current: dayjs.Dayjs) => {
     return current
-      ? current.tz(MOSCOW_TZ, true).isBefore(dayjs().tz(MOSCOW_TZ).startOf('day'), 'day')
+      ? current.tz(MOSCOW_TZ, true).isBefore(dayjs.tz().startOf('day'), 'day')
       : false;
   };
 

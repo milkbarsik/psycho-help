@@ -5,12 +5,10 @@ import { AppContextProvider } from '@/app/context/provider';
 import styles from './App.module.scss';
 import AppRouter from './router/AppRouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import dayjs from 'dayjs';
+import '@/shared/lib/dayjs';
 import ru_RU from 'antd/locale/ru_RU';
 import { appTheme } from '@/app/theme';
 import { BackToTop } from '@/shared/ui';
-
-dayjs.locale('ru');
 
 
 function App() {

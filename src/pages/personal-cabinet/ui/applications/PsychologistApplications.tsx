@@ -3,10 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert, Empty, Pagination, message } from 'antd';
 import { AxiosError } from 'axios';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import dayjs from '@/shared/lib/dayjs';
 import clsx from 'clsx';
 import {
   applicationQueries,
@@ -21,12 +18,7 @@ import Loader from '@/shared/ui/loader/loader';
 import { ApplicationStatusTag } from '@/pages/personal-cabinet/constants';
 import styles from './PsychologistApplications.module.scss';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.locale('ru');
-
-const MOSCOW_TZ = 'Europe/Moscow';
-const toMoscow = (date: string) => dayjs(date).tz(MOSCOW_TZ);
+const toMoscow = (date: string) => dayjs(date).tz();
 
 const ITEMS_PER_PAGE = 5;
 
@@ -180,8 +172,8 @@ const PsychologistApplications = () => {
 
     if (dateRange) {
       const [from, to] = dateRange;
-      const fromMs = dayjs(from).tz(MOSCOW_TZ).startOf('day').valueOf();
-      const toMs = dayjs(to).tz(MOSCOW_TZ).endOf('day').valueOf();
+      const fromMs = dayjs(from).tz().startOf('day').valueOf();
+      const toMs = dayjs(to).tz().endOf('day').valueOf();
       result = result.filter((a) => {
         const date = a.scheduled_at;
         if (!date) return false;
