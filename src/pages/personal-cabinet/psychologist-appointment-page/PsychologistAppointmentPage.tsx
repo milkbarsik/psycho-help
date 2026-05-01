@@ -21,7 +21,6 @@ import PsychologistRejectModal from '@/features/personal-cabinet/ui/Psychologist
 import { usePsychologistDrafts } from '@/features/personal-cabinet/model/psychologist-drafts';
 import styles from './PsychologistAppointmentPage.module.scss';
 
-
 const TYPE_LABELS: Record<string, string> = {
   Online: 'Онлайн',
   Offline: 'Очно',
@@ -67,9 +66,8 @@ const PsychologistAppointmentPage = () => {
     isError,
     error,
   } = useQuery({
-    ...appointmentQueries.list(),
-    enabled: isPsychologist,
-    select: (appointments) => appointments.find((a) => a.id === id),
+    ...appointmentQueries.byId(id!),
+    enabled: isPsychologist && !!id,
   });
 
   const conclusion = usePsychologistDrafts((state) =>
