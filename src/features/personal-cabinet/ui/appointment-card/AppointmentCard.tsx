@@ -2,13 +2,11 @@ import type { FC } from 'react';
 import {
   UserOutlined,
   EnvironmentOutlined,
-  LikeOutlined,
-  DislikeOutlined,
   ClockCircleOutlined,
 } from '@ant-design/icons';
 import clsx from 'clsx';
 import type { AppointmentStatus } from '@/entities/appointment/types';
-import styles from './appointment-card.module.scss';
+import styles from './AppointmentCard.module.scss';
 
 interface AppointmentCardProps {
   date: string;
@@ -16,20 +14,20 @@ interface AppointmentCardProps {
   address: string;
   type: 'upcoming' | 'past' | 'confirmation';
   status?: AppointmentStatus | string;
-  rating?: 'good' | 'bad' | null;
+  hasComment?: boolean;
   onConfirm?: () => void;
   onComment?: () => void;
   onCancel?: () => void;
 }
 
 const getStatusConfig = (status?: string) => {
-  switch (status) {
-    case 'Approved':
-    case 'Accepted':
-      return { text: 'Подтверждено', dotClass: styles.dotSuccess };
-    case 'Cancelled':
+  switch (status?.toLocaleLowerCase()) {
+/*     case 'approved':
+    case 'accepted':
+      return { text: 'Подтверждено', dotClass: styles.dotSuccess }; */
+    case 'cancelled':
       return { text: 'Отменено', dotClass: styles.dotDanger };
-    case 'Done':
+    case 'done':
       return { text: 'Завершено', dotClass: styles.dotNeutral };
     default:
       return { text: 'Ожидает', dotClass: styles.dotWarning };
@@ -42,7 +40,7 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
   address,
   type,
   status,
-  rating,
+  hasComment,
   onConfirm,
   onComment,
   onCancel,
@@ -53,10 +51,7 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
     <div className={styles.card}>
       <div className={styles.header}>
         <div className={styles.date}>{date}</div>
-
         {type === 'confirmation' && <ClockCircleOutlined className={styles.iconWarning} />}
-        {type === 'past' && rating === 'good' && <LikeOutlined className={styles.iconSuccess} />}
-        {type === 'past' && rating === 'bad' && <DislikeOutlined className={styles.iconDanger} />}
       </div>
 
       <div className={styles.infoList}>
@@ -71,14 +66,13 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
       </div>
 
       <div className={styles.footer}>
-        {type === 'upcoming' && (
+        {(type === 'upcoming' || type === 'past') && (
           <div className={styles.status}>
             <span className={clsx(styles.statusDot, statusConfig.dotClass)}></span>
             {statusConfig.text}
           </div>
         )}
 
-        {/* Группа кнопок действий */}
         <div className={styles.actions}>
           {type === 'confirmation' && (
             <button className={styles.confirmButton} onClick={onConfirm}>
@@ -92,9 +86,8 @@ const AppointmentCard: FC<AppointmentCardProps> = ({
             </button>
           )}
 
-          {type === 'past' && !rating && <button className={styles.rateButton}>Оценить</button>}
-
-          {type === 'past' && rating && (
+          {/* Пока что убрал кнопку с оценкой */}
+          {type === 'past' && hasComment && (
             <button className={styles.commentLink} onClick={onComment}>
               Посмотреть комментарий
             </button>
