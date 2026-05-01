@@ -1,6 +1,6 @@
 import type { Role } from '@/entities/role/types';
 
-export interface User {
+export type User = {
   id: string;
   first_name: string;
   middle_name: string | null;
@@ -11,9 +11,9 @@ export interface User {
   study_group: string | null;
   roles?: Role[];
   avatar_url?: string;
-}
+};
 
-export interface RegistrationData {
+export type RegistrationData = {
   first_name: string;
   middle_name: string | null;
   last_name: string;
@@ -22,19 +22,19 @@ export interface RegistrationData {
   social_media: string | null;
   password: string;
   study_group: string | null;
-}
+};
 
-export interface LoginData {
+export type LoginData = {
   email: string;
   password: string;
-}
+};
 
-export interface UserPasswordUpdate {
+export type UserPasswordUpdate = {
   old_password: string;
   new_password: string;
-}
+};
 
-export interface UserUpdate {
+export type UserUpdate = {
   first_name: string | null;
   middle_name: string | null;
   last_name: string | null;
@@ -42,4 +42,4 @@ export interface UserUpdate {
   email: string | null;
   social_media: string | null;
   study_group: string | null;
-}
+};

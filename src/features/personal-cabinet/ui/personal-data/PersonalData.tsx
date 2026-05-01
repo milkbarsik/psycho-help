@@ -19,17 +19,14 @@ interface FormData {
   middle_name: string;
   phone_number: string;
   email: string;
-  social_media: string;
   study_group: string;
 }
 
 interface FormErrors {
   first_name?: string;
   last_name?: string;
-  middle_name?: string;
   phone_number?: string;
   email?: string;
-  social_media?: string;
   study_group?: string;
 }
 
@@ -56,7 +53,6 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     middle_name: user?.middle_name || '',
     phone_number: user?.phone_number || '',
     email: user?.email || '',
-    social_media: user?.social_media || '',
     study_group: user?.study_group || '',
   });
 
@@ -75,7 +71,6 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
       middle_name: user?.middle_name || '',
       phone_number: user?.phone_number || '',
       email: user?.email || '',
-      social_media: user?.social_media || '',
       study_group: user?.study_group || '',
     };
     setOriginalData(newOriginalData);
@@ -176,13 +171,13 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     (data: FormData): UserUpdate => ({
       first_name: data.first_name,
       last_name: data.last_name,
-      middle_name: data.middle_name,
+      middle_name: data.middle_name || null,
       phone_number: data.phone_number,
       email: data.email,
-      social_media: data.social_media,
-      study_group: data.study_group,
+      social_media: user?.social_media ?? null,
+      study_group: data.study_group || null,
     }),
-    [],
+    [user],
   );
 
   const handleSaveName = useCallback(async () => {

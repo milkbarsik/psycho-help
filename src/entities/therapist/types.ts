@@ -1,4 +1,4 @@
-export interface Therapist {
+export type Therapist = {
   id: string;
   experience: string;
   qualification: string;
@@ -12,4 +12,4 @@ export interface Therapist {
   middle_name: string | null;
   last_name: string;
   phone_number: string | null;
-}
+};

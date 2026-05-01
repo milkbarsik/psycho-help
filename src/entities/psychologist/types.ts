@@ -1,6 +1,6 @@
 import type { User } from '@/entities/auth';
 
-export interface Psychologist {
+export type Psychologist = {
   id: string;
   user_id: string;
   experience: string;
@@ -12,4 +12,4 @@ export interface Psychologist {
   short_description: string;
   photo: string | null;
   user: User | null; // где-то на бэке может быть null, а где-то обязательный
-}
+};
