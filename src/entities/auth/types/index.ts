@@ -34,7 +34,7 @@ export type UserPasswordUpdate = {
   new_password: string;
 };
 
-export type UserUpdate = {
+export type UserProfileUpdate = {
   first_name: string | null;
   middle_name: string | null;
   last_name: string | null;

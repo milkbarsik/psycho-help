@@ -6,7 +6,7 @@ import { useAuth } from '@/features/auth/api/useAuth';
 import AuthApi from '@/features/auth/api/auth-api';
 import EditIcon from '@/shared/assets/images/cabinet/edit.svg?react';
 import ExitIcon from '@/shared/assets/images/cabinet/exit.svg?react';
-import type { User, UserUpdate } from '@/entities/auth';
+import type { User, UserProfileUpdate } from '@/entities/auth';
 import styles from './PersonalData.module.scss';
 
 interface PersonalDataProps {
@@ -168,7 +168,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
   }, [formData, validateNameField]);
 
   const toProfileUpdate = useCallback(
-    (data: FormData): UserUpdate => ({
+    (data: FormData): UserProfileUpdate => ({
       first_name: data.first_name,
       last_name: data.last_name,
       middle_name: data.middle_name || null,

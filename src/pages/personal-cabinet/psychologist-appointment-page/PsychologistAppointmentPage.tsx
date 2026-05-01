@@ -67,8 +67,9 @@ const PsychologistAppointmentPage = () => {
     isError,
     error,
   } = useQuery({
-    ...appointmentQueries.byId(id!),
-    enabled: isPsychologist && !!id,
+    ...appointmentQueries.list(),
+    enabled: isPsychologist,
+    select: (appointments) => appointments.find((a) => a.id === id),
   });
 
   const conclusion = usePsychologistDrafts((state) =>
