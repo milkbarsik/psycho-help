@@ -1,7 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import { $serviceClient } from '@/shared/api/http';
-import type { UserUpdate } from '@/entities/auth/types';
-import type { UserPasswordUpdate, User, RegistrationData } from '@/entities/auth';
+import type { User, RegistrationData, UserUpdate, UserPasswordUpdate } from '@/entities/auth';
 
 export default class AuthApi {
   static async login(email: string, password: string): Promise<AxiosResponse<User>> {

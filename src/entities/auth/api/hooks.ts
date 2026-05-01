@@ -1,5 +1,5 @@
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
-import type { ResponseError } from '@/entities/auth/types';
+import type { ResponseError } from '@/entities/auth';
 import type { User, RegistrationData, LoginData } from '../types';
 import { authApi } from './api';
 

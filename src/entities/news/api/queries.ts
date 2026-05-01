@@ -1,6 +1,6 @@
 import { type QueryObserverOptions, queryOptions } from '@tanstack/react-query';
 import { $api } from '@/shared/api/http.ts';
-import type { ResponseError } from '@/entities/auth/types';
+import type { ResponseError } from '@/entities/auth';
 import type { News } from '@/entities/news/types';
 
 export const newsItemQueryKey = {
