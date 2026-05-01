@@ -125,8 +125,10 @@ const PsychologistApplicationPage = () => {
   );
   const selectedTime = userTime || applicationScheduledAt?.format('HH:mm') || null;
   const locationAddress =
-    userLocationAddress || application?.location_address || application?.preferred_campus || '';
-  const meetingUrl = userMeetingUrl || application?.meeting_url || '';
+    userLocationAddress !== null
+      ? userLocationAddress
+      : (application?.location_address ?? application?.preferred_campus ?? '');
+  const meetingUrl = userMeetingUrl !== null ? userMeetingUrl : (application?.meeting_url ?? '');
 
   const selectedDateTime = useMemo(() => {
     if (!selectedDate || !selectedTime) return null;
