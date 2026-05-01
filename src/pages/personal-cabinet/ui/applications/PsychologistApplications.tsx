@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Empty, Pagination, message } from 'antd';
+import { Alert, Empty, Pagination, message } from 'antd';
 import { AxiosError } from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
@@ -117,9 +117,11 @@ const PsychologistApplications = () => {
     sortDirection !== 'asc' ||
     dateRange !== null;
 
-  const { data: allApplications = [], isLoading: isLoadingApplications } = useQuery(
-    applicationQueries.list(),
-  );
+  const {
+    data: allApplications = [],
+    isLoading: isLoadingApplications,
+    isError: isErrorApplications,
+  } = useQuery(applicationQueries.list());
 
   const acceptMutation = useMutation({
     mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
@@ -192,6 +194,16 @@ const PsychologistApplications = () => {
   const isLoading = isLoadingApplications;
 
   if (isLoading) return <Loader />;
+  if (isErrorApplications)
+    return (
+      <Alert
+        type="error"
+        showIcon
+        message="Не удалось загрузить заявки"
+        description="Попробуйте обновить страницу"
+        style={{ margin: '2.4rem 0' }}
+      />
+    );
 
   const renderApplicationRow = (application: Application) => {
     const statusUI = ApplicationStatusTag[application.status];

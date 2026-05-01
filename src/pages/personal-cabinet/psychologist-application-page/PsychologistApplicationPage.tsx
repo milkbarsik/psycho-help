@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { DatePicker, Empty, Input, message, Select } from 'antd';
+import { DatePicker, Empty, Input, message, Result, Select } from 'antd';
 import { AxiosError } from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
@@ -79,7 +79,12 @@ const PsychologistApplicationPage = () => {
     [navigate, setSavedTab],
   );
 
-  const { data: application, isLoading } = useQuery({
+  const {
+    data: application,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     ...applicationQueries.byId(id!),
     enabled: isPsychologist && !!id,
   });
@@ -177,6 +182,21 @@ const PsychologistApplicationPage = () => {
 
   if (!isPsychologist) return <Navigate to="/" replace />;
   if (isLoading) return <Loader />;
+  if (isError) {
+    const detail = (error as AxiosError<{ detail?: string }>)?.response?.data?.detail;
+    return (
+      <Result
+        status="error"
+        title="Не удалось загрузить заявку"
+        subTitle={detail || 'Попробуйте обновить страницу или вернитесь назад'}
+        extra={
+          <button className={styles.back} type="button" onClick={() => navigate(-1)}>
+            Вернуться назад
+          </button>
+        }
+      />
+    );
+  }
   if (!application) return <Empty description="Заявка не найдена" />;
 
   const canAccept = application.status === 'new';

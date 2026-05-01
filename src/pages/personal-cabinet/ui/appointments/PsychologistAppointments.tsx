@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Empty, Pagination } from 'antd';
+import { Alert, Empty, Pagination } from 'antd';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import utc from 'dayjs/plugin/utc';
@@ -95,9 +95,11 @@ const PsychologistAppointments = () => {
     sortDirection !== 'asc' ||
     dateRange !== null;
 
-  const { data: allAppointments = [], isLoading: isLoadingAppointments } = useQuery(
-    appointmentQueries.list(),
-  );
+  const {
+    data: allAppointments = [],
+    isLoading: isLoadingAppointments,
+    isError: isErrorAppointments,
+  } = useQuery(appointmentQueries.list());
 
   const filteredAppointments = useMemo(() => {
     let result = allAppointments;
@@ -150,6 +152,16 @@ const PsychologistAppointments = () => {
   const isLoading = isLoadingAppointments;
 
   if (isLoading) return <Loader />;
+  if (isErrorAppointments)
+    return (
+      <Alert
+        type="error"
+        showIcon
+        message="Не удалось загрузить записи"
+        description="Попробуйте обновить страницу"
+        style={{ margin: '2.4rem 0' }}
+      />
+    );
 
   const renderAppointmentRow = (appointment: Appointment) => {
     const statusUI = AppointmentStatusTag[appointment.status];
