@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { $api } from '@/shared/api/http';
-import type { Appointment } from '@/entities/appointment/types';
+import type { Appointment, AppointmentCreateRequest } from '@/entities/appointment/types';
 
 export const appointmentQueryKey = {
   list: 'appointment.list',
@@ -31,17 +31,7 @@ export const completeAppointment = async (id: string, conclusion: string): Promi
   return data;
 };
 
-export const createAppointment = async (body: {
-  application_id?: string;
-  patient_id: string;
-  psychologist_id: string;
-  type: 'Offline' | 'Online';
-  scheduled_time: string;
-  reason?: string;
-  remind_time?: string;
-  venue?: string;
-  comment?: string;
-}): Promise<Appointment> => {
+export const createAppointment = async (body: AppointmentCreateRequest): Promise<Appointment> => {
   const { data } = await $api.post<Appointment>('/appointments/create', body);
   return data;
 };

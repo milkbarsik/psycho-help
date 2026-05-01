@@ -1,11 +1,8 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Empty, Pagination } from 'antd';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import { Alert, Empty, Pagination } from 'antd';
+import dayjs from '@/shared/lib/dayjs';
 import clsx from 'clsx';
 import { appointmentQueries } from '@/entities/appointment/api';
 import type { Appointment } from '@/entities/appointment/types';
@@ -15,12 +12,7 @@ import Loader from '@/shared/ui/loader/loader';
 import { AppointmentStatusTag } from '@/pages/personal-cabinet/constants';
 import styles from './PsychologistAppointments.module.scss';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.locale('ru');
-
-const MOSCOW_TZ = 'Europe/Moscow';
-const toMoscow = (date: string) => dayjs(date).tz(MOSCOW_TZ);
+const toMoscow = (date: string) => dayjs(date).tz();
 
 const ITEMS_PER_PAGE = 5;
 
@@ -38,7 +30,8 @@ const APPOINTMENT_FORMAT_OPTIONS = [
 ];
 
 const getPatientName = (appointment: Appointment) =>
-  [appointment.patient.last_name, appointment.patient.first_name].filter(Boolean).join(' ');
+  [appointment.patient?.last_name, appointment.patient?.first_name].filter(Boolean).join(' ') ||
+  'Имя не указано';
 
 const getTimeRange = (time: string) => {
   const start = toMoscow(time);
@@ -46,8 +39,8 @@ const getTimeRange = (time: string) => {
 };
 
 const getVenueDisplay = (appointment: Appointment) => {
-  if (appointment.type === 'Online') return 'Онлайн';
-  return appointment.venue ? `${appointment.venue}` : 'Очно';
+  if (appointment.type === 'Online') return appointment.venue || 'Онлайн';
+  return appointment.venue || 'Очно';
 };
 
 const groupByDate = <T,>(
@@ -94,9 +87,11 @@ const PsychologistAppointments = () => {
     sortDirection !== 'asc' ||
     dateRange !== null;
 
-  const { data: allAppointments = [], isLoading: isLoadingAppointments } = useQuery(
-    appointmentQueries.list(),
-  );
+  const {
+    data: allAppointments = [],
+    isLoading: isLoadingAppointments,
+    isError: isErrorAppointments,
+  } = useQuery(appointmentQueries.list());
 
   const filteredAppointments = useMemo(() => {
     let result = allAppointments;
@@ -117,8 +112,8 @@ const PsychologistAppointments = () => {
 
     if (dateRange) {
       const [from, to] = dateRange;
-      const fromMs = dayjs(from).startOf('day').valueOf();
-      const toMs = dayjs(to).endOf('day').valueOf();
+      const fromMs = dayjs(from).tz().startOf('day').valueOf();
+      const toMs = dayjs(to).tz().endOf('day').valueOf();
       result = result.filter((a) => {
         const t = dayjs(a.scheduled_time).valueOf();
         return t >= fromMs && t <= toMs;
@@ -149,12 +144,22 @@ const PsychologistAppointments = () => {
   const isLoading = isLoadingAppointments;
 
   if (isLoading) return <Loader />;
+  if (isErrorAppointments)
+    return (
+      <Alert
+        type="error"
+        showIcon
+        message="Не удалось загрузить записи"
+        description="Попробуйте обновить страницу"
+        style={{ margin: '2.4rem 0' }}
+      />
+    );
 
   const renderAppointmentRow = (appointment: Appointment) => {
     const statusUI = AppointmentStatusTag[appointment.status];
 
     return (
-      <article key={appointment.id} className={styles.appointmentRow} role="listitem">
+      <article className={styles.appointmentRow} key={appointment.id} role="listitem">
         <div className={styles.contentCol}>
           <div className={styles.timeStatusRow}>
             <div className={styles.timeCol}>{getTimeRange(appointment.scheduled_time)}</div>
@@ -164,9 +169,7 @@ const PsychologistAppointments = () => {
             </div>
           </div>
           <div className={styles.infoCol}>
-            <span
-              className={styles.patientName}
-            >{`${appointment.patient.last_name} ${appointment.patient.first_name}`}</span>
+            <span className={styles.patientName}>{getPatientName(appointment)}</span>
             <span className={styles.location}>{getVenueDisplay(appointment)}</span>
           </div>
         </div>
@@ -174,6 +177,7 @@ const PsychologistAppointments = () => {
           <button
             className={styles.btnPrimary}
             onClick={() => navigate(`/cabinet/appointment/${appointment.id}`)}
+            type="button"
           >
             Открыть
           </button>
@@ -210,7 +214,7 @@ const PsychologistAppointments = () => {
         {groupByDate(paginated as Appointment[], (appointment) =>
           toMoscow(appointment.scheduled_time).format('D MMMM'),
         ).map((group) => (
-          <div key={group.date} className={styles.dateGroup}>
+          <div className={styles.dateGroup} key={group.date}>
             <h3 className={styles.dateHeader}>{group.date}</h3>
             {group.items.map(renderAppointmentRow)}
           </div>
@@ -219,12 +223,12 @@ const PsychologistAppointments = () => {
 
       {currentItems.length > ITEMS_PER_PAGE && (
         <Pagination
+          className={styles.pagination}
           current={currentPage}
           total={currentItems.length}
           pageSize={ITEMS_PER_PAGE}
           onChange={(page) => setCurrentPage(FILTERS_TAB, page)}
           showSizeChanger={false}
-          className={styles.pagination}
         />
       )}
     </section>

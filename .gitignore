@@ -28,9 +28,12 @@ yarn-error.log*
 test-results
 
 # ai tools
-.claude/
-CLAUDE.md
-.codex
+/.claude/
+/CLAUDE.md
+/.codex
 
 # scripts
-git-pull-all.sh
+/git-pull-all.sh
+
+# statistics
+/.VSCodeCounter/

@@ -1,25 +1,24 @@
 import type { FC } from 'react';
-import styles from './AppointmentForm.module.css';
-import { useApplication } from '@/features/personal-cabinet/model/application';
-import type { Therapist } from '@/entities/therapist/types';
-import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
-import clsx from 'clsx';
-import { Img } from '@/shared/ui';
 import { useState, useMemo, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { message, DatePicker, ConfigProvider } from 'antd';
+import locale from 'antd/es/locale/ru_RU';
+import dayjs, { Dayjs } from 'dayjs';
+import clsx from 'clsx';
+import { useApplication } from '@/features/personal-cabinet/model/application';
+import { therapistQueries } from '@/entities/therapist/api';
+import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
+import { Img } from '@/shared/ui';
 import arrow from '@/shared/assets/images/appointments/arrow.svg';
 import backArrow from '@/shared/assets/images/appointments/backArrow.svg';
 import { useAuth } from '@/features/auth/api/useAuth';
 import type { ApplicationCreateRequest, UniversityStatus } from '@/entities/application/types';
 import { createApplication, getUniversityStatuses } from '@/entities/application/api';
-import { message, DatePicker, ConfigProvider } from 'antd';
-import locale from 'antd/es/locale/ru_RU';
-import dayjs, { Dayjs } from 'dayjs';
+import Loader from '@/shared/ui/loader/loader';
+import styles from './AppointmentForm.module.css';
 
-interface Props {
-  doctors: Therapist[];
-}
-
-const AppointmentForm: FC<Props> = ({ doctors }) => {
+const AppointmentForm: FC = () => {
+  const { data: doctors = [], isLoading } = useQuery(therapistQueries.list());
   const user = useAuth((s) => s.user);
   const application = useApplication((state) => state.application);
   const setApplication = useApplication((state) => state.setApplication);
@@ -117,6 +116,8 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
       ),
     [doctors]
   );
+
+  if (isLoading) return <Loader />;
 
   const handleNextButton = () => {
     if (!meetingType) {

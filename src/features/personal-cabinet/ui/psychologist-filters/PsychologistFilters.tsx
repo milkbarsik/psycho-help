@@ -111,13 +111,18 @@ const PsychologistListFilters = ({
         <button
           className={styles['filters__sort-button']}
           onClick={() => onSortDirectionChange(sortDirection === 'asc' ? 'desc' : 'asc')}
+          type="button"
         >
           Сортировка по дате
           {sortDirection === 'desc' ? <SortDescendingOutlined /> : <SortAscendingOutlined />}
         </button>
 
         {hasActiveFilters && (
-          <button className={styles['filters__reset-button']} onClick={onResetFilters}>
+          <button
+            className={styles['filters__reset-button']}
+            onClick={onResetFilters}
+            type="button"
+          >
             Сбросить фильтры
           </button>
         )}

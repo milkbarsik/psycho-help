@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, type KeyboardEvent } from 'react';
+import React, { useState, useRef, type KeyboardEvent } from 'react';
 import { type ITabItemProps, TabItem } from './components/tab-item';
 import styles from './Tabs.module.scss';
 import clsx from 'clsx';
@@ -26,12 +26,6 @@ export const Tabs: React.FC<ITabsProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<string>(defaultActiveTab || tabs[0]?.id || '');
   const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-
-  useEffect(() => {
-    if (defaultActiveTab) {
-      setActiveTab(defaultActiveTab);
-    }
-  }, [defaultActiveTab]);
 
   const handleTabClick = (tabId: string, disabled?: boolean) => {
     if (disabled) return;

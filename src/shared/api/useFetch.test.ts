@@ -1,7 +1,12 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { useFetch } from './useFetch';
-import { AxiosError } from 'axios';
+import {
+  AxiosError,
+  AxiosHeaders,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from 'axios';
 
 describe('useFetch', () => {
   it('должен успешно вызвать foo и обновить состояния загрузки', async () => {
@@ -21,9 +26,16 @@ describe('useFetch', () => {
   });
 
   it('должен обработать ошибку AxiosError и установить error', async () => {
-    const axiosError = new AxiosError('Request failed', 'ERR_BAD_REQUEST', {} as any, {}, {
+    const headers = new AxiosHeaders();
+    const config: InternalAxiosRequestConfig = { headers };
+    const response: AxiosResponse = {
       status: 400,
-    } as any);
+      statusText: 'Bad Request',
+      headers,
+      config,
+      data: null,
+    };
+    const axiosError = new AxiosError('Request failed', 'ERR_BAD_REQUEST', config, {}, response);
     const mockFoo = vi.fn().mockRejectedValue(axiosError);
     const { result } = renderHook(() => useFetch(mockFoo));
 

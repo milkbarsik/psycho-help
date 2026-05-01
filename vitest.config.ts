@@ -1,8 +1,10 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 import path from 'path';
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   test: {
     globals: true,
     environment: 'jsdom',
@@ -11,9 +13,8 @@ export default defineConfig({
     exclude: [
       'tests/e2e/**',
       'node_modules/**',
-      // Потом нужно будет исправить эти тесты и убрать их из исключений
+      // Потом нужно будет исправить этот тест и убрать его из исключений
       'src/widgets/footer/footer.test.tsx',
-      'src/features/auth/api/useAuth.test.ts',
     ],
     coverage: {
       provider: 'v8',

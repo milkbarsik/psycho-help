@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useFetch } from '@/shared/api/useFetch';
 import { useAuth } from '@/features/auth/api/useAuth';
-import type { regData } from '@/shared/api/types';
+import type { RegistrationData } from '@/entities/auth';
 import styles from './modal.module.css';
 import EyeIcon from './icons/Eye.svg?react';
 import EyeOffIcon from './icons/EyeOff.svg?react';
@@ -45,7 +45,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 
   const { fetching, isLoading, error } = useFetch(async () => {
     const { confirm_password, ...dataForServer } = formValue;
-    const res = await registration(dataForServer as regData);
+    await registration(dataForServer as RegistrationData);
   });
 
   //Функции для валидации полей формы
@@ -109,8 +109,8 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
 
   const handleOk = async () => {
     if (!validateForm()) return;
-    await fetching();
-    if (error == null) {
+    const ok = await fetching();
+    if (ok) {
       setOpen(false);
       setModalOpen(false);
       resetForm();
@@ -313,10 +313,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           </label>
         </form>
 
-        {error.status === 422 && (
-          <p className={styles.errorMessage}>пользователь с таким email уже существует</p>
-        )}
-        {error.message !== '' && error.status !== 422 && (
+        {error.message !== '' && (
           <p className={styles.errorMessage}>{error.message}</p>
         )}
 

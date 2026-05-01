@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { DatePicker, Empty, Input, message, Select } from 'antd';
+import { DatePicker, Empty, Input, message, Result, Select } from 'antd';
 import { AxiosError } from 'axios';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import dayjs from '@/shared/lib/dayjs';
+import { MOSCOW_TZ } from '@/shared/lib/dayjs';
 import clsx from 'clsx';
 import {
   applicationQueries,
@@ -14,7 +12,7 @@ import {
   offerConsultation,
   acceptApplication,
 } from '@/entities/application/api';
-import type { MeetingType } from '@/entities/application/types';
+import type { Application, MeetingType } from '@/entities/application/types';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { useCabinetTab } from '@/features/personal-cabinet/model/personal-cabinet-tab';
@@ -25,11 +23,6 @@ import { getTabsForRole, type TabId } from '@/pages/personal-cabinet/config/tabs
 import PsychologistRejectModal from '@/features/personal-cabinet/ui/PsychologistRejectModal';
 import styles from './PsychologistApplicationPage.module.scss';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.locale('ru');
-
-const MOSCOW_TZ = 'Europe/Moscow';
 
 const MEETING_TYPE_OPTIONS = [
   { value: 'online' as const, label: 'Онлайн' },
@@ -66,7 +59,10 @@ const PsychologistApplicationPage = () => {
   const userId = user?.id;
   const setSavedTab = useCabinetTab((s) => s.setActiveTab);
 
-  const isPsychologist = useMemo(() => !!user && new Role(user.roles).isPsychologist(), [user]);
+  const isPsychologist = useMemo(
+    () => (user?.roles ? new Role(user.roles).isPsychologist() : false),
+    [user?.roles],
+  );
 
   const handleSidebarTabChange = useCallback(
     (tabId: string) => {
@@ -76,7 +72,12 @@ const PsychologistApplicationPage = () => {
     [navigate, setSavedTab],
   );
 
-  const { data: application, isLoading } = useQuery({
+  const {
+    data: application,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     ...applicationQueries.byId(id!),
     enabled: isPsychologist && !!id,
   });
@@ -103,17 +104,28 @@ const PsychologistApplicationPage = () => {
   }, [application?.id, formInitializedForId]);
 
   const applicationScheduledAt = useMemo(
-    () => (application?.scheduled_at ? dayjs(application.scheduled_at).tz(MOSCOW_TZ) : null),
+    () => (application?.scheduled_at ? dayjs(application.scheduled_at).tz() : null),
     [application?.scheduled_at],
   );
 
-  const meetingType = userMeetingType ?? application?.meeting_type ?? null;
+  const getMeetingType = (application: Application | undefined) => {
+    if (userMeetingType) return userMeetingType;
+    if (application?.meeting_type) return application.meeting_type;
+    if (application?.location_address) return 'offline';
+    if (application?.meeting_url) return 'online';
+    if (application?.preferred_campus) return 'offline';
+    return 'online';
+  };
+
+  const meetingType = getMeetingType(application);
+
   const selectedDate = useMemo(
-    () => userDate ?? applicationScheduledAt?.startOf('day') ?? null,
+    () => userDate || applicationScheduledAt?.startOf('day') || null,
     [applicationScheduledAt, userDate],
   );
-  const selectedTime = userTime ?? applicationScheduledAt?.format('HH:mm') ?? null;
-  const locationAddress = userLocationAddress ?? application?.location_address ?? '';
+  const selectedTime = userTime || applicationScheduledAt?.format('HH:mm') || null;
+  const locationAddress =
+    userLocationAddress ?? application?.location_address ?? application?.preferred_campus ?? '';
   const meetingUrl = userMeetingUrl ?? application?.meeting_url ?? '';
 
   const selectedDateTime = useMemo(() => {
@@ -126,7 +138,7 @@ const PsychologistApplicationPage = () => {
       selectedTime && !TIME_SLOTS.includes(selectedTime)
         ? [...TIME_SLOTS, selectedTime].sort()
         : TIME_SLOTS;
-    const nowMoscow = dayjs().tz(MOSCOW_TZ);
+    const nowMoscow = dayjs.tz();
 
     return options.map((slot) => ({
       value: slot,
@@ -137,7 +149,10 @@ const PsychologistApplicationPage = () => {
 
   const acceptMutation = useMutation({
     mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [applicationQueryKey.byId, id] });
+    },
     onError: (error: AxiosError<{ detail?: string }>) => {
       const detail = error.response?.data?.detail;
       message.error(detail || 'Не удалось выполнить операцию');
@@ -167,6 +182,21 @@ const PsychologistApplicationPage = () => {
 
   if (!isPsychologist) return <Navigate to="/" replace />;
   if (isLoading) return <Loader />;
+  if (isError) {
+    const detail = (error as AxiosError<{ detail?: string }>)?.response?.data?.detail;
+    return (
+      <Result
+        status="error"
+        title="Не удалось загрузить заявку"
+        subTitle={detail || 'Попробуйте обновить страницу или вернитесь назад'}
+        extra={
+          <button className={styles.back} type="button" onClick={() => navigate(-1)}>
+            Вернуться назад
+          </button>
+        }
+      />
+    );
+  }
   if (!application) return <Empty description="Заявка не найдена" />;
 
   const canAccept = application.status === 'new';
@@ -181,12 +211,12 @@ const PsychologistApplicationPage = () => {
     canChange &&
     meetingType &&
     selectedDateTime &&
-    selectedDateTime.isAfter(dayjs().tz(MOSCOW_TZ)) &&
+    selectedDateTime.isAfter(dayjs.tz()) &&
     (meetingType === 'offline' ? locationAddress.trim().length > 0 : meetingUrl.trim().length > 0);
 
   const disabledDates = (current: dayjs.Dayjs) => {
     return current
-      ? current.tz(MOSCOW_TZ, true).isBefore(dayjs().tz(MOSCOW_TZ).startOf('day'), 'day')
+      ? current.tz(MOSCOW_TZ, true).isBefore(dayjs.tz().startOf('day'), 'day')
       : false;
   };
 
@@ -203,7 +233,11 @@ const PsychologistApplicationPage = () => {
           {text}
         </span>
         {text.length > 100 && (
-          <button className={styles.expandButton} onClick={() => setIsExpanded(!isExpanded)}>
+          <button
+            className={styles.expandButton}
+            onClick={() => setIsExpanded(!isExpanded)}
+            type="button"
+          >
             {isExpanded ? 'Свернуть' : 'Открыть полностью'}
           </button>
         )}
@@ -212,184 +246,209 @@ const PsychologistApplicationPage = () => {
   };
 
   const statusUI = ApplicationStatusTag[application.status];
+  const userName =
+    [application.user?.last_name, application.user?.first_name, application.user?.middle_name]
+      .filter(Boolean)
+      .join(' ') || 'Имя не указано';
+  const preferPsychologistName =
+    [
+      application.psychologist?.user?.last_name,
+      application.psychologist?.user?.first_name,
+      application.psychologist?.user?.middle_name,
+    ]
+      .filter(Boolean)
+      .join(' ') || '—';
 
   return (
     <div className={styles.page}>
-      <div className={styles.cabinetLayout}>
-        <div className={styles.sidebarWrapper}>
-          <Sidebar
-            user={user}
-            activeTab="applications"
-            onChangeTab={handleSidebarTabChange}
-            tabs={PSYCHOLOGIST_TABS}
-          />
+      <div className={styles.sidebarWrapper}>
+        <Sidebar
+          user={user}
+          activeTab="applications"
+          onChangeTab={handleSidebarTabChange}
+          tabs={PSYCHOLOGIST_TABS}
+        />
+      </div>
+
+      <main className={styles.content}>
+        <button className={styles.back} onClick={() => navigate(-1)} type="button">
+          <span>&lt;</span>
+          <span>Вернуться назад</span>
+        </button>
+
+        <h1 className={styles.pageTitle}>Заявка</h1>
+
+        <h2 className={styles.userName}>{userName}</h2>
+
+        <div className={styles.statusRow}>
+          <p className={styles.statusLabel}>Статус</p>
+          <div className={styles['status']}>
+            <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
+            <span className={styles['status-text']}>{statusUI.text}</span>
+          </div>
         </div>
 
-        <main className={styles.content}>
-          <button type="button" onClick={() => navigate(-1)} className={styles.back}>
-            <span>&lt;</span>
-            <span>Вернуться назад</span>
-          </button>
-
-          <div className={styles.layout}>
-            <div className={styles.mainContent}>
-              <h1 className={styles.pageTitle}>Заявка</h1>
-
-              <h2 className={styles.userName}>
-                {application.user.last_name} {application.user.first_name}
-              </h2>
-
-              <div className={styles.statusRow}>
-                <p className={styles.statusLabel}>Статус</p>
-                <div className={styles['status']}>
-                  <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
-                  <span className={styles['status-text']}>{statusUI.text}</span>
-                </div>
-              </div>
-
-              {application.status === 'rejected' && application.reject_reason && (
-                <div className={styles.reasonBlock}>
-                  <span className={styles.reasonLabel}>Причина отказа:</span>
-                  <span className={styles.reasonText}>{application.reject_reason}</span>
-                </div>
-              )}
-
-              {application.status === 'cancelled' && application.cancel_reason && (
-                <div className={styles.reasonBlock}>
-                  <span className={styles.reasonLabel}>Причина отмены:</span>
-                  <span className={styles.reasonText}>{application.cancel_reason}</span>
-                </div>
-              )}
-
-              <section className={styles.dataSection}>
-                <div className={styles.dataGrid}>
-                  <div className={styles.dataItem}>
-                    <span className={styles.dataLabel}>Email:</span>
-                    <span className={styles.dataValue}>{application.user.email || '—'}</span>
-                  </div>
-                  <div className={styles.dataItem}>
-                    <span className={styles.dataLabel}>Телефон:</span>
-                    <span className={styles.dataValue}>{application.user.phone_number || '—'}</span>
-                  </div>
-                  <div className={styles.dataItem}>
-                    <span className={styles.dataLabel}>Кампус:</span>
-                    <span className={styles.dataValue}>{application.preferred_campus || '—'}</span>
-                  </div>
-                  <div className={styles.dataItem}>
-                    <span className={styles.dataLabel}>Статус пациента:</span>
-                    <span className={styles.dataValue}>{application.university_status}</span>
-                  </div>
-                  <h3 className={styles.sidebarTitle}>Запись на сессию</h3>
-                  <label className={styles.fieldLabel}>
-                    <span className={styles.dataLabel}>Дата</span>
-                    <div className={styles.timeWrapper}>
-                      <DatePicker
-                        className={styles.fieldPicker}
-                        value={selectedDate}
-                        onChange={(date) => setUserDate(date ? date.startOf('day') : null)}
-                        disabledDate={disabledDates}
-                        format="DD.MM.YYYY"
-                        placeholder="—"
-                        allowClear={false}
-                      />
-                    </div>
-                  </label>
-
-                  <label className={styles.fieldLabel}>
-                    <span className={styles.fieldLabel}>Время</span>
-                    <div className={styles.fieldSelectWrapper}>
-                      <Select
-                        className={styles.fieldSelect}
-                        prefixCls="customSelect"
-                        value={selectedTime || undefined}
-                        onChange={setUserTime}
-                        placeholder="—"
-                        options={timeOptions}
-                      />
-                    </div>
-                  </label>
-
-                  <label className={styles.fieldLabel}>
-                    <span className={styles.fieldLabel}>Формат</span>
-                    <div className={styles.fieldSelectWrapper}>
-                      <Select
-                        className={styles.fieldSelect}
-                        prefixCls="customSelect"
-                        value={meetingType ?? undefined}
-                        onChange={setUserMeetingType}
-                        options={MEETING_TYPE_OPTIONS}
-                        placeholder="—"
-                      />
-                    </div>
-                  </label>
-
-                  {meetingType === 'offline' && (
-                    <label className={styles.fieldLabel}>
-                      <span className={styles.fieldLabel}>Адрес проведения</span>
-                      <Input
-                        className={styles.dataValue}
-                        placeholder="—"
-                        value={locationAddress}
-                        onChange={(e) => setUserLocationAddress(e.target.value)}
-                      />
-                    </label>
-                  )}
-
-                  {meetingType === 'online' && (
-                    <label className={styles.fieldLabel}>
-                      <span className={styles.fieldLabel}>Ссылка на встречу</span>
-                      <Input
-                        className={styles.dataValue}
-                        placeholder="—"
-                        value={meetingUrl}
-                        onChange={(e) => setUserMeetingUrl(e.target.value)}
-                      />
-                    </label>
-                  )}
-                </div>
-              </section>
-
-              <div className={styles.dataItemFull}>
-                <span className={styles.dataLabel}>Описание проблемы:</span>
-                <ExpandableText text={application.problem_description} />
-              </div>
-
-              {(canReject || canAccept || canChange) && (
-                <div className={styles.actions}>
-                  {canReject && (
-                    <button
-                      className={styles.btnSecondary}
-                      type="button"
-                      onClick={() => setRejectModalOpen(true)}
-                    >
-                      Отклонить заявку
-                    </button>
-                  )}
-                  {canAccept && (
-                    <button
-                      className={styles.btnConfirm}
-                      onClick={() => acceptMutation.mutate(application.id)}
-                      disabled={acceptMutation.isPending}
-                    >
-                      В работу
-                    </button>
-                  )}
-                  {canChange && (
-                    <button
-                      className={styles.btnPrimary}
-                      type="button"
-                      onClick={() => offerMutation.mutate()}
-                      disabled={!canSave}
-                    >
-                      {offerMutation.isPending ? 'Сохранение...' : 'Запросить подтверждение'}
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
+        {application.status === 'new' && preferPsychologistName && (
+          <div className={styles.dataItemFull}>
+            <span className={styles.dataLabel}>Предпочитаемый психолог:</span>
+            <span className={styles.dataValue}>{preferPsychologistName}</span>
           </div>
-        </main>
-      </div>
+        )}
+
+        {application.status === 'rejected' && application.reject_reason && (
+          <div className={styles.reasonBlock}>
+            <span className={styles.reasonLabel}>Причина отказа:</span>
+            <span className={styles.reasonText}>{application.reject_reason}</span>
+          </div>
+        )}
+
+        {application.status === 'cancelled' && application.cancel_reason && (
+          <div className={styles.reasonBlock}>
+            <span className={styles.reasonLabel}>Причина отмены:</span>
+            <span className={styles.reasonText}>{application.cancel_reason}</span>
+          </div>
+        )}
+
+        <div className={styles.dataGrid}>
+          <div className={styles.dataItem}>
+            <span className={styles.dataLabel}>Email:</span>
+            <span className={styles.dataValue}>{application.user?.email || '—'}</span>
+          </div>
+
+          <div className={styles.dataItem}>
+            <span className={styles.dataLabel}>Телефон:</span>
+            <span className={styles.dataValue}>{application.user?.phone_number || '—'}</span>
+          </div>
+
+          <div className={styles.dataItem}>
+            <span className={styles.dataLabel}>Статус пациента:</span>
+            <span className={styles.dataValue}>{application.university_status || '—'}</span>
+          </div>
+
+          <div className={styles.dataItem}>
+            <span className={styles.dataLabel}>Группа:</span>
+            <span className={styles.dataValue}>{application.user?.study_group || '—'}</span>
+          </div>
+
+          <h3 className={styles.sidebarTitle}>Запись на сессию</h3>
+
+          <label className={styles.fieldLabel}>
+            <span className={styles.dataLabel}>Дата</span>
+            <div className={styles.timeWrapper}>
+              <DatePicker
+                id="field-date"
+                className={styles.fieldPicker}
+                value={selectedDate}
+                onChange={(date) => setUserDate(date ? date.startOf('day') : null)}
+                disabledDate={disabledDates}
+                format="DD.MM.YYYY"
+                placeholder="—"
+                allowClear={false}
+                disabled={!canChange}
+              />
+            </div>
+          </label>
+
+          <label className={styles.fieldLabel}>
+            <span className={styles.fieldLabel}>Время</span>
+            <div className={styles.fieldSelectWrapper}>
+              <Select
+                id="field-time"
+                className={styles.fieldSelect}
+                prefixCls="customSelect"
+                value={selectedTime || undefined}
+                onChange={setUserTime}
+                placeholder="—"
+                options={timeOptions}
+                disabled={!canChange}
+              />
+            </div>
+          </label>
+
+          <label className={styles.fieldLabel}>
+            <span className={styles.fieldLabel}>Формат</span>
+            <div className={styles.fieldSelectWrapper}>
+              <Select
+                id="field-meeting-type"
+                className={styles.fieldSelect}
+                prefixCls="customSelect"
+                value={meetingType}
+                onChange={setUserMeetingType}
+                options={MEETING_TYPE_OPTIONS}
+                placeholder="—"
+                disabled={!canChange}
+              />
+            </div>
+          </label>
+
+          {meetingType === 'offline' && (
+            <label className={styles.fieldLabel}>
+              <span className={styles.fieldLabel}>Адрес проведения</span>
+              <Input
+                id="field-location-address"
+                className={styles.dataValue}
+                placeholder="—"
+                value={locationAddress}
+                onChange={(e) => setUserLocationAddress(e.target.value)}
+                disabled={!canChange}
+              />
+            </label>
+          )}
+
+          {meetingType === 'online' && (
+            <label className={styles.fieldLabel}>
+              <span className={styles.fieldLabel}>Ссылка на встречу</span>
+              <Input
+                id="field-meeting-url"
+                className={styles.dataValue}
+                placeholder="—"
+                value={meetingUrl}
+                onChange={(e) => setUserMeetingUrl(e.target.value)}
+                disabled={!canChange}
+              />
+            </label>
+          )}
+        </div>
+
+        <div className={styles.dataItemFull}>
+          <span className={styles.dataLabel}>Описание проблемы:</span>
+          <ExpandableText text={application.problem_description} />
+        </div>
+
+        {(canReject || canAccept || canChange) && (
+          <div className={styles.actions}>
+            {canReject && (
+              <button
+                className={styles.btnSecondary}
+                onClick={() => setRejectModalOpen(true)}
+                type="button"
+              >
+                Отклонить заявку
+              </button>
+            )}
+            {canAccept && (
+              <button
+                className={styles.btnConfirm}
+                onClick={() => acceptMutation.mutate(application.id)}
+                disabled={acceptMutation.isPending}
+                type="button"
+              >
+                {acceptMutation.isPending ? 'Сохранение...' : 'В работу'}
+              </button>
+            )}
+            {canChange && (
+              <button
+                className={styles.btnPrimary}
+                onClick={() => offerMutation.mutate()}
+                disabled={!canSave}
+                type="button"
+              >
+                {offerMutation.isPending ? 'Сохранение...' : 'Запросить подтверждение'}
+              </button>
+            )}
+          </div>
+        )}
+      </main>
 
       <PsychologistRejectModal
         type="application"

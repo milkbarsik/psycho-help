@@ -6,7 +6,7 @@ import { useAuth } from '@/features/auth/api/useAuth';
 import AuthApi from '@/features/auth/api/auth-api';
 import EditIcon from '@/shared/assets/images/cabinet/edit.svg?react';
 import ExitIcon from '@/shared/assets/images/cabinet/exit.svg?react';
-import type { User, UserProfileUpdate } from '@/shared/api/types';
+import type { User, UserProfileUpdate } from '@/entities/auth';
 import styles from './PersonalData.module.scss';
 
 interface PersonalDataProps {
@@ -171,12 +171,13 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     (data: FormData): UserProfileUpdate => ({
       first_name: data.first_name,
       last_name: data.last_name,
-      middle_name: data.middle_name,
+      middle_name: data.middle_name || null,
       phone_number: data.phone_number,
       email: data.email,
-      study_group: data.study_group,
+      social_media: user?.social_media ?? null,
+      study_group: data.study_group || null,
     }),
-    [],
+    [user],
   );
 
   const handleSaveName = useCallback(async () => {

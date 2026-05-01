@@ -1,19 +1,16 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Empty, Pagination, message } from 'antd';
+import { Alert, Empty, Pagination, message } from 'antd';
 import { AxiosError } from 'axios';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import dayjs from '@/shared/lib/dayjs';
 import clsx from 'clsx';
 import {
   applicationQueries,
   applicationQueryKey,
   acceptApplication,
 } from '@/entities/application/api';
-import type { Application, ApplicationStatus } from '@/entities/application/types';
+import type { Application, ApplicationStatus, MeetingType } from '@/entities/application/types';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { usePsychologistView } from '@/features/personal-cabinet/model/psychologist-view';
 import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-filters/PsychologistFilters';
@@ -21,12 +18,7 @@ import Loader from '@/shared/ui/loader/loader';
 import { ApplicationStatusTag } from '@/pages/personal-cabinet/constants';
 import styles from './PsychologistApplications.module.scss';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.locale('ru');
-
-const MOSCOW_TZ = 'Europe/Moscow';
-const toMoscow = (date: string) => dayjs(date).tz(MOSCOW_TZ);
+const toMoscow = (date: string) => dayjs(date).tz();
 
 const ITEMS_PER_PAGE = 5;
 
@@ -45,13 +37,30 @@ const APPLICATION_FORMAT_OPTIONS = [
   { value: 'all', label: 'Все форматы' },
   { value: 'offline', label: 'Очно' },
   { value: 'online', label: 'Онлайн' },
-  { value: 'unknown', label: 'Не указано' },
 ];
 
 const getPatientName = (application: Application) =>
-  [application.user.last_name, application.user.first_name].filter(Boolean).join(' ');
+  [application.user?.last_name, application.user?.first_name].filter(Boolean).join(' ') ||
+  'Имя не указано';
 
-const getApplicationSortTime = (application: Application): number => {
+const getShortPsychologistName = (
+  user?: {
+    last_name?: string | null;
+    first_name?: string | null;
+    middle_name?: string | null;
+  } | null,
+) => {
+  if (!user) return '';
+
+  const initials = [user.first_name?.[0], user.middle_name?.[0]]
+    .filter(Boolean)
+    .map((initial) => `${initial}.`)
+    .join('');
+
+  return [user.last_name, initials].filter(Boolean).join(' ');
+};
+
+const getSortTime = (application: Application): number => {
   const date = application.scheduled_at;
   return date ? new Date(date).getTime() : 0;
 };
@@ -62,12 +71,17 @@ const getTimeRange = (time: string | null) => {
   return `${start.format('HH:mm')} - ${start.add(1, 'hour').format('HH:mm')}`;
 };
 
-const getVenueDisplay = (application: Application) => {
-  if (application.meeting_type === 'online') return 'Онлайн';
-  if (application.meeting_type === 'offline') {
-    return application.location_address ? `${application.location_address}` : 'Очно';
-  }
-  return 'Формат ещё не указан';
+const getMeetingType: (application: Application) => MeetingType = (application: Application) => {
+  if (application.meeting_type) return application.meeting_type;
+  if (application.location_address) return 'offline';
+  if (application.meeting_url) return 'online';
+  if (application.preferred_campus) return 'offline';
+  return 'online';
+};
+
+const getVenue = (application: Application) => {
+  if (getMeetingType(application) === 'online') return application.meeting_url || 'Онлайн';
+  return application.location_address || application.preferred_campus || 'Очно';
 };
 
 const groupByDate = <T,>(
@@ -117,9 +131,11 @@ const PsychologistApplications = () => {
     sortDirection !== 'asc' ||
     dateRange !== null;
 
-  const { data: allApplications = [], isLoading: isLoadingApplications } = useQuery(
-    applicationQueries.list(),
-  );
+  const {
+    data: allApplications = [],
+    isLoading: isLoadingApplications,
+    isError: isErrorApplications,
+  } = useQuery(applicationQueries.list());
 
   const acceptMutation = useMutation({
     mutationFn: (applicationId: string) => acceptApplication(applicationId, userId!),
@@ -150,16 +166,14 @@ const PsychologistApplications = () => {
       result = result.filter((a) => getPatientName(a).toLowerCase().includes(q));
     }
 
-    if (formatFilter === 'unknown') {
-      result = result.filter((a) => a.meeting_type === null);
-    } else if (formatFilter !== 'all') {
-      result = result.filter((a) => a.meeting_type === formatFilter);
+    if (formatFilter !== 'all') {
+      result = result.filter((a) => getMeetingType(a) === formatFilter);
     }
 
     if (dateRange) {
       const [from, to] = dateRange;
-      const fromMs = dayjs(from).startOf('day').valueOf();
-      const toMs = dayjs(to).endOf('day').valueOf();
+      const fromMs = dayjs(from).tz().startOf('day').valueOf();
+      const toMs = dayjs(to).tz().endOf('day').valueOf();
       result = result.filter((a) => {
         const date = a.scheduled_at;
         if (!date) return false;
@@ -169,9 +183,7 @@ const PsychologistApplications = () => {
     }
 
     const dir = sortDirection === 'asc' ? 1 : -1;
-    return [...result].sort(
-      (a, b) => dir * (getApplicationSortTime(a) - getApplicationSortTime(b)),
-    );
+    return [...result].sort((a, b) => dir * (getSortTime(a) - getSortTime(b)));
   }, [relevantApplications, statusFilter, formatFilter, searchQuery, dateRange, sortDirection]);
 
   const currentItems = filteredApplications;
@@ -192,11 +204,23 @@ const PsychologistApplications = () => {
   const isLoading = isLoadingApplications;
 
   if (isLoading) return <Loader />;
+  if (isErrorApplications)
+    return (
+      <Alert
+        type="error"
+        showIcon
+        message="Не удалось загрузить заявки"
+        description="Попробуйте обновить страницу"
+        style={{ margin: '2.4rem 0' }}
+      />
+    );
 
   const renderApplicationRow = (application: Application) => {
     const statusUI = ApplicationStatusTag[application.status];
+    const preferPsychologistName = getShortPsychologistName(application.psychologist?.user);
+
     return (
-      <article key={application.id} className={styles.appointmentRow} role="listitem">
+      <article className={styles.appointmentRow} key={application.id} role="listitem">
         <div className={styles.contentCol}>
           <div className={styles.timeStatusRow}>
             <div className={styles.timeCol}>{getTimeRange(application.scheduled_at)}</div>
@@ -204,10 +228,13 @@ const PsychologistApplications = () => {
               <div className={clsx(styles['status-dot'], styles[statusUI.className])}></div>
               <span className={styles['status-text']}>{statusUI.text}</span>
             </div>
+            {application.status === 'new' && preferPsychologistName && (
+              <div className={styles.timeCol}>{preferPsychologistName}</div>
+            )}
           </div>
           <div className={styles.infoCol}>
             <span className={styles.patientName}>{getPatientName(application)}</span>
-            <span className={styles.location}>{getVenueDisplay(application)}</span>
+            <span className={styles.location}>{getVenue(application)}</span>
           </div>
         </div>
         <div className={styles.actionsCol}>
@@ -216,14 +243,15 @@ const PsychologistApplications = () => {
               className={styles.btnConfirm}
               onClick={() => acceptMutation.mutate(application.id)}
               disabled={acceptMutation.isPending}
+              type="button"
             >
-              В работу
+              {acceptMutation.isPending ? 'Сохранение...' : 'В работу'}
             </button>
           )}
           <button
             className={styles.btnOpen}
             onClick={() => navigate(`/cabinet/application/${application.id}`)}
-            disabled={application.status === 'new'}
+            type="button"
           >
             Открыть
           </button>
@@ -260,7 +288,7 @@ const PsychologistApplications = () => {
           const date = application.scheduled_at;
           return date ? toMoscow(date).format('D MMMM') : 'Дата ещё не указана';
         }).map((group) => (
-          <div key={group.date} className={styles.dateGroup}>
+          <div className={styles.dateGroup} key={group.date}>
             <h3 className={styles.dateHeader}>{group.date}</h3>
             {group.items.map(renderApplicationRow)}
           </div>
@@ -269,12 +297,12 @@ const PsychologistApplications = () => {
 
       {currentItems.length > ITEMS_PER_PAGE && (
         <Pagination
+          className={styles.pagination}
           current={currentPage}
           total={currentItems.length}
           pageSize={ITEMS_PER_PAGE}
           onChange={(page) => setCurrentPage(FILTERS_TAB, page)}
           showSizeChanger={false}
-          className={styles.pagination}
         />
       )}
     </section>
