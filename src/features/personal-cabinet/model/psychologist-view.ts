@@ -13,7 +13,7 @@ const MOSCOW_TZ = 'Europe/Moscow';
 export type SortDirection = 'asc' | 'desc';
 export type ApplicationStatusFilter = 'all' | ApplicationStatus | 'closed';
 export type AppointmentStatusFilter = 'all' | AppointmentStatus;
-export type FormatFilter = 'all' | 'offline' | 'online' | 'unknown';
+export type FormatFilter = 'all' | 'offline' | 'online';
 export type ActiveTab = 'applications' | 'appointments';
 
 interface BaseFilters {

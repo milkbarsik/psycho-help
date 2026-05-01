@@ -14,7 +14,7 @@ import {
   offerConsultation,
   acceptApplication,
 } from '@/entities/application/api';
-import type { MeetingType } from '@/entities/application/types';
+import type { Application, MeetingType } from '@/entities/application/types';
 import { Role } from '@/entities/role/helpers';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { useCabinetTab } from '@/features/personal-cabinet/model/personal-cabinet-tab';
@@ -115,20 +115,25 @@ const PsychologistApplicationPage = () => {
     [application?.scheduled_at],
   );
 
-  const meetingType =
-    userMeetingType ||
-    application?.meeting_type ||
-    (application?.preferred_campus ? 'offline' : 'online');
+  const getMeetingType = (application: Application | undefined) => {
+    if (userMeetingType) return userMeetingType;
+    if (application?.meeting_type) return application.meeting_type;
+    if (application?.location_address) return 'offline';
+    if (application?.meeting_url) return 'online';
+    if (application?.preferred_campus) return 'offline';
+    return 'online';
+  };
+
+  const meetingType = getMeetingType(application);
+
   const selectedDate = useMemo(
     () => userDate || applicationScheduledAt?.startOf('day') || null,
     [applicationScheduledAt, userDate],
   );
   const selectedTime = userTime || applicationScheduledAt?.format('HH:mm') || null;
   const locationAddress =
-    userLocationAddress !== null
-      ? userLocationAddress
-      : (application?.location_address ?? application?.preferred_campus ?? '');
-  const meetingUrl = userMeetingUrl !== null ? userMeetingUrl : (application?.meeting_url ?? '');
+    userLocationAddress ?? application?.location_address ?? application?.preferred_campus ?? '';
+  const meetingUrl = userMeetingUrl ?? application?.meeting_url ?? '';
 
   const selectedDateTime = useMemo(() => {
     if (!selectedDate || !selectedTime) return null;

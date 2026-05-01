@@ -13,7 +13,7 @@ import {
   applicationQueryKey,
   acceptApplication,
 } from '@/entities/application/api';
-import type { Application, ApplicationStatus } from '@/entities/application/types';
+import type { Application, ApplicationStatus, MeetingType } from '@/entities/application/types';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { usePsychologistView } from '@/features/personal-cabinet/model/psychologist-view';
 import PsychologistListFilters from '@/features/personal-cabinet/ui/psychologist-filters/PsychologistFilters';
@@ -45,14 +45,13 @@ const APPLICATION_FORMAT_OPTIONS = [
   { value: 'all', label: 'Все форматы' },
   { value: 'offline', label: 'Очно' },
   { value: 'online', label: 'Онлайн' },
-  { value: 'unknown', label: 'Не указано' },
 ];
 
 const getPatientName = (application: Application) =>
   [application.user?.last_name, application.user?.first_name].filter(Boolean).join(' ') ||
   'Имя не указано';
 
-const getApplicationSortTime = (application: Application): number => {
+const getSortTime = (application: Application): number => {
   const date = application.scheduled_at;
   return date ? new Date(date).getTime() : 0;
 };
@@ -63,11 +62,17 @@ const getTimeRange = (time: string | null) => {
   return `${start.format('HH:mm')} - ${start.add(1, 'hour').format('HH:mm')}`;
 };
 
-const getVenueDisplay = (application: Application) => {
-  if (application.meeting_type === 'online') return application.meeting_url || 'Онлайн';
-  if (application.meeting_type === 'offline' || application.preferred_campus)
-    return application.location_address || application.preferred_campus || 'Очно';
-  return application.meeting_url || 'Онлайн';
+const getMeetingType: (application: Application) => MeetingType = (application: Application) => {
+  if (application.meeting_type) return application.meeting_type;
+  if (application.location_address) return 'offline';
+  if (application.meeting_url) return 'online';
+  if (application.preferred_campus) return 'offline';
+  return 'online';
+};
+
+const getVenue = (application: Application) => {
+  if (getMeetingType(application) === 'online') return application.meeting_url || 'Онлайн';
+  return application.location_address || application.preferred_campus || 'Очно';
 };
 
 const groupByDate = <T,>(
@@ -152,10 +157,8 @@ const PsychologistApplications = () => {
       result = result.filter((a) => getPatientName(a).toLowerCase().includes(q));
     }
 
-    if (formatFilter === 'unknown') {
-      result = result.filter((a) => a.meeting_type === null);
-    } else if (formatFilter !== 'all') {
-      result = result.filter((a) => a.meeting_type === formatFilter);
+    if (formatFilter !== 'all') {
+      result = result.filter((a) => getMeetingType(a) === formatFilter);
     }
 
     if (dateRange) {
@@ -171,9 +174,7 @@ const PsychologistApplications = () => {
     }
 
     const dir = sortDirection === 'asc' ? 1 : -1;
-    return [...result].sort(
-      (a, b) => dir * (getApplicationSortTime(a) - getApplicationSortTime(b)),
-    );
+    return [...result].sort((a, b) => dir * (getSortTime(a) - getSortTime(b)));
   }, [relevantApplications, statusFilter, formatFilter, searchQuery, dateRange, sortDirection]);
 
   const currentItems = filteredApplications;
@@ -234,7 +235,7 @@ const PsychologistApplications = () => {
           </div>
           <div className={styles.infoCol}>
             <span className={styles.patientName}>{getPatientName(application)}</span>
-            <span className={styles.location}>{getVenueDisplay(application)}</span>
+            <span className={styles.location}>{getVenue(application)}</span>
           </div>
         </div>
         <div className={styles.actionsCol}>
