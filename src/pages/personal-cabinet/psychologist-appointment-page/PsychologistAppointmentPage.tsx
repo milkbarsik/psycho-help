@@ -242,6 +242,13 @@ const PsychologistAppointmentPage = () => {
             </div>
           )}
 
+          {appointment.comment && (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Комментарий</span>
+              <span className={styles.infoValue}>{appointment.comment}</span>
+            </div>
+          )}
+
           {appointment.status === 'done' && appointment.conclusion && (
             <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Заключение</span>
