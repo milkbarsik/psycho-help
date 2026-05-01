@@ -3,7 +3,8 @@ import type { User } from '@/entities/auth';
 import type { RoleCode } from '@/entities/role/types';
 import Dashboard from '../ui/dashboard/Dashboard';
 import PsychologistApplications from '@/pages/personal-cabinet/ui/applications/PsychologistApplications';
-import Appointments from '@/pages/personal-cabinet/ui/appointments/Appointments';
+import PsychologistAppointments from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointments';
+import AppointmentForm from '@/features/personal-cabinet/ui/input-block/AppointmentForm';
 import ComingSoon from '../ui/PlaceholderComponent';
 import PersonalData from '@/features/personal-cabinet/ui/personal-data/PersonalData';
 
@@ -44,7 +45,7 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
     {
       id: 'appointments',
       label: 'Запись на сессию',
-      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
+      render: () => <AppointmentForm />,
     },
     {
       id: 'profile',
@@ -72,7 +73,7 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
     {
       id: 'appointments',
       label: 'Записи',
-      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
+      render: () => <PsychologistAppointments />,
     },
     {
       id: 'profile',
@@ -95,7 +96,7 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
     {
       id: 'appointments',
       label: 'Записи',
-      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
+      render: () => <ComingSoon title="Администрирование" />,
     },
     {
       id: 'admin',
