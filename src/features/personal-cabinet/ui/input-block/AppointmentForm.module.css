@@ -52,7 +52,7 @@
   gap: 8px;
 }
 
-.location__element input[type="checkbox"] {
+.location__element input[type='checkbox'] {
   cursor: pointer;
   width: 18px;
   height: 18px;
@@ -157,9 +157,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s, transform 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
   z-index: 2;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .galleryBtn img {
@@ -193,7 +195,7 @@
     flex-direction: column;
     align-items: center;
   }
-  
+
   .galleryBtn {
     position: static;
     transform: none;
@@ -221,7 +223,8 @@
   gap: 8px;
 }
 
-.datePicker, .selectInput {
+.datePicker,
+.selectInput {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -258,11 +261,13 @@
   cursor: pointer;
 }
 
-.subButton:hover, .submitBtn:hover {
+.subButton:hover,
+.submitBtn:hover {
   opacity: 0.9;
 }
 
-.subButton:disabled, .submitBtn:disabled {
+.subButton:disabled,
+.submitBtn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -344,17 +349,25 @@
   .location__element label {
     color: var(--color-label-neutral-inverted-primary);
   }
-  .name{
+  .name {
     color: var(--color-label-neutral-inverted-primary);
   }
-  .qual{
+  .qual {
     color: var(--color-label-neutral-inverted-primary);
   }
   .exp {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
   .office {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
 
   .consultArea {
@@ -369,6 +382,10 @@
     color: var(--color-label-neutral-inverted-primary);
   }
   .results__textGray {
-    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
 }

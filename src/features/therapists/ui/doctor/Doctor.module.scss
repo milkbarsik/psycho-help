@@ -86,8 +86,8 @@
 }
 
 .speciality {
-  font-size: 2rem; 
-  color: var(--color-label-neutral-primary); 
+  font-size: 2rem;
+  color: var(--color-label-neutral-primary);
   font: var(--font-text-large);
 }
 
@@ -143,9 +143,13 @@
   }
   .experience,
   .consult_areas {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
-  .photo{
+  .photo {
     background-color: var(--color-fill-neutral-primary);
   }
 }

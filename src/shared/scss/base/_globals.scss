@@ -20,7 +20,6 @@
    если что-то будет не сходится, то надо будет поправить
 */
 
-
 :root {
   --color-background-neutral-primary: #{$neutral-0};
   --color-background-neutral-secondary: #{$neutral-50};
@@ -74,7 +73,7 @@
   --color-fill-brand-secondary: #{$accent-brand-200};
   --color-fill-brand-tetriary: #{$accent-brand-100};
   --color-fill-brand-quaternary: #{$accent-brand-50};
-  
+
   --color-fill-brand-derivable-primary: #{rgba($accent-brand-500, 0.8)};
   --color-fill-brand-derivable-secondary: #{rgba($accent-brand-500, 0.52)};
   --color-fill-brand-derivable-tetriary: #{rgba($accent-brand-500, 0.32)};

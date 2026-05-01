@@ -110,7 +110,11 @@
     background-color: var(--color-fill-neutral-primary);
   }
   .avatar {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
   .name {
     color: var(--color-label-neutral-inverted-primary);
@@ -118,19 +122,19 @@
 
   .navItem {
     color: var(--color-label-neutral-inverted-primary);
-    &:hover{
+    &:hover {
       color: var(--color-interactive-brand-primary);
     }
-    &.active{
+    &.active {
       background-color: var(--color-interactive-neutral-active);
     }
   }
   .askButton {
     color: var(--color-interactive-neutral-primary);
-    &:hover{
+    &:hover {
       background-color: var(--color-interactive-neutral-hover-secondary);
     }
-    &:active{
+    &:active {
       background-color: var(--color-interactive-neutral-active-secondary);
     }
   }

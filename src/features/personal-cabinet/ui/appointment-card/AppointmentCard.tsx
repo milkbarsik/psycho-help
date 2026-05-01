@@ -1,9 +1,5 @@
 import type { FC } from 'react';
-import {
-  UserOutlined,
-  EnvironmentOutlined,
-  ClockCircleOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, EnvironmentOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import clsx from 'clsx';
 import type { AppointmentStatus } from '@/entities/appointment/types';
 import styles from './AppointmentCard.module.scss';
@@ -22,7 +18,7 @@ interface AppointmentCardProps {
 
 const getStatusConfig = (status?: string) => {
   switch (status?.toLocaleLowerCase()) {
-/*     case 'approved':
+    /*     case 'approved':
     case 'accepted':
       return { text: 'Подтверждено', dotClass: styles.dotSuccess }; */
     case 'cancelled':

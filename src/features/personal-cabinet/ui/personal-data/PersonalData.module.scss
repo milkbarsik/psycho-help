@@ -493,14 +493,18 @@
 }
 
 [data-theme='dark'] {
-  .name{
+  .name {
     color: var(--color-label-neutral-inverted-primary);
   }
   .avatarSection {
     background-color: transparent;
   }
   .avatarIcon {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
   .avatarUpload rect {
     fill: transparent;
@@ -524,11 +528,20 @@
     color: var(--color-label-neutral-inverted-primary);
   }
   .nameFieldsRow input::placeholder {
-    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
   .cancelNameButton {
     color: var(--color-label-neutral-inverted-primary);
-    border: 1px solid color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    border: 1px solid
+      color-mix(
+        in srgb,
+        var(--color-label-neutral-secondary),
+        var(--color-label-neutral-inverted-primary)
+      );
   }
   .cancelNameButton:hover {
     background-color: var(--color-interactive-neutral-hover-secondary);
@@ -564,13 +577,21 @@
     color: var(--color-label-neutral-inverted-primary);
   }
   .field .editableField input::placeholder {
-    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
   .passwordField {
     background-color: var(--color-fill-neutral-primary);
     color: var(--color-label-neutral-inverted-primary);
   }
   .passwordField input::placeholder {
-    color:  color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) ;
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
 }

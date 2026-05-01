@@ -10,7 +10,7 @@ const BackToTop: React.FC = () => {
     const onScroll = () => {
       const current = window.scrollY;
       const isScrollingUp = current < lastScroll.current;
-      const pastThreshold = current > 300; 
+      const pastThreshold = current > 300;
       setVisible(isScrollingUp && pastThreshold);
       lastScroll.current = current;
     };
@@ -32,7 +32,9 @@ const BackToTop: React.FC = () => {
       className={clsx(styles.button, { [styles.visible]: visible })}
       onClick={handleClick}
     >
-      <span className={styles.icon} aria-hidden>↑</span>
+      <span className={styles.icon} aria-hidden>
+        ↑
+      </span>
     </button>
   );
 };

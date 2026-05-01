@@ -85,7 +85,7 @@
     background-color: var(--color-fill-neutral-secondary);
   }
   .p,
-  .answer{
+  .answer {
     color: var(--color-label-neutral-inverted-primary);
   }
   .button path {

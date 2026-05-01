@@ -234,7 +234,11 @@
   }
 
   .text {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
   .tab {
     background-color: var(--color-interactive-neutral-active);
@@ -247,10 +251,10 @@
   .button {
     background-color: var(--color-fill-neutral-none);
     color: var(--color-interactive-neutral-primary);
-    &:hover{
+    &:hover {
       background-color: var(--color-interactive-neutral-hover-secondary);
     }
-    &:hover{
+    &:hover {
       background-color: var(--color-interactive-neutral-active-secondary);
     }
   }

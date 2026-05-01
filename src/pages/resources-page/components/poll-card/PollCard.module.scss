@@ -126,7 +126,11 @@
   .title {
     color: var(--color-label-neutral-inverted-primary);
   }
-  .description{
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) !important;
+  .description {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    ) !important;
   }
 }

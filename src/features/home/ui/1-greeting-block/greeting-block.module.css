@@ -25,17 +25,17 @@
 }
 
 .greeting__title {
-    font-size: 4.4rem;
-    line-height: 52px;
-    color: var(--color-label-neutral-primary);
-    font-weight: 500;
-    font-family: 'Geist', sans-serif;
+  font-size: 4.4rem;
+  line-height: 52px;
+  color: var(--color-label-neutral-primary);
+  font-weight: 500;
+  font-family: 'Geist', sans-serif;
 }
 
 .greeting__subtitle {
-    font-size: 2rem;
-    font-family: 'Roboto', sans-serif;
-    color: var(--color-label-neutral-secondary);
+  font-size: 2rem;
+  font-family: 'Roboto', sans-serif;
+  color: var(--color-label-neutral-secondary);
 }
 
 .greeting__image {
@@ -57,16 +57,16 @@
 }
 
 .greeting__option {
-    background: var(--color-interactive-neutral-secondary);
-    border: 2px solid transparent;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 1rem;
-    font-size: 2rem;
-    padding: 16px 64px;
-    border-radius: 12px;
+  background: var(--color-interactive-neutral-secondary);
+  border: 2px solid transparent;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 2rem;
+  padding: 16px 64px;
+  border-radius: 12px;
 }
 
 .greeting__option_icon {
@@ -74,38 +74,38 @@
 }
 
 .greeting__option:hover {
-    background-color: var(--color-interactive-neutral-hover-secondary);
+  background-color: var(--color-interactive-neutral-hover-secondary);
 }
 
 .greeting__option:active,
 .greeting__selected,
 .greeting__option:active:hover {
-    background: var(--color-interactive-brand-secondary);
-    color: var(--color-border-brand-strong);
+  background: var(--color-interactive-brand-secondary);
+  color: var(--color-border-brand-strong);
 }
 
 .greeting__option:focus-visible {
-    border-radius: 4px;
-    border-color: var(--color-border-brand-strong);
+  border-radius: 4px;
+  border-color: var(--color-border-brand-strong);
 }
 
 .greeting__submit {
-    width: 100%;
-    border: solid;
-    background-color: var(--color-interactive-brand-primary);
-    color: var(--color-label-neutral-inverted-primary);
-    padding: 16px;
-    border-radius: 12px;
-    font-size: 2rem;
-    cursor: pointer;
+  width: 100%;
+  border: solid;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-label-neutral-inverted-primary);
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 2rem;
+  cursor: pointer;
 }
 
 .greeting__submit:hover {
-    background-color: var(--color-interactive-brand-hover)
+  background-color: var(--color-interactive-brand-hover);
 }
 
 .greeting__submit:active {
-    background-color: var(--color-interactive-brand-active)
+  background-color: var(--color-interactive-brand-active);
 }
 
 @media (max-width: 1206px) {
@@ -216,16 +216,20 @@
   }
 
   .greeting__subtitle {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
 
   .greeting__option {
     background: var(--color-interactive-neutral-active);
-    &:hover{
+    &:hover {
       color: var(--color-interactive-neutral-primary);
       background: var(--color-background-neutral-primary);
     }
-    &:active{
+    &:active {
       background: none;
       border-color: var(--color-border-brand-strong);
       color: var(--color-interactive-brand-active);
@@ -239,10 +243,10 @@
   .greeting__submit {
     background-color: var(--color-fill-neutral-none);
     color: var(--color-interactive-neutral-primary);
-    &:hover{
+    &:hover {
       background-color: var(--color-interactive-neutral-hover-secondary);
     }
-    &:active{
+    &:active {
       background-color: var(--color-interactive-neutral-active-secondary);
     }
   }

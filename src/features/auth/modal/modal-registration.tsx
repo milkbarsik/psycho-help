@@ -313,9 +313,7 @@ const ModalRegistration: React.FC<Tprops> = ({ setWindow, isOpen, setModalOpen }
           </label>
         </form>
 
-        {error.message !== '' && (
-          <p className={styles.errorMessage}>{error.message}</p>
-        )}
+        {error.message !== '' && <p className={styles.errorMessage}>{error.message}</p>}
 
         <div className={styles.footer}>
           <button

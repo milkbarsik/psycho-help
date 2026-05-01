@@ -1,17 +1,17 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .errorText {
-    color: var(--color-label-danger-primary);
+  color: var(--color-label-danger-primary);
 }
 
 .registerButton {
-    width: 70px;
-    min-width: unset;
+  width: 70px;
+  min-width: unset;
 }
 .hintText {
-    opacity: 0.5;
+  opacity: 0.5;
 }

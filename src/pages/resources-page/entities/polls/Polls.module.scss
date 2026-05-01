@@ -28,7 +28,6 @@
     }
 
     @include past-tablet {
-
       .passList {
         grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
         padding: 0;

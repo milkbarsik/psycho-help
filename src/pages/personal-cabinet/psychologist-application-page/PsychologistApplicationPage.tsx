@@ -23,7 +23,6 @@ import { getTabsForRole, type TabId } from '@/pages/personal-cabinet/config/tabs
 import PsychologistRejectModal from '@/features/personal-cabinet/ui/PsychologistRejectModal';
 import styles from './PsychologistApplicationPage.module.scss';
 
-
 const MEETING_TYPE_OPTIONS = [
   { value: 'online' as const, label: 'Онлайн' },
   { value: 'offline' as const, label: 'Очно' },
@@ -215,9 +214,7 @@ const PsychologistApplicationPage = () => {
     (meetingType === 'offline' ? locationAddress.trim().length > 0 : meetingUrl.trim().length > 0);
 
   const disabledDates = (current: dayjs.Dayjs) => {
-    return current
-      ? current.tz(MOSCOW_TZ, true).isBefore(dayjs.tz().startOf('day'), 'day')
-      : false;
+    return current ? current.tz(MOSCOW_TZ, true).isBefore(dayjs.tz().startOf('day'), 'day') : false;
   };
 
   interface ExpandableTextProps {

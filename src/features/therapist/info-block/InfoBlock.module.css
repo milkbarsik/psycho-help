@@ -163,7 +163,11 @@
   }
   .exp,
   .office {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
   .consultArea {
     color: var(--color-label-neutral-inverted-primary);
@@ -173,14 +177,18 @@
     color: var(--color-label-neutral-inverted-primary);
   }
   .supInfo {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
 
   .regBtn {
     background-color: var(--color-background-neutral-primary);
     color: var(--color-label-neutral-primary);
   }
-  .photo{
+  .photo {
     background-color: var(--color-fill-neutral-primary);
   }
 }

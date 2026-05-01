@@ -1,22 +1,22 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .errorText {
-    color: var(--color-label-danger-primary);
+  color: var(--color-label-danger-primary);
 }
 .hintText {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .checkbox {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .registerButton {
-    width: 110px;
-    min-width: unset;
+  width: 110px;
+  min-width: unset;
 }

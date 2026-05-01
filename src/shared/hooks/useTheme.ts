@@ -44,7 +44,7 @@ export function useTheme() {
     updateFavicon(getSystemTheme());
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     const handleThemeChange = (e: MediaQueryListEvent | MediaQueryList) => {
       updateFavicon(e.matches ? 'dark' : 'light');
     };

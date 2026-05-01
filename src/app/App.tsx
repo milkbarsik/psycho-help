@@ -11,7 +11,6 @@ import { appTheme } from '@/app/theme';
 import { BackToTop } from '@/shared/ui';
 import { useTheme } from '@/shared/hooks/useTheme';
 
-
 function App() {
   const { currentTheme } = useTheme();
   const client = new QueryClient({
@@ -23,7 +22,7 @@ function App() {
   });
   const themeConfig = {
     ...appTheme,
-    algorithm: currentTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    algorithm: currentTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
   };
   return (
     <QueryClientProvider client={client}>

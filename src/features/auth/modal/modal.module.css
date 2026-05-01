@@ -335,25 +335,29 @@
   .modalContent {
     background: var(--color-background-neutral-inverted);
   }
-  .closeButton{
+  .closeButton {
     color: var(--color-label-neutral-inverted-primary);
   }
   .button {
     color: var(--color-label-neutral-inverted-primary);
-    &:hover{
+    &:hover {
       background-color: var(--color-interactive-neutral-hover-secondary);
       color: var(--color-interactive-brand-hover);
     }
-    &:active{
+    &:active {
       color: var(--color-interactive-brand-active);
     }
   }
   .hintText,
   .modalDesc,
   .Suggestion span {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary));
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
   }
-  .checkbox_custom{
-    border:1px solid var(--color-border-neutral-inverted);
+  .checkbox_custom {
+    border: 1px solid var(--color-border-neutral-inverted);
   }
 }

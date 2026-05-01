@@ -109,16 +109,20 @@
 }
 
 [data-theme='dark'] {
-  .title{
+  .title {
     color: var(--color-label-neutral-inverted-primary) !important;
   }
   .sectionTitle {
     color: var(--color-label-neutral-inverted-primary);
   }
   .emptyText {
-    color: color-mix(in srgb, var(--color-label-neutral-secondary), var(--color-label-neutral-inverted-primary)) !important;
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    ) !important;
   }
-  .countBage{
+  .countBage {
     color: var(--color-label-neutral-inverted-primary);
   }
 }
