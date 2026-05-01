@@ -34,11 +34,6 @@ export interface UserPasswordUpdate {
   new_password: string;
 }
 
-export interface ResponseError {
-  message: string;
-  status: number | undefined;
-}
-
 export interface UserUpdate {
   first_name: string | null;
   middle_name: string | null;

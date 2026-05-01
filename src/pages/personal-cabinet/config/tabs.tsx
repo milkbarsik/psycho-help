@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { User } from '@/entities/auth';
+import type { User } from '@/entities/auth/types';
 import type { RoleCode } from '@/entities/role/types';
 import Dashboard from '../ui/dashboard/Dashboard';
 import PsychologistApplications from '@/pages/personal-cabinet/ui/applications/PsychologistApplications';

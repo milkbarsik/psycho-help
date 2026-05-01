@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { useCallback, useRef, useState } from 'react';
-import type { ResponseError } from '@/entities/auth';
+import type { ResponseError } from '@/shared/api';
 
 export type UseFetchReturn = {
   isLoading: boolean;
