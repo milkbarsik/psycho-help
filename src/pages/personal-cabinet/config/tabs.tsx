@@ -10,12 +10,11 @@ import PersonalData from '@/features/personal-cabinet/ui/personal-data/PersonalD
 
 export type TabId =
   | 'main'
-  | 'book'
-  | 'profile'
   | 'applications'
-  | 'appointments'
-  | 'clients'
-  | 'admin';
+  | 'userAppointments'
+  | 'psychologistAppointments'
+  | 'profile';
+// потом админа и контент-менеджера добавим, сейчас даже не понятно, какие табы у них будут
 
 export interface TabRenderProps {
   user: User;
@@ -43,7 +42,7 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
       ),
     },
     {
-      id: 'appointments',
+      id: 'userAppointments',
       label: 'Запись на сессию',
       render: () => <AppointmentForm />,
     },
@@ -71,7 +70,7 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
       render: () => <PsychologistApplications />,
     },
     {
-      id: 'appointments',
+      id: 'psychologistAppointments',
       label: 'Записи',
       render: () => <PsychologistAppointments />,
     },
@@ -94,13 +93,8 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
       ),
     },
     {
-      id: 'appointments',
+      id: 'psychologistAppointments',
       label: 'Записи',
-      render: () => <ComingSoon title="Администрирование" />,
-    },
-    {
-      id: 'admin',
-      label: 'Администрирование',
       render: () => <ComingSoon title="Администрирование" />,
     },
     {
