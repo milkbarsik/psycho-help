@@ -1,6 +1,7 @@
 import { type QueryObserverOptions, queryOptions } from '@tanstack/react-query';
 import { $api } from '@/shared/api/http.ts';
-import type { ResponseError, Therapist } from '@/shared/api';
+import type { ResponseError } from '@/shared/api';
+import type { Therapist } from '../types';
 
 export const therapistQueryKey = {
   list: 'therapist.list',

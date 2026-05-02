@@ -1,6 +1,11 @@
 import type { AxiosResponse } from 'axios';
 import { $serviceClient } from '@/shared/api/http';
-import type { User, regData } from '@/shared/api/types';
+import type {
+  User,
+  RegistrationData,
+  UserProfileUpdate,
+  UserPasswordUpdate,
+} from '@/entities/auth';
 
 export default class AuthApi {
   static async login(email: string, password: string): Promise<AxiosResponse<User>> {
@@ -8,7 +13,7 @@ export default class AuthApi {
     return res;
   }
 
-  static async registration(data: regData): Promise<AxiosResponse<User>> {
+  static async registration(data: RegistrationData): Promise<AxiosResponse<User>> {
     const res = await $serviceClient.post<User>('/users/register', { ...data });
     return res;
   }
@@ -20,6 +25,15 @@ export default class AuthApi {
 
   static async logOut(): Promise<AxiosResponse> {
     const res = await $serviceClient.post('/users/logout');
+    return res;
+  }
+
+  static async updateProfile(data: UserProfileUpdate): Promise<AxiosResponse<User>> {
+    const res = await $serviceClient.put<User>('/users/me', data);
+    return res;
+  }
+  static async updatePassword(data: UserPasswordUpdate): Promise<AxiosResponse<User>> {
+    const res = await $serviceClient.post<User>('/users/me/password', data);
     return res;
   }
 }

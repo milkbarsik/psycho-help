@@ -1,0 +1,68 @@
+.section {
+  margin-bottom: var(--spacing-xl, 24px);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: var(--font-weight-semibold, 600);
+  margin-bottom: var(--spacing-md, 16px);
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-md, 16px);
+}
+
+.emptyText {
+  color: var(--color-text-secondary, #666);
+  font-style: italic;
+}
+
+.greetingTitle {
+  font-size: var(--font-size-xl, 24px);
+  font-weight: var(--font-weight-semibold, 600);
+  margin: 0 0 0.8rem 0;
+}
+
+.greetingSubtitle {
+  font-size: var(--font-size-md, 16px);
+  color: var(--color-text-secondary, #666);
+  margin: 0;
+}
+
+.pageLoaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.modalInitiator {
+  font-size: var(--font-text-medium, 14px);
+  color: var(--color-text-primary, #333);
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border-neutral-base, #eee);
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.modalText {
+  font-size: var(--font-text-medium, 14px);
+  line-height: 1.5;
+  color: var(--color-text-secondary, #444);
+  white-space: pre-wrap;
+}
+
+[data-theme='dark'] {
+  .modalInitiator {
+    color: var(--color-label-neutral-inverted-primary);
+    border-bottom-color: var(--color-border-neutral-primary);
+  }
+  .modalText {
+    color: var(--color-label-neutral-inverted-secondary);
+  }
+}

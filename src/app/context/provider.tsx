@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 import { useAuth } from '@/features/auth/api/useAuth';
 import { useFetch } from '@/shared/api/useFetch';
 import { AppContext } from './';
+
 interface IProps {
   children: ReactElement;
 }
@@ -25,7 +26,7 @@ export const AppContextProvider = ({ children }: IProps) => {
 
   useEffect(() => {
     fetching();
-  }, []);
+  }, [fetching]);
 
   const memoizedValues = useMemo(
     () => ({

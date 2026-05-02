@@ -1,66 +1,68 @@
 import React from 'react';
 import type { FC } from 'react';
+import { createPortal } from 'react-dom';
 import ModalRegistration from './modal-registration';
-import styles from './modal.module.css';
 import ModalLogin from './modal-login';
 import ModalForgotPassword from './modal-forgot-password';
 import ModalChangePassword from './modal-change-password';
-import Auth from './icons/Auth.svg?react';
-const ModalWindow: FC = () => {
-  const [modalWindow, setModalWindow] = React.useState<string>('log');
-  const [isModalOpen, setModalOpen] = React.useState<boolean>(false);
 
-  /*Здесь идет чередование модальных окон регистрации и логина по клику в модалке,
-   функция только в том случае, если модальное окно открыто */
-  const render = (window: string) => {
-    if (window === 'log') {
+interface ModalWindowProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const ModalWindow: FC<ModalWindowProps> = ({ isOpen, onClose }) => {
+  const [modalWindow, setModalWindow] = React.useState<string>('log');
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setModalWindow('log');
+    }
+  }, [isOpen]);
+
+  const handleSetModalOpen = (open: boolean) => {
+    if (!open) onClose();
+  };
+
+  const renderContent = () => {
+    if (modalWindow === 'log') {
       return (
-        <ModalLogin setWindow={setModalWindow} isOpen={isModalOpen} setModalOpen={setModalOpen} />
+        <ModalLogin setWindow={setModalWindow} isOpen={isOpen} setModalOpen={handleSetModalOpen} />
       );
     }
-    if (window === 'reg') {
+    if (modalWindow === 'reg') {
       return (
         <ModalRegistration
           setWindow={setModalWindow}
-          isOpen={isModalOpen}
-          setModalOpen={setModalOpen}
+          isOpen={isOpen}
+          setModalOpen={handleSetModalOpen}
         />
       );
     }
-    if (window === 'forgot') {
+    if (modalWindow === 'forgot') {
       return (
         <ModalForgotPassword
           setWindow={setModalWindow}
-          isOpen={isModalOpen}
-          setModalOpen={setModalOpen}
+          isOpen={isOpen}
+          setModalOpen={handleSetModalOpen}
         />
       );
     }
-    if (window === 'change') {
+    if (modalWindow === 'change') {
       return (
         <ModalChangePassword
           setWindow={setModalWindow}
-          isOpen={isModalOpen}
-          setModalOpen={setModalOpen}
+          isOpen={isOpen}
+          setModalOpen={handleSetModalOpen}
         />
       );
     }
     return null;
   };
 
-  return (
-    <div className={styles.buttonWrapper}>
-      <button
-        className={styles.button}
-        onClick={() => setModalOpen(!isModalOpen)}
-        aria-label="Открыть окно входа"
-      >
-        <Auth />
-        <span>Войти</span>
-      </button>
-      {isModalOpen && render(modalWindow)}
-    </div>
-  );
+  if (!isOpen) return null;
+
+  return createPortal(renderContent(), document.body);
 };
 
 export default ModalWindow;

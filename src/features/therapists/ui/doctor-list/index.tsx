@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { DoctorCard } from '../doctor';
-import styles from './DoctorList.module.css';
-import type { Therapist } from '@/shared/api/types';
+import styles from './DoctorList.module.scss';
+import type { Therapist } from '@/entities/therapist/types';
 
 interface Props {
   doctors: Therapist[];

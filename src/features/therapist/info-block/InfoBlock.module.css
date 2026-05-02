@@ -1,0 +1,194 @@
+.mainInfo {
+  display: flex;
+  color: var(--color-label-neutral-primary);
+  gap: 36px;
+}
+
+.imgWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.regBtn {
+  background-color: var(--color-interactive-brand-primary);
+  padding: 16px 49px;
+  color: var(--color-label-neutral-inverted-primary);
+  font-size: 2rem;
+  border-radius: 16px;
+  border-width: 0;
+}
+
+.photo {
+  width: 244px;
+  height: 267px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.name {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border-neutral-base);
+  margin: 24px 0;
+}
+
+.qual {
+  font-size: 2rem;
+}
+
+.exp {
+  font-size: 2rem;
+  color: var(--color-label-neutral-secondary);
+}
+
+.office {
+  font-size: 1.6rem;
+  color: var(--color-label-neutral-secondary);
+}
+
+.consultAreas {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+  max-width: 467px;
+  flex-wrap: wrap;
+}
+
+.consultArea {
+  color: var(--color-label-neutral-secondary);
+  border: var(--color-border-neutral-base) 1px solid;
+  padding: 4px 16px;
+  border-radius: 16px;
+}
+
+.btns {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.infoBtn {
+  color: var(--color-label-neutral-primary);
+  font-size: 2rem;
+  border-radius: 16px;
+  padding: 4px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.infoBtnActive {
+  color: var(--color-label-neutral-inverted-primary);
+  background-color: var(--color-interactive-neutral-hover);
+}
+
+.supInfo {
+  margin-top: 24px;
+  color: var(--color-label-neutral-secondary);
+  font-size: 1.6rem;
+}
+
+@media screen and (max-width: 768px) {
+  .photo {
+    width: 208px;
+    height: 228px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .mainInfo {
+    flex-direction: column;
+  }
+  .regBtnTablet {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 56px;
+    margin-bottom: 10px;
+    z-index: 1;
+  }
+
+  .photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+  }
+
+  .infoBtn {
+    font-size: 1.2rem;
+  }
+
+  .name {
+    font-size: 1.8rem;
+  }
+
+  .qual {
+    font-size: 1.6rem;
+  }
+
+  .exp {
+    font-size: 1.6rem;
+  }
+
+  .office {
+    font-size: 1.2rem;
+  }
+}
+
+[data-theme='dark'] {
+  .name,
+  .qual {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .exp,
+  .office {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .consultArea {
+    color: var(--color-label-neutral-inverted-primary);
+    border: 1px solid var(--color-border-neutral-inverted);
+  }
+  .infoBtn {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .supInfo {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+
+  .regBtn {
+    background-color: var(--color-background-neutral-primary);
+    color: var(--color-label-neutral-primary);
+  }
+  .photo {
+    background-color: var(--color-fill-neutral-primary);
+  }
+}

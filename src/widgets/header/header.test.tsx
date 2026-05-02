@@ -1,18 +1,36 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import Header from './header';
-import { useAuth } from '../../features/auth/api/useAuth';
+import { navPages, CABINET_PATH } from '@/app/router/routes';
+import { useAuth } from '@/features/auth/api/useAuth';
 
-// Мокаем SVG-компоненты и модальное окно
-vi.mock('@/shared/assets/images/Logo-2.svg?react', () => ({
-  default: () => <div data-testid="logo" />,
+vi.stubGlobal(
+  'ResizeObserver',
+  vi.fn(() => ({ observe: vi.fn(), unobserve: vi.fn(), disconnect: vi.fn() })),
+);
+// Мокаем SVG-компоненты
+vi.mock('@/shared/assets/images/logo.svg?react', () => ({
+  default: (props: Record<string, unknown>) => <svg data-testid="logo" {...props} />,
 }));
 vi.mock('@/shared/assets/images/header/profile.svg?react', () => ({
-  default: () => <div data-testid="profile-icon" />,
+  default: (props: Record<string, unknown>) => <svg data-testid="profile-icon" {...props} />,
 }));
+vi.mock('@/shared/assets/images/header/auth.svg?react', () => ({
+  default: (props: Record<string, unknown>) => <svg data-testid="auth-icon" {...props} />,
+}));
+
+// Мокаем модальное окно
 vi.mock('@/features/auth/modal/modal', () => ({
-  default: () => <button data-testid="modal-button">Войти</button>,
+  default: ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) =>
+    isOpen ? (
+      <div data-testid="auth-modal">
+        <button data-testid="close-modal" onClick={onClose}>
+          Close
+        </button>
+      </div>
+    ) : null,
 }));
 
 // Мокаем хук авторизации
@@ -20,64 +38,91 @@ vi.mock('@/features/auth/api/useAuth', () => ({
   useAuth: vi.fn(),
 }));
 
-describe('Header component', () => {
-  it('рендерит логотип и все навигационные пункты', () => {
-    (useAuth as any).mockReturnValue({ isAuth: false });
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
-    );
+const renderHeader = () =>
+  render(
+    <MemoryRouter>
+      <Header />
+    </MemoryRouter>,
+  );
 
-    // Проверяем наличие логотипа
+describe('Header component', () => {
+  beforeEach(() => {
+    vi.mocked(useAuth).mockReturnValue({ isAuth: false } as ReturnType<typeof useAuth>);
+  });
+
+  it('рендерит логотип и все навигационные пункты', () => {
+    renderHeader();
+
     expect(screen.getByTestId('logo')).toBeInTheDocument();
 
-    // Проверяем наличие всех пунктов меню
-    const navItems = ['Главная', 'Психологи', 'Новости', 'Полезные материалы', 'FAQ'];
-    navItems.forEach((text) => {
-      expect(screen.getByRole('link', { name: new RegExp(text, 'i') })).toBeInTheDocument();
+    navPages.forEach(({ navText }) => {
+      expect(screen.getByRole('link', { name: new RegExp(navText, 'i') })).toBeInTheDocument();
     });
   });
 
-  it('показывает кнопку "Войти", если пользователь не авторизован', () => {
-    (useAuth as any).mockReturnValue({ isAuth: false });
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
-    );
+  it('навигационные ссылки ведут на правильные страницы', () => {
+    renderHeader();
 
-    expect(screen.getByTestId('modal-button')).toBeInTheDocument();
-    expect(screen.queryByTestId('profile-icon')).not.toBeInTheDocument();
+    navPages.forEach(({ path, navText }) => {
+      const link = screen.getByRole('link', { name: new RegExp(navText, 'i') });
+      expect(link).toHaveAttribute('href', path);
+    });
   });
 
-  it('показывает иконку профиля, если пользователь авторизован', () => {
-    (useAuth as any).mockReturnValue({ isAuth: true });
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
-    );
+  describe('Авторизация', () => {
+    it('показывает кнопку "Войти", если пользователь не авторизован', () => {
+      renderHeader();
 
-    expect(screen.getByTestId('profile-icon')).toBeInTheDocument();
-    expect(screen.queryByTestId('modal-button')).not.toBeInTheDocument();
+      const authBtn = screen.getByTestId('auth-button');
+      expect(authBtn).toBeInTheDocument();
+      expect(authBtn).toHaveAccessibleName();
+      expect(authBtn.textContent?.trim().length ?? 0).toBeGreaterThan(0);
+      expect(screen.queryByTestId('profile-icon')).not.toBeInTheDocument();
+    });
 
-    // Проверяем, что ссылка ведёт в кабинет
-    const profileLink = screen.getByRole('link', { name: /личного кабинета/i });
-    expect(profileLink).toHaveAttribute('href', '/cabinet');
+    it('показывает иконку профиля, если пользователь авторизован', () => {
+      vi.mocked(useAuth).mockReturnValue({ isAuth: true } as ReturnType<typeof useAuth>);
+      renderHeader();
+
+      expect(screen.getByTestId('profile-icon')).toBeInTheDocument();
+      expect(screen.queryByTestId('auth-button')).not.toBeInTheDocument();
+    });
+
+    it('ссылка профиля ведёт в личный кабинет', () => {
+      vi.mocked(useAuth).mockReturnValue({ isAuth: true } as ReturnType<typeof useAuth>);
+      renderHeader();
+
+      const cabinetLink = screen.getByTestId('profile-icon').closest('a');
+      expect(cabinetLink).toHaveAttribute('href', CABINET_PATH);
+    });
   });
 
-  it('каждая ссылка имеет aria-label', () => {
-    (useAuth as any).mockReturnValue({ isAuth: false });
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
-    );
+  describe('Модальное окно входа', () => {
+    it('клик по кнопке "Войти" открывает модальное окно', async () => {
+      renderHeader();
 
-    const links = screen.getAllByRole('link');
-    links.forEach((link) => {
-      expect(link).toHaveAttribute('aria-label');
+      expect(screen.queryByTestId('auth-modal')).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getByTestId('auth-button'));
+
+      expect(screen.getByTestId('auth-modal')).toBeInTheDocument();
+    });
+
+    it('модальное окно закрывается при вызове onClose', async () => {
+      renderHeader();
+
+      await userEvent.click(screen.getByTestId('auth-button'));
+      expect(screen.getByTestId('auth-modal')).toBeInTheDocument();
+
+      await userEvent.click(screen.getByTestId('close-modal'));
+      expect(screen.queryByTestId('auth-modal')).not.toBeInTheDocument();
+    });
+
+    it('модальное окно не рендерится для авторизованного пользователя', () => {
+      vi.mocked(useAuth).mockReturnValue({ isAuth: true } as ReturnType<typeof useAuth>);
+      renderHeader();
+
+      expect(screen.queryByTestId('auth-modal')).not.toBeInTheDocument();
     });
   });
 });

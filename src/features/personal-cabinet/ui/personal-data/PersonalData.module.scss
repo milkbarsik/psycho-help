@@ -1,0 +1,597 @@
+// Миксин для полей ввода
+@mixin input-field {
+  width: 100%;
+  padding: 1.2rem 1.6rem;
+  border: 1px solid var(--color-border-neutral-soft);
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  color: var(--color-label-neutral-primary);
+  background-color: var(--color-background-neutral-primary);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  outline: none;
+
+  &:hover {
+    border-color: var(--color-fill-neutral-primary);
+  }
+
+  &:focus {
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
+  }
+
+  &::placeholder {
+    color: var(--color-label-neutral-quaternary);
+  }
+
+  &:disabled {
+    background-color: var(--color-background-neutral-secondary);
+    cursor: not-allowed;
+  }
+}
+
+// Миксин для лейблов
+@mixin field-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+  color: var(--color-label-neutral-secondary);
+}
+
+// Миксин для редактируемого поля
+@mixin editable-field {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  border: 1px solid var(--color-border-neutral-soft);
+  border-radius: 0.8rem;
+  background-color: var(--color-background-neutral-primary);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  position: relative;
+
+  &:hover {
+    border-color: var(--color-fill-neutral-primary);
+  }
+
+  &:focus-within {
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
+  }
+
+  &.editing {
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    color: var(--color-label-neutral-primary);
+    background: transparent;
+    padding: 0;
+
+    &::placeholder {
+      color: var(--color-label-neutral-quaternary);
+    }
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+  max-width: 1200px;
+
+  @media (min-width: 634px) {
+    grid-template-columns: 320px 1fr;
+    gap: 3.2rem;
+  }
+}
+
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+  background-color: var(--color-background-neutral-primary);
+
+  font-family: var(--text-font-family);
+}
+
+.avatar {
+  position: relative;
+  width: 28.8rem;
+  height: 28.8rem;
+  border-radius: 50%;
+  background-color: var(--color-border-neutral-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatarIcon {
+    font-size: 16.4rem;
+    color: var(--color-label-neutral-secondary);
+
+    @media (min-width: 634px) and (max-width: 1023px) {
+      font-size: 12rem;
+    }
+
+    @media (max-width: 633px) {
+      font-size: 10rem;
+    }
+  }
+
+  @media (min-width: 634px) and (max-width: 1023px) {
+    width: 20rem;
+    height: 20rem;
+  }
+
+  @media (max-width: 633px) {
+    width: 17rem;
+    height: 17rem;
+  }
+}
+
+.avatarUpload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  cursor: pointer;
+  padding: 0.8rem 1.6rem;
+  margin-top: 1.2rem;
+  border-radius: 0.8rem;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    label {
+      border-bottom: 1px solid var(--color-label-brand-primary);
+    }
+  }
+
+  label {
+    color: var(--color-label-brand-primary);
+    font: var(--font-text-medium);
+    cursor: pointer;
+  }
+
+  svg {
+    path {
+      stroke: var(--color-label-brand-primary);
+    }
+  }
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: var(--color-background-neutral-primary);
+
+  font-family: var(--text-font-family);
+  font: var(--font-text-medium);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-label-neutral-primary);
+    margin: 0;
+  }
+}
+
+.nameWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+
+  .name {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-label-neutral-primary);
+  }
+}
+
+.nameEditContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.nameFieldsRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+
+  @media (min-width: 634px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.nameInputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  input {
+    @include input-field;
+    height: 4.8rem;
+    padding: 1.2rem 1.6rem;
+
+    &.inputError {
+      border-color: var(--color-label-danger-primary);
+
+      &:focus {
+        border-color: var(--color-label-danger-primary);
+        box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.15);
+      }
+    }
+  }
+}
+
+.nameErrorText {
+  font-size: 1.2rem;
+  color: var(--color-label-danger-primary);
+  padding-left: 0.4rem;
+}
+
+.nameActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.saveNameButton {
+  padding: 0.8rem 1.6rem;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-background-neutral-primary);
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-interactive-brand-hover);
+  }
+}
+
+.cancelNameButton {
+  padding: 0.8rem 1.6rem;
+  background-color: transparent;
+  color: var(--color-label-neutral-secondary);
+  border: 1px solid var(--color-border-neutral-soft);
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-background-neutral-secondary);
+    border-color: var(--color-fill-neutral-primary);
+  }
+}
+
+.editButton {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-interactive-brand-disable);
+  }
+
+  svg {
+    width: 2.4rem;
+    height: 2.4rem;
+    color: var(--color-interactive-neutral-hover);
+  }
+}
+
+.fieldsGrid {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  label {
+    @include field-label;
+  }
+
+  &:focus-within {
+    label {
+      color: var(--color-label-brand-secondary);
+    }
+  }
+
+  .editableField {
+    @include editable-field;
+    height: 4.8rem;
+
+    input {
+      padding: 0;
+    }
+  }
+
+  .errorText {
+    font-size: 1.2rem;
+    color: var(--color-label-danger-primary);
+    margin-top: 0.4rem;
+  }
+}
+
+.passwordField {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  border: 1px solid var(--color-border-neutral-soft);
+  border-radius: 0.8rem;
+  background-color: var(--color-background-neutral-primary);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  height: 4.8rem;
+  box-sizing: border-box;
+
+  &:hover {
+    border-color: var(--color-fill-neutral-primary);
+  }
+
+  &:focus-within {
+    border-color: var(--color-label-brand-secondary);
+    box-shadow: 0 0 0 3px rgba(64, 123, 254, 0.15);
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    color: var(--color-label-neutral-primary);
+    background: transparent;
+    padding: 0;
+    height: 100%;
+
+    &::placeholder {
+      color: var(--color-label-neutral-quaternary);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .togglePassword {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+      color: var(--color-label-neutral-tetriary);
+    }
+
+    &:hover svg {
+      color: var(--color-interactive-neutral-hover);
+    }
+  }
+}
+
+.changePasswordLink {
+  font: var(--font-text-medium);
+  color: var(--color-interactive-brand-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+
+  &:hover {
+    color: var(--color-interactive-brand-hover);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 1.2rem;
+  padding-top: 1.6rem;
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  gap: 1.2rem;
+  background-color: transparent;
+
+  padding: 1.2rem 2rem;
+  color: var(--color-label-danger-primary);
+  border: none;
+  border-radius: 0.8rem;
+  font: var(--font-text-large);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-interactive-brand-disable);
+  }
+
+  &:disabled {
+    background-color: var(--color-interactive-neutral-disable);
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
+.saveButton {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem 2rem;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-background-neutral-primary);
+  border: none;
+  border-radius: 0.8rem;
+  font: var(--font-text-medium);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-interactive-brand-hover);
+  }
+
+  &:disabled {
+    background-color: var(--color-interactive-neutral-disable);
+    cursor: not-allowed;
+  }
+}
+
+[data-theme='dark'] {
+  .name {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .avatarSection {
+    background-color: transparent;
+  }
+  .avatarIcon {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .avatarUpload rect {
+    fill: transparent;
+  }
+
+  .profileSection {
+    background-color: transparent;
+  }
+  .editButton rect {
+    fill: transparent;
+  }
+  .editButton path {
+    stroke: var(--color-border-neutral-inverted);
+  }
+  .editButton:hover {
+    background-color: var(--color-interactive-neutral-hover);
+  }
+
+  .nameFieldsRow input {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .nameFieldsRow input::placeholder {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .cancelNameButton {
+    color: var(--color-label-neutral-inverted-primary);
+    border: 1px solid
+      color-mix(
+        in srgb,
+        var(--color-label-neutral-secondary),
+        var(--color-label-neutral-inverted-primary)
+      );
+  }
+  .cancelNameButton:hover {
+    background-color: var(--color-interactive-neutral-hover-secondary);
+    color: var(--color-interactive-neutral-active);
+  }
+
+  .fieldsGrid label {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .selectDropdown {
+    border: none;
+  }
+  .customSelect {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .selectArrow {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .selectOption {
+    background-color: var(--color-interactive-neutral-hover);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .selectOption.selected {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-interactive-brand-primary);
+  }
+
+  .editableField {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .editableField input {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .field .editableField input::placeholder {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .passwordField {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .passwordField input::placeholder {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+}

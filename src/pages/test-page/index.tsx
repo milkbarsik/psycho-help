@@ -67,16 +67,27 @@ export const TestPage = () => {
       </div>
 
       <div className={styles.buttons}>
-        <button className={`${styles.buttonAction} ${styles.buttonActionBack}`} onClick={handlePrev}>
+        <button
+          className={`${styles.buttonAction} ${styles.buttonActionBack}`}
+          onClick={handlePrev}
+        >
           Назад
         </button>
 
         {isLastQuestion ? (
-          <button className={`${styles.buttonAction} ${styles.buttonActionComplete}`} onClick={handleFinish} disabled={!answers[currentQuestion.id]}>
+          <button
+            className={`${styles.buttonAction} ${styles.buttonActionComplete}`}
+            onClick={handleFinish}
+            disabled={!answers[currentQuestion.id]}
+          >
             Завершить
           </button>
         ) : (
-          <button className={`${styles.buttonAction} ${styles.buttonActionNext}`} onClick={handleNext} disabled={!answers[currentQuestion.id]}>
+          <button
+            className={`${styles.buttonAction} ${styles.buttonActionNext}`}
+            onClick={handleNext}
+            disabled={!answers[currentQuestion.id]}
+          >
             Далее
           </button>
         )}

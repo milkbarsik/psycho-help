@@ -4,9 +4,9 @@
 // На мобильных устройствах hover не будет работать.
 // Это полезно для улучшения пользовательского опыта на сенсорных экранах.
 @mixin media-hover {
-    @include media-tablet {
-        &:hover {
-            @content;
-        }
+  @include media-tablet {
+    &:hover {
+      @content;
     }
+  }
 }

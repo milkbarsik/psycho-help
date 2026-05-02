@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import AuthApi from './auth-api';
 import type { AxiosResponse } from 'axios';
-import type { regData, User } from '@/shared/api/types';
+import type { User, RegistrationData } from '@/entities/auth';
 
 type Tauth = {
   isAuth: boolean;
@@ -9,12 +9,12 @@ type Tauth = {
   setAuth: (value: boolean) => void;
   setUser: (user: User | null) => void;
   login: (email: string, password: string) => Promise<AxiosResponse<User>>;
-  registration: (data: regData) => Promise<AxiosResponse<User>>;
+  registration: (data: RegistrationData) => Promise<AxiosResponse<User>>;
   getUser: () => Promise<AxiosResponse<User>>;
   logOut: () => Promise<AxiosResponse>;
 };
 
-export const useAuth = create<Tauth>((set, get) => ({
+export const useAuth = create<Tauth>((set, _get) => ({
   isAuth: false,
   user: null,
   remember_me: false,
@@ -25,11 +25,12 @@ export const useAuth = create<Tauth>((set, get) => ({
 
   async login(email: string, password: string): Promise<AxiosResponse<User>> {
     const res = await AuthApi.login(email, password);
-    set((state) => ({ ...state, isAuth: true, user: { ...res.data } }));
+    const userRes = await AuthApi.getUser();
+    set((state) => ({ ...state, isAuth: true, user: { ...userRes.data } }));
     return res;
   },
 
-  async registration(data: regData): Promise<AxiosResponse<User>> {
+  async registration(data: RegistrationData): Promise<AxiosResponse<User>> {
     const res = await AuthApi.registration(data);
     set((state) => ({ ...state, isAuth: true, user: { ...res.data } }));
     return res;

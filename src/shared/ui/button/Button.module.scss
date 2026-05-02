@@ -1,72 +1,114 @@
 .button {
-    color: white;
-    font-size: 1.6rem;
-    font-weight: bold;
-    user-select: none;
-    display: flex;
-    border-radius: 1rem;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    transition: 
-        outline .3s ease,
-        background .3s ease,
-        outline-offset .3s ease;
-    outline: 2px solid transparent;
+  color: var(--color-label-neutral-inverted-primary);
+  font-size: 1.6rem;
+  font-weight: bold;
+  user-select: none;
+  display: flex;
+  border-radius: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  transition:
+    outline 0.3s ease,
+    background 0.3s ease,
+    outline-offset 0.3s ease;
+  outline: 2px solid transparent;
+  border-width: 0;
 
-    &.medium {
-        padding: 1.4rem;
+  &.medium {
+    padding: 1.4rem;
 
-        .icon {
-            width: 2.4rem;
-            height: 2.4rem;
-        }
+    .icon {
+      width: 2.4rem;
+      height: 2.4rem;
     }
-
+  }
+  &.color-brand {
     &.secondary {
-        background-color: var(--color-interactive-brand-secondary);    
-        color: var(--color-label-brand-primary);
+      background-color: var(--color-interactive-brand-secondary);
+      color: var(--color-label-brand-primary);
 
-        &:hover {
-            background-color: var(--color-interactive-brand-hover-secondary)
-        }
+      &:hover {
+        background-color: var(--color-interactive-brand-hover-secondary);
+      }
 
-        &:active {
-            background-color: var(--color-interactive-brand-active-secondary);
-        }
+      &:active {
+        background-color: var(--color-interactive-brand-active-secondary);
+      }
 
-        &:disabled {
-            background-color: var(--color-interactive-neutral-disable);
-            color: var(--color-label-neutral-quaternary);
-        }
+      &:disabled {
+        background-color: var(--color-interactive-neutral-disable);
+        color: var(--color-label-neutral-quaternary);
+      }
     }
 
     &.primary {
-        background: #486CC0;
+      background: var(--color-fill-brand-primary);
 
-        &:hover {
-            background: #36508a;
-        }
+      &:hover {
+        background: var(--color-interactive-neutral-hover);
+      }
 
-        &:focus {
-            outline: 2px solid #486CC0;
-            outline-offset: 2px;
-            background: #36508a
-        }
+      &:focus {
+        outline: 2px solid var(--color-border-brand-strong);
+        outline-offset: 2px;
+        background: var(--color-fill-brand-primary);
+      }
     }
+  }
 
-    &.hasIcon {
-        gap: 1.2rem;
+  &.color-neutral {
+    &.primary {
+      background-color: var(--color-interactive-neutral-primary);
+      color: var(--color-label-neutral-inverted-primary);
 
-        .icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+      &:hover {
+        background-color: var(--color-interactive-neutral-hover);
+      }
 
-            svg {
-                width: 100%;
-                height: 100%;
-            }
-        }
+      &:active {
+        background-color: var(--color-interactive-neutral-active);
+      }
+
+      &:disabled {
+        background-color: var(--color-interactive-neutral-disable);
+        color: var(--color-label-neutral-quaternary);
+      }
     }
+  }
+
+  &.hasIcon {
+    gap: 1.2rem;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+[data-theme='dark'] {
+  .button {
+    &.color-brand {
+      background-color: var(--color-fill-neutral-none);
+      color: var(--color-interactive-neutral-primary);
+      &:hover {
+        background-color: var(--color-interactive-neutral-hover-secondary);
+      }
+      &:active {
+        background-color: var(--color-interactive-neutral-active-secondary);
+        outline: none;
+      }
+      &:focus {
+        background-color: var(--color-fill-neutral-none);
+        outline: none;
+      }
+    }
+  }
 }

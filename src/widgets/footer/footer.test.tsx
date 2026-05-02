@@ -1,35 +1,40 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Footer from './footer';
-import VkIcon from '@/shared/assets/images/main/footer/vk.svg';
-import TgIcon from '@/shared/assets/images/main/footer/tg.svg';
+import VkIcon from '@/shared/assets/images/footer/vk.svg';
+import TgIcon from '@/shared/assets/images/footer/tg.svg';
 
 describe('Footer', () => {
   it('рендерит основные заголовки', () => {
     render(<Footer />);
-    expect(screen.getByText('Служба психологической помощи')).toBeInTheDocument();
-    expect(screen.getByText('Будем рады Вам помочь!')).toBeInTheDocument();
+    expect(screen.getByText('московский политех')).toBeInTheDocument();
+    expect(screen.getByText(/Служба психологической помощи/i)).toBeInTheDocument();
   });
 
   it('рендерит все адреса', () => {
     render(<Footer />);
-    const addresses = [
-      'ул. Большая Семёновская, 38, ауд. В-509',
-      'ул. Прянишникова, 2а, ауд. 1401',
-      'ул. Павла Корчагина, 22, ауд. 239',
-      'ул. Автозаводская, 16, ауд. 1109',
+    const streets = [
+      'ул. Большая Семёновская, 38',
+      'ул. Прянишникова, 2а',
+      'ул. Павла Корчагина, 22',
+      'ул. Автозаводская, 16',
     ];
-    addresses.forEach((address) => {
-      expect(screen.getByText(address)).toBeInTheDocument();
+    const auditoriums = ['ауд. В-509', 'ауд. 1401', 'ауд. 239', 'ауд. 1109'];
+    streets.forEach((street) => {
+      expect(screen.getByText(street)).toBeInTheDocument();
+    });
+    auditoriums.forEach((auditorium) => {
+      expect(screen.getByText(auditorium)).toBeInTheDocument();
     });
   });
 
   it('рендерит телефон и социальные иконки', () => {
     render(<Footer />);
-    expect(screen.getByText('Тел: +7(495) 223-05-41')).toBeInTheDocument();
+    expect(screen.getByText('Телефон:')).toBeInTheDocument();
+    expect(screen.getByText('+7 (495) 223-05-41')).toBeInTheDocument();
     // Проверка изображений
-    const vkImg = screen.getByAltText('Vk') as HTMLImageElement;
-    const tgImg = screen.getByAltText('Tg') as HTMLImageElement;
+    const vkImg = screen.getByAltText('VK') as HTMLImageElement;
+    const tgImg = screen.getByAltText('Telegram') as HTMLImageElement;
 
     expect(vkImg.src).toContain(VkIcon);
     expect(tgImg.src).toContain(TgIcon);
@@ -37,7 +42,9 @@ describe('Footer', () => {
 
   it('рендерит e-mail ссылку', () => {
     render(<Footer />);
-    const emailLink = screen.getByRole('link', { name: /psycholog@mospolytech.ru/i }) as HTMLAnchorElement;
+    const emailLink = screen.getByRole('link', {
+      name: /psycholog@mospolytech.ru/i,
+    }) as HTMLAnchorElement;
     expect(emailLink).toBeInTheDocument();
     expect(emailLink.href).toBe('mailto:psycholog@mospolytech.ru');
   });

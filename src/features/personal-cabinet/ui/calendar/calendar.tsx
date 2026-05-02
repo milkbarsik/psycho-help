@@ -29,9 +29,9 @@ const ACalendar: FC<Props> = ({ appointments }) => {
 
   // выбор сегодняшней даты по умолчанию
   useEffect(() => {
-    setAppointment({ date: dayjs().format('YYYY-MM-DD') });
+    setAppointment({ scheduled_time: dayjs().format('YYYY-MM-DD') });
     setSelectedDate(dayjs());
-  }, []);
+  }, [setAppointment]);
 
   // формирования объекта с помеченными датами
   useEffect(() => {
@@ -40,7 +40,7 @@ const ACalendar: FC<Props> = ({ appointments }) => {
         Object.assign(
           {},
           ...appointments.map((el) => {
-            return { [dayjs(el.remind_time).format('YYYY-MM-DD')]: el.status };
+            return { [dayjs(el.scheduled_time).format('YYYY-MM-DD')]: el.status };
           }),
         ),
       );
@@ -49,7 +49,7 @@ const ACalendar: FC<Props> = ({ appointments }) => {
 
   // изменение при выборе даты
   const onChange = (value: Dayjs) => {
-    setAppointment({ date: value.format('YYYY-MM-DD') });
+    setAppointment({ scheduled_time: value.format('YYYY-MM-DD') });
     setSelectedDate(dayjs(value));
   };
 

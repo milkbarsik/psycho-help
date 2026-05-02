@@ -1,0 +1,346 @@
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.pageTitle {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.btnAdd {
+  background: transparent;
+  border: none;
+  color: #3b82f6;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  margin-left: auto;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.navigationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.weekSelector {
+  display: flex;
+  gap: 20px;
+}
+
+.dayItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.dayName {
+  text-transform: capitalize;
+  font-size: 14px;
+  color: #4a4a4a;
+}
+
+.dayNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #1a1a1a;
+  transition: all 0.2s;
+}
+
+.dayActive .dayNumber {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.dayItem:hover:not(.dayActive) .dayNumber {
+  background-color: #f0f0f0;
+}
+
+.datePicker {
+  border-radius: 8px;
+  height: 40px;
+  width: 160px;
+  margin-left: auto;
+}
+
+.wrapper {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.scheduleGrid {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeLabels {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeLabelRow {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.timeText {
+  width: 50px;
+  font-size: 13px;
+  color: #888;
+  transform: translateY(-8px);
+}
+
+.gridLine {
+  flex: 1;
+  border-top: 1px solid #f0f0f0;
+  margin-left: 16px;
+}
+
+.eventsContainer {
+  position: absolute;
+  top: 0;
+  left: 66px;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.eventCard {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+}
+
+.eventCardActive {
+  background-color: #eff6ff;
+  border-left: 3px solid #3b82f6;
+
+  &:hover {
+    background-color: #eff6ff;
+  }
+}
+
+.eventTime {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.eventName {
+  font-size: 13px;
+  color: #4a4a4a;
+  margin-bottom: 4px;
+}
+
+.eventVenue {
+  font-size: 12px;
+  color: #888888;
+}
+
+.detailsPanel {
+  width: 340px;
+  flex-shrink: 0;
+  padding-top: 8px;
+}
+
+.detailsCard {
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.detailsTime {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+}
+
+.detailsInfoList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #4a4a4a;
+  font-size: 14px;
+
+  .infoIcon {
+    color: #bfbfbf;
+    font-size: 16px;
+  }
+}
+
+.commentBlock {
+  margin-bottom: 24px;
+}
+
+.commentLabel {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #1a1a1a;
+}
+
+.commentText {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.btnReadMore {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #888;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: #4a4a4a;
+  }
+}
+
+.btnNavigate {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  background-color: #2563eb;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #1d4ed8 !important;
+  }
+}
+
+.emptyDetails {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bfbfbf;
+  text-align: center;
+  padding: 40px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+[data-theme='dark'] {
+  .pageTitle,
+  .dayName,
+  .dayNumber,
+  .detailsTime,
+  .infoIcon,
+  .commentLabel,
+  .eventName,
+  .eventVenue {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .infoRow span:not(:first-child),
+  .commentText,
+  .eventTime {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-quaternary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .dayItem:hover:not(.dayActive) .dayNumber {
+    background-color: var(--color-interactive-brand-hover);
+  }
+  .emptyDetails {
+    background-color: var(--color-background-neutral-inverted);
+    border: 1px solid var(--color-border-neutral-disable);
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-quaternary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .detailsCard {
+    background-color: var(--color-background-neutral-inverted);
+    border: 1px solid var(--color-border-neutral-disable);
+  }
+
+  .eventCard {
+    background-color: var(--color-fill-neutral-primary);
+    &:hover {
+      background-color: var(--color-interactive-neutral-hover);
+    }
+  }
+  .eventCardActive {
+    background-color: var(--color-fill-brand-derivable-quaternary);
+    border-left: none;
+    &:hover {
+      background-color: var(--color-fill-brand-derivable-quaternary);
+    }
+  }
+}

@@ -150,3 +150,40 @@
     gap: 0.4rem;
   }
 }
+
+[data-theme='dark'] {
+  .counter {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .title {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .option {
+    background-color: var(--color-fill-neutral-primary);
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .buttonAction {
+    &Back {
+      background-color: var(--color-background-neutral-primary);
+      color: var(--color-label-brand-primary);
+      &:hover {
+        background-color: var(--color-interactive-neutral-hover-secondary);
+      }
+      &:active {
+        background-color: var(--color-interactive-neutral-active-secondary);
+      }
+    }
+    &Next,
+    &Complete {
+      border: var(--color-interactive-brand-primary);
+      background-color: var(--color-interactive-brand-primary);
+      color: var(--color-label-neutral-inverted-primary);
+      &:hover {
+        background-color: var(--color-interactive-brand-hover);
+      }
+      &:active {
+        background-color: var(--color-interactive-brand-active);
+      }
+    }
+  }
+}

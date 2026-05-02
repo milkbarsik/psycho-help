@@ -122,7 +122,9 @@ $font-weight-semi-bold: 600;
 @mixin header($level) {
   font: var(--font-h#{$level});
   @if $level == 5 {
-    letter-spacing: var(--font-header-letter-spacing-h5); // the hell do i know why designers chose to use 0.1 specifically on h5
+    letter-spacing: var(
+      --font-header-letter-spacing-h5
+    ); // the hell do i know why designers chose to use 0.1 specifically on h5
   } @else {
     letter-spacing: var(--font-header-letter-spacing);
   }

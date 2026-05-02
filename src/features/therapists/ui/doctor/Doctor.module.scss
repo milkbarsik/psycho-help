@@ -1,0 +1,155 @@
+@use '@/shared/scss/abstracts/breakpoints' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+  align-items: center;
+  border: 1px solid var(--color-border-neutral-base);
+  padding: 2.4rem 1rem;
+  border-radius: 2rem;
+
+  .photo {
+    width: 10.4rem;
+    max-width: 10.4rem;
+    border-radius: 2rem;
+    aspect-ratio: 1 / 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.3s ease;
+  }
+
+  .consult_label {
+    display: none;
+  }
+
+  .consult_areas {
+    display: none;
+  }
+
+  .info {
+    padding-inline: 0.8rem;
+    width: 100%;
+  }
+
+  @include past-tablet {
+    margin: 0 auto;
+
+    .info {
+      padding-inline: 0;
+    }
+
+    .consult_label {
+      display: block;
+    }
+
+    .consult_areas {
+      display: block;
+    }
+
+    .photo {
+      max-width: initial;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .experience {
+      margin-bottom: 1.5rem;
+    }
+
+    align-items: flex-start;
+    flex-direction: column;
+    max-width: 38.9rem;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background-neutral-primary);
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 1.2rem 3rem 1.2rem;
+    transition: transform 0.2s;
+    border: 1px solid var(--color-border-neutral-base);
+  }
+}
+
+.wrapper:hover {
+  transform: translateY(-0.4rem);
+}
+
+.fio {
+  color: var(--color-label-neutral-primary);
+  font-size: 3.2rem;
+  font-weight: 500;
+  margin: 0 0 0.4rem 0;
+  font: var(--font-h4);
+}
+
+.speciality {
+  font-size: 2rem;
+  color: var(--color-label-neutral-primary);
+  font: var(--font-text-large);
+}
+
+.experience {
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--color-label-neutral-secondary);
+  font: var(--font-text-large);
+  opacity: 0.72;
+}
+
+.consult_label {
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin-top: 0.8rem;
+  color: var(--color-label-neutral-primary);
+  font: var(--font-h5);
+}
+
+.consult_areas {
+  font-size: 2rem;
+  color: var(--color-label-neutral-secondary);
+  opacity: 0.72;
+  margin-top: 0.2rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1150px) {
+  .fio {
+    font-size: 2.8rem;
+  }
+
+  .consult_areas,
+  .speciality,
+  .experience {
+    font-size: 1.6rem;
+  }
+
+  .consult_label {
+    font-size: 2.2rem;
+  }
+}
+
+[data-theme='dark'] {
+  .wrapper {
+    background-color: var(--color-background-neutral-inverted);
+  }
+
+  .fio,
+  .speciality,
+  .consult_label {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .experience,
+  .consult_areas {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .photo {
+    background-color: var(--color-fill-neutral-primary);
+  }
+}
