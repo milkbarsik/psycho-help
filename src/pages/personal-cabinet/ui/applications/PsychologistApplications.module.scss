@@ -200,3 +200,14 @@
     }
   }
 }
+
+@media (max-width: 500px) {
+  .appointmentRow {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .actionsCol {
+    justify-content: flex-start;
+  }
+}
+

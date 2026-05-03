@@ -184,3 +184,13 @@
     border-top: 1px solid var(--color-border-neutral-inverted);
   }
 }
+
+@media (max-width: 500px) {
+  .appointmentRow {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .actionsCol {
+    justify-content: flex-start;
+  }
+}
