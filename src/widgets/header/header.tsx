@@ -115,7 +115,7 @@ const Header = () => {
           ))}
           <li className={styles.header__item}>
             <button
-              className={`${styles.header__link} ${styles['header__link--icon']}`}
+              className={`${styles.header__link}`}
               onClick={toggleTheme}
               type="button"
               aria-label={
@@ -128,7 +128,7 @@ const Header = () => {
             </button>
             {isAuth ? (
               <Link
-                className={`${styles.header__link} ${styles['header__link--icon']}`}
+                className={`${styles.header__link}`}
                 to={CABINET_PATH}
                 onClick={closeMenu}
                 aria-label="Личный кабинет"
@@ -137,7 +137,7 @@ const Header = () => {
               </Link>
             ) : (
               <button
-                className={`${styles.header__link} ${styles['header__link--icon']} ${styles['header__link--auth']}`}
+                className={`${styles.header__link} ${styles['header__link--auth']}`}
                 onClick={handleAuthClick}
                 type="button"
                 aria-label="Открыть окно входа"
