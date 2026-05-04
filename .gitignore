@@ -7,6 +7,7 @@
 
 /.idea
 /.vscode
+
 # testing
 /coverage
 
@@ -25,3 +26,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 test-results
+
+# ai tools
+/.claude/
+/CLAUDE.md
+/.codex
+
+# scripts
+/git-pull-all.sh
+
+# statistics
+/.VSCodeCounter/

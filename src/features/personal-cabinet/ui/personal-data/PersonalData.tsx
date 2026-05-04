@@ -1,20 +1,12 @@
-import {
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-  type ChangeEvent,
-  type FormEvent,
-  type MouseEvent,
-} from 'react';
+import { useState, useCallback, useRef, useEffect, type ChangeEvent, type FormEvent } from 'react';
 import type { FC } from 'react';
-import { UserOutlined, DownOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { Modal, message, Input } from 'antd';
 import { useAuth } from '@/features/auth/api/useAuth';
 import AuthApi from '@/features/auth/api/auth-api';
 import EditIcon from '@/shared/assets/images/cabinet/edit.svg?react';
 import ExitIcon from '@/shared/assets/images/cabinet/exit.svg?react';
-import type { User } from '@/shared/api/types';
+import type { User, UserProfileUpdate } from '@/entities/auth';
 import styles from './PersonalData.module.scss';
 
 interface PersonalDataProps {
@@ -27,7 +19,6 @@ interface FormData {
   middle_name: string;
   phone_number: string;
   email: string;
-  status: 'student' | 'teacher' | 'admin';
   study_group: string;
 }
 
@@ -37,89 +28,7 @@ interface FormErrors {
   phone_number?: string;
   email?: string;
   study_group?: string;
-  status?: string;
 }
-
-interface SelectOption {
-  value: 'student' | 'teacher' | 'admin';
-  label: string;
-}
-
-const statusOptions: SelectOption[] = [
-  { value: 'student', label: 'Студент' },
-  { value: 'teacher', label: 'Преподаватель' },
-  { value: 'admin', label: 'Администратор' },
-];
-
-const CustomSelect: FC<{
-  value: 'student' | 'teacher' | 'admin';
-  onChange: (value: 'student' | 'teacher' | 'admin') => void;
-  label: string;
-}> = ({ value, onChange, label }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const selectRef = useRef<HTMLDivElement>(null);
-
-  const selectedOption = statusOptions.find((opt) => opt.value === value);
-
-  const handleToggle = useCallback(() => {
-    setIsOpen(!isOpen);
-    setIsFocused(!isFocused);
-  }, [isOpen, isFocused]);
-
-  const handleSelect = useCallback(
-    (optionValue: 'student' | 'teacher' | 'admin') => {
-      onChange(optionValue);
-      setIsOpen(false);
-      setIsFocused(false);
-    },
-    [onChange],
-  );
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-        setIsFocused(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('click', handleClickOutside as unknown as EventListener);
-    }
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside as unknown as EventListener);
-    };
-  }, [isOpen]);
-
-  return (
-    <div className={styles.customSelectWrapper} ref={selectRef}>
-      <button
-        type="button"
-        className={`${styles.customSelect} ${isFocused ? styles.focused : ''}`}
-        onClick={handleToggle}
-        aria-label={label}
-      >
-        <span className={styles.selectValue}>{selectedOption?.label}</span>
-        <DownOutlined className={`${styles.selectArrow} ${isOpen ? styles.open : ''}`} />
-      </button>
-      {isOpen && (
-        <div className={styles.selectDropdown}>
-          {statusOptions.map((option) => (
-            <div
-              key={option.value}
-              className={`${styles.selectOption} ${option.value === value ? styles.selected : ''}`}
-              onClick={() => handleSelect(option.value)}
-            >
-              {option.label}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
 
 const PersonalData: FC<PersonalDataProps> = ({ user }) => {
   const { logOut, setUser } = useAuth();
@@ -144,7 +53,6 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     middle_name: user?.middle_name || '',
     phone_number: user?.phone_number || '',
     email: user?.email || '',
-    status: user?.status || 'student',
     study_group: user?.study_group || '',
   });
 
@@ -156,40 +64,6 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     middle_name?: string;
   }>({});
 
-  // TODO: solve unsaved changes tab discarding
-
-  //   const hasUnsavedChanges = useCallback(() => {
-  //  return JSON.stringify(formData) !== JSON.stringify(originalData) || avatar !== user?.avatar_url;
-  // }, [formData, originalData, avatar, user]);
-  // useEffect(() => {
-  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  //     if (hasUnsavedChanges()) {
-  //       e.preventDefault();
-  //     }
-  //   };
-
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-  //   return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  // }, [hasUnsavedChanges]);
-
-  // const blocker = useBlocker(
-  //   ({ currentLocation, nextLocation }) =>
-  //     hasUnsavedChanges() && currentLocation.pathname !== nextLocation.pathname,
-  // );
-
-  // useEffect(() => {
-  //   if (blocker.state === 'blocked') {
-  //     Modal.confirm({
-  //       title: 'У вас есть несохранённые изменения',
-  //       content: 'Хотите покинуть страницу? Внесенные изменения не будут сохранены.',
-  //       okText: 'Покинуть',
-  //       cancelText: 'Остаться',
-  //       onOk: () => blocker.proceed?.(),
-  //       onCancel: () => blocker.reset?.(),
-  //     });
-  //   }
-  // }, [blocker]);
-
   useEffect(() => {
     const newOriginalData: FormData = {
       first_name: user?.first_name || '',
@@ -197,39 +71,31 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
       middle_name: user?.middle_name || '',
       phone_number: user?.phone_number || '',
       email: user?.email || '',
-      status: user?.status || 'student',
       study_group: user?.study_group || '',
     };
     setOriginalData(newOriginalData);
     setFormData(newOriginalData);
   }, [user]);
 
-  const validateField = useCallback(
-    (name: keyof FormData, value: string): string | undefined => {
-      switch (name) {
-        case 'first_name':
-        case 'last_name':
-          if (!value.trim()) return 'Обязательное поле';
-          if (value.length < 2) return 'Минимум 2 символа';
-          if (!/^[а-яА-ЯёЁa-zA-Z-]+$/.test(value)) return 'Только буквы и дефис';
-          break;
-        case 'email':
-          if (!value.trim()) return 'Обязательное поле';
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Некорректный email';
-          break;
-        case 'phone_number':
-          if (!value.trim()) return 'Обязательное поле';
-          if (!/^\+?[\d\s()-]{10,}$/.test(value)) return 'Некорректный номер телефона';
-          break;
-        case 'study_group':
-          if (formData.status === 'student' && !value.trim())
-            return 'Обязательное поле для студентов';
-          break;
-      }
-      return undefined;
-    },
-    [formData.status],
-  );
+  const validateField = useCallback((name: keyof FormData, value: string): string | undefined => {
+    switch (name) {
+      case 'first_name':
+      case 'last_name':
+        if (!value.trim()) return 'Обязательное поле';
+        if (value.length < 2) return 'Минимум 2 символа';
+        if (!/^[а-яА-ЯёЁa-zA-Z-]+$/.test(value)) return 'Только буквы и дефис';
+        break;
+      case 'email':
+        if (!value.trim()) return 'Обязательное поле';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Некорректный email';
+        break;
+      case 'phone_number':
+        if (!value.trim()) return 'Обязательное поле';
+        if (!/^\+?[\d\s()-]{10,}$/.test(value)) return 'Некорректный номер телефона';
+        break;
+    }
+    return undefined;
+  }, []);
 
   const validateNameField = useCallback(
     (name: 'first_name' | 'last_name' | 'middle_name', value: string): string | undefined => {
@@ -261,7 +127,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
   );
 
   const handleInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -270,10 +136,6 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     },
     [validateField],
   );
-
-  const handleStatusChange = useCallback((value: 'student' | 'teacher' | 'admin') => {
-    setFormData((prev) => ({ ...prev, status: value }));
-  }, []);
 
   const handleNameEdit = useCallback(() => {
     setIsEditingName(!isEditingName);
@@ -305,20 +167,25 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     return isValid;
   }, [formData, validateNameField]);
 
+  const toProfileUpdate = useCallback(
+    (data: FormData): UserProfileUpdate => ({
+      first_name: data.first_name,
+      last_name: data.last_name,
+      middle_name: data.middle_name || null,
+      phone_number: data.phone_number,
+      email: data.email,
+      social_media: user?.social_media ?? null,
+      study_group: data.study_group || null,
+    }),
+    [user],
+  );
+
   const handleSaveName = useCallback(async () => {
     if (!validateNameFields()) return;
 
     setIsSaving(true);
     try {
-      const res = await AuthApi.updateProfile({
-        first_name: formData.first_name,
-        last_name: formData.last_name,
-        middle_name: formData.middle_name,
-        phone_number: formData.phone_number,
-        email: formData.email,
-        status: formData.status,
-        study_group: formData.study_group,
-      });
+      const res = await AuthApi.updateProfile(toProfileUpdate(formData));
       setOriginalData(formData);
       setIsEditingName(false);
       setNameErrors({});
@@ -330,7 +197,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
     } finally {
       setIsSaving(false);
     }
-  }, [formData, validateNameFields, messageApi, setUser]);
+  }, [formData, validateNameFields, messageApi, setUser, toProfileUpdate]);
 
   const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -368,15 +235,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
 
       setIsSaving(true);
       try {
-        const res = await AuthApi.updateProfile({
-          first_name: formData.first_name,
-          last_name: formData.last_name,
-          middle_name: formData.middle_name,
-          phone_number: formData.phone_number,
-          email: formData.email,
-          status: formData.status,
-          study_group: formData.study_group,
-        });
+        const res = await AuthApi.updateProfile(toProfileUpdate(formData));
         setOriginalData(formData);
         setIsEditingName(false);
         setUser(res.data);
@@ -388,7 +247,7 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
         setIsSaving(false);
       }
     },
-    [formData, validateForm, messageApi, setUser],
+    [formData, validateForm, messageApi, setUser, toProfileUpdate],
   );
 
   const handlePasswordSubmit = useCallback(async () => {
@@ -548,36 +407,23 @@ const PersonalData: FC<PersonalDataProps> = ({ user }) => {
 
           <div className={styles.fieldsGrid}>
             <div className={styles.field}>
-              <label>Ваш статус</label>
-              <CustomSelect
-                value={formData.status}
-                onChange={handleStatusChange}
-                label="Ваш статус"
-              />
-            </div>
-
-            {formData.status === 'student' && (
-              <div className={styles.field}>
-                <label htmlFor="study_group">Учебная группа</label>
-                <div className={styles.editableField}>
-                  <input
-                    type="text"
-                    id="study_group"
-                    name="study_group"
-                    value={formData.study_group}
-                    onChange={handleInputChange}
-                    placeholder="Введите номер группы"
-                    aria-invalid={!!errors.study_group}
-                  />
-                  <button type="button" className={styles.editButton}>
-                    <EditIcon />
-                  </button>
-                </div>
-                {errors.study_group && (
-                  <span className={styles.errorText}>{errors.study_group}</span>
-                )}
+              <label htmlFor="study_group">Учебная группа</label>
+              <div className={styles.editableField}>
+                <input
+                  type="text"
+                  id="study_group"
+                  name="study_group"
+                  value={formData.study_group}
+                  onChange={handleInputChange}
+                  placeholder="Введите номер группы"
+                  aria-invalid={!!errors.study_group}
+                />
+                <button type="button" className={styles.editButton}>
+                  <EditIcon />
+                </button>
               </div>
-            )}
+              {errors.study_group && <span className={styles.errorText}>{errors.study_group}</span>}
+            </div>
 
             <div className={styles.field}>
               <label htmlFor="phone_number">Номер телефона</label>

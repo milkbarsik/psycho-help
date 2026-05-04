@@ -5,20 +5,24 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #19191B;
-  color: #fff;
+  background: var(--color-interactive-neutral-primary);
+  color: var(--color-label-neutral-inverted-primary);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  box-shadow: 0 6px 18px rgba(33, 33, 33, 0.08);
-  z-index: 1000;
+  box-shadow: 0 6px 18px var(--color-fill-neutral-primary);
+  z-index: 100;
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px) scale(0.95);
-  transition: opacity 320ms ease, transform 320ms ease, box-shadow 200ms ease, visibility 320ms;
+  transition:
+    opacity 320ms ease,
+    transform 320ms ease,
+    box-shadow 200ms ease,
+    visibility 320ms;
   outline: 2px solid transparent;
 }
 
@@ -30,12 +34,12 @@
 
 .button:hover {
   transform: translateY(0) scale(1.06);
-  box-shadow: 0 12px 28px rgba(33, 33, 33, 0.16);
-  background: #19191B;
+  box-shadow: 0 12px 28px var(--color-fill-neutral-primary);
+  background: var(--color-interactive-neutral-primary);
 }
 
 .button:focus-visible {
-  outline: 2px solid #1B50F5;
+  outline: 2px solid var(--color-interactive-neutral-primary);
   outline-offset: 2px;
 }
 
@@ -43,4 +47,11 @@
   font-size: 2.2rem;
   line-height: 1;
   transform: translateY(-1px);
+}
+
+[data-theme='dark'] {
+  .button {
+    background-color: var(--color-fill-neutral-none);
+    color: var(--color-label-neutral-primary);
+  }
 }

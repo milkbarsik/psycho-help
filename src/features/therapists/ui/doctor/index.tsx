@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { Therapist } from '@/shared/api/types';
+import type { Therapist } from '@/entities/therapist/types';
 import styles from './Doctor.module.scss';
 import Img from '@/shared/ui/img/Img';
 import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';

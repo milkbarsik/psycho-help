@@ -1,62 +1,82 @@
 import type { FC } from 'react';
-import styles from './AppointmentForm.module.css';
-import { useAppointment } from '@/features/personal-cabinet/model/appointment';
-import { getDayNameOfWeek } from '@/shared/lib/dateFunctions';
-import type { Therapist } from '@/entities/therapist/types';
-import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
-import clsx from 'clsx';
-import { Img } from '@/shared/ui';
 import { useState, useMemo, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { message, DatePicker, ConfigProvider } from 'antd';
+import locale from 'antd/es/locale/ru_RU';
+import dayjs, { Dayjs } from 'dayjs';
+import clsx from 'clsx';
+import { useApplication } from '@/features/personal-cabinet/model/application';
+import { therapistQueries } from '@/entities/therapist/api';
+import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
+import { Img } from '@/shared/ui';
 import arrow from '@/shared/assets/images/appointments/arrow.svg';
 import backArrow from '@/shared/assets/images/appointments/backArrow.svg';
+import { useAuth } from '@/features/auth/api/useAuth';
+import type { ApplicationCreateRequest, UniversityStatus } from '@/entities/application/types';
+import { createApplication, getUniversityStatuses } from '@/entities/application/api';
+import Loader from '@/shared/ui/loader/loader';
+import styles from './AppointmentForm.module.css';
 
-interface Props {
-  doctors: Therapist[];
-}
+const AppointmentForm: FC = () => {
+  const { data: doctors = [], isLoading } = useQuery(therapistQueries.list());
+  const user = useAuth((s) => s.user);
+  const application = useApplication((state) => state.application);
+  const setApplication = useApplication((state) => state.setApplication);
 
-const AppointmentForm: FC<Props> = ({ doctors }) => {
-  const appointment = useAppointment((state) => state.appointment);
-  const setAppointment = useAppointment((state) => state.setAppointment);
-  
-  // 🎯 State для навигации по галерее
+  // 🎯 State для навигации по галерее и фильтров
   const [currentTherapistIndex, setCurrentTherapistIndex] = useState(0);
-  // 🎯 State для выбранных офисов (чекбоксы)
   const [selectedOffices, setSelectedOffices] = useState<Set<string>>(new Set());
   const [window, setWindow] = useState<'form' | 'results'>('form');
+  const [meetingType, setMeetingType] = useState<'online' | 'offline' | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [universityStatuses, setUniversityStatuses] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 🔍 Фильтрация врачей по выбранным офисам
+  // 🔍 Фильтрация врачей по формату и выбранным офисам
   const filteredDoctors = useMemo(() => {
-    if (selectedOffices.size === 0) return doctors;
-    return doctors.filter(doctor => selectedOffices.has(doctor.office));
-  }, [doctors, selectedOffices]);
+    let availableDoctors = doctors;
 
-  // 🔄 Сброс индекса галереи при изменении отфильтрованного списка
-  useEffect(() => {
-    if (currentTherapistIndex >= filteredDoctors.length) {
-      setCurrentTherapistIndex(0);
+    // Если выбрано "очно", исключаем психологов, которые принимают ТОЛЬКО онлайн
+    if (meetingType === 'offline') {
+      availableDoctors = availableDoctors.filter(
+        (doctor) => doctor.office && doctor.office.toLowerCase() !== 'онлайн',
+      );
     }
-  }, [filteredDoctors.length, currentTherapistIndex]);
+
+    // Фильтр по чекбоксам офисов (применяется только для очного формата)
+    if (meetingType === 'offline' && selectedOffices.size > 0) {
+      availableDoctors = availableDoctors.filter(
+        (doctor) => doctor.office && selectedOffices.has(doctor.office),
+      );
+    }
+
+    return availableDoctors;
+  }, [doctors, selectedOffices, meetingType]);
+
+  // 🔄 Сброс индекса галереи при изменении списка или формата встречи
+  useEffect(() => {
+    setCurrentTherapistIndex(0);
+  }, [filteredDoctors.length, meetingType]);
 
   // 🔄 Сброс чекбоксов при переключении на Online
   useEffect(() => {
-    if (appointment.type === 'Online') {
+    if (meetingType === 'online') {
       setSelectedOffices(new Set());
     }
-  }, [appointment.type]);
+  }, [meetingType]);
 
-  const handleLocation = (id?: string) => {
-    if (!id) return;
-    const currentDoctor = doctors.find((doctor) => doctor.id === id);
-    if (currentDoctor) {
-      setAppointment({ venue: currentDoctor.office });
-    }
-  };
-
-  // 🎯 Переключение на следующего специалиста (циклически)
-  const handleNextTherapist = () => {
-    if (filteredDoctors.length === 0) return;
-    setCurrentTherapistIndex((prev) => (prev + 1) % filteredDoctors.length);
-  };
+  // 📚 Загрузка статусов
+  useEffect(() => {
+    const fetchUniversityStatuses = async () => {
+      try {
+        const statuses = await getUniversityStatuses();
+        setUniversityStatuses(statuses);
+      } catch {
+        setUniversityStatuses(['студент', 'аспирант', 'преподаватель', 'сотрудник']);
+      }
+    };
+    fetchUniversityStatuses();
+  }, []);
 
   // 🎯 Обработчик чекбокса офиса
   const handleOfficeToggle = (office: string) => {
@@ -69,86 +89,129 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
       }
       return newSet;
     });
-    setCurrentTherapistIndex(0); // Сброс к первому элементу при изменении фильтра
+    setCurrentTherapistIndex(0);
   };
 
-  // 🎯 Текущий отображаемый специалист
-  const currentTherapist = filteredDoctors[currentTherapistIndex];
+  // 🎯 Навигация по специалистам (вперед/назад)
+  const handleNextTherapist = () => {
+    if (currentTherapistIndex < filteredDoctors.length - 1) {
+      setCurrentTherapistIndex((prev) => prev + 1);
+    }
+  };
 
-  // 🎯 Уникальные офисы для чекбоксов
-  const uniqueOffices = useMemo(() => 
-    Array.from(new Set(doctors.map(d => d.office))), 
-    [doctors]
+  const handlePrevTherapist = () => {
+    if (currentTherapistIndex > 0) {
+      setCurrentTherapistIndex((prev) => prev - 1);
+    }
+  };
+
+  const currentTherapist = filteredDoctors[currentTherapistIndex];
+  const isOnlineOnly = currentTherapist?.office?.toLowerCase() === 'онлайн';
+
+  // 🎯 Уникальные офисы для чекбоксов (исключаем "Онлайн", так как это формат, а не офис)
+  const uniqueOffices = useMemo(
+    () =>
+      Array.from(new Set(doctors.map((d) => d.office).filter(Boolean))).filter(
+        (office) => office?.toLowerCase() !== 'онлайн',
+      ),
+    [doctors],
   );
 
+  if (isLoading) return <Loader />;
+
   const handleNextButton = () => {
+    if (!meetingType) {
+      message.error('Выберите формат консультации');
+      return;
+    }
+    if (!currentTherapist) {
+      message.error('Специалист не выбран');
+      return;
+    }
+    if (!selectedDate) {
+      message.error('Выберите дату и время приема');
+      return;
+    }
+    if (!application.university_status) {
+      message.error('Укажите ваш статус в университете');
+      return;
+    }
+    const description = application.problem_description?.trim();
+    if (!description || description.length < 10) {
+      message.error('Опишите проблему (минимум 10 символов)');
+      return;
+    }
+
     setWindow('results');
-    setAppointment({...appointment, therapist_id: currentTherapist.id, venue: currentTherapist.office})
-  }
+  };
+
+  const handleSubmit = async () => {
+    if (!user || !currentTherapist || !selectedDate) return;
+    setIsSubmitting(true);
+
+    const requestData: ApplicationCreateRequest = {
+      psychologist_id: currentTherapist.id!,
+      scheduled_at: selectedDate.toISOString(),
+      problem_description: application.problem_description!,
+      preferred_campus: meetingType === 'offline' ? currentTherapist.office : undefined,
+      university_status: application.university_status as UniversityStatus,
+    };
+
+    try {
+      await createApplication(requestData);
+      message.success('Заявка успешно отправлена');
+      useApplication.getState().resetApplication();
+      setSelectedDate(null);
+      setMeetingType(null);
+      setWindow('form');
+    } catch {
+      message.error('Не удалось отправить заявку');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <>
+    <ConfigProvider locale={locale}>
       {window === 'form' ? (
-        // 🔹 Ветка "форма" — всё содержимое в скобках ()
         <div className={styles.form}>
+          {/* Формат встречи */}
           <div className={styles.format}>
             <h3 className={styles.label}>Выберите формат консультации</h3>
             <div className={styles.format__btns}>
               <button
                 type="button"
-                className={`${styles.formatButton} ${appointment.type === 'Online' ? styles.active : ''}`}
-                onClick={() => {
-                  setAppointment({ type: 'Online', venue: '' });
-                  setSelectedOffices(new Set());
-                }}
-                aria-label="Кнопка выбора онлайн"
+                className={clsx(styles.formatButton, { [styles.active]: meetingType === 'online' })}
+                onClick={() => setMeetingType('online')}
               >
                 Онлайн
               </button>
               <button
                 type="button"
                 className={clsx(styles.formatButton, {
-                  [styles.active]: appointment.type === 'Offline',
+                  [styles.active]: meetingType === 'offline',
                 })}
-                onClick={() => {
-                  setAppointment({ type: 'Offline', venue: '' });
-                  handleLocation(appointment?.therapist_id);
-                }}
-                aria-label="Кнопка выбора очно"
+                onClick={() => setMeetingType('offline')}
               >
                 Очно
               </button>
             </div>
           </div>
-  
-          {/* Запрос */}
-          <div className={styles.field}>
-            <label className={styles.label}>Ваш запрос</label>
-            <textarea
-              value={appointment.reason}
-              onChange={(e) => setAppointment({ reason: e.target.value })}
-              className={styles.textarea}
-              placeholder="Ваш запрос"
-            />
-          </div>
-          
+
           {/* Фильтр по офисам (только для Offline) */}
-          {appointment.type === 'Offline' && (
+          {meetingType === 'offline' && uniqueOffices.length > 0 && (
             <div className={styles.location}>
               <p className={styles.label}>Выберите место консультации</p>
               <div className={styles.location__btns}>
-                {uniqueOffices.map(office => (
+                {uniqueOffices.map((office) => (
                   <div key={office} className={styles.location__element}>
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       id={`office-${office}`}
                       checked={selectedOffices.has(office)}
                       onChange={() => handleOfficeToggle(office)}
                     />
-                    <label 
-                      htmlFor={`office-${office}`} 
-                      className={styles.location__text}
-                    >
+                    <label htmlFor={`office-${office}`} className={styles.location__text}>
                       {office}
                     </label>
                   </div>
@@ -156,90 +219,148 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               </div>
             </div>
           )}
-  
+
           {/* Галерея специалистов */}
           <div className={styles.therapist}>
             <p className={styles.label}>Выберите специалиста</p>
-            
+
             {filteredDoctors.length > 0 && currentTherapist ? (
               <div className={styles.galleryWrapper}>
                 <div className={styles.mainInfo}>
                   <div className={styles.imgWrapper}>
                     <Img
-                      key={currentTherapist?.id || currentTherapist?.photo}
-                      className={styles.photo} 
-                      photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}${currentTherapist.photo}`} 
+                      key={currentTherapist.id || currentTherapist.photo}
+                      className={styles.photo}
+                      photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}${currentTherapist.photo}`}
                       altPhoto={altPhoto}
                     />
                   </div>
                   <div className={styles.info}>
                     <div className={styles.infoBlock}>
                       <p className={styles.name}>
-                        {[currentTherapist.last_name, currentTherapist.first_name, currentTherapist.middle_name]
+                        {[
+                          currentTherapist.last_name,
+                          currentTherapist.first_name,
+                          currentTherapist.middle_name,
+                        ]
                           .filter(Boolean)
                           .join(' ')}
                       </p>
                       <p className={styles.qual}>{currentTherapist.qualification}</p>
                       <p className={styles.exp}>Опыт {currentTherapist.experience}</p>
                     </div>
-                    
+
                     <div className={styles.infoBlock}>
-                      <p className={styles.qual}>Принимает лично и онлайн</p>
-                      <p className={styles.office}>{currentTherapist.office}</p>
+                      <p className={styles.qual}>
+                        {isOnlineOnly ? 'Принимает только онлайн' : 'Принимает лично и онлайн'}
+                      </p>
+                      {/* Если только онлайн, не дублируем слово "Онлайн" как адрес офиса */}
+                      {!isOnlineOnly && <p className={styles.office}>{currentTherapist.office}</p>}
                     </div>
-                    
+
                     <div>
                       <p className={styles.qual}>С чем поможет</p>
                       <div className={styles.consultAreas}>
-                        {currentTherapist.consult_areas?.split(', ').map(item => (
-                          <span key={item} className={styles.consultArea}>{item}</span>
-                        ))}
+                        {currentTherapist.consult_areas?.split(',').map((item) => {
+                          const text = item.trim().charAt(0).toUpperCase() + item.trim().slice(1);
+                          if (!text) return null;
+                          return (
+                            <span key={text} className={styles.consultArea}>
+                              {text}
+                            </span>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
                 </div>
-                
-                {/* Кнопка навигации */}
+
+                {/* Кнопки навигации */}
                 {filteredDoctors.length > 1 && (
-                  <button 
-                    type="button" 
-                    className={styles.galleryNextBtn}
-                    onClick={handleNextTherapist}
-                    aria-label="Следующий специалист"
-                    title="Показать следующего специалиста"
-                  >
-                    <img src={arrow} alt="arrow" />
-                  </button>
+                  <>
+                    {currentTherapistIndex > 0 && (
+                      <button
+                        type="button"
+                        className={clsx(styles.galleryBtn, styles.galleryPrevBtn)}
+                        onClick={handlePrevTherapist}
+                        aria-label="Предыдущий специалист"
+                      >
+                        <img src={arrow} alt="prev" />
+                      </button>
+                    )}
+                    {currentTherapistIndex < filteredDoctors.length - 1 && (
+                      <button
+                        type="button"
+                        className={clsx(styles.galleryBtn, styles.galleryNextBtn)}
+                        onClick={handleNextTherapist}
+                        aria-label="Следующий специалист"
+                      >
+                        <img src={arrow} alt="next" />
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             ) : (
               <p className={styles.empty}>
-                {appointment.type === 'Offline' 
-                  ? 'По выбранным фильтрам специалисты не найдены' 
+                {meetingType === 'offline'
+                  ? 'По выбранным фильтрам специалисты не найдены'
                   : 'Список специалистов загружается...'}
               </p>
             )}
           </div>
-  
-          {/* Кнопка "Далее" переключает на results */}
-          <button 
-            className={styles.subButton} 
-            type="button"
-            onClick={handleNextButton}
-          >
+
+          {/* Выбор времени (календарь) */}
+          <div className={styles.field}>
+            <label className={styles.label}>Выберите дату и время</label>
+            <DatePicker
+              showTime={{ format: 'HH:mm', minuteStep: 15 }}
+              format="DD.MM.YYYY HH:mm"
+              className={styles.datePicker}
+              placeholder="Выберите время приема"
+              onChange={(value) => setSelectedDate(value)}
+              value={selectedDate}
+              disabledDate={(current) => current && current < dayjs().startOf('day')}
+              hideDisabledOptions
+            />
+          </div>
+
+          {/* Статус в университете (необходим для бэка) */}
+          <div className={styles.field}>
+            <label className={styles.label}>Ваш статус в университете</label>
+            <select
+              value={application.university_status || 'студент'}
+              onChange={(e) =>
+                setApplication({ university_status: e.target.value as UniversityStatus })
+              }
+              className={styles.selectInput}
+            >
+              {universityStatuses.map((status) => (
+                <option key={status} value={status}>
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Запрос */}
+          <div className={styles.field}>
+            <label className={styles.label}>Ваш запрос</label>
+            <textarea
+              value={application.problem_description}
+              onChange={(e) => setApplication({ problem_description: e.target.value })}
+              className={styles.textarea}
+              placeholder="Опишите вашу проблему"
+            />
+          </div>
+
+          <button className={styles.subButton} type="button" onClick={handleNextButton}>
             Далее
           </button>
         </div>
       ) : (
-        // 🔹 Ветка "результаты" — тоже в скобках ()
         <div className={styles.results}>
-          <button 
-            className={styles.backButton}
-            type="button"
-            onClick={() => {
-              setWindow('form');
-            }}
-          >
+          <button className={styles.backButton} type="button" onClick={() => setWindow('form')}>
             <div className={styles.backArrow}>
               <img src={backArrow} alt="backArrow" />
               <p className={styles.backArrow__text}>Назад</p>
@@ -247,21 +368,51 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
           </button>
           <div className={styles.results__info}>
             <h3 className={styles.results__title}>Запись</h3>
-            <p className={styles.results__text}><span className={[styles.results__text, styles.results__textGray].join(" ")}>Психолог: </span>{[currentTherapist.last_name, currentTherapist.first_name, currentTherapist.middle_name].join(' ')}</p>
-            <p className={styles.results__text}><span className={[styles.results__text, styles.results__textGray].join(" ")}>Место: </span>{appointment.venue}</p>
-            <p className={[styles.results__text, styles.results__textGray].join(" ")}>Тема встречи:</p>
+
+            <p className={styles.results__text}>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>
+                Дата и время:{' '}
+              </span>
+              {selectedDate?.format('DD MMMM YYYY, HH:mm')}
+            </p>
+
+            <p className={styles.results__text}>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>
+                Психолог:{' '}
+              </span>
+              {[
+                currentTherapist.last_name,
+                currentTherapist.first_name,
+                currentTherapist.middle_name,
+              ].join(' ')}
+            </p>
+
+            <p className={styles.results__text}>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>Место: </span>
+              {meetingType === 'online' ? 'Онлайн' : currentTherapist.office}
+            </p>
+
+            <p className={styles.results__text}>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>
+                Статус в ВУЗе:{' '}
+              </span>
+              {application.university_status || 'студент'}
+            </p>
+
+            <p className={clsx(styles.results__text, styles.results__textGray)}>Тема встречи:</p>
             <textarea
-              value={appointment.reason}
-              onChange={(e) => setAppointment({...appointment, reason: e.target.value })}
-              className={[styles.textarea, styles.results__textarea].join(' ')}
-              placeholder="Ваш запрос"
+              value={application.problem_description}
+              readOnly
+              className={clsx(styles.textarea, styles.results__textarea)}
             />
-            <button className={styles.submitBtn}>Записаться</button>
+
+            <button className={styles.submitBtn} onClick={handleSubmit} disabled={isSubmitting}>
+              {isSubmitting ? 'Отправка...' : 'Записаться'}
+            </button>
           </div>
-          
         </div>
       )}
-    </>
+    </ConfigProvider>
   );
 };
 

@@ -27,12 +27,12 @@
 
 .title {
   @include header(2);
-  color: #19191b;
+  color: var(--color-label-neutral-primary);
   margin-bottom: 2rem;
 }
 
 .text {
-  color: #393939;
+  color: var(--color-label-neutral-secondary);
   font-size: 2rem;
 }
 .content {
@@ -67,8 +67,8 @@
   gap: 0.8rem;
   padding: 1rem 1.6rem;
   border-radius: 1.2rem;
-  background: #f9f9f9;
-  color: #333;
+  background: var(--color-interactive-neutral-secondary);
+  color: var(--color-label-neutral-primary);
   font-size: 1.6rem;
   transition: background-color 0.3s ease;
   flex: 1;
@@ -76,13 +76,13 @@
 }
 
 .tab:hover {
-  background: #e5e5e7;
+  background: var(--color-interactive-neutral-hover-secondary);
 }
 
 .tab.active {
-  background-color: #d6e3f5;
-  color: #1b50f5;
-  border-color: #d6e3f5;
+  background-color: var(--color-interactive-brand-secondary);
+  color: var(--color-label-brand-primary);
+  border-color: var(--color-border-brand-strong);
 }
 
 .tab:active {
@@ -109,8 +109,8 @@
   margin-top: 2rem;
   padding: 1.6rem;
   font-size: 1.8rem;
-  background-color: #1b50f5;
-  color: #fff;
+  background-color: var(--color-interactive-brand-primary);
+  color: var(--color-label-neutral-inverted-primary);
   border: none;
   border-radius: 1.2rem;
   cursor: pointer;
@@ -118,7 +118,7 @@
 }
 
 .button:hover {
-  background-color: #486cc0;
+  background-color: var(--color-interactive-brand-hover);
 }
 
 .buttonTextFull {
@@ -225,5 +225,46 @@
   }
   .containerTabButton {
     padding-inline: 0;
+  }
+}
+
+[data-theme='dark'] {
+  .title {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+
+  .text {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .tab {
+    background-color: var(--color-interactive-neutral-active);
+    color: var(--color-label-neutral-inverted-primary);
+    &:hover:not(.active) {
+      color: var(--color-interactive-neutral-primary);
+      background: var(--color-background-neutral-primary);
+    }
+    &:active:not(.active) {
+      background: none;
+      border: 1px solid var(--color-border-brand-strong);
+      color: var(--color-interactive-brand-active);
+    }
+  }
+  .tab.active {
+    background-color: var(--color-interactive-brand-primary);
+  }
+
+  .button {
+    background-color: var(--color-fill-neutral-none);
+    color: var(--color-interactive-neutral-primary);
+    &:hover {
+      background-color: var(--color-interactive-neutral-hover-secondary);
+    }
+    &:active {
+      background-color: var(--color-interactive-neutral-active-secondary);
+    }
   }
 }

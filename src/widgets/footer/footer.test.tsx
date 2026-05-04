@@ -19,12 +19,7 @@ describe('Footer', () => {
       'ул. Павла Корчагина, 22',
       'ул. Автозаводская, 16',
     ];
-    const auditoriums = [
-      'ауд. В-509',
-      'ауд. 1401',
-      'ауд. 239',
-      'ауд. 1109',
-    ];
+    const auditoriums = ['ауд. В-509', 'ауд. 1401', 'ауд. 239', 'ауд. 1109'];
     streets.forEach((street) => {
       expect(screen.getByText(street)).toBeInTheDocument();
     });
@@ -47,7 +42,9 @@ describe('Footer', () => {
 
   it('рендерит e-mail ссылку', () => {
     render(<Footer />);
-    const emailLink = screen.getByRole('link', { name: /psycholog@mospolytech.ru/i }) as HTMLAnchorElement;
+    const emailLink = screen.getByRole('link', {
+      name: /psycholog@mospolytech.ru/i,
+    }) as HTMLAnchorElement;
     expect(emailLink).toBeInTheDocument();
     expect(emailLink.href).toBe('mailto:psycholog@mospolytech.ru');
   });

@@ -1,16 +1,32 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 import clsx from 'clsx';
 import { UserOutlined } from '@ant-design/icons';
-import type { User } from '@/entities/auth/types';
+import type { User } from '@/entities/auth';
 import styles from './sidebar.module.scss';
+
+export interface TabConfig {
+  id: string;
+  label: string;
+}
+
+export interface TabBadge {
+  tabId: string;
+  content: (isActive: boolean) => ReactNode;
+}
 
 interface SidebarProps {
   user: User | null;
-  activeTab: 'main' | 'book' | 'profile';
-  onChangeTab: (tab: 'main' | 'book' | 'profile') => void;
+  activeTab: string;
+  onChangeTab: (tab: string) => void;
+  tabs: TabConfig[];
+  tabBadges?: TabBadge[];
 }
 
-const Sidebar: FC<SidebarProps> = ({ user, activeTab, onChangeTab }) => {
+const Sidebar: FC<SidebarProps> = ({ user, activeTab, onChangeTab, tabs, tabBadges }) => {
+  const getBadgeForTab = (tabId: string) => {
+    return tabBadges?.find((b) => b.tabId === tabId)?.content;
+  };
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.profileInfo}>
@@ -25,24 +41,20 @@ const Sidebar: FC<SidebarProps> = ({ user, activeTab, onChangeTab }) => {
       </div>
 
       <nav className={styles.nav}>
-        <button
-          className={clsx(styles.navItem, activeTab === 'main' && styles.active)}
-          onClick={() => onChangeTab('main')}
-        >
-          Главная
-        </button>
-        <button
-          className={clsx(styles.navItem, activeTab === 'book' && styles.active)}
-          onClick={() => onChangeTab('book')}
-        >
-          Запись на сессию
-        </button>
-        <button
-          className={clsx(styles.navItem, activeTab === 'profile' && styles.active)}
-          onClick={() => onChangeTab('profile')}
-        >
-          Профиль
-        </button>
+        {tabs.map((tab) => {
+          const badgeContent = getBadgeForTab(tab.id);
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              className={clsx(styles.navItem, isActive && styles.active)}
+              onClick={() => onChangeTab(tab.id)}
+            >
+              <span className={styles.navLabel}>{tab.label}</span>
+              {badgeContent && <>{badgeContent(isActive)}</>}
+            </button>
+          );
+        })}
       </nav>
 
       <div className={styles.footer}>

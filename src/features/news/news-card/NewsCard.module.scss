@@ -136,3 +136,22 @@
     width: 2.3rem;
   }
 }
+
+[data-theme='dark'] {
+  .wrapper {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .type {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .date {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .title {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+}

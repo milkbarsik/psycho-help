@@ -1,3 +1,22 @@
+export const ROLES = {
+  user: {
+    code: 'user',
+    name: 'Пользователь',
+    description: 'Студент или преподаватель - обычный пользователь системы',
+  },
+  psychologist: {
+    code: 'psychologist',
+    name: 'Психолог',
+    description: 'Психолог, проводящий консультации',
+  },
+  admin: { code: 'admin', name: 'Администратор', description: 'Администратор системы' },
+  content_manager: {
+    code: 'content_manager',
+    name: 'Контент-менеджер',
+    description: 'Управление контентом сайта',
+  },
+};
+
 export const users = [
   {
     id: '64179a88-2053-44ee-97aa-23724be4cd44',
@@ -8,7 +27,9 @@ export const users = [
     email: 'anna.petrova@example.com',
     social_media: 'https://vk.com/anna_petrova',
     password: 'therapist2024',
-    role: 'therapist',
+    roles: [ROLES.psychologist],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: 'ff431e7d-8930-46b4-b287-c9cba1f21158',
@@ -19,7 +40,9 @@ export const users = [
     email: 'dmitry.ivanov@example.com',
     social_media: 'https://t.me/dmitry_ivanov',
     password: 'studentPass1',
-    role: 'student',
+    roles: [ROLES.user],
+    study_group: 'ИС22-11Б',
+    avatar_url: null,
   },
   {
     id: '0fcd0559-df8b-4ad2-be9e-03c7ef1dd48a',
@@ -30,7 +53,9 @@ export const users = [
     email: 'elena.smirnova@example.com',
     social_media: 'https://instagram.com/elena_smirnova',
     password: 'adminSecure123',
-    role: 'administrator',
+    roles: [ROLES.admin],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '87270d78-36e0-4675-9f38-f151028c0125',
@@ -41,7 +66,9 @@ export const users = [
     email: 'sergey.kozlov@example.com',
     social_media: 'https://vk.com/sergey_kozlov',
     password: 'therapistPass',
-    role: 'therapist',
+    roles: [ROLES.psychologist],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '3693dc1a-1a29-4ef4-a0c9-97e47dd01cb5',
@@ -52,7 +79,9 @@ export const users = [
     email: 'olga.novikova@example.com',
     social_media: 'https://t.me/olga_novikova',
     password: 'student2024',
-    role: 'student',
+    roles: [ROLES.user],
+    study_group: 'ИБ22-12Б',
+    avatar_url: null,
   },
   {
     id: '560cb505-eb19-4ad5-a4b7-b29d1c1844ed',
@@ -63,7 +92,9 @@ export const users = [
     email: 'alexey.morozov@example.com',
     social_media: 'https://instagram.com/alexey_morozov',
     password: 'adminPass123',
-    role: 'administrator',
+    roles: [ROLES.admin],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '242ba8b3-2821-4962-9d1c-25d2a02ffcf0',
@@ -74,7 +105,9 @@ export const users = [
     email: 'tatiana.volkova@example.com',
     social_media: 'https://vk.com/tatiana_volkova',
     password: 'therapy2024',
-    role: 'therapist',
+    roles: [ROLES.psychologist],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '1818d2ef-55ce-4826-9a11-1a9c4581a005',
@@ -85,7 +118,9 @@ export const users = [
     email: 'pavel.sokolov@example.com',
     social_media: 'https://t.me/pavel_sokolov',
     password: 'studentLearn1',
-    role: 'student',
+    roles: [ROLES.user],
+    study_group: 'СТ22-13Б',
+    avatar_url: null,
   },
   {
     id: '79a7b6f6-44c9-4f9f-aeb0-1e5352d832c4',
@@ -96,7 +131,9 @@ export const users = [
     email: 'natalia.lebedeva@example.com',
     social_media: 'https://instagram.com/natalia_lebedeva',
     password: 'therapistHeal',
-    role: 'therapist',
+    roles: [ROLES.psychologist, ROLES.content_manager],
+    study_group: null,
+    avatar_url: null,
   },
   {
     id: '6b879aa7-3b0e-41a8-9c2c-510c8a970bd0',
@@ -107,7 +144,9 @@ export const users = [
     email: 'igor.komarov@example.com',
     social_media: 'https://vk.com/igor_komarov',
     password: 'adminMaster456',
-    role: 'administrator',
+    roles: [ROLES.admin],
+    study_group: null,
+    avatar_url: null,
   },
 ];
 
@@ -286,8 +325,6 @@ export const news = [
 <p>Доступные временные слоты: 15:00, 16:00 и 17:00. Минимум 3 участника в команде. Регистрацию должен пройти один человек от команды.</p>
 <p>Регистрация: <a href="https://spp-polytech-event.timepad.ru/event/3681211/">https://spp-polytech-event.timepad.ru/event/3681211/</a></p>
 <p>🍪 Не забудь взять с собой вкусняшки!</p>`,
-    ogTitle: 'Психологи университета приглашают на ПСИХОparty в честь Дня психолога',
-    ogImage: 'src/shared/assets/images/news/items/1.jpg',
   },
   {
     id: 2,
@@ -299,8 +336,6 @@ export const news = [
     text: `<p>24 ноября мы погрузились в особую атмосферу, где рисовали внутренние миры, исследовали себя и просто расслаблялись. Уютную атмосферу праздника добавило чаепитие с вкусняшками и милые подарочки для участников активностей.</p>
 <p>Спасибо всем, кто пришёл. И огромная благодарность команде психологов университета за организацию мероприятия! 🫶</p>
 <p>Ждём всех на следующих встречах!</p>`,
-    ogTitle: 'В университете успешно прошел праздник ПСИХОparty с арт-практиками и чаепитием',
-    ogImage: 'src/shared/assets/images/news/items/2.jpg',
   },
   {
     id: 3,
@@ -317,9 +352,6 @@ export const news = [
 <p>📍 Место: ул. Большая Семеновская, 38, ауд. Н-405</p>
 <p>Мероприятие проведёт психолог СПП Московского Политеха Ольга Сафронова.</p>
 <p>Регистрация: <a href="https://clck.ru/3LHqHj">https://clck.ru/3LHqHj</a> (количество мест ограничено)</p>`,
-    ogTitle:
-      'Психолог Ольга Сафронова проведет для сотрудников университета мастерскую по профилактике профессионального выгорания «Ресурсы и баланс».',
-    ogImage: 'src/shared/assets/images/news/items/3.jpg',
   },
   {
     id: 4,
@@ -341,9 +373,6 @@ export const news = [
 </ul>
 <p>Не упустите возможность обменяться опытом и узнать новое!</p>
 <p>Ссылка на онлайн-трансляцию: <a href="https://my.mts-link.ru/j/19394445/1232171321">https://my.mts-link.ru/j/19394445/1232171321</a></p>`,
-    ogTitle:
-      'В Московском Политехе пройдет круглый стол с экспертами, посвященный современным семейным ценностям, традициям и социальной поддержке.',
-    ogImage: 'src/shared/assets/images/news/items/4.jpg',
   },
 
   // Ниже ещё новости, которые можно трогать и менять, они не по макету, а просто для красоты
@@ -365,10 +394,6 @@ export const news = [
   // <p>🕒 Время: 16:30</p>
   // <p>📍 Место: Московский Политех, ул. Павла Корчагина, д. 22, ауд. ПК-201</p>
   // <p>Число участников ограничено.</p>`,
-  //   ogTitle: 'Троллинг и деструктивная коммуникация: виды, причины и способы противодействия',
-  //   ogDescription:
-  //     'Знакомо ли вам понятие «троллинг»? Приходилось ли становиться его объектом? Разберём этот феномен вместе с психологом-консультантом Николаем Емельянчуком.',
-  //   ogImage: 'src/shared/assets/images/news/items/5.jpg',
   // },
   // {
   //   id: '6',
@@ -393,10 +418,6 @@ export const news = [
   // <p>📅 Дата: 4 марта 2026 (среда)</p>
   // <p>🕒 Время: 16:00 – 18:00</p>
   // <p>👩 Спикер: психолог Абасова Лейла Рауфовна</p>`,
-  //   ogTitle: 'Тренинг для девушек: уверенность в себе и личные границы',
-  //   ogDescription:
-  //     'Тренинг, который поможет вам найти баланс между внутренней силой и заботой о себе. Укрепите уверенность, научитесь отстаивать границы и откройте свои скрытые ресурсы.',
-  //   ogImage: 'src/shared/assets/images/news/items/6.jpg',
   // },
   // {
   //   id: '7',
@@ -415,10 +436,6 @@ export const news = [
   // <p>📍 Место: ПК-201 «Добро.Центр»</p>
   // <p>Приглашённый эксперт: Емельянчук Николай Николаевич — психолог-консультант с десятилетним стажем, сертифицированный логотерапевт, преподаватель Московского института психоанализа.</p>
   // <p>Ждём всех желающих!</p>`,
-  //   ogTitle: 'МАКсимальная настройка на успешную сессию',
-  //   ogDescription:
-  //     'Волнуетесь перед сессией? Приходите на встречу психологического клуба «Головоломка», где мы будем работать с МАК-картами — простым способом понять свои страхи и найти ресурсы.',
-  //   ogImage: 'src/shared/assets/images/news/items/7.jpg',
   // },
   // {
   //   id: '8',
@@ -437,10 +454,6 @@ export const news = [
   // <p>Вяземская земля до сих пор хранит память о подвиге и боли тех, кто защищал Москву. Такие места помогают осознать истинную цену Победы.</p>
   // <p>Благодарим Сообщество потомков Московского ополчения и Профком Московского Политеха за возможность прикоснуться к истории и почтить память героев.</p>
   // <p>«Если бы не мысль о родных — не выстоял бы» — эти слова солдатских писем напоминают нам: любовь, семья и дом — самое важное, что у нас есть.</p>`,
-  //   ogTitle: 'Нет ни одной семьи, не пострадавшей от войны',
-  //   ogDescription:
-  //     '17–18 мая студенты проекта «Семья как совместный проект» отправились в военно-историческую поездку по местам боевой славы Московского народного ополчения.',
-  //   ogImage: 'src/shared/assets/images/news/items/8.jpg',
   // },
 ];
 

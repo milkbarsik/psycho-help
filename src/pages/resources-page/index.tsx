@@ -41,7 +41,7 @@ export const ResourcesPage = () => {
       searchParams.delete('entity');
       setSearchParams(searchParams);
     }
-  }, [searchParams]);
+  }, [searchParams, setSearchParams]);
 
   const handleChangeTab = (tabId: string) => {
     setSearchParams({ entity: tabId });
