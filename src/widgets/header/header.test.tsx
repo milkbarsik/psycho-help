@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router-dom';
 import Header from './header';
 import { navPages, CABINET_PATH } from '@/app/router/routes';
 import { useAuth } from '@/features/auth/api/useAuth';
-import { useTheme } from '@/shared/hooks/useTheme';
 
 vi.stubGlobal(
   'ResizeObserver',
@@ -21,11 +20,10 @@ vi.mock('@/shared/assets/images/header/profile.svg?react', () => ({
 vi.mock('@/shared/assets/images/header/auth.svg?react', () => ({
   default: (props: Record<string, unknown>) => <svg data-testid="auth-icon" {...props} />,
 }));
-vi.mock('@/shared/assets/images/header/moon.svg?react', () => ({
-  default: (props: Record<string, unknown>) => <svg data-testid="moon-icon" {...props} />,
-}));
-vi.mock('@/shared/assets/images/header/sun.svg?react', () => ({
-  default: (props: Record<string, unknown>) => <svg data-testid="sun-icon" {...props} />,
+vi.mock('@/shared/ui/theme-toggle/ThemeToggle', () => ({
+  default: ({ className }: { className?: string }) => (
+    <button data-testid="theme-toggle-button" className={className} />
+  ),
 }));
 
 vi.mock('@/features/auth/modal/modal', () => ({
@@ -40,7 +38,6 @@ vi.mock('@/features/auth/modal/modal', () => ({
 }));
 
 vi.mock('@/features/auth/api/useAuth', () => ({ useAuth: vi.fn() }));
-vi.mock('@/shared/hooks/useTheme', () => ({ useTheme: vi.fn() }));
 
 const renderHeader = () =>
   render(
@@ -52,11 +49,6 @@ const renderHeader = () =>
 describe('Header', () => {
   beforeEach(() => {
     vi.mocked(useAuth).mockReturnValue({ isAuth: false } as ReturnType<typeof useAuth>);
-    vi.mocked(useTheme).mockReturnValue({
-      currentTheme: 'light',
-      setTheme: vi.fn(),
-      toggleTheme: vi.fn(),
-    });
   });
 
   it('рендерит логотип и все навигационные ссылки', () => {
@@ -202,41 +194,6 @@ describe('Header', () => {
       await userEvent.click(getBurger());
 
       expect(document.body.style.overflow).toBe('');
-    });
-  });
-
-  describe('Переключатель темы', () => {
-    it('показывает иконку луны в светлой теме', () => {
-      renderHeader();
-
-      expect(screen.getByTestId('moon-icon')).toBeInTheDocument();
-      expect(screen.queryByTestId('sun-icon')).not.toBeInTheDocument();
-    });
-
-    it('показывает иконку солнца в тёмной теме', () => {
-      vi.mocked(useTheme).mockReturnValue({
-        currentTheme: 'dark',
-        setTheme: vi.fn(),
-        toggleTheme: vi.fn(),
-      });
-      renderHeader();
-
-      expect(screen.getByTestId('sun-icon')).toBeInTheDocument();
-      expect(screen.queryByTestId('moon-icon')).not.toBeInTheDocument();
-    });
-
-    it('вызывает toggleTheme при клике', async () => {
-      const toggleTheme = vi.fn();
-      vi.mocked(useTheme).mockReturnValue({
-        currentTheme: 'light',
-        setTheme: vi.fn(),
-        toggleTheme,
-      });
-      renderHeader();
-
-      await userEvent.click(screen.getByRole('button', { name: /переключить на тёмную тему/i }));
-
-      expect(toggleTheme).toHaveBeenCalledOnce();
     });
   });
 });

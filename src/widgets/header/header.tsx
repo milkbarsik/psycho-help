@@ -1,18 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useTheme } from '@/shared/hooks/useTheme';
 import { useAuth } from '@/features/auth/api/useAuth';
 import ModalWindow from '@/features/auth/modal/modal';
+import ThemeToggle from '@/shared/ui/theme-toggle/ThemeToggle';
 import { navPages, CABINET_PATH } from '@/app/router/routes';
 import { Link } from 'react-router-dom';
 import Logo from '@/shared/assets/images/logo.svg?react';
 import Profile from '@/shared/assets/images/header/profile.svg?react';
 import Auth from '@/shared/assets/images/header/auth.svg?react';
-import Moon from '@/shared/assets/images/header/moon.svg?react';
-import Sun from '@/shared/assets/images/header/sun.svg?react';
 import styles from './header.module.scss';
 
 const Header = () => {
-  const { currentTheme, toggleTheme } = useTheme();
   const { isAuth } = useAuth();
   const headerRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -114,18 +111,7 @@ const Header = () => {
             </li>
           ))}
           <li className={styles.header__item}>
-            <button
-              className={`${styles.header__link}`}
-              onClick={toggleTheme}
-              type="button"
-              aria-label={
-                currentTheme === 'light'
-                  ? 'Переключить на тёмную тему'
-                  : 'Переключить на светлую тему'
-              }
-            >
-              {currentTheme === 'light' ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}
-            </button>
+            <ThemeToggle className={styles.header__link} />
             {isAuth ? (
               <Link
                 className={`${styles.header__link}`}
