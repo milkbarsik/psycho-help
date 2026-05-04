@@ -1,0 +1,143 @@
+.link {
+  display: block;
+
+  &:hover,
+  &:focus-visible {
+    // .card__photo {
+    //   scale: 1.03;
+    // }
+
+    .card__title {
+      color: var(--color-interactive-brand-primary);
+    }
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.6rem;
+  height: 100%;
+  padding: 2.4rem;
+  border-radius: 1.6rem;
+  background-color: var(--color-fill-brand-quaternary);
+}
+
+// .card__photo-wrapper {
+//   overflow: hidden;
+//   border-radius: 2.4rem;
+//   margin-bottom: 2rem;
+// }
+
+// .card__photo {
+//   aspect-ratio: 1 / 1;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   background-position: center;
+//   width: 100%;
+//   transition: scale 0.5s;
+// }
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+// .card__type {
+//   font-weight: 500;
+//   font-size: 2rem;
+//   line-height: 2.8rem;
+//   color: var(--color-interactive-neutral-primary);
+// }
+
+.card__date {
+  align-self: end;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: var(--color-label-neutral-primary);
+}
+
+.card__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  color: var(--color-label-neutral-primary);
+  transition: color 0.5s;
+}
+
+// .card__description {
+//   display: -webkit-box;
+//   -webkit-line-clamp: 3;
+//   line-clamp: 3;
+//   -webkit-box-orient: vertical;
+//   overflow: hidden;
+//   margin-top: 1.2rem;
+//   font-size: 1.6rem;
+//   line-height: 2.4rem;
+//   color: var(--color-label-neutral-tetriary);
+// }
+
+.card__link {
+  width: 2.5rem;
+  border-radius: 0.2rem;
+}
+
+@media (max-width: 720px) {
+  .card {
+    padding: 1.6rem;
+  }
+
+  // .card__photo-wrapper {
+  //   margin-bottom: 1.2rem;
+  // }
+
+  .card__header {
+    gap: 1rem;
+  }
+
+  // .card__type {
+  //   font-size: 1.8rem;
+  //   line-height: 2.4rem;
+  // }
+
+  .card__date {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+  }
+
+  .card__title {
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    letter-spacing: -0.06em;
+  }
+}
+
+[data-theme='dark'] {
+  .card {
+    background-color: var(--color-fill-neutral-primary);
+  }
+
+  // .card__type {
+  //   color: var(--color-label-neutral-inverted-primary);
+  // }
+
+  .card__date {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+
+  .card__title {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+}
