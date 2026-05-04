@@ -83,11 +83,6 @@
   color: var(--color-label-neutral-secondary);
 }
 
-.location::before {
-  content: '|';
-  margin: 0 1.2rem;
-}
-
 .actionsCol {
   display: flex;
   justify-content: flex-end;
@@ -188,7 +183,11 @@
 @media (max-width: 500px) {
   .appointmentRow {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.6rem;
+  }
+  .infoCol {
+    flex-direction: column;
+    gap: 0.4rem;
   }
   .actionsCol {
     justify-content: flex-start;

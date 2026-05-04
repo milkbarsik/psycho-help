@@ -126,3 +126,8 @@
   }
 }
 
+@media (max-width: 600px) {
+  .filters__search-autocomplete {
+    max-width: unset;
+  }
+}
