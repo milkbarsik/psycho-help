@@ -83,6 +83,11 @@
   color: var(--color-label-neutral-secondary);
 }
 
+.location::before {
+  content: '|';
+  margin: 0 1.2rem;
+}
+
 .actionsCol {
   display: flex;
   justify-content: flex-end;
@@ -185,7 +190,7 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .appointmentRow {
     flex-direction: column;
     gap: 1.6rem;
@@ -196,5 +201,9 @@
   }
   .actionsCol {
     justify-content: flex-start;
+  }
+  .location::before {
+    display: none;
+    margin: 0 0;
   }
 }
