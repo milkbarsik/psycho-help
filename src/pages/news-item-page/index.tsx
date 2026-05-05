@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router';
-import { useNavigate, Link } from 'react-router-dom';
+import { newsQueries } from '@/entities/news/api/queries';
+import chevronLeft from '@/shared/assets/images/news/chevron-left.svg';
+import dayjs from '@/shared/lib/dayjs';
+import { Button } from '@/shared/ui';
+import Loader from '@/shared/ui/loader/loader';
+import { LeftOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { Result } from 'antd';
-import dayjs from '@/shared/lib/dayjs';
-import Loader from '@/shared/ui/loader/loader';
-import { newsQueries } from '@/entities/news/api/queries';
-import { Button } from '@/shared/ui';
-import { LeftOutlined } from '@ant-design/icons';
-import chevronLeft from '@/shared/assets/images/news/chevron-left.svg';
+import { useEffect } from 'react';
+import { useParams } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './NewsItemPage.module.scss';
 
 export const NewsItemPage = () => {

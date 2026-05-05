@@ -1,8 +1,8 @@
-import type { FC } from 'react';
-import { Link } from 'react-router-dom';
-import dayjs from '@/shared/lib/dayjs';
 import type { News } from '@/entities/news/types';
 import link from '@/shared/assets/images/news/link.svg';
+import dayjs from '@/shared/lib/dayjs';
+import type { FC } from 'react';
+import { Link } from 'react-router-dom';
 // import Img from '@/shared/ui/img/Img';
 // import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
 import styles from './NewsCard.module.scss';
