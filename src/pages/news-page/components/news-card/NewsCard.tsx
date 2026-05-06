@@ -30,14 +30,12 @@ export const NewsCard: FC<Props> = ({ news }) => {
         </div>
       )} */}
         <div className={styles.card__header}>
-          {/* {news.type && <div className={styles.card__type}>{news.type}</div>}
-        {news.date && (
-          <div className={styles.card__date}>{dayjs(news.date).tz().format('DD.MM.YYYY')}</div>
-        )} */}
-          {news.created_at && (
-            <div className={styles.card__date}>
-              {dayjs(news.created_at).tz().format('DD.MM.YYYY')}
-            </div>
+          {news.type && <div className={styles.card__type}>{news.type}</div>}
+          {/* {news.event_date && (
+            <div className={styles.card__event_date}>{dayjs(news.event_date).tz().format('DD.MM.YYYY')}</div>
+          )} */}
+          {news.date && (
+            <div className={styles.card__date}>{dayjs(news.date).tz().format('DD.MM.YYYY')}</div>
           )}
         </div>
         <p className={styles.card__title}>{news.title}</p>

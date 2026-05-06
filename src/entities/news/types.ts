@@ -1,21 +1,14 @@
 export type News = {
   id: string;
+  slug: string;
+  image: string | null;
+  type: NewsType | null;
+  // event_date: string;
+  date: string;
   title: string;
-  text: string;
-  created_at: string;
+  description: string | null;
+  link: string | null;
+  text: string | null;
 };
 
-// должно быть (правки запрошены)
-// export type News = {
-//   id: string;
-//   slug: string;
-//   image: string | null;
-//   type: NewsType | null;
-//   date: string;
-//   title: string;
-//   description: string | null;
-//   link: string | null;
-//   text: string | null;
-// };
-
-// export type NewsType = 'Анонс мероприятия' | 'Отчет о мероприятии';
+export type NewsType = 'Анонс мероприятия' | 'Отчет о мероприятии';

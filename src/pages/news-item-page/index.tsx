@@ -15,7 +15,6 @@ export const NewsItemPage = () => {
   // const { slug } = useParams();
   const { id } = useParams();
   const navigate = useNavigate();
-
   // const { data: news, isLoading, error } = useQuery(newsQueries.bySlug(slug!));
   const { data: news, isLoading, error } = useQuery(newsQueries.byId(id!));
 
@@ -47,20 +46,17 @@ export const NewsItemPage = () => {
           Новости
         </Link>
         <div className={styles.info}>
-          {/* <p>{dayjs(news.date).tz().format('DD.MM.YYYY')}</p>
-          <p>{news.type}</p> */}
-          <p>{dayjs(news.created_at).tz().format('DD.MM.YYYY')}</p>
+          {/* <p>{dayjs(news.event_date).tz().format('DD.MM.YYYY')}</p> */}
+          <p>{dayjs(news.date).tz().format('DD.MM.YYYY')}</p>
+          <p>{news.type}</p>
         </div>
       </div>
       <h2 className={styles.title}>{news.title}</h2>
-      {/* {news.image && (
+      {news.image && (
         <div className={styles.imageWrapper}>
-          <img
-            src={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}${news.image}`}
-            alt={news.title}
-          />
+          <img src={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}${news.image}`} alt={news.title} />
         </div>
-      )} */}
+      )}
 
       {news.text && (
         <div className={styles.content} dangerouslySetInnerHTML={{ __html: news.text }} />
