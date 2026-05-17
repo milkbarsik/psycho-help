@@ -27,7 +27,7 @@
 .greeting__title {
   font-size: 4.4rem;
   line-height: 52px;
-  color: var(--color-label-neutral-primary);
+  color: #19191b;
   font-weight: 500;
   font-family: 'Geist', sans-serif;
 }
@@ -35,77 +35,12 @@
 .greeting__subtitle {
   font-size: 2rem;
   font-family: 'Roboto', sans-serif;
-  color: var(--color-label-neutral-secondary);
+  color: rgba(49, 50, 53, 0.72);
 }
 
 .greeting__image {
   width: 100%;
   height: 100%;
-}
-
-.greeting__controls {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: stretch;
-  max-width: 100%;
-}
-
-.greeting__options {
-  display: flex;
-  gap: 4px;
-}
-
-.greeting__option {
-  background: var(--color-interactive-neutral-secondary);
-  border: 2px solid transparent;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 1rem;
-  font-size: 2rem;
-  padding: 16px 64px;
-  border-radius: 12px;
-}
-
-.greeting__option_icon {
-  stroke: currentColor;
-}
-
-.greeting__option:hover {
-  background-color: var(--color-interactive-neutral-hover-secondary);
-}
-
-.greeting__option:active,
-.greeting__selected,
-.greeting__option:active:hover {
-  background: var(--color-interactive-brand-secondary);
-  color: var(--color-border-brand-strong);
-}
-
-.greeting__option:focus-visible {
-  border-radius: 4px;
-  border-color: var(--color-border-brand-strong);
-}
-
-.greeting__submit {
-  width: 100%;
-  border: solid;
-  background-color: var(--color-interactive-brand-primary);
-  color: var(--color-label-neutral-inverted-primary);
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.greeting__submit:hover {
-  background-color: var(--color-interactive-brand-hover);
-}
-
-.greeting__submit:active {
-  background-color: var(--color-interactive-brand-active);
 }
 
 @media (max-width: 1206px) {
@@ -207,47 +142,5 @@
     font-size: 2rem;
     padding: 10px 40px;
     border-radius: 12px;
-  }
-}
-
-[data-theme='dark'] {
-  .greeting__title {
-    color: var(--color-label-neutral-inverted-primary);
-  }
-
-  .greeting__subtitle {
-    color: color-mix(
-      in srgb,
-      var(--color-label-neutral-secondary),
-      var(--color-label-neutral-inverted-primary)
-    );
-  }
-
-  .greeting__option {
-    background: var(--color-interactive-neutral-active);
-    &:hover:not(.greeting__selected) {
-      color: var(--color-interactive-neutral-primary);
-      background: var(--color-background-neutral-primary);
-    }
-    &:active:not(.greeting__selected) {
-      background: none;
-      border: 1px solid var(--color-border-brand-strong);
-      color: var(--color-interactive-brand-active);
-    }
-  }
-  .greeting__selected {
-    background: var(--color-interactive-brand-primary);
-    color: var(--color-label-neutral-inverted-primary);
-  }
-
-  .greeting__submit {
-    background-color: var(--color-fill-neutral-none);
-    color: var(--color-interactive-neutral-primary);
-    &:hover {
-      background-color: var(--color-interactive-neutral-hover-secondary);
-    }
-    &:active {
-      background-color: var(--color-interactive-neutral-active-secondary);
-    }
   }
 }

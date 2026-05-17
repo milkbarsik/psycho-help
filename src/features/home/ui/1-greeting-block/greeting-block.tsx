@@ -2,27 +2,9 @@ import styles from './greeting-block.module.css';
 import GreetingDesktop from '@/features/home/ui/1-greeting-block/img/greeting-desktop.png';
 import GreetingTablet from '@/features/home/ui/1-greeting-block/img/greeting-tablet.png';
 import GreetingMobile from '@/features/home/ui/1-greeting-block/img/greeting-mobile.png';
-import Personally from '@/features/home/ui/personally.svg?react';
-import Online from '@/features/home/ui/online.svg?react';
-import { useState } from 'react';
-import clsx from 'clsx';
+import AppointmentModule from '@/widgets/appointment-module';
 
 const GreetingBlock = () => {
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-
-  const handleAppointment = () => {
-    // TODO: Добавить обработку записи на прием
-    console.log('Записаться на прием');
-  };
-
-  const handleSelect = (type: number) => {
-    if (selectedOption === type) {
-      setSelectedOption(null);
-      return;
-    }
-    setSelectedOption(type);
-  };
-
   return (
     <div className={styles.greeting}>
       <div className={styles.greeting__content}>
@@ -40,31 +22,7 @@ const GreetingBlock = () => {
               </span>
             </div>
           </div>
-          <div className={styles.greeting__controls}>
-            <div className={styles.greeting__options}>
-              <button
-                onClick={() => handleSelect(1)}
-                className={clsx(styles.greeting__option, {
-                  [styles.greeting__selected]: selectedOption === 1,
-                })}
-              >
-                <Personally className={styles.greeting__option_icon} />
-                <span className={styles.greeting__option_text}>лично</span>
-              </button>
-              <button
-                onClick={() => handleSelect(2)}
-                className={clsx(styles.greeting__option, {
-                  [styles.greeting__selected]: selectedOption === 2,
-                })}
-              >
-                <Online className={styles.greeting__option_icon} />
-                <span className={styles.greeting__option_text}>онлайн</span>
-              </button>
-            </div>
-            <button onClick={handleAppointment} className={styles.greeting__submit}>
-              Записаться
-            </button>
-          </div>
+          <AppointmentModule redirectPath="/cabinet" />
         </div>
         <div className={styles.greeting__image_wrapper}>
           <picture>

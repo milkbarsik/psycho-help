@@ -1,68 +1,35 @@
-import React from 'react';
 import type { FC } from 'react';
-import { createPortal } from 'react-dom';
-import ModalRegistration from './modal-registration';
-import ModalLogin from './modal-login';
-import ModalForgotPassword from './modal-forgot-password';
-import ModalChangePassword from './modal-change-password';
+import { useAppContext } from '@/app/context';
+import AuthIcon from './icons/Auth.svg?react';
+import styles from './modal.module.css';
 
 interface ModalWindowProps {
-  isOpen: boolean;
-  onClose: () => void;
+  onMenuClose?: () => void;
 }
 
-const ModalWindow: FC<ModalWindowProps> = ({ isOpen, onClose }) => {
-  const [modalWindow, setModalWindow] = React.useState<string>('log');
+const ModalWindow: FC<ModalWindowProps> = ({ onMenuClose }) => {
+  const { openAuthModal } = useAppContext();
 
-  React.useEffect(() => {
-    if (isOpen) {
-      setModalWindow('log');
+  const handleButtonClick = () => {
+    if (onMenuClose) {
+      onMenuClose();
     }
-  }, [isOpen]);
 
-  const handleSetModalOpen = (open: boolean) => {
-    if (!open) onClose();
+    openAuthModal('log');
   };
 
-  const renderContent = () => {
-    if (modalWindow === 'log') {
-      return (
-        <ModalLogin setWindow={setModalWindow} isOpen={isOpen} setModalOpen={handleSetModalOpen} />
-      );
-    }
-    if (modalWindow === 'reg') {
-      return (
-        <ModalRegistration
-          setWindow={setModalWindow}
-          isOpen={isOpen}
-          setModalOpen={handleSetModalOpen}
-        />
-      );
-    }
-    if (modalWindow === 'forgot') {
-      return (
-        <ModalForgotPassword
-          setWindow={setModalWindow}
-          isOpen={isOpen}
-          setModalOpen={handleSetModalOpen}
-        />
-      );
-    }
-    if (modalWindow === 'change') {
-      return (
-        <ModalChangePassword
-          setWindow={setModalWindow}
-          isOpen={isOpen}
-          setModalOpen={handleSetModalOpen}
-        />
-      );
-    }
-    return null;
-  };
-
-  if (!isOpen) return null;
-
-  return createPortal(renderContent(), document.body);
+  return (
+    <div className={styles.buttonWrapper}>
+      <button
+        className={styles.button}
+        onClick={handleButtonClick}
+        aria-label="Открыть окно входа"
+      >
+        <AuthIcon />
+        <span>Войти</span>
+      </button>
+    </div>
+  );
 };
 
 export default ModalWindow;

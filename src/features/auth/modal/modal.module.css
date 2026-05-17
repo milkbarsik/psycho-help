@@ -201,6 +201,7 @@
 .forgotLink {
   color: var(--color-label-brand-primary);
   text-decoration: none;
+  cursor: pointer;
   transition: color 0.3s;
 }
 

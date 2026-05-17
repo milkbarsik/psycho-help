@@ -1,7 +1,7 @@
 import { useAuth } from './useAuth';
 import AuthApi from './auth-api';
 import { act } from '@testing-library/react';
-import type { User } from '@/entities/auth';
+import type { User } from '@/shared/api/types';
 import type { AxiosResponse } from 'axios';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 
@@ -18,19 +18,10 @@ describe('useAuth Store', () => {
   const mockUser: User = {
     id: '1',
     first_name: 'Годжо',
-    middle_name: null,
     last_name: 'Сатору',
     phone_number: '+7 999 999 99 99',
     email: 'gojosatoru@juju.com',
     social_media: 'tg',
-    study_group: null,
-    roles: [
-      {
-        code: 'user',
-        name: 'Пользователь',
-        description: 'Студент или преподаватель - обычный пользователь системы',
-      },
-    ],
   };
 
   beforeEach(() => {
@@ -83,14 +74,12 @@ describe('useAuth Store', () => {
 
     await act(async () => {
       await useAuth.getState().registration({
-        first_name: mockUser.first_name,
-        middle_name: mockUser.middle_name,
-        last_name: mockUser.last_name,
-        phone_number: mockUser.phone_number,
         email: mockUser.email,
-        social_media: mockUser.social_media,
+        role: 'student',
+        first_name: mockUser.first_name,
+        last_name: mockUser.last_name,
+        phone_number: mockUser.last_name,
         password: 'tututututiti',
-        study_group: mockUser.study_group,
       });
     });
 
