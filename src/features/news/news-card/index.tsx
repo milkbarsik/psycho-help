@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { News } from '@/shared/api/types';
+import type { News } from '@/entities/news/types';
 import styles from './NewsCard.module.scss';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -26,7 +26,7 @@ export const NewsCard: FC<Props> = ({ newsItem, linkToDetails = true }) => {
         </div>
       )} */}
       <div className={styles.cardHeader}>
-        <div className={styles.type}>{newsItem.type}</div>
+        {newsItem.type && <div className={styles.type}>{newsItem.type}</div>}
         <div className={styles.date}>{dayjs(newsItem.date).format('DD.MM.YYYY')}</div>
       </div>
       <p className={styles.title}>{newsItem.title}</p>

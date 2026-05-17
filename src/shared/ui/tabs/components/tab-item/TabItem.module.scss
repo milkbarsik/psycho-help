@@ -16,7 +16,7 @@
   }
 
   @include past-tablet {
-    &:hover {
+    &:hover:not(.active) {
       background: var(--color-interactive-brand-hover-secondary);
       color: var(--color-label-brand-primary);
     }
@@ -30,5 +30,18 @@
   @include past-desktop {
     font: var(--font-text-large);
     padding: 1.6rem 6.4rem;
+  }
+}
+
+[data-theme='dark'] {
+  .tab {
+    &:hover:not(.active) {
+      background-color: var(--color-interactive-brand-hover-secondary);
+      color: var(--color-label-brand-primary);
+    }
+    &:active:not(.active) {
+      background-color: var(--color-interactive-brand-primary);
+      color: var(--color-label-neutral-inverted-primary);
+    }
   }
 }

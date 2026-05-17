@@ -1,13 +1,12 @@
-.container {
-  width: 100%;
+.section {
+  margin-bottom: var(--spacing-xl, 24px);
 }
 
-.dateInput {
-  display: flex;
-  flex-direction: column;
-  gap: 2.4rem;
+.sectionTitle {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: var(--font-weight-semibold, 600);
+  margin-bottom: var(--spacing-md, 16px);
 }
-
 .placeholder {
   display: flex;
   align-items: center;

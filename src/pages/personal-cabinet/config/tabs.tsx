@@ -2,19 +2,19 @@ import type { FC } from 'react';
 import type { User } from '@/entities/auth/types';
 import type { RoleCode } from '@/entities/role/types';
 import Dashboard from '../ui/dashboard/Dashboard';
-import Applications from '@/pages/personal-cabinet/ui/applications/Applications';
-import Appointments from '@/pages/personal-cabinet/ui/appointments/Appointments';
+import PsychologistApplications from '@/pages/personal-cabinet/ui/applications/PsychologistApplications';
+import PsychologistAppointments from '@/pages/personal-cabinet/ui/appointments/PsychologistAppointments';
+import AppointmentForm from '@/features/personal-cabinet/ui/input-block/AppointmentForm';
 import ComingSoon from '../ui/PlaceholderComponent';
 import PersonalData from '@/features/personal-cabinet/ui/personal-data/PersonalData';
 
 export type TabId =
   | 'main'
-  | 'book'
-  | 'profile'
   | 'applications'
-  | 'appointments'
-  | 'clients'
-  | 'admin';
+  | 'userAppointments'
+  | 'psychologistAppointments'
+  | 'profile';
+// потом админа и контент-менеджера добавим, сейчас даже не понятно, какие табы у них будут
 
 export interface TabRenderProps {
   user: User;
@@ -42,9 +42,9 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
       ),
     },
     {
-      id: 'appointments',
+      id: 'userAppointments',
       label: 'Запись на сессию',
-      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
+      render: () => <AppointmentForm />,
     },
     {
       id: 'profile',
@@ -67,12 +67,12 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
     {
       id: 'applications',
       label: 'Заявки',
-      render: ({ primaryRoleCode }) => <Applications role={primaryRoleCode} />,
+      render: () => <PsychologistApplications />,
     },
     {
-      id: 'appointments',
+      id: 'psychologistAppointments',
       label: 'Записи',
-      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
+      render: () => <PsychologistAppointments />,
     },
     {
       id: 'profile',
@@ -93,13 +93,8 @@ export const roleBasedTabs: Record<string, TabConfig[]> = {
       ),
     },
     {
-      id: 'appointments',
+      id: 'psychologistAppointments',
       label: 'Записи',
-      render: ({ primaryRoleCode }) => <Appointments role={primaryRoleCode} />,
-    },
-    {
-      id: 'admin',
-      label: 'Администрирование',
       render: () => <ComingSoon title="Администрирование" />,
     },
     {

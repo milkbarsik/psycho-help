@@ -1,5 +1,5 @@
 import styles from './question.module.css';
-import buttonImage from '@/shared/assets/images/main/question/button.svg';
+import ButtonIcon from '@/shared/assets/images/main/question/button.svg?react';
 import clsx from 'clsx';
 
 const Question = ({
@@ -22,7 +22,7 @@ const Question = ({
     >
       <div className={styles.ask}>
         <p className={styles.p}>{ask}</p>
-        <img className={styles.button} src={buttonImage} alt="" />
+        <ButtonIcon className={styles.button} />
       </div>
       <p className={styles.answer}>{answer}</p>
     </div>

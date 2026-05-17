@@ -1,15 +1,17 @@
-import type { User } from "../auth";
-import type { Therapist } from "../therapist/types";
+import type { User } from '@/entities/auth';
+import type { Psychologist } from '@/entities/psychologist/types';
+import type { Appointment } from '@/entities/appointment/types';
 
 export interface Application {
   id: string;
-  user: User;
+  user: User | null;
+  assigned_to_user: User | null;
+  psychologist: Psychologist | null;
+  appointment: Appointment | null;
   problem_description: string;
   preferred_campus: string | null;
   university_status: UniversityStatus;
   status: ApplicationStatus;
-  assigned_to_user: User | null;
-  psychologist: Therapist;
   meeting_type: MeetingType | null;
   scheduled_at: string | null;
   location_address: string | null;
@@ -26,7 +28,6 @@ export interface Application {
   cancel_reason: string | null;
   cancel_initiator: CancelInitiator | null;
   internal_comment: string | null;
-  appointment_id: string | null;
   version: number;
 }
 
@@ -40,6 +41,7 @@ export type ApplicationStatus =
   | 'expired';
 
 export type UniversityStatus = string;
+// export type UniversityStatus = 'студент' | 'аспирант' | 'преподаватель' | 'сотрудник';
 export type MeetingType = 'offline' | 'online';
 export type CancelInitiator = 'user' | 'psychologist' | 'manager' | 'system';
 

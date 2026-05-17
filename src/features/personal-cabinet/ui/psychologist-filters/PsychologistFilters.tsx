@@ -91,6 +91,7 @@ const PsychologistListFilters = ({
         />
 
         <DatePicker.RangePicker
+          dropdownClassName="custom-range-picker-dropdown"
           className={styles['filters__date-range']}
           separator={<span style={{ color: '#C4C4C4' }}>&#10132;</span>}
           value={dateRange ? [dayjs(dateRange[0]), dayjs(dateRange[1])] : null}
@@ -107,17 +108,22 @@ const PsychologistListFilters = ({
         />
       </div>
 
-      <div className={styles['filters__bar']}>
+      <div className={styles['filters__bar__second']}>
         <button
           className={styles['filters__sort-button']}
           onClick={() => onSortDirectionChange(sortDirection === 'asc' ? 'desc' : 'asc')}
+          type="button"
         >
           Сортировка по дате
           {sortDirection === 'desc' ? <SortDescendingOutlined /> : <SortAscendingOutlined />}
         </button>
 
         {hasActiveFilters && (
-          <button className={styles['filters__reset-button']} onClick={onResetFilters}>
+          <button
+            className={styles['filters__reset-button']}
+            onClick={onResetFilters}
+            type="button"
+          >
             Сбросить фильтры
           </button>
         )}

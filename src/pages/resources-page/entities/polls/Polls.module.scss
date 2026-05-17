@@ -28,7 +28,6 @@
     }
 
     @include past-tablet {
-
       .passList {
         grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
         padding: 0;
@@ -48,6 +47,21 @@
     .showMore {
       width: 100%;
       padding-inline: 1rem;
+    }
+  }
+}
+
+[data-theme="dark"]{
+  .wrapper{
+    .passList{
+      .passBtn{
+        &:hover{
+          background-color: var(--color-interactive-neutral-hover-secondary);
+        }
+        &:active{
+          background-color: var(--color-interactive-neutral-active-secondary);
+        }
+      }
     }
   }
 }

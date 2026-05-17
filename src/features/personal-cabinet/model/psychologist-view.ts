@@ -1,12 +1,12 @@
 import { create } from 'zustand';
-import dayjs from 'dayjs';
+import dayjs from '@/shared/lib/dayjs';
 import type { ApplicationStatus } from '@/entities/application/types';
 import type { AppointmentStatus } from '@/entities/appointment/types';
 
 export type SortDirection = 'asc' | 'desc';
 export type ApplicationStatusFilter = 'all' | ApplicationStatus | 'closed';
 export type AppointmentStatusFilter = 'all' | AppointmentStatus;
-export type FormatFilter = 'all' | 'offline' | 'online' | 'unknown';
+export type FormatFilter = 'all' | 'offline' | 'online';
 export type ActiveTab = 'applications' | 'appointments';
 
 interface BaseFilters {
@@ -34,8 +34,8 @@ interface ViewState {
 }
 
 export const getDefaultAppointmentDateRange = (): [string, string] => [
-  dayjs().startOf('day').toISOString(),
-  dayjs().add(1, 'month').startOf('day').toISOString(),
+  dayjs.tz().startOf('day').toISOString(),
+  dayjs.tz().add(1, 'month').startOf('day').toISOString(),
 ];
 
 const getDefaultFilters = (): BaseFilters => ({

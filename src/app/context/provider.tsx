@@ -38,7 +38,7 @@ export const AppContextProvider = ({ children }: IProps) => {
 
   useEffect(() => {
     fetching();
-  }, []);
+  }, [fetching]);
 
   const openAuthModal = (
     type: ModalWindowType,

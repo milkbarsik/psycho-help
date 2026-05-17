@@ -1,9 +1,4 @@
-import dayjs from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import 'dayjs/locale/ru';
-
-dayjs.locale('ru');
-dayjs.extend(LocalizedFormat);
+import dayjs from '@/shared/lib/dayjs';
 
 export const combineDateAndTime = (dateStr: string, timeStr: string) => {
   return dayjs(dateStr + ' ' + timeStr).toISOString();

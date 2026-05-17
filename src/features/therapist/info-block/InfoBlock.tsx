@@ -1,4 +1,4 @@
-import type { Therapist } from '@/shared/api';
+import type { Therapist } from '@/entities/therapist/types';
 import { useState, type FC } from 'react';
 import styles from './InfoBlock.module.css';
 import { Img } from '@/shared/ui';

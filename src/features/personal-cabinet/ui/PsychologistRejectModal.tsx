@@ -59,7 +59,7 @@ const PsychologistRejectModal = ({
 }: PsychologistRejectModalProps) => {
   const queryClient = useQueryClient();
   const reason = usePsychologistDrafts((state) =>
-    entityId ? state.reasonDrafts[type]?.[entityId] ?? '' : '',
+    entityId ? state.reasonDrafts[type]?.[entityId] || '' : '',
   );
   const setReasonDraft = usePsychologistDrafts((state) => state.setReasonDraft);
   const clearReasonDraft = usePsychologistDrafts((state) => state.clearReasonDraft);

@@ -200,3 +200,45 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+  .appointmentRow {
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+  .infoCol {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .actionsCol {
+    justify-content: flex-start;
+  }
+  .location::before {
+    display: none;
+    margin: 0 0;
+  }
+}
+
+[data-theme='dark'] {
+  .dateHeader,
+  .timeCol,
+  .patientName,
+  .status-text {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+  .location {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-quaternary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .appointmentRow:not(:first-of-type) {
+    border-top: 1px solid var(--color-border-neutral-inverted);
+  }
+  .status-dot {
+    &--completed {
+      background-color: var(--color-label-neutral-inverted-primary);
+    }
+  }
+}

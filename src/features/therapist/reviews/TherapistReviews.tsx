@@ -1,8 +1,6 @@
 const TherapistReviews = () => {
-    return (
-        <></>
-    )
-}
+  return <></>;
+};
 
 export default TherapistReviews;
 

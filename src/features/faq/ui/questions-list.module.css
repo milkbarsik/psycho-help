@@ -1,9 +1,9 @@
 .wrapper {
-    padding-top: 3.6rem;
+  padding-top: 3.6rem;
 }
 
 @media (max-width: 634px) {
-    .wrapper {
-        padding-top: 2.4rem;
-    }
+  .wrapper {
+    padding-top: 2.4rem;
+  }
 }

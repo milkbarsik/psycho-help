@@ -104,3 +104,38 @@
     padding: 1.2rem 0.8rem;
   }
 }
+
+[data-theme='dark'] {
+  .sidebar {
+    background-color: var(--color-fill-neutral-primary);
+  }
+  .avatar {
+    color: color-mix(
+      in srgb,
+      var(--color-label-neutral-secondary),
+      var(--color-label-neutral-inverted-primary)
+    );
+  }
+  .name {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+
+  .navItem {
+    color: var(--color-label-neutral-inverted-primary);
+    &:hover:not(.active) {
+      color: var(--color-interactive-brand-primary);
+    }
+    &.active {
+      background-color: var(--color-interactive-neutral-active);
+    }
+  }
+  .askButton {
+    color: var(--color-interactive-neutral-primary);
+    &:hover {
+      background-color: var(--color-interactive-neutral-hover-secondary);
+    }
+    &:active {
+      background-color: var(--color-interactive-neutral-active-secondary);
+    }
+  }
+}

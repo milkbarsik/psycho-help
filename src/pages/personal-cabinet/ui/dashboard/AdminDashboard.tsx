@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import styles from './Dashboard.module.scss';
+import styles from './AdminDashboard.module.scss';
 
 const AdminDashboard: FC = () => {
   return (

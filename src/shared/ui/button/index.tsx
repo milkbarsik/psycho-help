@@ -7,7 +7,7 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'medium';
   iconPosition?: 'left' | 'right';
   icon?: ReactNode;
-  color?: 'neutral' | 'brand'
+  color?: 'neutral' | 'brand';
 }
 
 export const Button = ({
@@ -34,15 +34,15 @@ export const Button = ({
     <button
       {...props}
       className={clsx(
-        styles.button, 
+        styles.button,
         styles[variant],
-        className, 
-        styles[size], 
-        styles[`color-${color}`], 
+        className,
+        styles[size],
+        styles[`color-${color}`],
         {
           [styles.disabled]: disabled,
           [styles.hasIcon]: !!icon,
-        }
+        },
       )}
     >
       {content}

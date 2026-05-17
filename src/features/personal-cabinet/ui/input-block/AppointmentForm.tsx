@@ -1,35 +1,34 @@
 import type { FC } from 'react';
-import styles from './AppointmentForm.module.css';
-import { useApplication } from '@/features/personal-cabinet/model/application';
-import type { Therapist } from '@/entities/therapist/types';
-import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
-import clsx from 'clsx';
-import { Img } from '@/shared/ui';
 import { useState, useMemo, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { message, DatePicker, ConfigProvider } from 'antd';
+import locale from 'antd/es/locale/ru_RU';
+import dayjs, { Dayjs } from 'dayjs';
+import clsx from 'clsx';
+import { useApplication } from '@/features/personal-cabinet/model/application';
+import { therapistQueries } from '@/entities/therapist/api';
+import altPhoto from '@/shared/assets/images/altPhotos/User_Accounts_alt.png';
+import { Img } from '@/shared/ui';
 import arrow from '@/shared/assets/images/appointments/arrow.svg';
 import backArrow from '@/shared/assets/images/appointments/backArrow.svg';
 import { useAuth } from '@/features/auth/api/useAuth';
 import type { ApplicationCreateRequest, UniversityStatus } from '@/entities/application/types';
 import { createApplication, getUniversityStatuses } from '@/entities/application/api';
-import { message, DatePicker, ConfigProvider } from 'antd';
-import locale from 'antd/es/locale/ru_RU';
-import dayjs, { Dayjs } from 'dayjs';
+import Loader from '@/shared/ui/loader/loader';
+import styles from './AppointmentForm.module.css';
 
-interface Props {
-  doctors: Therapist[];
-}
-
-const AppointmentForm: FC<Props> = ({ doctors }) => {
+const AppointmentForm: FC = () => {
+  const { data: doctors = [], isLoading } = useQuery(therapistQueries.list());
   const user = useAuth((s) => s.user);
   const application = useApplication((state) => state.application);
   const setApplication = useApplication((state) => state.setApplication);
 
   // 🎯 State для навигации по галерее и фильтров
   const [currentTherapistIndex, setCurrentTherapistIndex] = useState(0);
-  const[selectedOffices, setSelectedOffices] = useState<Set<string>>(new Set());
-  const[window, setWindow] = useState<'form' | 'results'>('form');
-  const[meetingType, setMeetingType] = useState<'online' | 'offline' | null>(null);
-  const[selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [selectedOffices, setSelectedOffices] = useState<Set<string>>(new Set());
+  const [window, setWindow] = useState<'form' | 'results'>('form');
+  const [meetingType, setMeetingType] = useState<'online' | 'offline' | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [universityStatuses, setUniversityStatuses] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,19 +39,19 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
     // Если выбрано "очно", исключаем психологов, которые принимают ТОЛЬКО онлайн
     if (meetingType === 'offline') {
       availableDoctors = availableDoctors.filter(
-        (doctor) => doctor.office && doctor.office.toLowerCase() !== 'онлайн'
+        (doctor) => doctor.office && doctor.office.toLowerCase() !== 'онлайн',
       );
     }
 
     // Фильтр по чекбоксам офисов (применяется только для очного формата)
     if (meetingType === 'offline' && selectedOffices.size > 0) {
       availableDoctors = availableDoctors.filter(
-        (doctor) => doctor.office && selectedOffices.has(doctor.office)
+        (doctor) => doctor.office && selectedOffices.has(doctor.office),
       );
     }
 
     return availableDoctors;
-  },[doctors, selectedOffices, meetingType]);
+  }, [doctors, selectedOffices, meetingType]);
 
   // 🔄 Сброс индекса галереи при изменении списка или формата встречи
   useEffect(() => {
@@ -77,7 +76,7 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
       }
     };
     fetchUniversityStatuses();
-  },[]);
+  }, []);
 
   // 🎯 Обработчик чекбокса офиса
   const handleOfficeToggle = (office: string) => {
@@ -113,10 +112,12 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
   const uniqueOffices = useMemo(
     () =>
       Array.from(new Set(doctors.map((d) => d.office).filter(Boolean))).filter(
-        (office) => office?.toLowerCase() !== 'онлайн'
+        (office) => office?.toLowerCase() !== 'онлайн',
       ),
-    [doctors]
+    [doctors],
   );
+
+  if (isLoading) return <Loader />;
 
   const handleNextButton = () => {
     if (!meetingType) {
@@ -187,7 +188,9 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               </button>
               <button
                 type="button"
-                className={clsx(styles.formatButton, { [styles.active]: meetingType === 'offline' })}
+                className={clsx(styles.formatButton, {
+                  [styles.active]: meetingType === 'offline',
+                })}
                 onClick={() => setMeetingType('offline')}
               >
                 Очно
@@ -235,7 +238,11 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
                   <div className={styles.info}>
                     <div className={styles.infoBlock}>
                       <p className={styles.name}>
-                        {[currentTherapist.last_name, currentTherapist.first_name, currentTherapist.middle_name]
+                        {[
+                          currentTherapist.last_name,
+                          currentTherapist.first_name,
+                          currentTherapist.middle_name,
+                        ]
                           .filter(Boolean)
                           .join(' ')}
                       </p>
@@ -323,7 +330,9 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
             <label className={styles.label}>Ваш статус в университете</label>
             <select
               value={application.university_status || 'студент'}
-              onChange={(e) => setApplication({ university_status: e.target.value as UniversityStatus })}
+              onChange={(e) =>
+                setApplication({ university_status: e.target.value as UniversityStatus })
+              }
               className={styles.selectInput}
             >
               {universityStatuses.map((status) => (
@@ -359,24 +368,34 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
           </button>
           <div className={styles.results__info}>
             <h3 className={styles.results__title}>Запись</h3>
-            
+
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>Дата и время: </span>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>
+                Дата и время:{' '}
+              </span>
               {selectedDate?.format('DD MMMM YYYY, HH:mm')}
             </p>
 
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>Психолог: </span>
-              {[currentTherapist.last_name, currentTherapist.first_name, currentTherapist.middle_name].join(' ')}
+              <span className={clsx(styles.results__text, styles.results__textGray)}>
+                Психолог:{' '}
+              </span>
+              {[
+                currentTherapist.last_name,
+                currentTherapist.first_name,
+                currentTherapist.middle_name,
+              ].join(' ')}
             </p>
 
             <p className={styles.results__text}>
               <span className={clsx(styles.results__text, styles.results__textGray)}>Место: </span>
               {meetingType === 'online' ? 'Онлайн' : currentTherapist.office}
             </p>
-            
+
             <p className={styles.results__text}>
-              <span className={clsx(styles.results__text, styles.results__textGray)}>Статус в ВУЗе: </span>
+              <span className={clsx(styles.results__text, styles.results__textGray)}>
+                Статус в ВУЗе:{' '}
+              </span>
               {application.university_status || 'студент'}
             </p>
 
@@ -386,12 +405,8 @@ const AppointmentForm: FC<Props> = ({ doctors }) => {
               readOnly
               className={clsx(styles.textarea, styles.results__textarea)}
             />
-            
-            <button 
-              className={styles.submitBtn} 
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-            >
+
+            <button className={styles.submitBtn} onClick={handleSubmit} disabled={isSubmitting}>
               {isSubmitting ? 'Отправка...' : 'Записаться'}
             </button>
           </div>
