@@ -2,7 +2,7 @@
   background-color: var(--color-fill-brand-tetriary);
 }
 
-.hero__inner {
+.inner {
   max-width: 144rem;
   margin: 0 auto;
   padding: 0 12rem;
@@ -12,7 +12,7 @@
   gap: 2rem 6.7rem;
 }
 
-.hero__title {
+.title {
   grid-row: 1;
   align-self: end;
   font-weight: 600;
@@ -22,14 +22,14 @@
   color: var(--color-label-brand-secondary);
 }
 
-.hero__text {
+.text {
   grid-row: 2;
   font-size: 2rem;
   line-height: 2.8rem;
   color: var(--color-label-neutral-secondary);
 }
 
-.hero__image {
+.image {
   grid-row: span 2;
   align-self: center;
   max-width: 59.9rem;
@@ -37,24 +37,24 @@
 }
 
 @media (max-width: 1200px) {
-  .hero__inner {
+  .inner {
     padding: 0 5.7rem;
     gap: 2rem 2.4rem;
   }
 
-  .hero__title {
+  .title {
     font-size: 4.8rem;
     line-height: 5.6rem;
   }
 
-  .hero__text {
+  .text {
     margin: 0 0 3.5rem 0;
     max-width: 39rem;
     font-size: 1.6rem;
     line-height: 2.4rem;
   }
 
-  .hero__image {
+  .image {
     max-height: 32rem;
     max-width: 100%;
     width: auto;
@@ -62,7 +62,7 @@
 }
 
 @media (max-width: 720px) {
-  .hero__inner {
+  .inner {
     padding: 2.4rem 1rem 2rem;
     display: flex;
     flex-direction: column;
@@ -70,14 +70,14 @@
     gap: 2rem;
   }
 
-  .hero__title {
+  .title {
     align-self: center;
     font-size: 3.6rem;
     line-height: 4.4rem;
     letter-spacing: -0.04em;
   }
 
-  .hero__text {
+  .text {
     margin: 0;
     font-size: 1.6rem;
     line-height: 2.4rem;
@@ -89,11 +89,11 @@
     background-color: var(--color-fill-neutral-primary);
   }
 
-  .hero__title {
+  .title {
     color: var(--color-label-neutral-inverted-primary);
   }
 
-  .hero__text {
+  .text {
     color: var(--color-label-neutral-inverted-primary);
   }
 }

@@ -3,11 +3,11 @@
 
   &:hover,
   &:focus-visible {
-    // .card__photo {
+    // .photo {
     //   scale: 1.03;
     // }
 
-    .card__title {
+    .title {
       color: var(--color-interactive-brand-primary);
     }
   }
@@ -24,13 +24,13 @@
   background-color: var(--color-fill-brand-quaternary);
 }
 
-// .card__photo-wrapper {
+// .photo-wrapper {
 //   overflow: hidden;
 //   border-radius: 2.4rem;
 //   margin-bottom: 2rem;
 // }
 
-// .card__photo {
+// .photo {
 //   aspect-ratio: 1 / 1;
 //   background-repeat: no-repeat;
 //   background-size: cover;
@@ -39,28 +39,28 @@
 //   transition: scale 0.5s;
 // }
 
-.card__header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
 }
 
-// .card__type {
+// .type {
 //   font-weight: 500;
 //   font-size: 2rem;
 //   line-height: 2.8rem;
 //   color: var(--color-interactive-neutral-primary);
 // }
 
-.card__date {
+.date {
   align-self: end;
   font-size: 1.6rem;
   line-height: 2.4rem;
   color: var(--color-label-neutral-primary);
 }
 
-.card__title {
+.title {
   display: -webkit-box;
   -webkit-line-clamp: 4;
   line-clamp: 4;
@@ -72,7 +72,7 @@
   transition: color 0.5s;
 }
 
-// .card__description {
+// .description {
 //   display: -webkit-box;
 //   -webkit-line-clamp: 3;
 //   line-clamp: 3;
@@ -84,7 +84,7 @@
 //   color: var(--color-label-neutral-tetriary);
 // }
 
-.card__link {
+.link {
   width: 2.5rem;
   border-radius: 0.2rem;
 }
@@ -94,25 +94,25 @@
     padding: 1.6rem;
   }
 
-  // .card__photo-wrapper {
+  // .photo-wrapper {
   //   margin-bottom: 1.2rem;
   // }
 
-  .card__header {
+  .header {
     gap: 1rem;
   }
 
-  // .card__type {
+  // .type {
   //   font-size: 1.8rem;
   //   line-height: 2.4rem;
   // }
 
-  .card__date {
+  .date {
     font-size: 1.2rem;
     line-height: 1.6rem;
   }
 
-  .card__title {
+  .title {
     font-weight: 500;
     font-size: 1.8rem;
     line-height: 2.4rem;
@@ -125,15 +125,15 @@
     background-color: var(--color-fill-neutral-primary);
   }
 
-  // .card__type {
+  // .type {
   //   color: var(--color-label-neutral-inverted-primary);
   // }
 
-  .card__date {
+  .date {
     color: var(--color-label-neutral-inverted-primary);
   }
 
-  .card__title {
+  .title {
     color: color-mix(
       in srgb,
       var(--color-label-neutral-secondary),

@@ -11,13 +11,13 @@
   border-radius: 1.6rem;
 }
 
-.banner__info {
+.info {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
 }
 
-.banner__title {
+.title {
   font-weight: 500;
   font-size: 3.2rem;
   line-height: 3.6rem;
@@ -25,14 +25,14 @@
   color: var(--color-label-neutral-primary);
 }
 
-.banner__text {
+.text {
   z-index: 1;
   font-size: 2rem;
   line-height: 2.8rem;
   color: var(--color-label-neutral-primary);
 }
 
-.banner__icon {
+.icon {
   position: absolute;
   top: 25.8rem;
   right: 7.6rem;
@@ -42,7 +42,7 @@
   height: 14.7rem;
 }
 
-.banner__link {
+.link {
   width: 100%;
   z-index: 1;
   text-align: center;
@@ -73,11 +73,11 @@
     gap: 4.8rem;
   }
 
-  .banner__info {
+  .info {
     width: 30rem;
   }
 
-  .banner__icon {
+  .icon {
     top: 11.9rem;
     right: 2.7rem;
     bottom: -1.3rem;
@@ -86,7 +86,7 @@
     height: 18.2rem;
   }
 
-  .banner__link {
+  .link {
     width: 30rem;
   }
 }
@@ -96,11 +96,11 @@
     height: 51.6rem;
   }
 
-  .banner__info {
+  .info {
     width: 100%;
   }
 
-  .banner__icon {
+  .icon {
     top: 25.8rem;
     right: auto;
     bottom: 11.1rem;
@@ -109,13 +109,13 @@
     height: 14.7rem;
   }
 
-  .banner__link {
+  .link {
     width: 100%;
   }
 }
 
 [data-theme='dark'] {
-  .banner__title {
+  .title {
     color: var(--color-label-neutral-inverted-primary);
   }
 
@@ -124,7 +124,7 @@
     border: 1px solid var(--color-border-neutral-inverted);
   }
 
-  .banner__text {
+  .text {
     color: color-mix(
       in srgb,
       var(--color-label-neutral-secondary),
@@ -132,16 +132,16 @@
     );
   }
 
-  .banner__link {
+  .link {
     background-color: var(--color-background-neutral-primary);
     color: var(--color-label-neutral-primary);
   }
 
-  .banner__link:hover {
+  .link:hover {
     background-color: var(--color-interactive-neutral-hover-secondary);
   }
 
-  .banner__link:active {
+  .link:active {
     background-color: var(--color-interactive-neutral-active-secondary);
   }
 }
