@@ -3,8 +3,8 @@ export type News = {
   slug: string;
   image: string | null;
   type: NewsType | null;
-  // event_date: string;
   date: string;
+  event_date: string;
   title: string;
   description: string | null;
   link: string | null;

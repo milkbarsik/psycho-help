@@ -46,8 +46,7 @@ export const NewsItemPage = () => {
           Новости
         </Link>
         <div className={styles.info}>
-          {/* <p>{dayjs(news.event_date).tz().format('DD.MM.YYYY')}</p> */}
-          <p>{dayjs(news.date).tz().format('DD.MM.YYYY')}</p>
+          <p>{dayjs(news.event_date).tz().format('DD.MM.YYYY')}</p>
           <p>{news.type}</p>
         </div>
       </div>

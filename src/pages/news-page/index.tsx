@@ -29,7 +29,7 @@ export const NewsPage = () => {
     <div className={styles.news}>
       <NewsHero />
 
-      <div className={styles['news__list-wrapper']}>
+      <div className={styles.listWrapper}>
         <NewsList news={news} />
 
         <NewsBanner />

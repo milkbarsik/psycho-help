@@ -21,7 +21,7 @@ export const NewsCard: FC<Props> = ({ news }) => {
     >
       <div className={styles.card}>
         {/* {news.image && (
-        <div className={styles['photo-wrapper']}>
+        <div className={styles.photoWrapper}>
           <Img
             className={styles.photo}
             photo={`${import.meta.env.VITE_REACT_APP_IMAGE_URL}` + news.image}
@@ -31,11 +31,8 @@ export const NewsCard: FC<Props> = ({ news }) => {
       )} */}
         <div className={styles.header}>
           {news.type && <div className={styles.type}>{news.type}</div>}
-          {/* {news.event_date && (
+          {news.event_date && (
             <div className={styles.event_date}>{dayjs(news.event_date).tz().format('DD.MM.YYYY')}</div>
-          )} */}
-          {news.date && (
-            <div className={styles.date}>{dayjs(news.date).tz().format('DD.MM.YYYY')}</div>
           )}
         </div>
         <p className={styles.title}>{news.title}</p>
