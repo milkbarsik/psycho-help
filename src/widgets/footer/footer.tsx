@@ -3,6 +3,7 @@ import TgIcon from '@/shared/assets/images/footer/tg.svg';
 import MaxIcon from '@/shared/assets/images/footer/max.svg';
 import styles from './footer.module.scss';
 import FooterLogo from '@/shared/assets/images/footer/logo.svg?react';
+import clsx from 'clsx';
 
 const Footer = () => {
   const addresses = [
@@ -84,7 +85,9 @@ const Footer = () => {
               <div className={styles.addressBackgroundLetters}>{address.letters}</div>
               <div className={styles.adressItemContent}>
                 <p className={styles.addressStreet}>{address.street}</p>
-                <p className={styles.addressStreet+ ' ' + styles.addressAuditorium}>{address.auditorium}</p>
+                <p className={clsx(styles.addressStreet, styles.addressAuditorium)}>
+                  {address.auditorium}
+                </p>
               </div>
             </div>
           ))}
@@ -92,7 +95,9 @@ const Footer = () => {
 
         {/* Копирайт */}
         <div className={styles.copyright}>
-          <p>© {new Date().getFullYear()} Служба психологической помощи (СПП) Московского Политеха.</p>
+          <p>
+            © 2025 Служба психологической помощи (СПП) Московского Политеха.
+          </p>
         </div>
       </div>
     </footer>
