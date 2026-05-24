@@ -1,7 +1,9 @@
 import VkIcon from '@/shared/assets/images/footer/vk.svg';
 import TgIcon from '@/shared/assets/images/footer/tg.svg';
+import MaxIcon from '@/shared/assets/images/footer/max.svg';
 import styles from './footer.module.scss';
 import FooterLogo from '@/shared/assets/images/footer/logo.svg?react';
+import clsx from 'clsx';
 
 const Footer = () => {
   const addresses = [
@@ -28,6 +30,7 @@ const Footer = () => {
   ];
 
   const socialLinks = [
+    { icon: MaxIcon, alt: 'Max', link: '#' },
     { icon: VkIcon, alt: 'VK', link: 'https://vk.com/spp_polytech' },
     { icon: TgIcon, alt: 'Telegram', link: 'https://t.me/spp_mospolytech' },
   ];
@@ -43,33 +46,35 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className={styles.contactInfo}>
-            <div className={styles.contactItem}>
-              <span className={styles.contactLabel}>Телефон:</span>
-              <a href="tel:+74952230541" className={styles.contactValue}>
-                +7 (495) 223-05-41
-              </a>
+          <div className={styles.rightGroup}>
+            <div className={styles.contactInfo}>
+              <div className={styles.contactItem}>
+                <span className={styles.contactLabel}>Телефон:</span>
+                <a href="tel:+74952230541" className={styles.contactValue}>
+                  +7 (495) 223-05-41
+                </a>
+              </div>
+              <div className={styles.contactItem}>
+                <span className={styles.contactLabel}>E-mail:</span>
+                <a href="mailto:psycholog@mospolytech.ru" className={styles.contactValue}>
+                  psycholog@mospolytech.ru
+                </a>
+              </div>
             </div>
-            <div className={styles.contactItem}>
-              <span className={styles.contactLabel}>E-mail:</span>
-              <a href="mailto:psycholog@mospolytech.ru" className={styles.contactValue}>
-                psycholog@mospolytech.ru
-              </a>
-            </div>
-          </div>
 
-          <div className={styles.socialSection}>
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.link}
-                className={styles.socialLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src={social.icon} alt={social.alt} className={styles.socialIcon} />
-              </a>
-            ))}
+            <div className={styles.socialSection}>
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.link}
+                  className={styles.socialLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={social.icon} alt={social.alt} className={styles.socialIcon} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -80,7 +85,9 @@ const Footer = () => {
               <div className={styles.addressBackgroundLetters}>{address.letters}</div>
               <div className={styles.adressItemContent}>
                 <p className={styles.addressStreet}>{address.street}</p>
-                <p className={styles.addressAuditorium}>{address.auditorium}</p>
+                <p className={clsx(styles.addressStreet, styles.addressAuditorium)}>
+                  {address.auditorium}
+                </p>
               </div>
             </div>
           ))}
@@ -88,7 +95,9 @@ const Footer = () => {
 
         {/* Копирайт */}
         <div className={styles.copyright}>
-          <p>© 2025 Служба психологической помощи (СПП) Московского Политеха.</p>
+          <p>
+            © 2025 Служба психологической помощи (СПП) Московского Политеха.
+          </p>
         </div>
       </div>
     </footer>
