@@ -1,12 +1,13 @@
 import { newsQueries } from '@/entities/news/api/queries';
 import chevronLeft from '@/shared/assets/images/news/chevron-left.svg';
 import dayjs from '@/shared/lib/dayjs';
+import { sanitizeHtml } from '@/shared/lib/sanitizeHtml';
 import { Button } from '@/shared/ui';
 import Loader from '@/shared/ui/loader/loader';
 import { LeftOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { Result } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './NewsItemPage.module.scss';
@@ -17,6 +18,8 @@ export const NewsItemPage = () => {
   const navigate = useNavigate();
   // const { data: news, isLoading, error } = useQuery(newsQueries.bySlug(slug!));
   const { data: news, isLoading, error } = useQuery(newsQueries.byId(id!));
+
+  const safeText = useMemo(() => sanitizeHtml(news?.text ?? ''), [news?.text]);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -57,8 +60,8 @@ export const NewsItemPage = () => {
         </div>
       )}
 
-      {news.text && (
-        <div className={styles.content} dangerouslySetInnerHTML={{ __html: news.text }} />
+      {safeText && (
+        <div className={styles.content} dangerouslySetInnerHTML={{ __html: safeText }} />
       )}
 
       <Button
