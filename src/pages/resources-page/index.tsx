@@ -2,14 +2,17 @@ import styles from './ResourcesPage.module.scss';
 import { type ITab, Tabs } from '@/shared/ui/tabs';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
 import { TRANSLATES } from './consts/translates.ts';
-import { ResourceEntities } from '@/pages/resources-page/consts/entities.ts';
+import {
+  ResourceEntities,
+  RESOURCES_ENTITY_STORAGE_KEY,
+  type TResourceEntity,
+} from '@/pages/resources-page/consts/entities.ts';
 import { Articles } from '@/pages/resources-page/entities/articles';
 import { Tests } from '@/pages/resources-page/entities/tests';
 import { Polls } from '@/pages/resources-page/entities/polls';
 
-const TABS = [
+const TABS: ITab[] = [
   {
     id: ResourceEntities.ARTICLES,
     content: <Articles />,
@@ -25,21 +28,32 @@ const TABS = [
     content: <Polls />,
     label: TRANSLATES.polls,
   },
-] as ITab[];
+];
+
+const isValidEntity = (value: string | null): value is TResourceEntity =>
+  !!value && (Object.values(ResourceEntities) as string[]).includes(value);
+
+const getSavedEntity = (): TResourceEntity => {
+  const savedEntity = sessionStorage.getItem(RESOURCES_ENTITY_STORAGE_KEY);
+  return isValidEntity(savedEntity) ? savedEntity : ResourceEntities.ARTICLES;
+};
 
 export const ResourcesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const features = TRANSLATES.features.join(' • ');
-  const [, setCurrentTab] = useState<typeof ResourceEntities | null>(null);
+
+  // Вкладка, с которой открывается страница: из урла, иначе - последняя посещённая
+  const [initialTab] = useState(() => {
+    const entityParam = searchParams.get('entity');
+    return isValidEntity(entityParam) ? entityParam : getSavedEntity();
+  });
 
   useEffect(() => {
-    const tabParam = searchParams.get('entity');
-    if (tabParam && Object.values(ResourceEntities)?.includes(tabParam)) {
-      setCurrentTab(tabParam as unknown as typeof ResourceEntities);
+    const entityParam = searchParams.get('entity');
+    if (isValidEntity(entityParam)) {
+      sessionStorage.setItem(RESOURCES_ENTITY_STORAGE_KEY, entityParam);
     } else {
-      setCurrentTab(null);
-      searchParams.delete('entity');
-      setSearchParams(searchParams);
+      setSearchParams({ entity: getSavedEntity() }, { replace: true });
     }
   }, [searchParams, setSearchParams]);
 
@@ -49,24 +63,15 @@ export const ResourcesPage = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.top}>
+      <div className={styles.hero}>
         <div className={styles.info}>
-          <h2 className={styles.title}>{TRANSLATES.title}</h2>
+          <h1 className={styles.title}>{TRANSLATES.title}</h1>
           <p className={styles.features}>{features}</p>
         </div>
-        <div className={styles.image}>
-          <img src={TRANSLATES.imgSrc} alt={'resources-image'} />
-        </div>
+        <img className={styles.image} src={TRANSLATES.imgSrc} alt="" />
       </div>
 
-      <div className={styles.content}>
-        <Tabs
-          contentClassName={styles.tabsContent}
-          fullWidth
-          onChange={handleChangeTab}
-          tabs={TABS}
-        />
-      </div>
+      <Tabs fullWidth defaultActiveTab={initialTab} onChange={handleChangeTab} tabs={TABS} />
     </div>
   );
 };

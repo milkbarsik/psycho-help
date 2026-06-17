@@ -1,21 +1,28 @@
 import { useState } from 'react';
-import { questionsData } from '@/pages/test-page/mocks';
-import styles from './Test-page.module.scss';
-import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import { mockTestData } from './mocks';
+import { TRANSLATES as t } from './constants';
+import { asArray } from '@/shared/lib/coerce';
+import styles from './TestPage.module.scss';
+import { useNavigate, useParams } from 'react-router-dom';
+import type { TTestAnswers } from './models';
 
 export const TestPage = () => {
+  const { slug } = useParams();
+  const data = mockTestData;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<TTestAnswers>({});
   const navigate = useNavigate();
 
-  const currentQuestion = questionsData[currentQuestionIndex];
-  const isLastQuestion = currentQuestionIndex === questionsData.length - 1;
+  const questions = asArray(data?.questions);
+  const currentQuestion = questions[currentQuestionIndex];
+  const isLastQuestion = currentQuestionIndex === questions.length - 1;
   const isFirstQuestion = currentQuestionIndex === 0;
 
-  const handleAnswer = (option: string) => {
+  const handleAnswer = (optionId: string) => {
     setAnswers((prev) => ({
       ...prev,
-      [currentQuestion.id]: option,
+      [currentQuestion.id]: optionId,
     }));
   };
 
@@ -34,34 +41,37 @@ export const TestPage = () => {
   };
 
   const handleFinish = () => {
-    console.log('Ответы:', answers);
-    navigate(`/resources?entity=tests`);
+    navigate(`/test/${slug}/result`, { state: { answers } });
   };
 
   if (!currentQuestion) {
-    return <div>Тест не найден</div>;
+    return <div>{t.notFound}</div>;
   }
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <div className={styles.counter}>
-          {currentQuestionIndex + 1} из {questionsData.length}
+        <div className={styles.counter} aria-live="polite">
+          {currentQuestionIndex + 1} {t.of} {data.questions.length}
         </div>
       </div>
 
       <div className={styles.question}>
-        <h2 className={styles.title}>{currentQuestion.title}</h2>
+        <h1 className={styles.title}>{currentQuestion.title}</h1>
 
         <div className={styles.options}>
-          {currentQuestion.options.map((option, index) => (
-            <div
-              key={index}
-              className={`${styles.option} ${answers[currentQuestion.id] === option ? styles.selected : ''}`}
-              onClick={() => handleAnswer(option)}
+          {asArray(currentQuestion.options).map((option) => (
+            <button
+              type="button"
+              key={option.id}
+              aria-pressed={answers[currentQuestion.id] === option.id}
+              className={clsx(styles.option, {
+                [styles.selected]: answers[currentQuestion.id] === option.id,
+              })}
+              onClick={() => handleAnswer(option.id)}
             >
-              {option}
-            </div>
+              {option.label}
+            </button>
           ))}
         </div>
       </div>
@@ -71,7 +81,7 @@ export const TestPage = () => {
           className={`${styles.buttonAction} ${styles.buttonActionBack}`}
           onClick={handlePrev}
         >
-          Назад
+          {t.back}
         </button>
 
         {isLastQuestion ? (
@@ -80,7 +90,7 @@ export const TestPage = () => {
             onClick={handleFinish}
             disabled={!answers[currentQuestion.id]}
           >
-            Завершить
+            {t.finish}
           </button>
         ) : (
           <button
@@ -88,7 +98,7 @@ export const TestPage = () => {
             onClick={handleNext}
             disabled={!answers[currentQuestion.id]}
           >
-            Далее
+            {t.next}
           </button>
         )}
       </div>

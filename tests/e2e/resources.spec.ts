@@ -6,10 +6,10 @@ test('Проверка статей', async ({ page }) => {
   await expect(cards).toHaveCount(6);
   await page.getByRole('button', { name: 'Показать ещё' }).click();
   await expect(cards).toHaveCount(9);
-  const navPromise = page.waitForURL(/\/article\/1/);
-  await page.getByRole('button', { name: 'Читать' }).first().click();
+  const navPromise = page.waitForURL(/\/article\/[a-z0-9-]+$/);
+  await page.getByRole('link', { name: 'Читать' }).first().click();
   await navPromise;
-  await expect(page).toHaveURL(/\/article\/1$/);
+  await expect(page).toHaveURL(/\/article\/[a-z0-9-]+$/);
 });
 
 test('Проверка тестов', async ({ page }) => {

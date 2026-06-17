@@ -1,13 +1,18 @@
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './ArticlePage.module.scss';
-import { mockArticlePageData } from './mocks';
-import { TRANSLATES as t } from './constants';
 import { Button } from '@/shared/ui';
 import { LeftOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
+import { asArray } from '@/shared/lib/coerce';
+import styles from './ArticlePage.module.scss';
+import { TRANSLATES as t } from './constants';
+import { mockArticlePageData } from './mocks';
 import type { TArticleContentItem } from './models';
 
-const parseContentData = (item: TArticleContentItem, index: number | string) => {
+const parseContentData = (item: TArticleContentItem | null | undefined, index: number | string) => {
+  if (!item) {
+    return null;
+  }
+
   const key = `article-content-${item.type}-${index}`;
 
   switch (item.type) {
@@ -25,23 +30,26 @@ const parseContentData = (item: TArticleContentItem, index: number | string) => 
     }
 
     case 'image':
-      return (
+      return item.src ? (
         <div className={styles.imageWrapper} key={key}>
           <img src={item.src} alt={item.alt} />
         </div>
-      );
+      ) : null;
     case 'ul':
+    case 'ol': {
+      const ListTag = item.type;
       return (
-        <ul key={key} className={styles.list}>
-          {item.items.map((listItem, listIndex) => (
+        <ListTag key={key} className={styles.list}>
+          {asArray(item.items).map((listItem, listIndex) => (
             <li key={`${key}-${listIndex}`}>{listItem}</li>
           ))}
-        </ul>
+        </ListTag>
       );
+    }
     case 'block':
       return (
         <div className={styles.block} key={key}>
-          {item.data.map((blockItem, blockIndex) =>
+          {asArray(item.data).map((blockItem, blockIndex) =>
             parseContentData(blockItem, `${key}-${blockIndex}`),
           )}
         </div>
@@ -54,33 +62,34 @@ const parseContentData = (item: TArticleContentItem, index: number | string) => 
 
 export const ArticlePage = () => {
   const data = mockArticlePageData;
-  const navigate = useNavigate();
 
-  const handleBack = () => {
-    navigate('/resources');
-  };
+  if (!data) {
+    return <div className={styles.wrapper}>{t.notFound}</div>;
+  }
+
+  const date = dayjs(data.date);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.top}>
         <Link to="/resources" className={styles.backButton}>
-          <LeftOutlined />
+          <LeftOutlined aria-hidden />
           {t.materials}
         </Link>
 
         <div className={styles.info}>
-          <p className={styles.date}>{dayjs(data.date).format('DD.MM.YYYY')}</p>
-          <p className={styles.author}>{data.author}</p>
+          {date.isValid() && <p className={styles.date}>{date.format('DD.MM.YYYY')}</p>}
+          {data.author && <p className={styles.author}>{data.author}</p>}
         </div>
       </div>
-      <h1 className={styles.title}>{data.title}</h1>
-      <div className={styles.content}>{data?.content?.map(parseContentData)}</div>
+      {data.title && <h1 className={styles.title}>{data.title}</h1>}
+      <div className={styles.content}>{asArray(data.content).map(parseContentData)}</div>
 
       <Button
         className={styles.bottomBtn}
-        icon={<LeftOutlined />}
+        icon={<LeftOutlined aria-hidden />}
         variant="secondary"
-        onClick={handleBack}
+        to="/resources"
       >
         {t.other}
       </Button>

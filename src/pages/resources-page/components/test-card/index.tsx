@@ -1,61 +1,49 @@
-import type { ReactNode, MouseEvent, HTMLAttributes } from 'react';
-import clsx from 'clsx';
+import { Link } from 'react-router-dom';
+import { DEFAULT_TEST_COVER } from '@/pages/resources-page/consts';
+import { formatDuration, formatQuestionsCount } from '@/shared/lib/format';
+import { toNumber, toText } from '@/shared/lib/coerce';
+import type { TTest } from '@/pages/resources-page/entities/tests/models.ts';
 import styles from './TestCard.module.scss';
 
-interface IProps extends HTMLAttributes<HTMLDivElement> {
-  title: string;
-  description?: string;
-  imageSrc?: string;
-  bottomSlot?: ReactNode;
-  info?: {
-    key: string;
-    value: string;
-  };
-  ellipseDescription?: boolean;
-  className?: string;
-  hasHorizontalDesktopVersion?: boolean;
-  onClick?: (e: MouseEvent) => void;
-}
+type TProps = {
+  test: TTest;
+};
 
-export const TestCard = ({
-  className,
-  title,
-  info,
-  onClick,
-  description,
-  ellipseDescription,
-  imageSrc,
-  bottomSlot,
-  hasHorizontalDesktopVersion,
-  ...props
-}: IProps) => {
+// Карточка теста всегда кликабельная целиком — это переход на страницу теста,
+// поэтому рендерим обычной ссылкой (доступность и клавиатура работают сами).
+export const TestCard = ({ test }: TProps) => {
+  const { slug } = test;
+  const title = toText(test.title);
+  const description = toText(test.description);
+  const cover = toText(test.imageSrc) ?? DEFAULT_TEST_COVER;
+  const questionsCount = toNumber(test.questionsCount);
+  const durationMinutes = toNumber(test.durationMinutes);
+  const hasInfo = questionsCount !== null || durationMinutes !== null;
+
   return (
-    <div
-      {...props}
-      onClick={onClick}
-      className={clsx(styles.wrapper, className, {
-        [styles.desktop]: hasHorizontalDesktopVersion,
-        [styles.clickable]: onClick,
-      })}
+    <Link
+      to={`/test/${slug}`}
+      className={styles.card}
+      data-testid="test-card"
+      aria-label={title ?? undefined}
     >
       <div className={styles.imageWrapper}>
-        {!!imageSrc && <img src={imageSrc} alt={`image-${title}`} />}
+        <img className={styles.image} src={cover} alt={title ?? ''} />
       </div>
       <div className={styles.content}>
-        <h4 className={styles.title}>{title}</h4>
-        {!!description && (
-          <p className={clsx(styles.description, { [styles.ellipse]: ellipseDescription })}>
-            {description}
-          </p>
-        )}
-        {!!info && (
+        {title && <h2 className={styles.title}>{title}</h2>}
+        {description && <p className={styles.description}>{description}</p>}
+        {hasInfo && (
           <div className={styles.info}>
-            <p>{info.key}</p>
-            <p>{info.value}</p>
+            {questionsCount !== null && (
+              <span className={styles.infoValue}>{formatQuestionsCount(questionsCount)}</span>
+            )}
+            {durationMinutes !== null && (
+              <span className={styles.infoValue}>{formatDuration(durationMinutes)}</span>
+            )}
           </div>
         )}
-        <div className={styles.bottomSlot}>{bottomSlot}</div>
       </div>
-    </div>
+    </Link>
   );
 };

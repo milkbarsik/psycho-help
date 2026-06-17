@@ -1,39 +1,40 @@
-export interface IArticlePageData {
+export type TArticlePageData = {
+  slug: string;
   date: string;
   author: string;
   title: string;
   content: TArticleContentItem[];
-}
+};
 
 export type TArticleContentItem =
-  | IArticleTextItem
-  | IArticleCover
-  | IArticleHeading
-  | IArticleBlockItem
-  | IArticleListItem;
+  | TArticleTextItem
+  | TArticleCover
+  | TArticleHeading
+  | TArticleBlockItem
+  | TArticleListItem;
 
-export interface IArticleCover {
+export type TArticleCover = {
   type: 'image';
   src: string;
   alt: string;
-}
+};
 
-export interface IArticleTextItem {
+export type TArticleTextItem = {
   type: 'p';
   data: string;
-}
+};
 
-export interface IArticleBlockItem {
+export type TArticleBlockItem = {
   type: 'block';
-  data: (IArticleTextItem | IArticleListItem)[];
-}
+  data: (TArticleTextItem | TArticleListItem)[];
+};
 
-export interface IArticleListItem {
+export type TArticleListItem = {
   type: 'ul' | 'ol';
   items: string[];
-}
+};
 
-export interface IArticleHeading {
+export type TArticleHeading = {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   data: string;
-}
+};

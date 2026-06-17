@@ -1,11 +1,11 @@
 /* Это нужно для того, чтобы на компе при открытии бургер-меню не прыгала сама кнопка бургера */
-:global(html):has(.header__list--open) {
+:global(html):has(.list--open) {
   scrollbar-gutter: stable;
   background-color: var(--color-fill-brand-primary);
   transition: background-color 0.3s;
 }
 
-:global(html[data-theme='dark']):has(.header__list--open) {
+:global(html[data-theme='dark']):has(.list--open) {
   background-color: var(--color-interactive-brand-hover);
 }
 
@@ -29,10 +29,9 @@
   z-index: 200;
   display: flex;
   justify-content: center;
-  background-color: var(--color-background-neutral-primary);
 }
 
-.header__nav {
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -41,12 +40,11 @@
   margin: 0 9.3rem;
   padding: 0 3.6rem;
   border-radius: 2.8rem;
-  // Надо будет поменять, когда дизайнеры нарисуют
   // backdrop-filter: blur(1rem);
-  background-color: var(--color-fill-neutral-quaternary);
+  background-color: var(--color-background-neutral-secondary);
 }
 
-.header__logo {
+.logo {
   display: flex;
   border: 1px solid transparent;
   padding: 1.5rem;
@@ -79,7 +77,7 @@
   }
 }
 
-.header__list {
+.list {
   display: flex;
   align-items: center;
   gap: 1.2rem;
@@ -89,21 +87,23 @@
   margin: 0;
 }
 
-.header__item:first-child {
-  display: flex;
-  justify-content: end;
-  flex-grow: 1;
+.item {
+  &:first-child {
+    display: flex;
+    justify-content: end;
+    flex-grow: 1;
+  }
+
+  &:last-child {
+    display: flex;
+    justify-content: end;
+    flex-grow: 1;
+    align-items: center;
+    gap: 1.2rem;
+  }
 }
 
-.header__item:last-child {
-  display: flex;
-  justify-content: end;
-  flex-grow: 1;
-  align-items: center;
-  gap: 1.2rem;
-}
-
-.header__link {
+.link {
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -155,29 +155,29 @@
   }
 
   &:active,
-  & :focus-visible {
+  &:focus-visible {
     background-color: transparent;
     border-color: var(--color-border-brand-strong);
     color: var(--color-interactive-brand-primary);
   }
 }
 
-.header__burger {
+.burger {
   display: none;
 }
 
 @media (max-width: 1300px) {
-  .header__nav {
+  .nav {
     width: 100%;
     margin: 0 4.7rem;
     padding: 0 1.6rem;
   }
 
-  .header__logo {
+  .logo {
     padding: 1.1rem;
   }
 
-  .header__burger {
+  .burger {
     position: relative;
     display: block;
     z-index: 250;
@@ -251,7 +251,7 @@
     }
   }
 
-  .header__list {
+  .list {
     position: fixed;
     inset: 0;
     flex-direction: column;
@@ -274,7 +274,7 @@
     }
   }
 
-  .header__item {
+  .item {
     &:first-child {
       justify-content: start;
       flex-grow: 0;
@@ -289,7 +289,7 @@
     }
   }
 
-  .header__link {
+  .link {
     color: var(--color-label-neutral-inverted-primary);
 
     svg {
@@ -329,14 +329,14 @@
     margin-top: 0.8rem;
   }
 
-  .header__nav {
+  .nav {
     width: 100%;
     margin: 0 1rem;
     padding: 0 0.4rem;
     border-radius: 2rem;
   }
 
-  .header__logo {
+  .logo {
     margin: 0.4rem 0;
     border-radius: 0.8rem;
 
@@ -346,31 +346,28 @@
     }
   }
 
-  .header__list {
+  .list {
     padding: 0 0 0 2rem;
+  }
 
-    .header__item:last-child {
-      padding: 1.1rem 0 0.3rem;
-    }
+  .item:last-child {
+    padding: 1.1rem 0 0.3rem;
   }
 }
 
 [data-theme='dark'] {
-  .header {
-    background-color: var(--color-background-neutral-inverted);
+  .nav {
+    background-color: var(--color-label-neutral-primary);
   }
 
-  .header__nav {
-    background-color: var(--color-fill-neutral-primary);
-  }
-
-  .header__logo {
+  .logo {
     color: var(--color-label-neutral-inverted-primary);
 
     &:hover {
       @media (hover: hover) {
         color: var(--color-interactive-brand-hover);
       }
+
       @media (hover: none) {
         color: var(--color-label-neutral-inverted-primary);
       }
@@ -383,7 +380,7 @@
     }
   }
 
-  .header__link {
+  .link {
     color: var(--color-label-neutral-inverted-primary);
 
     &:hover {
@@ -407,15 +404,15 @@
   }
 
   @media (max-width: 1300px) {
-    .header__burger span {
+    .burger span {
       background-color: var(--color-label-neutral-inverted-primary);
     }
 
-    .header__list {
+    .list {
       background-color: var(--color-interactive-brand-hover);
     }
 
-    .header__link {
+    .link {
       color: var(--color-label-neutral-inverted-primary);
 
       &:hover {

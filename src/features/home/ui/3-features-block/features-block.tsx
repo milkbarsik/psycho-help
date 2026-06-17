@@ -7,15 +7,8 @@ import FeatureDesktop_2 from '@/features/home/ui/3-features-block/img/2/features
 import FeatureTablet_2 from '@/features/home/ui/3-features-block/img/2/features-tablet.png';
 import FeatureMobile_2 from '@/features/home/ui/3-features-block/img/2/features-mobile.png';
 import { Button } from '@/shared/ui';
-import { useNavigate } from 'react-router-dom';
 
 const FeaturesBlock = () => {
-  const navigate = useNavigate();
-
-  const handleShowAllTherapists = () => {
-    navigate('/therapists');
-  };
-
   return (
     <div className={styles.features}>
       <div className={styles.features__grid}>
@@ -32,7 +25,7 @@ const FeaturesBlock = () => {
               гарантируем бережную и профессиональную помощь.
             </span>
           </div>
-          <Button onClick={handleShowAllTherapists} color="neutral">
+          <Button to="/therapists" color="neutral">
             Смотреть всех
           </Button>
         </div>

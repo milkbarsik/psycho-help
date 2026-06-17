@@ -1,8 +1,9 @@
-export interface ITest {
+export type TTest = {
   id: string;
+  slug: string;
   title: string;
-  description: string;
-  imageSrc?: string;
-  countQuestion: string;
-  time: string;
-}
+  description?: string | null;
+  imageSrc?: string | null;
+  questionsCount?: number | null;
+  durationMinutes?: number | null;
+};

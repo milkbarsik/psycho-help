@@ -8,8 +8,10 @@ import {
   NewsItemPage,
   NewsPage,
   PersonalCabinet,
+  PollPage,
   ResourcesPage,
   TestPage,
+  TestResultPage,
 } from '@/pages';
 import PsychologistAppointmentPage from '@/pages/personal-cabinet/psychologist-appointment-page/PsychologistAppointmentPage';
 import PsychologistApplicationPage from '@/pages/personal-cabinet/psychologist-application-page/PsychologistApplicationPage';
@@ -67,7 +69,7 @@ export const routes: RoutePath[] = [
     Component: DoctorPage,
   },
   {
-    path: '/article/:id',
+    path: '/article/:slug',
     Component: ArticlePage,
   },
   {
@@ -75,8 +77,12 @@ export const routes: RoutePath[] = [
     Component: NewsPage,
     navText: 'Новости',
   },
+  // {
+  //   path: '/news/:slug',
+  //   Component: NewsItemPage,
+  // },
   {
-    path: '/news/:slug',
+    path: '/news/:id',
     Component: NewsItemPage,
   },
   {
@@ -85,8 +91,16 @@ export const routes: RoutePath[] = [
     navText: 'Полезные материалы',
   },
   {
-    path: '/test/:id',
+    path: '/test/:slug',
     Component: TestPage,
+  },
+  {
+    path: '/test/:slug/result',
+    Component: TestResultPage,
+  },
+  {
+    path: '/poll/:slug',
+    Component: PollPage,
   },
   {
     path: '/faq',

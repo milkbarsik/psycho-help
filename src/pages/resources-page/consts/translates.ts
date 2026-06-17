@@ -1,4 +1,4 @@
-import ResourcesImage from '@/shared/assets/images/resources/main.png';
+import ResourcesImage from '@/shared/assets/images/resources/resources-hero.svg';
 
 export const TRANSLATES = {
   title: 'Полезные материалы',
@@ -9,4 +9,8 @@ export const TRANSLATES = {
   tests: 'Тесты',
   read: 'Читать',
   pass: 'Пройти',
+  passPoll: 'Пройти опрос',
+  pollPassed: 'прошли опрос',
+  pollRecommend: 'рекомендуют',
+  pollRating: 'рейтинг',
 };

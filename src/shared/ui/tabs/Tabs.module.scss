@@ -3,25 +3,34 @@
 .tabsContainer {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 }
 
 .tabList {
   display: flex;
-  align-items: center;
   gap: 1rem;
-  flex-wrap: wrap;
-  width: fit-content;
 
   &.fullWidth {
     justify-content: center;
-    width: 100%;
+  }
+}
+
+@include past-tablet {
+  .tabsContainer {
+    gap: 3.6rem;
   }
 
-  @include past-tablet {
+  .tabList {
     gap: 1.2rem;
   }
+}
 
-  @include past-desktop {
+@include past-desktop {
+  .tabsContainer {
+    gap: 4.8rem;
+  }
+
+  .tabList {
     gap: 1.6rem;
   }
 }

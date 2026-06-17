@@ -1,47 +1,49 @@
 @use '@/shared/scss/abstracts/breakpoints' as *;
 
 .tab {
-  font: var(--font-text-medium);
+  font: var(--font-text-medium-button);
+  width: 8.5rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 1.2rem;
   background: var(--color-interactive-neutral-secondary);
   color: var(--color-label-neutral-primary);
-  border-radius: 1.2rem;
-  padding-inline: 1.6rem;
-  padding-block: 0.75rem;
-  transition: 0.3s ease;
-  border-width: 0;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 
-  &.active {
-    color: var(--color-label-neutral-inverted-primary);
-    background: var(--color-interactive-brand-primary);
-  }
-
-  @include past-tablet {
-    &:hover:not(.active) {
+  &:hover:not(.active) {
+    @media (hover: hover) {
       background: var(--color-interactive-brand-hover-secondary);
       color: var(--color-label-brand-primary);
     }
   }
 
+  &.active {
+    background: var(--color-interactive-brand-primary);
+    color: var(--color-label-neutral-inverted-primary);
+    cursor: default;
+  }
+
   @include past-tablet {
-    padding: 1rem 2.2rem;
     font: var(--font-text-large-button);
+    width: 11rem;
+    padding: 1rem;
   }
 
   @include past-desktop {
-    font: var(--font-text-large);
-    padding: 1.6rem 6.4rem;
+    width: 18.7rem;
+    padding: 1.6rem;
   }
 }
 
 [data-theme='dark'] {
   .tab {
-    &:hover:not(.active) {
-      background-color: var(--color-interactive-brand-hover-secondary);
-      color: var(--color-label-brand-primary);
-    }
-    &:active:not(.active) {
-      background-color: var(--color-interactive-brand-primary);
-      color: var(--color-label-neutral-inverted-primary);
+    background: var(--color-interactive-brand-secondary);
+
+    &.active {
+      background: var(--color-interactive-brand-active);
     }
   }
 }

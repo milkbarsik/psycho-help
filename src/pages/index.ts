@@ -6,5 +6,7 @@ export * from './home-page';
 export * from './news-item-page';
 export * from './news-page';
 export * from './personal-cabinet';
+export * from './poll-page';
 export * from './resources-page';
 export * from './test-page';
+export * from './test-result-page';

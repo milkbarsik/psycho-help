@@ -3,7 +3,7 @@ import { type ITabItemProps, TabItem } from './components/tab-item';
 import styles from './Tabs.module.scss';
 import clsx from 'clsx';
 
-export interface ITab extends Omit<ITabItemProps, 'isActive' | 'tabRef'> {
+export interface ITab extends Omit<ITabItemProps, 'isActive' | 'tabRef' | 'onClick' | 'onKeyDown'> {
   content: React.ReactNode;
 }
 

@@ -1,113 +1,169 @@
 @use '@/shared/scss/abstracts/breakpoints' as *;
 
-.wrapper {
-  padding: 0.8rem 0.8rem 1.4rem 0.8rem;
-  outline: 0.1rem solid transparent;
-  border: 0.1rem solid var(--color-border-neutral-base);
-  border-radius: 2.8rem;
-  background: var(--color-fill-neutral-none);
-  // max-width: 30rem;
-  width: 100%;
-  height: auto;
-  gap: 1.2rem;
+.card {
   display: flex;
   flex-direction: column;
-  transition: 0.3s ease;
+  gap: 2rem;
+  border: 0.1rem solid var(--color-border-neutral-base);
+  padding: 1rem 0.8rem 1.6rem;
+  border-radius: 2.8rem;
+  background-color: var(--color-background-neutral-primary);
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+}
 
-  .info {
-    font: var(--font-text-small);
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.imageWrapper {
+  position: relative;
+  height: 28.8rem;
+  border-radius: 2.4rem;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge {
+  position: absolute;
+  left: 2.4rem;
+  bottom: 1.8rem;
+  font: var(--font-text-medium);
+  font-weight: 500;
+  padding: 0.8rem 1rem;
+  border-radius: 100%;
+  background-color: var(--color-background-neutral-primary);
+  color: var(--color-label-brand-primary);
+  transition: background-color 0.3s;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding: 0 0.8rem;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 0 0.8rem;
+}
+
+.title {
+  font: var(--font-h4);
+  letter-spacing: -0.05em;
+  color: var(--color-interactive-neutral-primary);
+  transition: color 0.3s;
+}
+
+.description {
+  font: var(--font-text-medium);
+  color: var(--color-label-neutral-tetriary);
+  transition: color 0.3s;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  max-width: 42.7rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem 0 2.4rem;
+}
+
+.statValue {
+  font: var(--font-text-medium);
+  color: var(--color-label-brand-primary);
+}
+
+.statLabel {
+  font: var(--font-text-small);
+  color: var(--color-label-neutral-secondary);
+  transition: color 0.3s;
+}
+
+.info {
+  display: flex;
+  gap: 2rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.infoIcon {
+  width: 2.4rem;
+  color: var(--color-label-neutral-primary);
+  transition: color 0.3s;
+}
+
+.infoValue {
+  font: var(--font-text-medium);
+  color: var(--color-interactive-neutral-primary);
+  transition: color 0.3s;
+}
+
+@include past-tablet {
+  .badge {
+    bottom: 1.4rem;
+    font: var(--font-text-large-button);
   }
 
-  .imageWrapper {
-    height: 18.4rem;
-    min-height: 18.4rem;
-    width: 100%;
-    border-radius: 2.4rem;
-    overflow: hidden;
-    background: var(--color-fill-neutral-quaternary);
+  .stats {
+    justify-content: space-between;
+    padding: 0 0.9rem;
+  }
+
+  .stat {
+    padding: 0.8rem 0 1.2rem;
+  }
+
+  .statValue {
+    font: var(--font-text-large);
+  }
+
+  .statLabel {
+    font: var(--font-text-medium);
+  }
+
+  .info {
+    gap: 2.5rem;
+    padding: 0 1.2rem;
+  }
+
+  .infoValue {
+    font: var(--font-text-large);
+  }
+}
+
+@include past-desktop {
+  .weapper {
+    padding: 1rem 0.8rem 2.4rem;
   }
 
   .content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    padding-inline: 0.8rem;
-
-    .title {
-      font: var(--font-h4);
-    }
-
-    .description {
-      color: var(--color-label-neutral-secondary);
-      font: var(--font-text-medium);
-
-      &.ellipse {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        text-overflow: ellipsis;
-        height: 100%;
-      }
-    }
+    padding: 0 1.6rem;
   }
 
-  @include past-tablet {
-    height: auto;
-    min-width: 35rem;
-    padding: 1rem;
-    gap: 2rem;
-    // max-width: 40rem;
-
-    .imageWrapper {
-      height: 23rem;
-      min-height: 23rem;
-    }
-
-    .content {
-      .title {
-        font: var(--font-h4);
-      }
-    }
+  .stats {
+    padding: 0;
   }
 
-  @include past-desktop {
-    width: 38.6rem;
-    max-width: initial;
-    height: 60rem;
-    padding: 0.8rem 0.8rem 2.1rem 0.8rem;
-
-    .imageWrapper {
-      height: 28rem;
-    }
-
-    &.desktop {
-      padding: 0.8rem;
-      flex-direction: row;
-      width: auto;
-      height: auto;
-      align-items: center;
-
-      .imageWrapper {
-        flex: 1;
-        max-width: 48rem;
-      }
-
-      .content {
-        flex: 1;
-      }
-    }
+  .stat {
+    padding: 0.8rem 1rem 1.2rem;
   }
 
-  @include past-tablet {
-    &.clickable:hover {
-      cursor: pointer;
-      border-color: var(--color-border-brand-strong);
-      outline-color: var(--color-border-brand-strong);
-    }
+  .statValue {
+    font: var(--font-text-large-button);
   }
 }
 
@@ -115,22 +171,36 @@
   margin-top: auto;
 }
 
+.button {
+  width: 100%;
+  padding: 1.6rem;
+  border-radius: 1.6rem;
+}
+
 [data-theme='dark'] {
-  .wrapper {
+  .card {
+    border-color: var(--color-border-neutral-inverted);
     background-color: var(--color-background-neutral-inverted);
-    border: 1px solid var(--color-border-neutral-inverted);
   }
-  .imageWrapper {
-    background-color: var(--color-fill-neutral-primary);
+
+  .badge {
+    background-color: var(--color-background-neutral-inverted);
   }
+
   .title {
     color: var(--color-label-neutral-inverted-primary);
   }
-  .description {
-    color: color-mix(
-      in srgb,
-      var(--color-label-neutral-secondary),
-      var(--color-label-neutral-inverted-primary)
-    ) !important;
+
+  .description,
+  .statLabel {
+    color: var(--color-interactive-neutral-active-secondary);
+  }
+
+  .infoIcon {
+    color: var(--color-label-neutral-inverted-primary);
+  }
+
+  .infoValue {
+    color: var(--color-label-neutral-inverted-primary);
   }
 }

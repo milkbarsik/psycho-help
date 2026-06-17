@@ -1,29 +1,71 @@
 .button {
-  color: var(--color-label-neutral-inverted-primary);
-  font-size: 1.6rem;
-  font-weight: bold;
-  user-select: none;
   display: flex;
-  border-radius: 1rem;
-  align-items: center;
   justify-content: center;
-  width: fit-content;
-  transition:
-    outline 0.3s ease,
-    background 0.3s ease,
-    outline-offset 0.3s ease;
+  align-items: center;
   outline: 2px solid transparent;
-  border-width: 0;
+  border: none;
+  border-radius: 1.6rem;
+  width: fit-content;
+  user-select: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    outline-color 0.3s,
+    outline-offset 0.3s;
+
+  &.fontLarge {
+    &.bold {
+      font: var(--font-text-large-button);
+    }
+    &.regular {
+      font: var(--font-text-large);
+    }
+  }
+
+  &.fontMedium {
+    &.bold {
+      font: var(--font-text-medium-button);
+    }
+    &.regular {
+      font: var(--font-text-medium);
+    }
+  }
 
   &.medium {
-    padding: 1.4rem;
+    padding: 1.6rem;
 
     .icon {
       width: 2.4rem;
       height: 2.4rem;
     }
   }
-  &.color-brand {
+
+  &.brand {
+    &.primary {
+      background: var(--color-interactive-brand-primary);
+      color: var(--color-label-neutral-inverted-primary);
+
+      &:hover {
+        background: var(--color-interactive-brand-hover);
+      }
+
+      &:active {
+        background: var(--color-interactive-brand-active);
+      }
+
+      &:disabled {
+        background-color: var(--color-interactive-brand-disable);
+        color: var(--color-label-neutral-quaternary);
+      }
+
+      &:focus-visible {
+        outline-color: var(--color-border-brand-strong);
+        outline-offset: 2px;
+      }
+    }
+
     &.secondary {
       background-color: var(--color-interactive-brand-secondary);
       color: var(--color-label-brand-primary);
@@ -40,24 +82,15 @@
         background-color: var(--color-interactive-neutral-disable);
         color: var(--color-label-neutral-quaternary);
       }
-    }
 
-    &.primary {
-      background: var(--color-fill-brand-primary);
-
-      &:hover {
-        background: var(--color-interactive-neutral-hover);
-      }
-
-      &:focus {
-        outline: 2px solid var(--color-border-brand-strong);
+      &:focus-visible {
+        outline-color: var(--color-border-brand-strong);
         outline-offset: 2px;
-        background: var(--color-fill-brand-primary);
       }
     }
   }
 
-  &.color-neutral {
+  &.neutral {
     &.primary {
       background-color: var(--color-interactive-neutral-primary);
       color: var(--color-label-neutral-inverted-primary);
@@ -73,6 +106,34 @@
       &:disabled {
         background-color: var(--color-interactive-neutral-disable);
         color: var(--color-label-neutral-quaternary);
+      }
+
+      &:focus-visible {
+        outline-color: var(--color-border-brand-strong);
+        outline-offset: 2px;
+      }
+    }
+
+    &.secondary {
+      background-color: var(--color-interactive-neutral-secondary);
+      color: var(--color-label-neutral-primary);
+
+      &:hover {
+        background-color: var(--color-interactive-neutral-hover-secondary);
+      }
+
+      &:active {
+        background-color: var(--color-interactive-neutral-active-secondary);
+      }
+
+      &:disabled {
+        background-color: var(--color-interactive-neutral-disable);
+        color: var(--color-label-neutral-quaternary);
+      }
+
+      &:focus-visible {
+        outline-color: var(--color-border-brand-strong);
+        outline-offset: 2px;
       }
     }
   }
@@ -93,18 +154,20 @@
   }
 }
 
-[data-theme='dark'] {
-  .button {
-    &.color-brand {
-      background-color: var(--color-fill-neutral-none);
-      color: var(--color-interactive-neutral-primary);
-      &:hover {
-        background-color: var(--color-interactive-neutral-hover-secondary);
-      }
-      &:active {
-        background-color: var(--color-interactive-neutral-active-secondary);
-        outline: none;
-      }
-    }
-  }
-}
+// [data-theme='dark'] {
+//   .button {
+//     &.brand {
+//       background-color: var(--color-fill-neutral-none);
+//       color: var(--color-interactive-neutral-primary);
+
+//       &:hover {
+//         background-color: var(--color-interactive-neutral-hover-secondary);
+//       }
+
+//       &:active {
+//         background-color: var(--color-interactive-neutral-active-secondary);
+//         outline: none;
+//       }
+//     }
+//   }
+// }

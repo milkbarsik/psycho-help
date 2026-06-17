@@ -81,12 +81,12 @@ const Header = () => {
 
   return (
     <header className={styles.header} ref={headerRef}>
-      <nav className={styles.header__nav} aria-label="Основная навигация">
-        <Link className={styles.header__logo} to="/" aria-label="Вернуться на главную страницу">
+      <nav className={styles.nav} aria-label="Основная навигация">
+        <Link className={styles.logo} to="/" aria-label="Вернуться на главную страницу">
           <Logo aria-hidden="true" />
         </Link>
         <button
-          className={`${styles.header__burger} ${menuOpen ? styles['header__burger--open'] : ''}`}
+          className={`${styles.burger} ${menuOpen ? styles['burger--open'] : ''}`}
           onClick={toggleMenu}
           type="button"
           aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
@@ -100,21 +100,21 @@ const Header = () => {
         </button>
         <ul
           id="main-nav-menu"
-          className={`${styles.header__list} ${isAnimating ? styles['header__list--animating'] : ''} ${menuOpen ? styles['header__list--open'] : ''}`}
+          className={`${styles.list} ${isAnimating ? styles['list--animating'] : ''} ${menuOpen ? styles['list--open'] : ''}`}
           role="list"
         >
           {navPages.map((item, index) => (
-            <li className={styles.header__item} key={index}>
-              <Link className={styles.header__link} to={item.path} onClick={closeMenu}>
+            <li className={styles.item} key={index}>
+              <Link className={styles.link} to={item.path} onClick={closeMenu}>
                 {item.navText}
               </Link>
             </li>
           ))}
-          <li className={styles.header__item}>
-            <ThemeToggle className={styles.header__link} />
+          <li className={styles.item}>
+            <ThemeToggle className={styles.link} />
             {isAuth ? (
               <Link
-                className={`${styles.header__link}`}
+                className={`${styles.link}`}
                 to={CABINET_PATH}
                 onClick={closeMenu}
                 aria-label="Личный кабинет"
@@ -123,7 +123,7 @@ const Header = () => {
               </Link>
             ) : (
               <button
-                className={`${styles.header__link} ${styles['header__link--auth']}`}
+                className={`${styles.link} ${styles['link--auth']}`}
                 onClick={handleAuthClick}
                 type="button"
                 aria-label="Открыть окно входа"

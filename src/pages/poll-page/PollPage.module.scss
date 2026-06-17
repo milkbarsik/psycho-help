@@ -34,7 +34,12 @@
 
 .option {
   padding: 1.6rem 2.4rem;
+  border: none;
   border-radius: 0.9rem;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
   cursor: pointer;
   transition: 0.3s ease;
   background-color: var(--color-interactive-neutral-secondary);
@@ -42,6 +47,10 @@
 
   &:hover {
     background-color: var(--color-interactive-neutral-hover-secondary);
+  }
+
+  &:focus-visible {
+    outline-color: var(--color-interactive-brand-primary);
   }
 
   &.selected {
@@ -77,6 +86,59 @@
     &:hover {
       background-color: var(--color-border-brand-base);
     }
+  }
+}
+
+.stars {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.star {
+  border: none;
+  background: none;
+  padding: 0.4rem;
+  cursor: pointer;
+  font-size: 3.2rem;
+  line-height: 1;
+  color: var(--color-label-neutral-quaternary);
+  transition: color 0.3s ease;
+
+  &.starActive {
+    color: var(--color-interactive-brand-primary);
+  }
+}
+
+.recommendOptions {
+  display: flex;
+  gap: 0.8rem;
+
+  .option {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.feedbackError {
+  font: var(--font-text-medium);
+  color: var(--color-label-danger-primary);
+}
+
+.thanks {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  align-items: flex-start;
+
+  .thanksText {
+    font: var(--font-text-medium);
+    color: var(--color-label-neutral-secondary);
+  }
+
+  .thanksBtn {
+    margin-top: 1.6rem;
+    width: 100%;
+    max-width: 39rem;
   }
 }
 
@@ -138,7 +200,8 @@
   }
 
   .buttonAction {
-    padding-inline: 4.85rem;
+    flex: 1;
+    padding-inline: 1rem;
     font: var(--font-text-medium);
   }
 
@@ -158,10 +221,13 @@
   .title {
     color: var(--color-label-neutral-inverted-primary);
   }
+  .thanksText {
+    color: var(--color-label-neutral-inverted-primary);
+  }
   .option {
     background-color: var(--color-fill-neutral-primary);
     color: var(--color-label-neutral-inverted-primary);
-    &:hover:not(.selected){
+    &:hover:not(.selected) {
       background-color: var(--color-fill-neutral-tetriary);
     }
   }
